@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "compro",
+  "displayName": "Compro",
+  "version": "2.0.0",
+  "description": "Layer 3 Company Profile Multi-Agent Plugin with Slide Deck Generator & Vercel Deployment",
+  "author": {
+    "name": "Aryo Adi Putro"
+  },
+  "homepage": "https://github.com/aorysan/compro",
+  "repository": "https://github.com/aorysan/compro",
+  "license": "MIT",
+  "keywords": [
+    "company-profile",
+    "pitch-deck",
+    "vercel",
+    "multi-agent",
+    "compro"
+  ],
+  "skills": ["./"]
+}
