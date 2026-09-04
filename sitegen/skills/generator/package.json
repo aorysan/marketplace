@@ -1,0 +1,15 @@
+{
+  "name": "sitegen-skill",
+  "private": true,
+  "type": "module",
+  "description": "QC tooling untuk skill sitegen — hanya untuk screenshot verifikasi hasil scaffold Next.js App Router.",
+  "scripts": {
+    "qc": "node scripts/render.mjs"
+  },
+  "dependencies": {
+    "node-vibrant": "^3.1.6",
+    "pdf-parse": "^2.4.5",
+    "puppeteer": "^25.3.0",
+    "sharp": "^0.35.3"
+  }
+}

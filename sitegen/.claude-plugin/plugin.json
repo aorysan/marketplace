@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "sitegen",
+  "displayName": "Sitegen",
+  "version": "1.0.0",
+  "description": "Master orchestrator for end-to-end website generation from PDF intake to deployment. Handles intake, research, brainstorming, planning, code generation, QA, SEO validation, debugging, and deployment.",
+  "author": {
+    "name": "Aryo Adi Putro"
+  },
+  "homepage": "https://github.com/aorysan/sitegen",
+  "repository": "https://github.com/aorysan/sitegen",
+  "license": "MIT",
+  "keywords": [
+    "web-development",
+    "website-generator",
+    "nextjs",
+    "orchestrator",
+    "sitegen",
+    "playwright"
+  ],
+  "skills": [
+    "./"
+  ]
+}

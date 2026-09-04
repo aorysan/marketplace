@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+.node_modules/
+
+# Temp & Generated Output
+.preview/
+.grademe/
+.sitegen/assets/
+
+# OS & Environment Files
+.DS_Store
+Thumbs.db
+*.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*

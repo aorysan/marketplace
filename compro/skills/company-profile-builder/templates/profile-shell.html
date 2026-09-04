@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Profile — {{COMPANY_NAME}}</title>
+
+  <!-- Reveal.js CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css" id="theme-link">
+
+  <!-- Inlined Custom CSS for self-contained single-file HTML -->
+  <style>
+/* {{CUSTOM_CSS}} */
+
+    /* Critical CSS overrides */
+    .reveal .slides section .slide-content {
+      max-width: 90%;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Konten slide di-inject di sini oleh builder -->
+      <!-- Setiap section adalah satu slide -->
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+  <script>
+    Reveal.initialize({
+      navigation: true,
+      progress: true,
+      center: true,
+      hash: true,
+      controlsBackArrows: 'visible',
+      transition: 'slide',
+      locale: 'id',
+    });
+  </script>
+</body>
+</html>

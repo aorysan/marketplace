@@ -1,0 +1,20 @@
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.superpowers
+docs/superpowers/plans
+
+# Test outputs (generated — not committed)
+tests/outputs/
+tests/prompt_*.txt
+skills/*/outputs/
+
+# Generated outputs
+*BKB*.md

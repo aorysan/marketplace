@@ -1,0 +1,27 @@
+{
+  "name": "compro",
+  "description": "Layer 3 Company Profile Multi-Agent Plugin with Slide Deck Generator & Vercel Deployment",
+  "version": "2.0.0",
+  "skills": [
+    {
+      "name": "compro",
+      "path": "skills/compro/SKILL.md"
+    },
+    {
+      "name": "company-profile-writer",
+      "path": "skills/company-profile-writer/SKILL.md"
+    },
+    {
+      "name": "company-profile-reviewer",
+      "path": "skills/company-profile-reviewer/SKILL.md"
+    },
+    {
+      "name": "company-profile-builder",
+      "path": "skills/company-profile-builder/SKILL.md"
+    },
+    {
+      "name": "company-profile-publisher",
+      "path": "skills/company-profile-publisher/SKILL.md"
+    }
+  ]
+}

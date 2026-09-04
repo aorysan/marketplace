@@ -1,0 +1,54 @@
+/* --- Fixed Section Indicators (right edge, vertically centered) --- */
+
+.section-indicators {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .section-indicators { display: flex; }
+}
+
+.section-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: all 300ms ease;
+}
+
+.section-indicator .indicator-line {
+  height: 1px;
+  width: 24px;
+  background: var(--color-border-strong);
+  transition: all 300ms ease;
+}
+
+.section-indicator .indicator-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  transition: all 300ms ease;
+}
+
+/* Active state */
+.section-indicator.active .indicator-line {
+  background: var(--color-primary);
+  width: 48px;
+}
+
+.section-indicator.active .indicator-label {
+  color: var(--color-heading);
+}
+

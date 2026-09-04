@@ -1,0 +1,148 @@
+/* ========================================
+   Company Profile Slides — Custom CSS
+   Template statis: edit file ini untuk perubahan visual
+   ======================================== */
+
+/* Warna brand — sesuaikan dengan kebutuhan */
+:root {
+  --color-primary: #6366f1;      /* Indigo */
+  --color-secondary: #ec4899;    /* Pink */
+  --color-accent: #10b981;       /* Emerald */
+  --color-text: #f8fafc;         /* Light text on dark */
+  --color-text-muted: #94a3b8;   /* Muted text */
+  --color-background: #0f172a;   /* Dark slide background */
+  --color-card-bg: rgba(255,255,255,0.05);
+  --color-card-border: rgba(255,255,255,0.1);
+}
+
+/* Global */
+.reveal {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--color-text);
+}
+
+.reveal .slides section {
+  background-color: var(--color-background);
+}
+
+/* Typography */
+.reveal h1, .reveal h2, .reveal h3 {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.reveal h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+}
+
+.reveal h2 {
+  font-size: 1.8em;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.reveal p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* Statistik / angka besar */
+.reveal .stat {
+  font-size: 3em;
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+/* Kartu fitur */
+.reveal .feature-card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 1.5em;
+  margin: 1em 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.reveal .feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.reveal .feature-card h3 {
+  color: var(--color-accent);
+  margin-top: 0;
+}
+
+/* Tabel */
+.reveal table {
+  font-size: 0.9em;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.reveal th {
+  background: rgba(99,102,241,0.3);
+  padding: 0.5em 1em;
+  text-align: left;
+  font-weight: 600;
+}
+
+.reveal td {
+  padding: 0.5em 1em;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+/* Hero section */
+.reveal .hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 60%;
+}
+
+.reveal .hero-section h1 {
+  font-size: 3.5em;
+  margin-bottom: 0.3em;
+}
+
+.reveal .hero-section .tagline {
+  font-size: 1.5em;
+  color: var(--color-text-muted);
+  margin-bottom: 1em;
+}
+
+/* Gaya list */
+.reveal ul {
+  font-size: 1em;
+}
+
+.reveal li {
+  margin-bottom: 0.3em;
+}
+
+/* Logo placeholder */
+.reveal .logo-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--color-card-bg);
+  border: 2px dashed var(--color-card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1em;
+  color: var(--color-text-muted);
+  font-size: 0.9em;
+}
+
+/* Gaya presentasi contact */
+.reveal .contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0.3em 0;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "insightify",
+  "version": "6.4.1",
+  "description": "Generate comprehensive technical specification documentation (artifact-style HTML + knowledge-base.md) from code repositories. Archetype-aware spec covering directory structure, data models, component architecture, state management, routing, API patterns, and Mermaid diagrams.",
+  "author": {
+    "name": "Aryo Adi Putro"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aorysan/insightify"
+  },
+  "keywords": [
+    "documentation",
+    "knowledge-base",
+    "doc-generator",
+    "insightify",
+    "artifact",
+    "react",
+    "frontend",
+    "typescript",
+    "technical-spec"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "jsdom": "^24.0.0",
+    "marked": "^12.0.0",
+    "mermaid": "^10.9.0",
+    "pdf-parse": "^1.1.1",
+    "tree-sitter": "^0.25.1",
+    "tree-sitter-javascript": "^0.25.0",
+    "tree-sitter-python": "^0.25.0",
+    "tree-sitter-typescript": "^0.23.2"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "aorysan-marketplace",
+  "description": "A curated collection of Claude Code plugins by Aorysan",
+  "plugins": [
+    {
+      "name": "sitegen",
+      "path": "sitegen",
+      "version": "1.0.0",
+      "description": "Master orchestrator for end-to-end website generation from PDF intake to deployment",
+      "category": "web-development"
+    },
+    {
+      "name": "insightify",
+      "path": "insightify",
+      "version": "6.4.1",
+      "description": "Generate artifact-style technical documentation and a Product Knowledge Base from code repositories, URLs, and files",
+      "category": "documentation"
+    },
+    {
+      "name": "compro",
+      "path": "compro",
+      "version": "2.0.0",
+      "description": "Layer 3 Company Profile multi-agent plugin with slide deck generator and Vercel deployment",
+      "category": "content-generation"
+    },
+    {
+      "name": "business-intelligence-layer",
+      "path": "business-intelligence-layer",
+      "version": "1.1.0",
+      "description": "Strategic analysis plugin producing Business Knowledge Base, Business Audit Report, and Brand Story Guide",
+      "category": "analytics"
+    }
+  ]
+}

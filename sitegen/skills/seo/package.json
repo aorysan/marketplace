@@ -1,0 +1,9 @@
+{
+  "name": "sitegen-checklist-reviewer",
+  "private": true,
+  "type": "module",
+  "description": "Script dan tool untuk review teknis hasil generate landing page.",
+  "scripts": {
+    "check": "node scripts/check-technical.js"
+  }
+}

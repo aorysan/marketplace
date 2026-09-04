@@ -1,0 +1,32 @@
+node_modules/
+.insightify/
+.worktrees/
+.superpowers/
+.claude/settings.local.json
+docs/superpowers/plans
+scraped_artifact/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+# Optional npm cache directory
+.npm
+# Optional eslint cache
+.eslintcache
+# dotenv environment variables file
+.env
+.env.test
+.env.production
+.env.local
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+insights/

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="system">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  {{STYLE}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  {{> site-header}}
+
+  {{> section-indicators}}
+
+  <main class="site-main">
+    <div class="doc-container">
+      <article class="doc-content">
+        <div class="artifact-container">
+          <!-- Product Overview -->
+          <section id="overview" class="doc-section">
+            <span class="section-label">Overview</span>
+            <h1>{{PRODUCT_NAME}}</h1>
+            <p class="tagline">{{TAGLINE}}</p>
+            {{PRODUCT_OVERVIEW}}
+          </section>
+
+          <!-- 14 Documentation Sections in Plan Order -->
+          {{DOC_SECTIONS}}
+
+
+        </div>
+      </article>
+    </div>
+  </main>
+
+  {{SCRIPTS}}
+</body>
+</html>

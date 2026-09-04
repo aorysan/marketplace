@@ -1,0 +1,58 @@
+# ============================================================
+# Compro plugin — .gitignore
+# Runtime / scratch artifacts and local-only state that must
+# never be pushed to the repository.
+# ============================================================
+
+# --- Node dependencies ---
+node_modules/
+
+# --- Vercel local state (auth token, project cache, logs) ---
+# Never commit these — they contain account/project credentials.
+.vercel/
+vercel.json.local
+
+# --- Sanity/scaffolding notes committed. Just ignore transient ones ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Editor / IDE state ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+._*
+
+# --- OS junk (incl. macOS AppleDouble files) ---
+Thumbs.db
+Desktop.ini
+
+# --- SDD (Subagent-Driven Development) scratch workspace ---
+# Per-plan progress ledgers, task briefs, review diffs, fix reports.
+# This is transient coordination state owned by the SDD skill, not
+# source. Keep it local so recovery maps are never published.
+.superpowers/
+docs/superpowers/plans
+
+# --- Layer 3 runtime outputs (produced from the skills at run time) ---
+# These are generated per-run and ARE the user's private working data.
+
+# Business intake documents (user's source material)
+input/
+
+# Intermediate draft / review artifacts
+artifacts/
+
+# Generated slide decks, one directory per company profile
+compros/
+
+# Technical SEO audit reports
+qa/
+
+# Deployment status reports
+deploy/

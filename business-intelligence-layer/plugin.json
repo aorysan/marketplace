@@ -1,0 +1,8 @@
+{
+  "name": "business-intelligence-layer",
+  "description": "Plugin analisis strategis yang mengubah Product Knowledge Base, Pitch Deck, Pricing, dan Market Notes menjadi Business Knowledge Base terstruktur, Business Audit Report, dan Brand Story Guide. Mencakup target pelanggan, value proposition, pricing, positioning, kompetitor, PMF, SWOT, dan keputusan go/no-go.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Aryo Adi Putro"
+  }
+}

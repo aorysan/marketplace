@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{DOC_TITLE}} — Technical Blueprint Skeleton</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./blueprint-styles.css">
+  <style>
+    /* Inline overrides if needed */
+    a { color: var(--bp-accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="blueprint-container">
+
+    <!-- 00. Blueprint Header -->
+    <header class="bp-header">
+      <div class="bp-meta">{{SYSTEM_TYPE}} · {{VERSION_TAG}} · {{DATE_TAG}}</div>
+      <h1 class="bp-title">{{DOC_TITLE}}</h1>
+      <p class="bp-subtitle">{{DOC_EXECUTIVE_SUMMARY}}</p>
+    </header>
+
+    <!-- 01. End-to-End Lifecycle Journey Matrix -->
+    <section class="bp-section" data-screen-label="01 Journey">
+      <div class="bp-section-heading">
+        <span class="bp-section-num">01</span>
+        <h2 class="bp-section-title">End-to-End Journey — {{JOURNEY_TITLE_SUFFIX}}</h2>
+      </div>
+      <p class="bp-section-desc">{{JOURNEY_DESCRIPTION}}</p>
+
+      <div class="bp-journey-matrix">
+        <!-- Header Row: Phases -->
+        <div class="bp-journey-header-row">
+          <div></div>
+          <div class="bp-phase-label">Fase 1 · {{PHASE_1_NAME}}</div>
+          <div class="bp-phase-label">Fase 2 · {{PHASE_2_NAME}}</div>
+          <div class="bp-phase-label">Fase 3 · {{PHASE_3_NAME}}</div>
+          <div class="bp-phase-label">Fase 4 · {{PHASE_4_NAME}}</div>
+          <div class="bp-phase-label">Fase 5 · {{PHASE_5_NAME}}</div>
+        </div>
+
+        <!-- Actor Row 1: Primary User / Client -->
+        <div class="bp-journey-row">
+          <div class="bp-actor-cell">
+            <div class="bp-actor-name">{{ACTOR_1_NAME}}</div>
+            <div class="bp-actor-tag">{{ACTOR_1_CHANNELS}}</div>
+          </div>
+          <div class="bp-flow-card">
+            <b>{{A1_P1_TITLE}}</b>
+            <span>{{A1_P1_DESC}}</span>
+          </div>
+          <div class="bp-flow-card">
+            <b>{{A1_P2_TITLE}}</b>
+            <span>{{A1_P2_DESC}}</span>
+          </div>
+          <div class="bp-flow-card">
+            <b>{{A1_P3_TITLE}}</b>
+            <span>{{A1_P3_DESC}}</span>
+          </div>
+          <div class="bp-flow-card">
+            <b>{{A1_P4_TITLE}}</b>
+            <span>{{A1_P4_DESC}}</span>
+          </div>
+          <div class="bp-flow-card">
+            <b>{{A1_P5_TITLE}}</b>
+            <span>{{A1_P5_DESC}}</span>
+          </div>
+        </div>
+
+        <!-- Actor Row 2: Core System / Backend Service -->
+        <div class="bp-journey-row">
+          <div class="bp-actor-cell">
+            <div class="bp-actor-name">{{ACTOR_2_NAME}}</div>
+            <div class="bp-actor-tag">{{ACTOR_2_TECH}}</div>
+          </div>
+          <div class="bp-flow-card neutral">
+            <b>{{A2_P1_TITLE}}</b>
+            <span>{{A2_P1_DESC}}</span>
+          </div>
+          <div class="bp-flow-card neutral">
+            <b>{{A2_P2_TITLE}}</b>
+            <span>{{A2_P2_DESC}}</span>
+          </div>
+          <div class="bp-flow-card neutral">
+            <b>{{A2_P3_TITLE}}</b>
+            <span>{{A2_P3_DESC}}</span>
+          </div>
+          <div class="bp-flow-card neutral">
+            <b>{{A2_P4_TITLE}}</b>
+            <span>{{A2_P4_DESC}}</span>
+          </div>
+          <div class="bp-flow-card neutral">
+            <b>{{A2_P5_TITLE}}</b>
+            <span>{{A2_P5_DESC}}</span>
+          </div>
+        </div>
+
+        <!-- Actor Row 3: Operator / Admin / Output Display -->
+        <div class="bp-journey-row">
+          <div class="bp-actor-cell">
+            <div class="bp-actor-name">{{ACTOR_3_NAME}}</div>
+            <div class="bp-actor-tag">{{ACTOR_3_SURFACE}}</div>
+          </div>
+          <div class="bp-flow-card dark">
+            <b>{{A3_P1_TITLE}}</b>
+            <span>{{A3_P1_DESC}}</span>
+          </div>
+          <div class="bp-flow-card dark">
+            <b>{{A3_P2_TITLE}}</b>
+            <span>{{A3_P2_DESC}}</span>
+          </div>
+          <div class="bp-flow-card dark">
+            <b>{{A3_P3_TITLE}}</b>
+            <span>{{A3_P3_DESC}}</span>
+          </div>
+          <div class="bp-flow-card dark">
+            <b>{{A3_P4_TITLE}}</b>
+            <span>{{A3_P4_DESC}}</span>
+          </div>
+          <div class="bp-flow-card dark">
+            <b>{{A3_P5_TITLE}}</b>
+            <span>{{A3_P5_DESC}}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02. Multi-Tier System Architecture & Protocols -->
+    <section class="bp-section" data-screen-label="02 Architecture">
+      <div class="bp-section-heading">
+        <span class="bp-section-num">02</span>
+        <h2 class="bp-section-title">Arsitektur Sistem & Integrasi Layanan</h2>
+      </div>
+      <p class="bp-section-desc">{{ARCH_DESCRIPTION}}</p>
+
+      <div class="bp-card bp-arch-grid">
+        <!-- Tier 1: Client & Ingress Channels -->
+        <div class="bp-arch-tier">
+          <div class="bp-arch-tier-title">Tier 1 · Kanal Klien & Titik Masuk (Ingress)</div>
+          <div class="bp-arch-cards">
+            <div class="bp-arch-card">
+              <div style="font-size: 15px; font-weight: 600;">{{CLIENT_1_NAME}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-secondary); line-height: 1.5;">{{CLIENT_1_DESC}}</div>
+              <div style="margin-top: 4px;"><span class="bp-badge accent">{{CLIENT_1_PROTOCOL}}</span></div>
+            </div>
+            <div class="bp-arch-card">
+              <div style="font-size: 15px; font-weight: 600;">{{CLIENT_2_NAME}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-secondary); line-height: 1.5;">{{CLIENT_2_DESC}}</div>
+              <div style="margin-top: 4px;"><span class="bp-badge accent">{{CLIENT_2_PROTOCOL}}</span></div>
+            </div>
+            <div class="bp-arch-card">
+              <div style="font-size: 15px; font-weight: 600;">{{CLIENT_3_NAME}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-secondary); line-height: 1.5;">{{CLIENT_3_DESC}}</div>
+              <div style="margin-top: 4px;"><span class="bp-badge accent">{{CLIENT_3_PROTOCOL}}</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bp-arch-connector">
+          <span>↓ REST API · GraphQL · WebSocket · Event Webhook ↓</span>
+        </div>
+
+        <!-- Tier 2: Core Domain Engine & Processing -->
+        <div class="bp-arch-tier">
+          <div class="bp-arch-tier-title">Tier 2 · Backend Core & Business Logic</div>
+          <div class="bp-arch-cards">
+            <div class="bp-arch-card neutral">
+              <div style="font-size: 15px; font-weight: 600;">{{SERVICE_1_NAME}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-secondary); line-height: 1.5;">{{SERVICE_1_DESC}}</div>
+            </div>
+            <div class="bp-arch-card neutral">
+              <div style="font-size: 15px; font-weight: 600;">{{SERVICE_2_NAME}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-secondary); line-height: 1.5;">{{SERVICE_2_DESC}}</div>
+            </div>
+            <div class="bp-arch-card neutral">
+              <div style="font-size: 15px; font-weight: 600;">{{SERVICE_3_NAME}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-secondary); line-height: 1.5;">{{SERVICE_3_DESC}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bp-arch-connector">
+          <span>↓ Query / Mutate · Cache Invalidation · Pub/Sub Stream ↓</span>
+        </div>
+
+        <!-- Tier 3: Data Persistence & External APIs -->
+        <div class="bp-arch-tier">
+          <div class="bp-arch-tier-title">Tier 3 · Persistence, Cache & Third-Party Integration</div>
+          <div class="bp-arch-cards">
+            <div class="bp-arch-card dark">
+              <div style="font-size: 15px; font-weight: 600;">{{STORAGE_1_NAME}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-dim); line-height: 1.5;">{{STORAGE_1_DESC}}</div>
+            </div>
+            <div class="bp-arch-card dark">
+              <div style="font-size: 15px; font-weight: 600;">{{STORAGE_2_NAME}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-dim); line-height: 1.5;">{{STORAGE_2_DESC}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. State Lifecycle & Transitions -->
+    <section class="bp-section" data-screen-label="03 State Machine">
+      <div class="bp-section-heading">
+        <span class="bp-section-num">03</span>
+        <h2 class="bp-section-title">Siklus Status & Transisi State Entity</h2>
+      </div>
+      <p class="bp-section-desc">{{STATE_DESCRIPTION}}</p>
+
+      <div class="bp-card" style="display: flex; flex-direction: column; gap: 24px;">
+        <div class="bp-state-chain">
+          <div class="bp-state-node">STATE_INIT</div>
+          <div class="bp-state-arrow"><div class="bp-state-arrow-line"></div><div class="bp-state-arrow-head"></div></div>
+          <div class="bp-state-node">STATE_QUEUED</div>
+          <div class="bp-state-arrow"><div class="bp-state-arrow-line"></div><div class="bp-state-arrow-head"></div></div>
+          <div class="bp-state-node">STATE_ACTIVE</div>
+          <div class="bp-state-arrow"><div class="bp-state-arrow-line"></div><div class="bp-state-arrow-head"></div></div>
+          <div class="bp-state-node">STATE_COMPLETED</div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; padding-top: 14px; border-top: 1px dashed var(--bp-border);">
+          <div style="background: var(--bp-surface-alt); padding: 12px 14px; border-radius: 4px; font-size: 12.5px; line-height: 1.5;">
+            <b>Branch Exception:</b> {{STATE_BRANCH_1_DESC}}
+          </div>
+          <div style="background: var(--bp-surface-alt); padding: 12px 14px; border-radius: 4px; font-size: 12.5px; line-height: 1.5;">
+            <b>Auto-Expire Policy:</b> {{STATE_EXPIRE_RULE_DESC}}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. Step-by-Step Operator Workflow Timeline -->
+    <section class="bp-section" data-screen-label="04 Workflow">
+      <div class="bp-section-heading">
+        <span class="bp-section-num">04</span>
+        <h2 class="bp-section-title">Alur Kerja Operasional & Rantai Eksekusi</h2>
+      </div>
+      <p class="bp-section-desc">{{WORKFLOW_DESCRIPTION}}</p>
+
+      <div class="bp-card" style="display: grid; grid-template-columns: 1fr 340px; gap: 32px;">
+        <div class="bp-timeline-chain">
+          <div class="bp-timeline-step">
+            <div class="bp-step-indicator">
+              <div class="bp-step-badge">1</div>
+              <div class="bp-step-line"></div>
+            </div>
+            <div class="bp-step-content">
+              <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">{{STEP_1_TITLE}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-secondary); line-height: 1.5;">{{STEP_1_DESC}}</div>
+            </div>
+          </div>
+
+          <div class="bp-timeline-step">
+            <div class="bp-step-indicator">
+              <div class="bp-step-badge">2</div>
+              <div class="bp-step-line"></div>
+            </div>
+            <div class="bp-step-content">
+              <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">{{STEP_2_TITLE}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-secondary); line-height: 1.5;">{{STEP_2_DESC}}</div>
+            </div>
+          </div>
+
+          <div class="bp-timeline-step">
+            <div class="bp-step-indicator">
+              <div class="bp-step-badge">3</div>
+            </div>
+            <div class="bp-step-content">
+              <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">{{STEP_3_TITLE}}</div>
+              <div style="font-size: 12.5px; color: var(--bp-text-secondary); line-height: 1.5;">{{STEP_3_DESC}}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Operational Sidebar Rules -->
+        <div style="background: var(--bp-surface-alt); border: 1px solid var(--bp-border-light); border-radius: var(--bp-radius-sm); padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+          <div style="font-family: var(--bp-font-mono); font-size: 11px; text-transform: uppercase; color: var(--bp-text-muted);">SOP & Kebijakan Khusus</div>
+          <div style="font-size: 12.5px; line-height: 1.55; color: var(--bp-text-secondary);">
+            {{OPERATIONAL_SOP_POINTS}}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05. Key Technical Policies & System Constraints -->
+    <section class="bp-section" data-screen-label="05 Policies">
+      <div class="bp-section-heading">
+        <span class="bp-section-num">05</span>
+        <h2 class="bp-section-title">Catatan Teknis & Aturan Validasi Sistem</h2>
+      </div>
+
+      <div class="bp-card bp-policy-grid">
+        <div class="bp-policy-item">
+          <div class="bp-policy-title">{{POLICY_1_TITLE}}</div>
+          <div class="bp-policy-desc">{{POLICY_1_DESC}}</div>
+        </div>
+        <div class="bp-policy-item">
+          <div class="bp-policy-title">{{POLICY_2_TITLE}}</div>
+          <div class="bp-policy-desc">{{POLICY_2_DESC}}</div>
+        </div>
+        <div class="bp-policy-item">
+          <div class="bp-policy-title">{{POLICY_3_TITLE}}</div>
+          <div class="bp-policy-desc">{{POLICY_3_DESC}}</div>
+        </div>
+        <div class="bp-policy-item">
+          <div class="bp-policy-title">{{POLICY_4_TITLE}}</div>
+          <div class="bp-policy-desc">{{POLICY_4_DESC}}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06. Feature Matrix & Delivery Modules -->
+    <section class="bp-section" data-screen-label="06 Feature Matrix">
+      <div class="bp-section-heading">
+        <span class="bp-section-num">06</span>
+        <h2 class="bp-section-title">Daftar Fitur & Modul Pengerjaan</h2>
+      </div>
+
+      <div class="bp-feature-table">
+        <div class="bp-table-header">
+          <div>No</div>
+          <div>Modul / Epik</div>
+          <div>Rincian Item Fitur & Lingkup</div>
+          <div>Target</div>
+        </div>
+
+        <div class="bp-table-row">
+          <div style="font-family: var(--bp-font-mono); font-size: 12px; color: var(--bp-text-dim);">01</div>
+          <div style="font-size: 14px; font-weight: 600;">{{MOD_1_NAME}}</div>
+          <div style="font-size: 12.5px; line-height: 1.55; color: var(--bp-text-secondary);">{{MOD_1_FEATURES}}</div>
+          <div><span class="bp-badge accent">Sprint 1</span></div>
+        </div>
+
+        <div class="bp-table-row">
+          <div style="font-family: var(--bp-font-mono); font-size: 12px; color: var(--bp-text-dim);">02</div>
+          <div style="font-size: 14px; font-weight: 600;">{{MOD_2_NAME}}</div>
+          <div style="font-size: 12.5px; line-height: 1.55; color: var(--bp-text-secondary);">{{MOD_2_FEATURES}}</div>
+          <div><span class="bp-badge accent">Sprint 2</span></div>
+        </div>
+
+        <div class="bp-table-row">
+          <div style="font-family: var(--bp-font-mono); font-size: 12px; color: var(--bp-text-dim);">03</div>
+          <div style="font-size: 14px; font-weight: 600;">{{MOD_3_NAME}}</div>
+          <div style="font-size: 12.5px; line-height: 1.55; color: var(--bp-text-secondary);">{{MOD_3_FEATURES}}</div>
+          <div><span class="bp-badge accent">Sprint 3</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07. Low-Fidelity UI Wireframes & Screen Mockups -->
+    <section class="bp-section" data-screen-label="07 UI Wireframes">
+      <div class="bp-section-heading">
+        <span class="bp-section-num">07</span>
+        <h2 class="bp-section-title">Gambaran UI Wireframes & Layout Klien</h2>
+      </div>
+      <p class="bp-section-desc">Sketsa wireframe tata letak arsitektur antarmuka pengguna.</p>
+
+      <div class="bp-card bp-wireframe-grid">
+        <!-- Frame 1: Mobile App / Web Wireframe -->
+        <div class="bp-frame-mobile">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--bp-border-muted);">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.05em;">{{M_APP_HEADER}}</div>
+            <div style="font-family: var(--bp-font-mono); font-size: 9px; color: var(--bp-text-dim);">●●●</div>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: var(--bp-surface-highlight); border: 1px solid var(--bp-border-highlight); border-radius: 4px; padding: 10px;">
+              <div style="font-size: 12px; font-weight: 600;">{{M_CARD_TITLE}}</div>
+              <div style="font-size: 11px; color: var(--bp-text-secondary); margin-top: 4px;">{{M_CARD_DESC}}</div>
+            </div>
+            <div style="border: 1px dashed var(--bp-border); border-radius: 4px; padding: 10px; font-size: 11px; color: var(--bp-text-muted);">
+              {{M_PLACEHOLDER_AREA}}
+            </div>
+          </div>
+          <div style="background: var(--bp-text-primary); color: #fff; text-align: center; padding: 10px; border-radius: 4px; font-size: 12px; font-weight: 600;">
+            {{M_PRIMARY_CTA}}
+          </div>
+        </div>
+
+        <!-- Frame 2: Kiosk / Terminal Wireframe -->
+        <div class="bp-frame-kiosk">
+          <div style="text-align: center; display: flex; flex-direction: column; gap: 4px;">
+            <div style="font-size: 14px; font-weight: 700;">{{KIOSK_TITLE}}</div>
+            <div style="font-size: 11px; color: var(--bp-text-muted);">{{KIOSK_SUBTITLE}}</div>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: center;">
+            <div style="border: 2px solid var(--bp-accent); background: var(--bp-surface-highlight); border-radius: 6px; padding: 16px; text-align: center;">
+              <div style="font-size: 13px; font-weight: 600;">{{KIOSK_ACTION_1}}</div>
+            </div>
+            <div style="border: 1px solid var(--bp-border-strong); background: var(--bp-surface-alt); border-radius: 6px; padding: 14px; text-align: center;">
+              <div style="font-size: 13px; font-weight: 600;">{{KIOSK_ACTION_2}}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Frame 3: Public Display / TV Screen Wireframe -->
+        <div class="bp-frame-tv">
+          <div style="display: flex; justify-content: space-between; align-items: center; color: var(--bp-text-dim); font-family: var(--bp-font-mono); font-size: 10px;">
+            <span>{{TV_HEADER}}</span>
+            <span>10:00:00</span>
+          </div>
+          <div style="background: #fdf8ef; color: #1a1917; border-radius: 4px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-family: var(--bp-font-mono); font-size: 10px; color: #8a857b;">NOMOR AKTIF</div>
+              <div style="font-size: 32px; font-weight: 700; font-family: var(--bp-font-mono);">A-042</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--bp-font-mono); font-size: 10px; color: #8a857b;">LOKET</div>
+              <div style="font-size: 28px; font-weight: 700; color: var(--bp-accent);">02</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

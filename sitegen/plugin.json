@@ -1,0 +1,74 @@
+{
+  "name": "sitegen",
+  "version": "1.0.0",
+  "description": "Master orchestrator for end-to-end website generation from PDF intake to deployment. Handles intake, generation, SEO validation, debugging, and deployment.",
+  "skills": [
+    {
+      "name": "sitegen",
+      "path": "skills/SKILL.md",
+      "description": "Master orchestrator for full website generation flow"
+    },
+    {
+      "name": "sitegen-brainstorming",
+      "path": "skills/brainstorming/SKILL.md",
+      "description": "Interactive multi-turn session to determine vision, audience, and style direction"
+    },
+    {
+      "name": "sitegen-debug",
+      "path": "skills/debug/SKILL.md",
+      "description": "Automated QA, Visual Debugging, and remediation for site generation"
+    },
+    {
+      "name": "sitegen-deploy",
+      "path": "skills/deploy/SKILL.md",
+      "description": "Deployment module for pushing code and deploying to target platforms"
+    },
+    {
+      "name": "sitegen-generator",
+      "path": "skills/generator/SKILL.md",
+      "description": "Core Next.js scaffolding and component generation skill"
+    },
+    {
+      "name": "sitegen-impeccable",
+      "path": "skills/impeccable/SKILL.md",
+      "description": "Advanced visual detailing, motion injection, and component styling"
+    },
+    {
+      "name": "sitegen-intake",
+      "path": "skills/intake/SKILL.md",
+      "description": "Data extraction from PDF company profiles to structured text"
+    },
+    {
+      "name": "sitegen-planner",
+      "path": "skills/planner/SKILL.md",
+      "description": "Generates PRDs and design systems based on global requirements"
+    },
+    {
+      "name": "sitegen-qa-reviewer",
+      "path": "skills/qa-reviewer/SKILL.md",
+      "description": "QA reviewer for validating consistency across requirements and code"
+    },
+    {
+      "name": "sitegen-research",
+      "path": "skills/research/SKILL.md",
+      "description": "Competitor and user needs analysis based on intake data"
+    },
+    {
+      "name": "sitegen-seo",
+      "path": "skills/seo/SKILL.md",
+      "description": "SEO analysis, schema validation, and meta tag remediation"
+    },
+    {
+      "name": "sitegen-systematic-debugging",
+      "path": "skills/systematic-debugging/SKILL.md",
+      "description": "Root cause analysis and systemic fix generation for complex issues"
+    },
+    {
+      "name": "sitegen-ui-ux-pro-max",
+      "path": "skills/ui-ux-pro-max/SKILL.md",
+      "description": "AAA tier-1 UI/UX parameter determination and global design specification"
+    }
+  ],
+  "category": "web-development",
+  "enabled": true
+}
