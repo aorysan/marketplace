@@ -1,4 +1,4 @@
-# Company Profile Writer (Skill 8)
+# Writer
 
 > **Skill untuk:** Mengolah 3 dokumen input bisnis menjadi draf narasi company profile berbasis slide (Markdown).
 
@@ -12,7 +12,7 @@ Dokumen yang disediakan di folder `input/`:
 3. `input/brand-story-guide.md`: Panduan nada suara (*tone of voice*), persona audiens, dan pesan kunci merek.
 
 ## Outputs
-- `artifacts/01-company-profile-draft.md`: Draf presentasi company profile lengkap dengan pemisah heading slide.
+- `compros/<slug>/drafts/01-draft.md` (legacy: `artifacts/01-company-profile-draft.md`): Draf presentasi company profile lengkap dengan pemisah heading slide.
 
 ## Aturan Penulisan & Chunking
 1. **Pemisah Slide Deterministic:**
@@ -36,7 +36,7 @@ Dokumen yang disediakan di folder `input/`:
 2. Identifikasi USP, masalah pelanggan, dan tone yang harus digunakan.
 3. Susun draf per slide mengikuti struktur standar di atas.
 4. Periksa jumlah kata per section (pastikan 150–250 kata per H1).
-5. Tulis hasil akhir ke `artifacts/01-company-profile-draft.md`.
+5. Tulis hasil akhir ke `compros/<slug>/drafts/01-draft.md` (legacy: `artifacts/01-company-profile-draft.md`).
 
 ## Referensi Nama Slide (English)
 Slide types di bawah menyelaraskan label yang dipakai harness pengujian dengan judul slide di atas:

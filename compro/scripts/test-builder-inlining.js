@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const shellPath = path.join(__dirname, '..', 'skills', 'company-profile-builder', 'templates', 'profile-shell.html');
-const cssPath = path.join(__dirname, '..', 'skills', 'company-profile-builder', 'templates', 'custom.css');
+const shellPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'profile-shell.html');
+const cssPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'custom.css');
 
 if (!fs.existsSync(shellPath) || !fs.existsSync(cssPath)) {
   console.error('FAIL: template files missing');
@@ -10,6 +10,7 @@ if (!fs.existsSync(shellPath) || !fs.existsSync(cssPath)) {
 }
 
 const shellContent = fs.readFileSync(shellPath, 'utf-8');
+const cssContent = fs.readFileSync(cssPath, 'utf-8');
 
 // The shell must contain the CSS injection token <!-- {{CUSTOM_CSS}} --> or <style>{{CUSTOM_CSS}}</style>
 // and must NOT have external <link rel="stylesheet" href="custom.css">
@@ -20,6 +21,13 @@ if (shellContent.includes('<link rel="stylesheet" href="custom.css">')) {
 
 if (!shellContent.includes('/* {{CUSTOM_CSS}} */') && !shellContent.includes('{{CUSTOM_CSS}}')) {
   console.error('FAIL: profile-shell.html missing CSS injection placeholder {{CUSTOM_CSS}}');
+  process.exit(1);
+}
+
+// Verify CSS placeholder replacement
+const inlined = shellContent.replace('/* {{CUSTOM_CSS}} */', cssContent);
+if (!inlined.includes('--brand-primary') || inlined.includes('/* {{CUSTOM_CSS}} */')) {
+  console.error('FAIL: CSS placeholder replacement verification failed');
   process.exit(1);
 }
 

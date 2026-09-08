@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Profile — {{COMPANY_NAME}}</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans (600, 700, 800) & Inter (400, 500, 600) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Reveal.js CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css" id="theme-link">
+
+  <!-- PDF Print Stylesheet Loader per Reveal.js standard -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi)
+      ? 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/css/print/pdf.min.css'
+      : '';
+    if (link.href) {
+      document.getElementsByTagName('head')[0].appendChild(link);
+    }
+  </script>
+
+  <!-- Inlined Custom CSS for self-contained single-file HTML -->
+  <style>
+/* {{CUSTOM_CSS}} */
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- Konten slide di-inject di sini oleh builder -->
+      <!-- Setiap section adalah satu slide beresolusi 1920x1080 (16:9) -->
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      hash: true,
+      slideNumber: true,
+      navigation: true,
+      progress: true,
+      center: true,
+      controlsBackArrows: 'visible',
+      transition: 'slide',
+      locale: 'id'
+    });
+  </script>
+</body>
+</html>

@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const deployScriptPath = path.join(__dirname, '..', 'skills', 'company-profile-publisher', 'scripts', 'deploy.js');
-const skillPath = path.join(__dirname, '..', 'skills', 'company-profile-publisher', 'SKILL.md');
+const deployScriptPath = path.join(__dirname, '..', 'skills', 'publisher', 'scripts', 'deploy.js');
+const skillPath = path.join(__dirname, '..', 'skills', 'publisher', 'SKILL.md');
 
 if (!fs.existsSync(deployScriptPath) || !fs.existsSync(skillPath)) {
   console.error('FAIL: publisher script or SKILL.md missing');
@@ -29,5 +29,18 @@ if (!skillContent.includes('Auto-Fix') || !skillContent.includes('Konfirmasi') |
   process.exit(1);
 }
 
-console.log('PASS: publisher and deploy.js contain SEO Auto-Fix, confirmation gate, and GET 200 check');
+// Check SKILL.md references consolidated paths
+const pathChecks = [
+  'compros/<slug>/index.html',
+  'compros/<slug>/reports/seo-report.md'
+];
+
+for (const p of pathChecks) {
+  if (!skillContent.includes(p)) {
+    console.error(`FAIL: publisher SKILL.md missing consolidated path reference to "${p}"`);
+    process.exit(1);
+  }
+}
+
+console.log('PASS: publisher and deploy.js contain SEO Auto-Fix, confirmation gate, GET 200 check, and consolidated paths');
 process.exit(0);

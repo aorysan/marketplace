@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * deploy.js — Helper script untuk company-profile-publisher
+ * deploy.js — Helper script untuk publisher
  * Men-deploy folder ke Vercel menggunakan CLI, lalu memverifikasi
  * preview URL dengan HTTP GET 200 (dengan retries).
  *

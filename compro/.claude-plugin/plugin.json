@@ -1,8 +1,8 @@
-{
+﻿{
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "compro",
   "displayName": "Compro",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Layer 3 Company Profile Multi-Agent Plugin with Slide Deck Generator & Vercel Deployment",
   "author": {
     "name": "Aryo Adi Putro"

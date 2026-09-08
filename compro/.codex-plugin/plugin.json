@@ -8,20 +8,20 @@
       "path": "skills/compro/SKILL.md"
     },
     {
-      "name": "company-profile-writer",
-      "path": "skills/company-profile-writer/SKILL.md"
+      "name": "writer",
+      "path": "skills/writer/SKILL.md"
     },
     {
-      "name": "company-profile-reviewer",
-      "path": "skills/company-profile-reviewer/SKILL.md"
+      "name": "reviewer",
+      "path": "skills/reviewer/SKILL.md"
     },
     {
-      "name": "company-profile-builder",
-      "path": "skills/company-profile-builder/SKILL.md"
+      "name": "builder",
+      "path": "skills/builder/SKILL.md"
     },
     {
-      "name": "company-profile-publisher",
-      "path": "skills/company-profile-publisher/SKILL.md"
+      "name": "publisher",
+      "path": "skills/publisher/SKILL.md"
     }
   ]
 }

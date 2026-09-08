@@ -11,10 +11,10 @@ if (!fs.existsSync(manifestPath)) {
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
 const requiredSkills = [
   'compro',
-  'company-profile-writer',
-  'company-profile-reviewer',
-  'company-profile-builder',
-  'company-profile-publisher'
+  'writer',
+  'reviewer',
+  'builder',
+  'publisher'
 ];
 
 if (manifest.name !== 'compro') {

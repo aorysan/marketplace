@@ -1,21 +1,21 @@
-# Company Profile Publisher
+# Publisher
 
-> **Skill untuk:** Mendeploy HTML Company Profile (hasil dari company-profile-builder) ke Vercel sebagai website live, lengkap dengan technical SEO auto-fix, user confirmation gate, dan live GET 200 verification.
+> **Skill untuk:** Mendeploy HTML Company Profile (hasil dari builder) ke Vercel sebagai website live, lengkap dengan technical SEO auto-fix, user confirmation gate, dan live GET 200 verification.
 
 ## Tujuan
 Menerima file HTML presentasi dari builder, memvalidasi, melakukan technical SEO auto-fix, menyiapkan folder deployment bersih, serta mendeploy ke Vercel menggunakan Vercel CLI. Kembalikan preview URL dan status live ke user.
 
 ## Input
-- Path ke HTML file: `<project>/compros/<name>/index.html`
-- Folder assets (opsional): `<project>/compros/<name>/assets/`
+- Path ke HTML file: `<project>/compros/<slug>/index.html`
+- Folder assets (opsional): `<project>/compros/<slug>/assets/`
 - (Opsional) Informasi nama project dari caller
 
 ## Output
 - **Technical SEO patch** pada `index.html` (Title, Description, OpenGraph, JSON-LD Schema)
-- `qa/seo-report.md` — audit log hasil auto-fix
+- `compros/<slug>/reports/seo-report.md` (legacy: `qa/seo-report.md`) — audit log hasil auto-fix
 - User confirmation prompt sebelum deploy
 - Vercel preview deployment via `deploy.js` dengan live HTTP GET 200 verification
-- `deploy/deployment-status.md`
+- `compros/<slug>/reports/deployment-status.md` (legacy: `deploy/deployment-status.md`)
 - Preview URL + status live
 
 ## Prinsip
@@ -40,7 +40,7 @@ Sebelum menyiapkan deployment, lakukan audit technical SEO pada `index.html`:
    - Ekstrak entity name dan tagline dari Hero Slide (misalnya dari judul slide pertama).
    - Inject structured data ke `<head>`: `<title>`, `<meta name="description">`, Open Graph tags, dan JSON-LD Schema (misal tipe `Organization`/`WebSite`).
    - Tambahkan `alt` pada gambar yang belum punya.
-3. **Tulis audit log** ke `qa/seo-report.md`:
+3. **Tulis audit log** ke `compros/<slug>/reports/seo-report.md` (legacy: `qa/seo-report.md`):
    - Daftar item yang dicek dan statusnya (ok / missing / fixed).
    - Ringkasan tindakan Auto-Fix yang dilakukan.
    - Entity name dan tagline yang diekstrak dan digunakan.
@@ -61,13 +61,13 @@ Sebelum mengeksekusi deploy, tampilkan ringkasan dan minta persetujuan eksplisit
 
 1. Tampilkan summary kepada user:
    - Jumlah slide yang siap dideploy.
-   - Status SEO (item yang di-auto-fix, path `qa/seo-report.md`).
+   - Status SEO (item yang di-auto-fix, path `compros/<slug>/reports/seo-report.md`).
    - Folder deployment bersih yang akan digunakan.
    - Mode deploy (preview atau `--prod`).
 2. **Pause dan tanya** user untuk persetujuan eksplisit (misal: "Lanjutkan deploy ke Vercel? (y/N)").
 3. Jika user tidak menyetujui, batalkan dan jangan jalankan deploy.
 
-### 4. Deploy Execution via `scripts/deploy.js`
+### 4. Deploy Execution via `skills/publisher/scripts/deploy.js`
 Setelah disetujui, jalankan script deploy:
 
 - Cek Vercel CLI tersedia: `vercel --version`
@@ -84,7 +84,7 @@ vercel deploy --yes --no-wait <deployment-directory> [--prod]
 - Return ke user:
   - Preview URL
   - Status live (LIVE jika GET 200 terkonfirmasi)
-  - Tulis `deploy/deployment-status.md`
+  - Tulis `compros/<slug>/reports/deployment-status.md` (legacy: `deploy/deployment-status.md`)
 
 ### 5. Post-deploy
 - Cek preview URL accessibility: HTTP GET, pastikan 200 (sudah dilakukan di langkah 4).
@@ -108,8 +108,8 @@ vercel deploy --yes --no-wait <deployment-directory> [--prod]
 **User request:** "Deploy company profile slides ke Vercel"
 
 **Skill execution:**
-1. Audit & Auto-Fix technical SEO `index.html`, tulis `qa/seo-report.md`
+1. Audit & Auto-Fix technical SEO `compros/<slug>/index.html`, tulis `compros/<slug>/reports/seo-report.md`
 2. Siapkan folder deployment bersih (hanya `index.html` + `assets/`)
 3. User Confirmation Gate — tampilkan summary, minta persetujuan
-4. Jalankan `scripts/deploy.js`, verifikasi GET 200
+4. Jalankan `skills/publisher/scripts/deploy.js`, verifikasi GET 200
 5. Return: "Company profile berhasil di-deploy ke: https://project-git-branch-user.vercel.app (LIVE)"

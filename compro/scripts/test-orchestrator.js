@@ -8,7 +8,7 @@ if (!fs.existsSync(skillPath)) {
 }
 
 const content = fs.readFileSync(skillPath, 'utf-8');
-const phases = [
+const checks = [
   'Gate 0',
   'Phase 1',
   'Phase 2',
@@ -16,18 +16,19 @@ const phases = [
   'Phase 4',
   'Gate 5',
   'Phase 6',
-  'company-profile-writer',
-  'company-profile-reviewer',
-  'company-profile-builder',
-  'company-profile-publisher'
+  '/writer',
+  '/reviewer',
+  '/builder',
+  '/publisher',
+  'compros/<slug>/'
 ];
 
-for (const phase of phases) {
-  if (!content.includes(phase)) {
-    console.error(`FAIL: orchestrator SKILL.md missing phase or skill reference: "${phase}"`);
+for (const check of checks) {
+  if (!content.includes(check)) {
+    console.error(`FAIL: orchestrator SKILL.md missing phase or skill reference: "${check}"`);
     process.exit(1);
   }
 }
 
-console.log('PASS: orchestrator SKILL.md contains all gates, phases, and skill transitions');
+console.log('PASS: orchestrator SKILL.md contains all gates, phases, simplified skills, and consolidated paths');
 process.exit(0);

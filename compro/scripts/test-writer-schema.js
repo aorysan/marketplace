@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const skillPath = path.join(__dirname, '..', 'skills', 'company-profile-writer', 'SKILL.md');
+const skillPath = path.join(__dirname, '..', 'skills', 'writer', 'SKILL.md');
 if (!fs.existsSync(skillPath)) {
-  console.error('FAIL: skills/company-profile-writer/SKILL.md does not exist');
+  console.error('FAIL: skills/writer/SKILL.md does not exist');
   process.exit(1);
 }
 
@@ -12,7 +12,7 @@ const checks = [
   'business-knowledge-base.md',
   'business-audit-report.md',
   'brand-story-guide.md',
-  'artifacts/01-company-profile-draft.md',
+  'compros/<slug>/drafts/01-draft.md',
   'Hero Slide',
   'Problem Slide',
   'Solution',

@@ -16,7 +16,7 @@ for (const script of testScripts) {
   const scriptPath = path.join(__dirname, script);
   console.log(`\n[RUN] ${script}...`);
   try {
-    const output = execSync(`node ${scriptPath}`, { encoding: 'utf-8' });
+    const output = execSync(`node "${scriptPath}"`, { encoding: 'utf-8' });
     process.stdout.write(output);
   } catch (err) {
     console.error(`[FAIL] ${script}`);

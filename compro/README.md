@@ -5,12 +5,12 @@ Arsitektur multi-agen untuk mengonversi data mentah bisnis menjadi presentasi sl
 ## Alur Kerja Layer 3 (Pipeline)
 
 1. **Gate 0 - Intake Check**: Mengecek ketersediaan bahan dasar (`input/business-knowledge-base.md`, `business-audit-report.md`, `brand-story-guide.md`).
-2. **Phase 1 - Drafting** (`/company-profile-writer`): Menghasilkan draf narasi per-slide dalam format Markdown.
-3. **Phase 2 - Content QA** (`/company-profile-reviewer`): Memverifikasi akurasi terhadap fakta bisnis, brand voice, dan merumuskan draf On-Page SEO (Meta Title/Description). Terdapat mekanisme revisi berulang bila belum disetujui.
-4. **Phase 3 - Slide Deck Build** (`/company-profile-builder`): Membangun file presentasi statis *single-file HTML* (Reveal.js) dengan CSS inlined agar portabel dan bebas error 404 styling.
-5. **Phase 4 - Pre-flight SEO & Auto-Fix** (`/company-profile-publisher`): Audit technical SEO (Title, Description, Open Graph, Schema.org JSON-LD, Alt Image) dan melakukan auto-patching otomatis pada file HTML.
+2. **Phase 1 - Drafting** (`/writer`): Menghasilkan draf narasi per-slide dalam format Markdown.
+3. **Phase 2 - Content QA** (`/reviewer`): Memverifikasi akurasi terhadap fakta bisnis, brand voice, dan merumuskan draf On-Page SEO (Meta Title/Description). Terdapat mekanisme revisi berulang bila belum disetujui.
+4. **Phase 3 - Slide Deck Build** (`/builder`): Membangun file presentasi statis *single-file HTML* (Reveal.js) dengan CSS inlined agar portabel dan bebas error 404 styling.
+5. **Phase 4 - Pre-flight SEO & Auto-Fix** (`/publisher`): Audit technical SEO (Title, Description, Open Graph, Schema.org JSON-LD, Alt Image) dan melakukan auto-patching otomatis pada file HTML.
 6. **Gate 5 - User Confirmation Gate**: Berhenti dan meminta persetujuan eksplisit dari pengguna sebelum rilis publik.
-7. **Phase 6 - Deployment** (`/company-profile-publisher`): Menayangkan slide ke URL publik via Vercel CLI (default: preview deployment) dan memverifikasi keterjangkauan live via HTTP GET 200.
+7. **Phase 6 - Deployment** (`/publisher`): Menayangkan slide ke URL publik via Vercel CLI (default: preview deployment) dan memverifikasi keterjangkauan live via HTTP GET 200.
 
 ## Struktur Repositori
 
@@ -19,14 +19,15 @@ Arsitektur multi-agen untuk mengonversi data mentah bisnis menjadi presentasi sl
 │   └── plugin.json                     # Manifest registrasi skill
 ├── skills/
 │   ├── compro/SKILL.md                 # Orchestrator State-Machine
-│   ├── company-profile-writer/SKILL.md # Skill 8: Copywriting & Slide Drafting
-│   ├── company-profile-reviewer/SKILL.md # Skill 9: QA & Content SEO Validator
-│   ├── company-profile-builder/        # Skill 10: HTML/CSS Reveal.js Assembler
+│   ├── writer/SKILL.md                 # Skill 8: Copywriting & Slide Drafting
+│   ├── reviewer/SKILL.md               # Skill 9: QA & Content SEO Validator
+│   ├── builder/                        # Skill 10: HTML/CSS Reveal.js Assembler
 │   │   ├── SKILL.md
-│   │   └── templates/
-│   │       ├── profile-shell.html
-│   │       └── custom.css
-│   └── company-profile-publisher/      # Skill 11: SEO Auto-Fix & Vercel Deployer
+│   │   ├── templates/
+│   │   │   ├── profile-shell.html
+│   │   │   └── custom.css
+│   │   └── references/
+│   └── publisher/                      # Skill 11: SEO Auto-Fix & Vercel Deployer
 │       ├── SKILL.md
 │       └── scripts/
 │           └── deploy.js
