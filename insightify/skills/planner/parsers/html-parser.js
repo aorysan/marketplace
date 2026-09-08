@@ -1,7 +1,9 @@
 const cheerio = require('cheerio');
+const { extractColors, renderColorsSection } = require('./color-extractor');
 
 function parseHtml(htmlString) {
   const $ = cheerio.load(htmlString);
+  const colorsSection = renderColorsSection(extractColors($));
   $('nav, footer, script, style, .ads, .sidebar').remove();
   $('body > header').remove();
 
@@ -13,7 +15,7 @@ function parseHtml(htmlString) {
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 
-  return `# ${title}\n\n${cleaned}`;
+  return `# ${title}\n\n${cleaned}${colorsSection}`;
 }
 
 function convertNode($, $el, depth) {

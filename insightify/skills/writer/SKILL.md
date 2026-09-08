@@ -21,6 +21,7 @@ description: Stage 2 - Execute documentation plan by generating a single compreh
 - Person: second person ("you") for instructions, third person for concepts
 - Voice: active voice preferred ("Run the command" not "The command should be run")
 - Avoid jargon without explanation — if a term is in `knowledge/business-policies.md` (glossary), link or define it on first use
+- **NO Source Citations in Final Documentation**: Do NOT output `> **Source:** ...` or any blockquote source citations in the rendered markdown documentation. The user-facing documentation must be clean, readable, and client-ready. Source citations belong strictly to the internal extraction knowledge base (`.insightify/knowledge/`).
 
 ## Conciseness & Abstraction Level
 

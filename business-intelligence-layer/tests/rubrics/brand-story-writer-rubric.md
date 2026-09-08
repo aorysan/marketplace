@@ -2,7 +2,7 @@
 
 Evaluating the **Brand Story Guide** output. Checker: read output, mark each item Y/N/Partial, note evidence/quote.
 
-Total: 6 items. Score = (Y + 0.5*Partial) / 6 * 100%.
+Total: 7 items. Score = (Y + 0.5*Partial) / 7 * 100%.
 
 ---
 
@@ -31,6 +31,11 @@ Total: 6 items. Score = (Y + 0.5*Partial) / 6 * 100%.
 - [ ] **Y/N:** Apakah ada elevator pitch — 1-2 kalimat yang bisa dipakai memperkenalkan produk dengan singkat?
 - [ ] **Evidence:** Kutip elevator pitch.
 
+## 7. Brand Color Palette
+- [ ] **Y/N:** Apakah ada section Brand Color Palette dengan mapping peran (minimal primary/secondary/accent) yang berasal dari tabel `## Colors` di Product Knowledge Base (bukan dikarang)?
+- [ ] **Partial:** Apakah ada section warna tapi warnanya hanya sekadar daftar tanpa mapping peran, atau bersumber bukan dari input PKB?
+- [ ] **Evidence:** Kutip section warna + cek sumber terhadap tabel `## Colors` di PKB.
+
 ---
 
 ## Consistency Checks (Additional)
@@ -39,6 +44,7 @@ Total: 6 items. Score = (Y + 0.5*Partial) / 6 * 100%.
 - [ ] Apakah brand story tidak memperkenalkan persona/target yang berbeda dari BKB?
 - [ ] Apakah value proposition / USP yang digunakan di brand story konsisten dengan yang ada di BKB?
 - [ ] Apakah posisi harga / model monetisasi yang disinggung konsisten dengan BKB?
+- [ ] Apakah mapping peran warna di Brand Color Palette konsisten dengan tone of voice dan persona di BKB?
 
 ### Cek terhadap Business Audit Report
 - [ ] Apakah brand story tidak membuat klaim yang bertentangan dengan kelemahan yang sudah ditemukan di Audit Report?

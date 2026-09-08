@@ -69,11 +69,15 @@ export function renderMarkdown(md) {
     return `<h${depth}>${text}</h${depth}>\n`;
   };
 
-  // Render blockquotes with source citations
+  // Render blockquotes (suppress source citations in HTML output)
   renderer.blockquote = (quote) => {
     const quoteText = typeof quote === 'object' ? (quote.text || '') : quote;
-    if (quoteText.includes('**Source:**') || quoteText.includes('<strong>Source:</strong>') || quoteText.includes('Source:')) {
-      return `<blockquote class="source-citation">${quoteText}</blockquote>\n`;
+    if (
+      quoteText.includes('**Source:**') ||
+      quoteText.includes('<strong>Source:</strong>') ||
+      /^\s*(?:<[^>]+>\s*)*(?:>\s*)?(?:\*\*)?Source:\*?\*?\s*/i.test(quoteText)
+    ) {
+      return '';
     }
     return `<blockquote>${quoteText}</blockquote>\n`;
   };
@@ -443,64 +447,6 @@ export function buildSidebarNav(docPath) {
 }
 
 /**
- * Build process diagram
- */
-export function buildProcessDiagram() {
-  return `
-    <div class="process-diagram">
-      <div class="process-step">
-        <div class="step-number">1</div>
-        <div class="step-content">
-          <h3>Planner</h3>
-          <p>Ingest sources → Extract 10 knowledge categories → Generate documentation plan</p>
-          <div class="step-io">
-            <span class="input">Sources (files, URLs)</span>
-            <span class="arrow">→</span>
-            <span class="output">Knowledge Base + Plan</span>
-          </div>
-        </div>
-      </div>
-      <div class="process-step">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <h3>Writer</h3>
-          <p>Generate document sections independently in parallel</p>
-          <div class="step-io">
-            <span class="input">Knowledge Base + Plan</span>
-            <span class="arrow">→</span>
-            <span class="output">Documentation Document</span>
-          </div>
-        </div>
-      </div>
-      <div class="process-step">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <h3>Reviewer</h3>
-          <p>Evaluate across 10 dimensions (Accuracy, Completeness, Consistency, Structure, Usability, Type Safety, Architecture Alignment, Business Alignment, Scannability, Brevity)</p>
-          <div class="step-io">
-            <span class="input">Markdown Pages</span>
-            <span class="arrow">→</span>
-            <span class="output">Review Report + Issues</span>
-          </div>
-        </div>
-      </div>
-      <div class="process-step">
-        <div class="step-number">4</div>
-        <div class="step-content">
-          <h3>Builder</h3>
-          <p>Render artifact-style HTML with sidebar, Mermaid diagrams, dark/light mode, and assemble knowledge-base.md</p>
-          <div class="step-io">
-            <span class="input">Approved Pages</span>
-            <span class="arrow">→</span>
-            <span class="output">index.html + knowledge-base.md</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-/**
  * Assemble knowledge base from finalized documentation
  */
 export function assembleKnowledgeBase(finalDocPath, options = {}) {
@@ -526,6 +472,9 @@ export function assembleKnowledgeBase(finalDocPath, options = {}) {
   if (frontmatterMatch) {
     body = frontmatterMatch[2];
   }
+
+  // Strip blockquote source citations
+  body = body.replace(/^>\s*\*\*Source:\*\*.*(?:\r?\n)?/gm, '').replace(/\n{3,}/g, '\n\n');
 
   const toc = [];
   const sections = body.match(/^##\s+(.+)$/gm) || [];
@@ -579,7 +528,6 @@ export function buildArtifact(options = {}) {
   const overview = buildProductOverview(kbDir);
   const docSections = buildDocSections(docPath);
   const sidebarNav = buildSidebarNav(docPath);
-  const processDiagram = buildProcessDiagram();
 
   let htmlTemplate = options.htmlTemplate;
   if (!htmlTemplate) {
@@ -642,7 +590,6 @@ export function buildArtifact(options = {}) {
     SIDEBAR_NAV: sidebarNav,
     PRODUCT_OVERVIEW: overview.html,
     DOC_SECTIONS: docSections,
-    PROCESS_DIAGRAM: processDiagram,
     STYLE: `<style>\n${styles}\n</style>`,
     SCRIPTS: `<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>\n<script>\n${scripts}\n</script>`,
     INSIGHTIFY_VERSION: insightifyVersion

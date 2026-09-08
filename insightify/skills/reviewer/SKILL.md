@@ -25,6 +25,7 @@ description: Stage 3 - Evaluate generated documentation across 10 quality dimens
 - 5: All facts match, no unsupported claims
 - 3: Minor inaccuracies or missing nuances
 - 1: Major factual errors or contradictions
+Note: Source citations (`> **Source:**`) are intentionally omitted from user-facing documentation (`documentation.md`). Do NOT flag missing citations as an accuracy or completeness defect.
 
 **Completeness** (vs plan):
 - 5: All planned sections present and substantive
@@ -81,7 +82,7 @@ description: Stage 3 - Evaluate generated documentation across 10 quality dimens
 - **Critical**: Factual error, missing entire planned section, broken navigation, TypeScript errors, architecture violations
 - **Critical**: Dense prose — any paragraph exceeding 1 sentence or wall-of-text blocks
 - **Critical**: Brevity violations — full TypeScript interface/type dumps, localStorage/env variable dumps, numbering prose after diagrams, or total length exceeding 700 lines
-- **Minor**: Typo, slightly inconsistent tone, suboptimal heading level, missing citation, document length between 500-700 lines
+- **Minor**: Typo, slightly inconsistent tone, suboptimal heading level, document length between 500-700 lines
 
 ## Issue Format for Writer
 

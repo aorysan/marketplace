@@ -74,7 +74,6 @@ describe('Writer Templates (11 Templates, 10 Merged Categories)', () => {
       // Content structure validation
       assert.ok(content.includes('# '), `${filename} must have an H1 title`);
       assert.ok(content.includes('## '), `${filename} must have H2 section headers`);
-      assert.ok(content.includes('> **Source:**'), `${filename} must contain blockquote source citations`);
     });
   });
 

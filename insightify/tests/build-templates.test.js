@@ -6,6 +6,7 @@ const path = require('path');
 describe('Build Templates (Artifact-Style HTML Output)', () => {
   const templatesDir = path.join(__dirname, '../skills/builder/templates');
   const skillPath = path.join(__dirname, '../skills/builder/SKILL.md');
+  const fixturesDir = path.join(__dirname, 'fixtures');
   const fixture14KbDir = path.join(__dirname, 'fixtures/sample-14-kb');
   const tmpDir = path.join(__dirname, '.tmp');
 
@@ -81,7 +82,6 @@ Content for ${cat} section ${idx + 1}.
       '{{SIDEBAR_NAV}}',
       '{{PRODUCT_OVERVIEW}}',
       '{{DOC_SECTIONS}}',
-      '{{PROCESS_DIAGRAM}}',
       '{{STYLE}}',
       '{{SCRIPTS}}',
       ];
@@ -244,7 +244,6 @@ Content for ${cat} section ${idx + 1}.
     assert.strictEqual(typeof builder.buildProductOverview, 'function');
     assert.strictEqual(typeof builder.buildDocSections, 'function');
     assert.strictEqual(typeof builder.buildSidebarNav, 'function');
-    assert.strictEqual(typeof builder.buildProcessDiagram, 'function');
     assert.strictEqual(typeof builder.assembleKnowledgeBase, 'function');
     assert.strictEqual(typeof builder.render, 'function');
     assert.strictEqual(typeof builder.readTemplate, 'function');
@@ -261,10 +260,11 @@ Content for ${cat} section ${idx + 1}.
     assert.ok(htmlText.includes('<strong>bold</strong>'));
     assert.ok(htmlText.includes('<ul>'));
 
-    // Source citations
+    // Source citations (suppressed in HTML output)
     const mdCite = '> **Source:** source-001.md # section-overview';
     const htmlCite = renderMarkdown(mdCite);
-    assert.ok(htmlCite.includes('<blockquote class="source-citation">'));
+    assert.strictEqual(htmlCite.includes('source-citation'), false);
+    assert.strictEqual(htmlCite.includes('source-001.md'), false);
 
     // Tables
     const mdTable = '| Col 1 | Col 2 |\n|---|---|\n| Val 1 | Val 2 |';
@@ -347,7 +347,7 @@ Content for ${cat} section ${idx + 1}.
     }
   });
 
-  test('buildSidebarNav creates navigation links for overview, pages, and pipeline', async () => {
+  test('buildSidebarNav creates navigation links for overview and pages', async () => {
     const { buildSidebarNav } = await import('../skills/builder/templates/build-html.mjs');
 
     const tmpDir = path.join(__dirname, '.tmp');
@@ -359,26 +359,40 @@ Content for ${cat} section ${idx + 1}.
     assert.ok(navHtml.includes('href="#overview"'));
     assert.ok(navHtml.includes('href="#executive-summary"'));
     assert.ok(navHtml.includes('href="#directory-structure"'));
-    assert.ok(navHtml.includes('href="#pipeline"'));
+    assert.strictEqual(navHtml.includes('href="#pipeline"'), false);
     
     fs.unlinkSync(combinedPath);
   });
 
-  test('buildProcessDiagram creates 4-step pipeline diagram', async () => {
-    const { buildProcessDiagram } = await import('../skills/builder/templates/build-html.mjs');
-    const processHtml = buildProcessDiagram();
-
-    assert.ok(processHtml.includes('class="process-diagram"'));
-    assert.ok(processHtml.includes('Planner'));
-    assert.ok(processHtml.includes('Writer'));
-    assert.ok(processHtml.includes('Reviewer'));
-    assert.ok(processHtml.includes('Builder'));
-    assert.ok(processHtml.includes('10 knowledge categories') || processHtml.includes('10 categories'));
-    assert.ok(processHtml.includes('independently in parallel'));
-    assert.ok(processHtml.includes('10 dimensions'));
+  test('assembleKnowledgeBase strips blockquote source citations', async () => {
+    const { assembleKnowledgeBase } = await import('../skills/builder/templates/build-html.mjs');
+    const tempDoc = path.join(fixturesDir, 'temp-citation-doc.md');
+    fs.writeFileSync(tempDoc, '# Test Doc\n\n## Section 1\n\nSome paragraph.\n\n> **Source:** source-001.md   Overview\n\nAnother paragraph.\n', 'utf8');
+    const kb = assembleKnowledgeBase(tempDoc, { kbDir: fixture14KbDir });
+    assert.strictEqual(kb.includes('> **Source:**'), false, 'Knowledge base must not contain source citations');
+    assert.ok(kb.includes('Some paragraph.'));
+    assert.ok(kb.includes('Another paragraph.'));
+    fs.unlinkSync(tempDoc);
   });
 
-  test('assembleKnowledgeBase processes all 14 categories in order, strips frontmatter, and preserves citations', async () => {
+  test('renderMarkdown suppresses blockquote source citations', async () => {
+    const { renderMarkdown } = await import('../skills/builder/templates/build-html.mjs');
+    const mdWithCitation = 'Text before citation.\n\n> **Source:** source-001.md   Overview\n\nText after citation.';
+    const html = renderMarkdown(mdWithCitation);
+    assert.strictEqual(html.includes('source-citation'), false);
+    assert.strictEqual(html.includes('source-001.md'), false);
+    assert.ok(html.includes('Text before citation.'));
+  });
+
+  test('renderMarkdown preserves legitimate blockquotes containing source in text', async () => {
+    const { renderMarkdown } = await import('../skills/builder/templates/build-html.mjs');
+    const mdWithBlockquote = 'Text before.\n\n> Data Source: PostgreSQL\n\nText after.';
+    const html = renderMarkdown(mdWithBlockquote);
+    assert.ok(html.includes('<blockquote>'));
+    assert.ok(html.includes('Data Source: PostgreSQL'));
+  });
+
+  test('assembleKnowledgeBase processes all 14 categories in order, strips frontmatter, and strips citations', async () => {
     const { assembleKnowledgeBase } = await import('../skills/builder/templates/build-html.mjs');
     
     const tmpDir = path.join(__dirname, '.tmp');
@@ -390,7 +404,7 @@ Content for ${cat} section ${idx + 1}.
 
     assert.ok(kb.includes('# Knowledge Base'));
     assert.strictEqual(kb.includes('confidence: "high"'), false, 'Frontmatter must be stripped');
-    assert.ok(kb.includes('> **Source:** source-001.md'));
+    assert.strictEqual(kb.includes('> **Source:**'), false, 'Knowledge base must not contain source citations');
     
     fs.unlinkSync(kbTestPath);
   });
@@ -442,7 +456,8 @@ Content for ${cat} section ${idx + 1}.
     assert.ok(artifact.html.includes('mermaid.initialize'));
     assert.ok(artifact.html.includes('id="overview"'));
     assert.ok(artifact.html.includes('id="executive-summary"'));
-    assert.ok(artifact.html.includes('id="pipeline"'));
+    assert.strictEqual(artifact.html.includes('id="pipeline"'), false, 'artifact must not include pipeline section');
+    assert.strictEqual(artifact.html.includes('Documentation Pipeline'), false, 'artifact must not include Documentation Pipeline header');
 
     assert.ok(artifact.knowledgeBase.includes('# Knowledge Base'));
     

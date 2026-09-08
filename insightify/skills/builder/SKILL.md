@@ -104,13 +104,12 @@ description: Stage 4 - Assemble Product-Knowledge-Base.md and render single arti
 
 ## Rendering Rules
 
-- **Markdown → HTML**: headings, paragraphs, code blocks, inline code, tables, lists, links, blockquotes (citations preserved with `source-citation` class).
+- **Markdown → HTML**: headings, paragraphs, code blocks, inline code, tables, lists, links, blockquotes (source citations suppressed).
 - **Mermaid Diagrams**: Render via `mermaid.initialize({startOnLoad: true, theme: 'base', securityLevel: 'loose'})` - diagrams in `<pre class="mermaid">` blocks. *Note: Loaded from external CDN (jsDelivr); offline environments display pre-formatted diagrams or require a locally bundled script.*
 - **Collapsible Trees**: Directory structure as nested `<details>/<summary>` with `open` on first level.
 - **Tabs**: Component registry with tabbed interface (Component | Props | Usage) using CSS-only `:checked` hack.
 - **Product Overview**: Grid cards from `product.md`; feature badges from `features.md` with source citations.
 - **Doc Sections**: Render the single `Product-Knowledge-Base.md` with section navigation generated from H2/H3 headings, structuring sections as `<section id="slug" class="doc-section">` with label + heading + content.
-- **Process Diagram**: 4-step flexbox (Planner → Writer → Reviewer → Builder) with In/Out labels.
 - **Styling**: 
   - Design tokens as CSS custom properties (`--color-bg`, `--color-text`, `--color-primary`, etc.)
   - Light/dark via `prefers-color-scheme` AND `[data-theme="light"]` / `[data-theme="dark"]`
@@ -121,7 +120,7 @@ description: Stage 4 - Assemble Product-Knowledge-Base.md and render single arti
   - Mermaid initialization
   - Smooth scroll to anchor
   - Copy code button (optional, progressive enhancement)
-- **Product-Knowledge-Base.md**: Assemble as the primary output. Generate a Table of Contents at the top, followed by the finalized documentation. Do not concatenate raw knowledge categories. Strip YAML frontmatter, and preserve all `> **Source:**` citations.
+- **Product-Knowledge-Base.md**: Assemble as the primary output. Generate a Table of Contents at the top, followed by the finalized documentation. Do not concatenate raw knowledge categories. Strip YAML frontmatter, and strip all `> **Source:**` citations.
 
 ## Blueprint-Style Preview (index.html Only)
 
@@ -279,7 +278,7 @@ Used for multi-tier architecture, system layers, and ingress/gateway topologies.
 
 ## Templates
 
-- `templates/index-html-template.html` — Full HTML template with placeholders: `{{TITLE}}`, `{{PRODUCT_NAME}}`, `{{TAGLINE}}`, `{{VERSION}}`, `{{GENERATED_AT}}`, `{{SIDEBAR_NAV}}`, `{{PRODUCT_OVERVIEW}}`, `{{DOC_SECTIONS}}`, `{{PROCESS_DIAGRAM}}`, `{{STYLE}}`, `{{SCRIPTS}}`
-- `templates/build-html.mjs` — Exports: `renderMarkdown(md)`, `buildProductOverview(kbDir)`, `buildDocSections(docPath, plan)`, `buildSidebarNav(plan)`, `buildProcessDiagram()`, `assembleKnowledgeBase(kbDir)`, `render(template, data)`, `readTemplate(templateName)`, `buildArtifact(options)`
-- `templates/styles.css` — Complete inline CSS (design tokens, layout, components, print, dark/light themes)
-- `templates/scripts.js` — Minimal JS bundle (theme toggle with localStorage, Mermaid init with theme sync, smooth scroll, copy code button, sidebar mobile toggle, active nav highlight)
+- `templates/layouts/base.html` (and modular `templates/components/`, with legacy `templates/index-html-template.html`) — Modular HTML template with placeholders: `{{TITLE}}`, `{{PRODUCT_NAME}}`, `{{TAGLINE}}`, `{{VERSION}}`, `{{GENERATED_AT}}`, `{{SIDEBAR_NAV}}`, `{{PRODUCT_OVERVIEW}}`, `{{DOC_SECTIONS}}`, `{{STYLE}}`, `{{SCRIPTS}}`
+- `templates/build-html.mjs` — Exports: `renderMarkdown(md)`, `buildProductOverview(kbDir)`, `buildDocSections(docPath)`, `buildSidebarNav(docPath)`, `assembleKnowledgeBase(finalDocPath, options)`, `render(template, data)`, `readTemplate(templateName)`, `buildArtifact(options)`
+- `templates/layouts/styles-base.css` (and `templates/components/`, fallback `templates/styles.css`) — Complete inline CSS (design tokens, layout, components, print, dark/light themes)
+- `templates/layouts/scripts-base.js` (fallback `templates/scripts.js`) — Minimal JS bundle (theme toggle with localStorage, Mermaid init with theme sync, smooth scroll, copy code button, sidebar mobile toggle, active nav highlight)

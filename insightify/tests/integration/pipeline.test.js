@@ -47,18 +47,12 @@ describe('Integration: Documentation Pipeline v6', () => {
   });
 
   test('builder renders HTML with CSS sidebar and Mermaid support', async () => {
-    const { renderMarkdown, buildProcessDiagram } = await import('../../skills/builder/templates/build-html.mjs');
+    const { renderMarkdown } = await import('../../skills/builder/templates/build-html.mjs');
     const md = '# Component Architecture\n\nParagraph with **bold** and `code`.\n\n```mermaid\ngraph TD\n  App --> Layout\n```';
     const html = renderMarkdown(md);
     assert.ok(html.includes('<h1 id="component-architecture">Component Architecture</h1>') || html.includes('<h1>Component Architecture</h1>'), 'Markdown header converted to HTML');
     assert.ok(html.includes('<strong>bold</strong>'), 'Markdown bold converted to HTML');
     assert.ok(html.includes('<code>code</code>'), 'Markdown code converted to HTML');
-
-    const processHtml = buildProcessDiagram();
-    assert.ok(processHtml.includes('Planner'));
-    assert.ok(processHtml.includes('Writer'));
-    assert.ok(processHtml.includes('Reviewer'));
-    assert.ok(processHtml.includes('Builder'));
   });
 
   test('orchestrator skill defines the 4-step pipeline flow', () => {

@@ -13,6 +13,11 @@ Kamu berperan sebagai brand storyteller. Tugasmu adalah mengubah insight bisnis 
 
 Jika salah satu dokumen belum ada, tanyakan atau tawarkan untuk membangunnya dulu memakai skill `business-strategist` (dan `business-strategist-reviewer`) sebelum lanjut menulis brand story — brand story yang baik butuh insight bisnis yang solid, bukan asumsi kosong.
 
+**Catatan tabel warna:** Product Knowledge Base dari Insightify dapat memuat tabel
+`## Colors` (format `| Color | Hex |`) yang mengekstrak warna dari proyek. Jika tabel
+ini ada di input, gunakan sebagai sumber data warna pada section Brand Color Palette
+di output. Jika tidak ada, jangan mengarang warna — tandai sebagai "Perlu divalidasi".
+
 ## Output: Brand Story Guide
 
 Susun panduan dengan komponen berikut:
@@ -49,11 +54,29 @@ Gunakan kerangka berikut sebagai panduan. Setiap section harus berakar pada insi
 ## 6. Elevator Pitch
 [1-2 kalimat yang memperkenalkan produk dengan singkat. Target: orang yang mendengar punya enough context buat paham apa produk ini dan untuk siapa. Contoh: "InventFlow: aplikasi inventori simpel untuk toko kecil — scan, catat, alert stok menipis, semua dari HP, Rp49rb/bulan."]
 
+## 7. Brand Color Palette
+[Mapping peran warna brand. Ambil warna dari tabel ## Colors di Product
+Knowledge Base. Tentukan peran secara kontekstual berdasarkan analisis brand:
+tone of voice, persona target pelanggan, dan industri. JANGAN mengarang warna
+yang tidak ada di input.]
+
+| Peran | Warna (sumber) | Hex |
+|-------|----------------|-----|
+| Primary | [warna spt tercantum di PKB] | #... |
+| Secondary | ... | #... |
+| Accent | ... | #... |
+| Text | ... | ... |
+| Background | ... | ... |
+
 ## Catatan Konsistensi
 [Jelaskan secara eksplisit: klaim dan pesan apa saja yang diadopsi dari Business Knowledge Base, dan bagaimana brand story tetap jujur terhadap kelemahan/risk yang ditemukan di Business Audit Report. Jika ada klaim yang diambil meski ada kelemahan di audit, jelaskan mengapa dianggap acceptable.]
 ```
 
 **Catatan:** Narasi harus berakar pada insight dari Business Knowledge Base/Audit Report, bukan generik atau template marketing kosong.
+
+**Catatan section warna:** Semua role tidak wajib terisi; hanya terisi jika ada warna
+yang sesuai di input. Jika input tidak punya tabel warna, isi section dengan
+"Belum tersedia di Product Knowledge Base — perlu divalidasi".
 
 ## Self-Validation & Cross-Check (lakukan sebelum output akhir)
 
@@ -65,6 +88,11 @@ Gunakan kerangka berikut sebagai panduan. Setiap section harus berakar pada insi
 - [ ] **Klaim didukung:** Apakah setiap key claim memiliki dasar di Business Knowledge Base atau Audit Report? Jika ada klaim tanpa dukungan, tambahkan catatan "asumsi" atau hapus.
 - [ ] **Tidak generic:** Apakah brand story terasa spesifik untuk produk ini dan tidak seperti template marketing umum? Jika terasa generic, perbaiki dengan memasukkan detail spesifik dari BKB/Audit.
 - [ ] **Catatan konsistensi:** Apakah bagian "Catatan Konsistensi" diisi dengan eksplisit menyebutkan klaim yang diadopsi dari BKB/Audit dan bagaimana brand story tetap jujur terhadap kelemahan?
+- [ ] **Warna dari input:** Apakah warna di Brand Color Palette diambil dari tabel
+  `## Colors` di Product Knowledge Base, dan bukan dikarang? Jika input tidak punya
+  tabel warna, apakah section ditandai "Perlu divalidasi"?
+- [ ] **Mapping peran konsisten:** Apakah penentuan primary/secondary/accent konsisten
+  dengan tone of voice dan persona target pelanggan yang ditentukan sebelumnya?
 
 ### Cross-Check (lakukan setelah self-validation)
 

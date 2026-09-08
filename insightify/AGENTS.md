@@ -29,7 +29,7 @@ Each stage has a standalone invocation (e.g., `/insightify-planner`) and an orch
 
 - **Skill definitions** (`skills/*/SKILL.md`) are the primary source of truth. Tests validate their content structure extensively.
 - **10 merged knowledge categories** (product, directory-structure, architecture, state-and-data, design-system, api-patterns, features-and-journeys, business-policies, constraints-and-limits, workflows) plus `unanswered`.
-- **Parsers** (`skills/planner/parsers/*.js`) are CommonJS — `code-parser.js`, `html-parser.js`, `json-parser.js`, `pdf-parser.js`, `directory-scanner.js`.
+- **Parsers** (`skills/planner/parsers/*.js`) are CommonJS — `code-parser.js`, `html-parser.js`, `json-parser.js`, `pdf-parser.js`, `directory-scanner.js`, `color-extractor.js`.
 - **Builder** (`skills/builder/templates/build-html.mjs`) is ESM. Tests import it via dynamic `import()`.
 - **Writer templates** (`skills/writer/templates/*.md`) — markdown templates with YAML frontmatter (legacy set; the writer skill reads `plan.md`/knowledge files directly).
 - **Output** goes to `insights/<project-name>/` relative to the target project.

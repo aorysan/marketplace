@@ -19,7 +19,7 @@ description: Stage 1 - Ingest sources, extract knowledge into categories based o
 
 | Extension | Parser | Notes |
 |-----------|--------|-------|
-| `.html`, `.htm` | `parsers/html-parser.js` | Strips nav/footer/scripts, preserves content structure |
+| `.html`, `.htm` | `parsers/html-parser.js` | Strips nav/footer/scripts, preserves content structure; extracts color palette data (`## Colors` section) |
 | `.js`, `.ts`, `.py`, `.java`, `.go`, `.rs`, `.rb`, `.php`, `.c`, `.cpp`, `.cs` | `parsers/code-parser.js` | Extracts JSDoc/docstrings; falls back to raw code |
 | `.pdf` | `parsers/pdf-parser.js` | Binary buffer input via `pdf-parse` |
 | `.json`, `.yaml`, `.yml` (`openapi.json`, `swagger.yaml`) | Native schema parser | OpenAPI/Swagger specs (detect `openapi`/`swagger` root key): parse endpoints/models directly instead of raw-text ingestion; non-spec `.json`/`.yaml` → Direct copy |

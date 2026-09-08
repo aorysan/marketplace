@@ -400,4 +400,21 @@ def sub(a, b):
     assert.ok(result.includes('By Author'), 'Content-level header content preserved');
     assert.ok(result.includes('Article content'), 'Article body preserved');
   });
+
+  test('html-parser appends ## Colors section and strips style tags from content', () => {
+    const html = `<html><head><style>.btn { color: #ffffff; background: rgb(26, 115, 232); }</style></head><body><main><h1>Colored</h1><p style="color: #0000ff">styled</p><p>Body</p></main></body></html>`;
+    const md = parseHtml(html);
+    assert.ok(md.includes('## Colors'), 'Colors section appended');
+    assert.ok(md.includes('| #ffffff | #ffffff |'), 'hex color from style tag captured');
+    assert.ok(md.includes('| rgb(26, 115, 232) | #1a73e8 |'), 'rgb color from style tag captured');
+    assert.ok(md.includes('| #0000ff | #0000ff |'), 'inline style color captured');
+    assert.ok(!md.includes('<style>'), 'style tag still stripped from content');
+    assert.ok(!md.includes('<span style='), 'no raw style attribute in content');
+  });
+
+  test('html-parser emits no Colors section when document has no colors', () => {
+    const html = `<html><body><main><h1>Plain</h1><p>Text only</p></main></body></html>`;
+    const md = parseHtml(html);
+    assert.ok(!md.includes('## Colors'), 'no Colors section without colors');
+  });
 });
