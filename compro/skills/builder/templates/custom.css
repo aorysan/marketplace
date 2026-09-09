@@ -1261,6 +1261,338 @@ body {
 }
 
 /* ==========================================================================
+   Badge-Title Alignment Consistency (C9)
+   ========================================================================== */
+
+.slide-ecosystem .slide-header,
+.slide-pricing .slide-header,
+.slide-social-proof .slide-header {
+  text-align: center;
+  align-items: center;
+}
+
+.slide-ecosystem .badge-eyebrow,
+.slide-pricing .badge-eyebrow,
+.slide-social-proof .badge-eyebrow {
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+}
+
+.slide-ecosystem .slide-header p,
+.slide-pricing .slide-header p,
+.slide-social-proof .slide-header p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==========================================================================
+   Slide: Differentiator Table Archetype (.slide-differentiator)
+   ========================================================================== */
+
+.slide-differentiator {
+  position: relative;
+}
+
+.slide-differentiator .table-container {
+  width: 100%;
+  background: var(--brand-card-bg);
+  border: 1px solid var(--brand-card-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-resting);
+}
+
+.comparison-table,
+.differentiator-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.comparison-table th,
+.comparison-table td,
+.differentiator-table th,
+.differentiator-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--brand-border);
+  vertical-align: middle;
+}
+
+.comparison-table th,
+.differentiator-table th {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand-text-primary);
+  background: rgba(255, 255, 255, 0.03);
+  letter-spacing: -0.01em;
+}
+
+.comparison-table td,
+.differentiator-table td {
+  color: var(--brand-text-secondary);
+}
+
+.comparison-table tbody tr:last-child td,
+.differentiator-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.comparison-table tbody tr:hover td,
+.differentiator-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Brand Column Prominent Highlight */
+.comparison-table .brand-col,
+.differentiator-table .brand-col {
+  background: var(--brand-primary-subtle);
+  border-left: 2px solid var(--brand-primary);
+  border-right: 2px solid var(--brand-primary);
+  font-weight: 600;
+}
+
+.comparison-table th.brand-col,
+.differentiator-table th.brand-col {
+  color: var(--brand-primary-light);
+  background: hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.18);
+  font-weight: 800;
+}
+
+.comparison-table tbody tr:hover td.brand-col,
+.differentiator-table tbody tr:hover td.brand-col {
+  background: hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.16);
+}
+
+/* Dual-Coded Visual Status Indicators */
+.comparison-check,
+.comparison-cross,
+.comparison-warn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.comparison-check {
+  color: var(--color-success);
+}
+
+.comparison-cross {
+  color: var(--color-problem);
+}
+
+.comparison-warn {
+  color: var(--color-warning);
+}
+
+.comparison-check svg,
+.comparison-cross svg,
+.comparison-warn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Honesty Callout Box */
+.honesty-callout {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 14px 22px;
+  background: hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.06);
+  border: 1px solid var(--brand-card-border);
+  border-left: 3px solid var(--brand-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-resting);
+}
+
+.honesty-callout svg {
+  width: 20px;
+  height: 20px;
+  color: var(--brand-primary-light);
+  flex-shrink: 0;
+}
+
+.honesty-callout p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--brand-text-secondary);
+  margin: 0;
+}
+
+.honesty-callout strong {
+  color: var(--brand-text-primary);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Slide: Social Proof / Testimonials (.slide-social-proof)
+   ========================================================================== */
+
+.slide-social-proof {
+  position: relative;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.testimonial-card {
+  background: var(--brand-card-bg);
+  border: 1px solid var(--brand-card-border);
+  border-radius: var(--radius-lg);
+  padding: 32px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-resting);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--brand-card-border-hover);
+}
+
+.quote-icon {
+  color: var(--brand-primary-light);
+  opacity: 0.4;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.quote-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.testimonial-quote {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--brand-text-primary);
+  font-style: italic;
+  margin: 0 0 24px;
+  flex-grow: 1;
+}
+
+.testimonial-attribution {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 16px;
+  border-top: 1px solid var(--brand-border);
+}
+
+.author-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--brand-primary-subtle);
+  border: 1px solid hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatar-initials {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand-primary-light);
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.author-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--brand-text-primary);
+}
+
+.author-title {
+  font-size: 13px;
+  color: var(--brand-text-secondary);
+}
+
+.author-company {
+  font-size: 12px;
+  color: var(--brand-primary-light);
+  font-weight: 500;
+}
+
+/* Trust Logo Bar & Fallback Pills */
+.trust-logo-bar {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  filter: grayscale(1) brightness(1.5);
+  opacity: 0.5;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.trust-logo-bar:hover {
+  filter: grayscale(0) brightness(1);
+  opacity: 0.9;
+}
+
+.trust-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trust-logo {
+  max-height: 36px;
+  width: auto;
+  color: var(--brand-text-muted);
+}
+
+.company-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  background: var(--brand-card-bg);
+  border: 1px solid var(--brand-card-border);
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-text-secondary);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.company-pill:hover {
+  border-color: var(--brand-card-border-hover);
+  color: var(--brand-text-primary);
+}
+
+/* ==========================================================================
    Print & PDF Export Parity (@media print)
    ========================================================================== */
 
@@ -1298,11 +1630,17 @@ body {
   /* Reset 3D transforms, box-shadows and hover effects to avoid clipping */
   .card, .feature-card, .problem-card, .solution-card, .benefit-card,
   .pricing-card, .pricing-featured, .best-seller, .phone-frame,
-  .ecosystem-diagram, .closing-banner, .facility-box, .satellite-node {
+  .ecosystem-diagram, .closing-banner, .facility-box, .satellite-node,
+  .comparison-table, .differentiator-table, .testimonial-card, .trust-logo-bar, .honesty-callout {
     transform: none !important;
     box-shadow: none !important;
     break-inside: avoid !important;
     page-break-inside: avoid !important;
+  }
+
+  .trust-logo-bar {
+    filter: none !important;
+    opacity: 0.9 !important;
   }
 
   .pricing-featured, .best-seller {

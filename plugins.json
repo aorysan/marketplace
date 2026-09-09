@@ -1,4 +1,4 @@
-﻿{
+{
     "name":  "aorysan-marketplace",
     "description":  "A curated collection of Claude Code plugins by Aorysan",
     "plugins":  [
@@ -19,7 +19,7 @@
                     {
                         "name":  "compro",
                         "path":  "compro",
-                        "version":  "2.1.0",
+                        "version":  "2.2.0",
                         "description":  "Layer 3 Company Profile Multi-Agent Plugin with Slide Deck Generator, Visual Mockups, \u0026 Vercel Deployment",
                         "category":  "content-generation"
                     },

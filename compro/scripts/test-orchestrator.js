@@ -9,6 +9,7 @@ if (!fs.existsSync(skillPath)) {
 
 const content = fs.readFileSync(skillPath, 'utf-8');
 const checks = [
+  'Gate -1',
   'Gate 0',
   'Phase 1',
   'Phase 2',

@@ -209,6 +209,104 @@ Corporate decks require strict structural discipline to look polished both in in
 
 ---
 
+### 2.8 Slide 7: Differentiator Table Archetype
+*Purpose:* Establish clear competitive advantages, transparent market positioning, and honest trade-offs across alternatives to build rapid enterprise trust.
+
+```
++------------------------------------------------------------------------------------+
+|  [Eyebrow Badge: KEUNGGULAN KOMPETITIF]                                            |
+|  Mengapa Memilih Solusi Kami Dibandingkan Alternatif Lain                          |
+|                                                                                    |
+|  +------------------------------------------------------------------------------+  |
+|  | Fitur / Dimensi    | Brand Kami (Hero)| Kompetitor A| Kompetitor B| Manual   |  |
+|  | (28% Col Width)    | (22% Highlighted)| (16% Width) | (16% Width) | (18% W)  |  |
+|  |--------------------+------------------+-------------+-------------+----------|  |
+|  | Model Biaya        | [v] Flat Bulanan | [x] Per-item| [x] Per-item| [x] Boros|  |
+|  | Standar Brand DNA  | [v] AI Otomatis  | [x] Manual  | [x] Nihil   | [!] Acak |  |
+|  | Integrasi Alur     | [v] 1 Terpadu    | [!] Parsial | [x] Terpisah| [x] Silo |  |
+|  | Setup Infrastruktur| [!] Butuh GPU    | [v] Cloud   | [v] Cloud   | [v] Nihil|  |
+|  +------------------------------------------------------------------------------+  |
+|                                                                                    |
+|  +------------------------------------------------------------------------------+  |
+|  | [!] CATATAN TRANSPARANSI (HONESTY CALLOUT):                                  |  |
+|  | "Kami terbuka tentang trade-off — lihat baris Setup Infrastruktur.           |  |
+|  |  On-premise GPU menjamin 100% kedaulatan data tanpa vendor lock-in cloud."   |  |
+|  +------------------------------------------------------------------------------+  |
++------------------------------------------------------------------------------------+
+```
+
+- **Table Layout & Column Widths:**
+  - 4–5 column grid/table structure with deliberate asymmetric column weighting:
+    - **Capability / Dimension Column:** `26%–30%` width, left-aligned, establishing the evaluation criteria clearly.
+    - **Brand Hero Column (`.brand-col`):** `20%–24%` width, elevated visual prominence.
+    - **Competitor & Manual Columns:** `16%–18%` width each, equally distributed for objective comparison.
+  - Table container (`.table-container`) bound within the inner safe zone (`1760×960px`), with subtle border dividers (`border-bottom: 1px solid var(--brand-border)`).
+- **Brand Column Highlight (`.brand-col`):**
+  - Highlighted with subtle brand tint background (`var(--brand-primary-subtle)`, ~10–12% opacity) applied to both `<th>` and all `<td>` cells in the column.
+  - Accentuated with subtle vertical borders (`border-left: 2px solid var(--brand-primary); border-right: 2px solid var(--brand-primary)`) to create an anchor pillar that immediately draws the eye upon slide transition.
+  - Bold typography in brand color (`--brand-text-primary` and `--brand-primary-light`) reinforcing the solution's identity.
+- **Dual-Coded Icon Treatments (Check / Cross / Warn):**
+  - Strict compliance with WCAG 1.4.1 (never convey information by color alone):
+    - **Positive / Checkmark (`.comparison-check`):** Vector check icon in `--color-success` (`#10b981`, >= 5.4:1 contrast) paired with explicit descriptive text (e.g., "Flat Bulanan", "AI Otomatis").
+    - **Negative / Cross (`.comparison-cross`):** Vector cross icon in `--color-problem` (`#ef4444`, >= 4.6:1 contrast) paired with succinct friction copy (e.g., "Per-item", "Manual", "Terpisah").
+    - **Warning / Trade-off (`.comparison-warn`):** Vector alert triangle icon in amber warning tone (`#f59e0b`, >= 4.5:1 contrast) indicating partial support, technical prerequisite, or manual intervention.
+- **Honesty Callout Box (`.honesty-callout`):**
+  - Positioned directly below the table with `margin-top: 18px` to anchor the conclusion of the comparison.
+  - Glassmorphic card styling with `border: 1px solid var(--brand-card-border)`, background tint, and an inline SVG information icon (`20×20px`).
+  - **Psychological Principle:** Radical transparency (explicitly calling out where a competitor or alternative has a simpler aspect, like cloud hosting vs. on-premise GPU) builds immense credibility and disarms buyer skepticism during enterprise reviews.
+- **Visual Scanning & Contrast Principles:**
+  - Designed for horizontal **F-pattern scanning**: evaluators anchor on the left feature row header, jump to the brand column for immediate verification, and contrast against competitors on the right.
+  - Header aligns strictly to the left in accordance with the *Badge-Title Alignment Consistency Rule* for left-aligned tabular data.
+
+---
+
+### 2.9 Slide 8: Social Proof / Testimonials Archetype
+*Purpose:* Reinforce enterprise credibility, reduce purchase anxiety, and validate performance claims via peer testimonials and recognized client logos.
+
+```
++------------------------------------------------------------------------------------+
+|               [Eyebrow Badge: BUKTI KEPERCAYAAN & REPUTASI]                        |
+|             Dipercaya oleh Pemimpin Industri & Mitra Terkemuka                     |
+|                                                                                    |
+|  +------------------------------------+    +------------------------------------+  |
+|  | ["] Decorative Quote SVG (32px)    |    | ["] Decorative Quote SVG (32px)    |  |
+|  | "Implementasi platform memangkas   |    | "Solusi paling andal dan intuitif  |  |
+|  |  waktu operasional hingga 60%      |    |  yang pernah diadopsi enterprise   |  |
+|  |  dalam kuartal pertama adopsi."    |    |  kami. Kolaborasi tim melesat."    |  |
+|  |                                    |    |                                    |  |
+|  | — Budi Santoso, CTO                |    | — Siti Wulandari, VP Ops           |  |
+|  |   PT Finansial Mandiri (Fintech)   |    |   Nusantara Logistics (Supply)     |  |
+|  +------------------------------------+    +------------------------------------+  |
+|                                                                                    |
+|  +==============================================================================+  |
+|  | LOGO TRUST BAR (Grayscale SVG logos, opacity 0.65, hover to full color)      |  |
+|  |  [ Logo 1 ]     [ Logo 2 ]     [ Logo 3 ]     [ Logo 4 ]     [ Logo 5 ]      |  |
+|  |  ATAU FALLBACK PILLS: [PT Finansial] [Nusantara Log] [Astra Corp] [Telko]    |  |
+|  +==============================================================================+  |
++------------------------------------------------------------------------------------+
+```
+
+- **Layout & Grid Composition:**
+  - 2-column balanced grid (`.testimonials-grid`, `grid-template-columns: repeat(2, 1fr); gap: 28px;`) for high-impact executive testimonials (or 3-column when 3 concise quotes are provided).
+  - Centered slide header layout strictly complying with the *Badge-Title Alignment Consistency Rule* (`text-align: center;`, with `.badge-eyebrow` centered via `margin-inline: auto`).
+  - Cards use standard container styling (`background: var(--brand-card-bg); border: 1px solid var(--brand-card-border); border-radius: var(--radius-lg); padding: 32px 30px;`).
+- **Quote Cards & Typography:**
+  - Prominent decorative quote icon (`.quote-icon`, 32×32px SVG, `color: var(--brand-primary-light)` at 30%–40% opacity) positioned above the quote text.
+  - Quote copy (`.testimonial-quote`): styled in `17px–19px`, `line-height: 1.6`, font weight 400/500 in `--brand-text-primary` (`#f8fafc`).
+  - Focus quotes on tangible outcomes: operational hours saved, ROI percentage, deployment speed, or system uptime rather than generic flattery.
+- **Client Attribution Hierarchy:**
+  - Author info container (`.testimonial-attribution`) pairing an avatar circle (`.author-avatar`, 44×44px, initial monogram or photo, `border-radius: 50%`) with structured metadata.
+  - 3-level typographic hierarchy:
+    - **Author Name (`.author-name`):** `15px`, bold (`font-weight: 700`), `--brand-text-primary`.
+    - **Title / Role (`.author-title`):** `13px`, `--brand-text-secondary`.
+    - **Company / Sector (`.author-company`):** `13px`, `--brand-text-muted` or `--brand-primary-light`.
+- **Grayscale Trust Bar & Fallback Pills:**
+  - Bottom-anchored trust badge strip (`.trust-logo-bar`) centered horizontally with `display: flex; justify-content: center; gap: 36px–48px;`.
+  - **Grayscale Treatment:** External brand logos must use `filter: grayscale(100%) opacity(0.65)` on dark backgrounds (`#0f172a`) to eliminate jarring color dissonance and preserve deck visual unity; smoothly transitions to `filter: grayscale(0%) opacity(1)` on `:hover`.
+  - **Fallback Company Pills (`.company-pill`):** When SVG logos are unavailable, render client names in elegant pill badges (`border-radius: 9999px; border: 1px solid var(--brand-card-border); background: var(--brand-card-bg); padding: 8px 18px; font-size: 13px; font-weight: 600; color: var(--brand-text-secondary);`).
+
+---
+
 ## 3. Contrast Ratio Standards (WCAG AA / AAA)
 
 Visual accessibility is non-negotiable. Text must remain effortlessly readable under challenging projection environments (ambient office lighting, low-contrast projectors).

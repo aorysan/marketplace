@@ -59,6 +59,25 @@ Builder ini dilengkapi modul referensi desain bawaan yang self-contained di dala
 - Analisis struktur heading (`#`, `##`, `###`) dan daftar bullet/tabel.
 - Ekstrak statistik kunci dan angka metrik untuk diposisikan sebagai anchor visual.
 
+### 1a. Brand Color Resolution
+Tentukan warna brand primer dengan urutan prioritas berikut:
+1. **Eksplisit dari brand-story-guide.md:**
+   - Cari section "Brand Color Palette" atau tabel warna
+   - Jika ada HEX warna primer → konversi ke HSL → inject ke `--brand-h/s/l`
+   - Jika ada konflik token yang disebutkan → gunakan yang dilabeli "documented brand" (bukan "runtime token")
+2. **Industri dari business-knowledge-base.md:**
+   - Jika tidak ada warna eksplisit, identifikasi bidang usaha
+   - Cocokkan dengan Industry Preset Palette di `design-tokens.md` §1.2
+3. **Default fallback:**
+   - Jika tidak bisa menentukan → Venturo Teal (H:186, S:100%, L:34%)
+
+- **Wajib log keputusan** di `reports/build.log`:
+  ```
+  [COLOR] Source: brand-story-guide.md → #009BAD (documented brand)
+  [COLOR] HSL: H=186, S=100%, L=34%
+  [COLOR] Conflict noted: runtime token #00A76F differs; using documented brand
+  ```
+
 ### 2. Archetype Mapping & Chunking
 Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 - **Heading Utama / Pembuka** ➔ **Hero Slide Archetype** (Headline H1 punchy, tagline, 3 chip metrik besar, visual container).
@@ -68,6 +87,8 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 - **Tampilan Produk / Aplikasi** ➔ **Smartphone UI Mockup Archetype** (Frame smartphone realistis ber-Dynamic Island dengan preview UI fungsional).
 - **Paket / Harga / Lisensi** ➔ **Pricing Slide Archetype** (Grid 3 kartu harga, tier rekomendasi berskala 1.04x dengan badge ribbon "Best Seller", harga coret diskon).
 - **Kontak / CTA Penutup** ➔ **Closing Slide Archetype** (Banner ajakan kolaborasi, tombol pill download App Store & Google Play, grid kontak 4 kolom WA/Email/Web/Alamat).
+- **Diferensiasi / Mengapa Kami** ➔ **Differentiator Table Archetype** (Tabel perbandingan 4–5 kolom brand vs kompetitor, highlight kolom brand, status indikator centang/silang/peringatan, honesty callout).
+- **Testimoni / Social Proof** ➔ **Social Proof Slide Archetype** (Header terpusat, 2–3 kartu kutipan testimoni klien dengan atribusi lengkap, logo trust bar grayscale atau fallback company pill badges).
 
 ### 3. Smart Asset Pipeline & Vector Fallbacks
 - Untuk setiap referensi gambar:
@@ -76,6 +97,15 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
   - Jika tidak ada gambar atau gambar gagal dimuat: generate vector SVG inline (SVG device frame, circular orbit diagram, SVG checkmarks & icons) dan simpan ke `compros/<slug>/assets/`.
   - Catat seluruh status penanganan aset ke dalam `reports/build.log`.
 
+### 3a. Inline SVG Enforcement Rule
+- **SEMUA aset SVG yang di-generate builder** (hero banner, ecosystem diagram, smartphone mockup, icon badges, closing banner) WAJIB di-inline langsung ke dalam HTML sebagai tag `<svg>`, BUKAN sebagai `<img src="assets/file.svg">`.
+- File SVG terpisah di `assets/` tetap disimpan sebagai arsip/backup, tetapi HTML TIDAK BOLEH me-reference mereka.
+- Satu-satunya `<img>` yang dibolehkan adalah:
+  - Gambar dari CDN eksternal (URL `https://`)
+  - Gambar raster yang disediakan user (PNG/JPG) yang memang harus jadi file terpisah
+- **Post-build self-check:** Setelah menulis `index.html`, scan semua tag `<img>`. Jika ada yang me-reference path lokal relatif (`src="assets/..."` atau `src="./..."`), itu adalah ERROR — baca file tersebut, inline isinya sebagai `<svg>`, dan hapus tag `<img>`.
+- **Constraint Retroaktif:** Aturan ini berlaku retroaktif: jika builder menemukan output lama dengan `<img src="assets/*.svg">`, harus di-fix saat rebuild.
+
 ### 4. HTML Assembly & Inlining
 - Muat template kerangka `profile-shell.html`.
 - Suntikkan Google Fonts (*Plus Jakarta Sans* 600/700/800 & *Inter* 400/500/600).
@@ -83,8 +113,17 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 - Suntikkan variabel CSS HSL brand ke dalam `:root`.
 - Baca `templates/custom.css` dan masukkan isinya menggantikan komentar placeholder `/* {{CUSTOM_CSS}} */` di dalam `<style>`.
 - Gantikan `{{COMPANY_NAME}}` pada `<title>`.
-- Render masing-masing `<section>` ke dalam `<div class="slides">` dengan class CSS semantik (`.hero-slide`, `.problem-card`, `.solution-card`, `.ecosystem-diagram`, `.phone-frame`, `.pricing-card`, `.closing-banner`).
+- Render masing-masing `<section>` ke dalam `<div class="slides">` dengan class CSS semantik (`.hero-slide`, `.problem-card`, `.solution-card`, `.ecosystem-diagram`, `.phone-frame`, `.pricing-card`, `.closing-banner`, `.slide-differentiator`, `.slide-social-proof`).
 - Tulis file keluaran final ke `<project>/compros/<slug>/index.html`.
+
+### Badge-Title Alignment Consistency Rule
+- Badge eyebrow dan slide title HARUS memiliki alignment yang sama:
+  - Centered slides: Ecosystem (Slide 5), Pricing (Slide 9), Social Proof (Slide 8) → badge must also be centered (`margin-left: auto; margin-right: auto;` atau `margin: 0 auto;`)
+  - Left-aligned slides: Hero (Slide 1), Problem (Slide 2), Solution (Slide 3), Traction (Slide 6), Differentiator (Slide 7) → badge also left-aligned
+- Slide yang wajib centered: Ecosystem (Slide 5), Pricing (Slide 9)
+- Slide yang wajib left-aligned: Hero (Slide 1), Problem (Slide 2), Solution (Slide 3), Traction (Slide 6)
+- Slide opsional mengikuti: Differentiator (Slide 7) → left, Social Proof (Slide 8) → centered
+- No slide may have mismatched badge vs title alignment (DILARANG keras mismatch badge vs title alignment pada slide mana pun).
 
 ### 5. Konsolidasi Folder
 - Simpan seluruh hasil kerja secara rapi dalam 1 root folder khusus proyek:
@@ -142,6 +181,20 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
   </div>
 </section>
 ```
+
+### Problem Card Icon Variation Rule
+- Setiap problem card WAJIB menggunakan ikon SVG Lucide-style yang BERBEDA dan semantically RELEVAN dengan masalah yang digambarkan.
+- Panduan pemilihan ikon:
+  | Kategori Masalah | Ikon yang Sesuai |
+  |------------------|------------------|
+  | Biaya / Finansial | TrendingUp, DollarSign, CreditCard |
+  | Konsistensi / Kualitas | Palette, Layers, ShieldOff |
+  | Workflow / Fragmentasi | Puzzle, GitBranch, Shuffle |
+  | Kecepatan / Waktu | Clock, Hourglass, Timer |
+  | Keamanan / Risiko | ShieldAlert, Lock, AlertOctagon |
+  | Skalabilitas | BarChart, Activity, Scale |
+- DILARANG menggunakan ikon yang sama untuk >1 problem card dalam satu deck.
+- Jika tidak yakin kategori masalah, default ke ikon yang paling deskriptif berdasarkan kata kunci di heading card.
 
 ### 3. Slide Solution
 ```html
@@ -224,6 +277,213 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
   </div>
 </section>
 ```
+
+### 6. Slide Differentiator / Why Choose Us
+```html
+<section class="slide-differentiator">
+  <div class="slide-header">
+    <div class="badge-eyebrow">KEUNGGULAN KOMPETITIF</div>
+    <h2>Mengapa Memilih Kami Dibandingkan Alternatif Lain</h2>
+  </div>
+  <div class="table-container">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Fitur / Kapabilitas</th>
+          <th class="brand-col">Brand Kami</th>
+          <th>Kompetitor A</th>
+          <th>Kompetitor B</th>
+          <th>Metode Manual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Model Biaya</td>
+          <td class="brand-col">
+            <span class="comparison-check">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Flat bulanan
+            </span>
+          </td>
+          <td>
+            <span class="comparison-cross">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Per-transaksi
+            </span>
+          </td>
+          <td>
+            <span class="comparison-cross">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Per-transaksi
+            </span>
+          </td>
+          <td>
+            <span class="comparison-cross">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Biaya tak terduga
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>Konsistensi Brand DNA</td>
+          <td class="brand-col">
+            <span class="comparison-check">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Otomatis & Terpusat
+            </span>
+          </td>
+          <td>
+            <span class="comparison-cross">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Manual
+            </span>
+          </td>
+          <td>
+            <span class="comparison-cross">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Tidak ada
+            </span>
+          </td>
+          <td>
+            <span class="comparison-warn">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Manual & Terfragmentasi
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>Alur Kerja & Integrasi</td>
+          <td class="brand-col">
+            <span class="comparison-check">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Satu alur terintegrasi
+            </span>
+          </td>
+          <td>
+            <span class="comparison-warn">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Parsial
+            </span>
+          </td>
+          <td>
+            <span class="comparison-cross">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Terpisah
+            </span>
+          </td>
+          <td>
+            <span class="comparison-cross">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Terpisah
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>Setup & Infrastruktur</td>
+          <td class="brand-col">
+            <span class="comparison-warn">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              GPU hardware req
+            </span>
+          </td>
+          <td>
+            <span class="comparison-check">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud hosted
+            </span>
+          </td>
+          <td>
+            <span class="comparison-check">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud hosted
+            </span>
+          </td>
+          <td>
+            <span class="comparison-check">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Tidak ada
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="honesty-callout">
+    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    <p><strong>Catatan Transparansi:</strong> Kami tidak menyembunyikan trade-off — lihat kolom Setup. Arsitektur on-premise kami memerlukan spesifikasi GPU mandiri demi menjaga kedaulatan data dan privasi komputasi internal Anda.</p>
+  </div>
+</section>
+```
+- **Panduan Implementasi Slide Differentiator:**
+  - Header berposisi left-aligned sesuai *Badge-Title Alignment Consistency Rule*.
+  - Tabel perbandingan `.comparison-table` memiliki 4–5 kolom: Brand column + 2–3 kompetitor + kolom manual.
+  - Kolom Brand diberi class `.brand-col` (pada `<th>` dan setiap `<td>`) untuk highlight visual berlatar brand subtle (`var(--brand-primary-subtle)`).
+  - Baris berisi aspek pembanding / key differentiators. Setiap cell status menggunakan ikon SVG dengan class semantik `.comparison-check` (centang hijau), `.comparison-cross` (silang merah), atau `.comparison-warn` (peringatan kuning) disertai keterangan singkat.
+  - Kotak catatan kejujuran `.honesty-callout` bersifat opsional namun sangat direkomendasikan jika terdapat aspek di mana kompetitor lebih unggul (transparansi membangun *trust* klien).
+
+### 7. Slide Social Proof / Testimonials
+```html
+<section class="slide-social-proof">
+  <div class="slide-header">
+    <div class="badge-eyebrow">BUKTI KEPERCAYAAN</div>
+    <h2>Dipercaya oleh Pemimpin Industri Terkemuka</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="quote-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" fill="none" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg>
+      </div>
+      <p class="testimonial-quote">"Implementasi platform ini memangkas waktu operasional tim kami hingga 60% dalam 3 bulan pertama. Dukungan teknis dan keandalan sistemnya benar-benar di atas ekspektasi."</p>
+      <div class="testimonial-attribution">
+        <div class="author-avatar">
+          <!-- Inlined avatar SVG atau inisial nama -->
+          <span class="avatar-initials">BS</span>
+        </div>
+        <div class="author-info">
+          <strong class="author-name">Budi Santoso</strong>
+          <span class="author-title">Chief Technology Officer</span>
+          <span class="author-company">PT Finansial Mandiri</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" fill="none" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg>
+      </div>
+      <p class="testimonial-quote">"Solusi paling stabil dan intuitif yang pernah diadopsi enterprise kami. Kolaborasi tim antar-departemen meningkat drastis berkat otomasi alur kerja terpadu."</p>
+      <div class="testimonial-attribution">
+        <div class="author-avatar">
+          <span class="avatar-initials">SW</span>
+        </div>
+        <div class="author-info">
+          <strong class="author-name">Siti Wulandari</strong>
+          <span class="author-title">VP of Operations</span>
+          <span class="author-company">Nusantara Logistics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="trust-logo-bar">
+    <!-- Format A: Logo perusahaan klien inlined SVG (grayscale & subtle) -->
+    <div class="trust-logo-item">
+      <svg class="trust-logo" viewBox="0 0 120 36" width="120" height="36" fill="currentColor">
+        <!-- SVG vector logo -->
+      </svg>
+    </div>
+    <!-- Format B (Fallback jika logo SVG tidak tersedia): Company name pill badges -->
+    <span class="company-pill">PT Finansial Mandiri</span>
+    <span class="company-pill">Nusantara Logistics</span>
+    <span class="company-pill">Astra Digital Corp</span>
+    <span class="company-pill">Telko Media Pratama</span>
+    <span class="company-pill">Bank Mega Perkasa</span>
+  </div>
+</section>
+```
+- **Panduan Implementasi Slide Social Proof:**
+  - Header slide wajib terpusat (*centered*) sesuai *Badge-Title Alignment Consistency Rule* (`.slide-social-proof .slide-header { text-align: center; align-items: center; }` dan `.badge-eyebrow { margin-left: auto; margin-right: auto; }`).
+  - Menampilkan 2–3 kartu testimoni `.testimonial-card` yang berisi kutipan pengalaman positif klien beserta atribusi lengkap (`author-name`, `author-title`, `author-company`).
+  - Bar logo kepercayaan di bawah kartu (`.trust-logo-bar`) menggunakan flex row terpusat dengan efek grayscale dan transparansi subtle.
+  - Fallback jika logo klien tidak tersedia: tampilkan nama-nama perusahaan dalam pill badges `.company-pill`.
 
 ---
 
