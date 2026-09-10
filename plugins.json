@@ -19,8 +19,8 @@
                     {
                         "name":  "compro",
                         "path":  "compro",
-                        "version":  "2.2.0",
-                        "description":  "Layer 3 Company Profile Multi-Agent Plugin with Slide Deck Generator, Visual Mockups, \u0026 Vercel Deployment",
+                        "version":  "2.3.0",
+                        "description":  "Layer 3 Company Profile Multi-Agent Plugin with Canva Editorial Slide Deck Generator & Vercel Deployment",
                         "category":  "content-generation"
                     },
                     {

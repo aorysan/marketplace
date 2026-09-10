@@ -1,0 +1,305 @@
+/* ==========================================================================
+   Compro Plugin v2.3.0 — Canva Editorial Theme (Gray-White Modern System)
+   Inspired by Canva "Gray White Modern Company Profile" (Salford & Co.)
+   Integrated with Venturo Pro Documented Brand Identity (#009BAD)
+   ========================================================================== */
+
+:root {
+  /* Canvas & Surface System */
+  --canvas-bg: #F4F5F7;
+  --canvas-surface: #FFFFFF;
+  --surface-border: rgba(0, 0, 0, 0.08);
+  --surface-border-subtle: rgba(0, 0, 0, 0.04);
+  --surface-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
+  --surface-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+  /* Contrast Blocks */
+  --charcoal-solid: #232220;
+  --charcoal-hover: #171615;
+  --charcoal-subtle: rgba(35, 34, 32, 0.05);
+
+  /* Typography Colors */
+  --text-headline: #1A1D20;
+  --text-body: #4A5568;
+  --text-muted: #718096;
+  --text-inverse: #FFFFFF;
+
+  /* Brand Colors (Venturo Pro Documented) */
+  --brand-primary: #009BAD;
+  --brand-dark: #006D79;
+  --brand-light: #38BDF8;
+  --brand-tint: rgba(0, 155, 173, 0.10);
+  --brand-border: rgba(0, 155, 173, 0.35);
+
+  /* Fonts */
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Base Reveal Overrides */
+html, body, .reveal {
+  background-color: var(--canvas-bg) !important;
+  color: var(--text-body);
+  font-family: var(--font-body);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides section {
+  box-sizing: border-box;
+  padding: 0;
+  height: 100%;
+  background: var(--canvas-bg);
+}
+
+/* Global Navigation Header */
+.editorial-top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 48px;
+  border-bottom: 1px solid var(--surface-border);
+  background: var(--canvas-bg);
+}
+
+.editorial-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--text-headline);
+  letter-spacing: -0.01em;
+}
+
+.editorial-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.editorial-nav-btn {
+  background: var(--charcoal-solid);
+  color: var(--text-inverse) !important;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.editorial-nav-btn:hover {
+  background: var(--brand-primary);
+}
+
+/* Archetype 1: Hero Cover */
+.archetype-hero-cover {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  height: calc(1080px - 72px);
+  padding: 40px 48px;
+  gap: 36px;
+  align-items: center;
+}
+
+.hero-floating-card {
+  background: var(--canvas-surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 48px;
+  box-shadow: var(--surface-shadow);
+}
+
+.hero-pill-badge {
+  display: inline-block;
+  background: var(--brand-tint);
+  color: var(--brand-primary);
+  border: 1px solid var(--brand-border);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.12;
+  color: var(--text-headline);
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.btn-solid {
+  background: var(--charcoal-solid);
+  color: var(--text-inverse);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--charcoal-solid);
+  border: 1px solid var(--surface-border);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Archetype 2: Narrative Split */
+.archetype-narrative-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  padding: 48px;
+  gap: 40px;
+  align-items: center;
+}
+
+/* Archetype 3: Mission Pillars */
+.archetype-mission-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 48px;
+  gap: 32px;
+}
+
+.pillar-card {
+  background: var(--canvas-surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: var(--surface-shadow);
+}
+
+.pillar-number {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--brand-primary);
+  margin-bottom: 16px;
+}
+
+/* Archetype 4: Workflow 3-Col */
+.archetype-workflow-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 48px;
+  gap: 28px;
+}
+
+/* Archetype 5: Features Staggered */
+.archetype-features-staggered {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  padding: 48px;
+  gap: 36px;
+}
+
+/* Archetype 6: Persona Cards */
+.archetype-persona-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 48px;
+  gap: 24px;
+}
+
+/* Archetype 7: Services Grid 2x2 */
+.archetype-services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: 48px;
+  gap: 24px;
+}
+
+/* Archetype 8: Portfolio Gallery */
+.archetype-portfolio-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 48px;
+  gap: 20px;
+}
+
+/* Archetype 9: Metrics Contact */
+.archetype-metrics-contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 48px;
+  gap: 36px;
+}
+
+.metric-counter-box {
+  background: var(--canvas-surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+}
+
+.metric-number {
+  font-family: var(--font-display);
+  font-size: 54px;
+  font-weight: 800;
+  color: var(--brand-primary);
+}
+
+/* Archetype 10: Closing CTA */
+.archetype-closing-cta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 60px;
+}
+
+/* Phone Frame Mockup (9:16) */
+.phone-frame-editorial {
+  width: 280px;
+  height: 560px;
+  background: #090D14;
+  border-radius: 36px;
+  border: 6px solid #2B2927;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.phone-notch {
+  width: 90px;
+  height: 18px;
+  background: #2B2927;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}

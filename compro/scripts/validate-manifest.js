@@ -1,34 +1,29 @@
 const fs = require('fs');
 const path = require('path');
 
-const manifestPath = path.join(__dirname, '..', '.codex-plugin', 'plugin.json');
-
-if (!fs.existsSync(manifestPath)) {
-  console.error('FAIL: .codex-plugin/plugin.json does not exist');
+const pluginJsonPath = path.join(__dirname, '..', 'plugin.json');
+if (!fs.existsSync(pluginJsonPath)) {
+  console.error('FAIL: plugin.json does not exist');
   process.exit(1);
 }
 
-const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
-const requiredSkills = [
-  'compro',
-  'writer',
-  'reviewer',
-  'builder',
-  'publisher'
-];
+const manifest = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf8'));
 
-if (manifest.name !== 'compro') {
-  console.error(`FAIL: expected manifest.name to be "compro", got "${manifest.name}"`);
+if (manifest.version !== '2.3.0') {
+  console.error(`FAIL: expected version 2.3.0, got ${manifest.version}`);
   process.exit(1);
 }
 
-const skillNames = (manifest.skills || []).map(s => s.name);
-const missing = requiredSkills.filter(s => !skillNames.includes(s));
+const requiredSkills = ['compro', 'writer', 'reviewer', 'builder', 'publisher'];
+const skillsDir = path.join(__dirname, '..', 'skills');
 
-if (missing.length > 0) {
-  console.error(`FAIL: missing skills in manifest: ${missing.join(', ')}`);
-  process.exit(1);
+for (const skill of requiredSkills) {
+  const skillFile = path.join(skillsDir, skill, 'SKILL.md');
+  if (!fs.existsSync(skillFile)) {
+    console.error(`FAIL: skill definition missing: ${skill}/SKILL.md`);
+    process.exit(1);
+  }
 }
 
-console.log('PASS: manifest is valid with all 5 Layer 3 skills');
+console.log('PASS: manifest is valid with version 2.3.0 and all 5 Layer 3 skills');
 process.exit(0);

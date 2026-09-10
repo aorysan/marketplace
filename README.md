@@ -8,7 +8,7 @@ A curated collection of Claude Code plugins built by [Aorysan](https://github.co
 |--------|-------------|---------|
 | [sitegen](./sitegen) | Master orchestrator for end-to-end website generation — from PDF intake to deployment. Handles intake, generation, SEO validation, debugging, and deployment. | 1.0.0 |
 | [insightify](./insightify) | Generate artifact-style technical documentation and a Product Knowledge Base from code repositories, URLs, and files. | 6.4.1 |
-| [compro](./compro) | Layer 3 Company Profile multi-agent plugin with slide deck generator and Vercel deployment. | 2.2.0 |
+| [compro](./compro) | Layer 3 Company Profile multi-agent plugin with Canva Editorial slide deck generator and Vercel deployment. | 2.3.0 |
 | [business-intelligence-layer](./business-intelligence-layer) | Strategic analysis plugin that turns Product Knowledge Base, Pitch Deck, Pricing, and Market Notes into a structured Business Knowledge Base, Business Audit Report, and Brand Story Guide. | 1.1.0 |
 
 ## Structure

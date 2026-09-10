@@ -1,6 +1,31 @@
-# Compro — Layer 3 Company Profile Multi-Agent Plugin (v2.2.0)
+# Compro Plugin v2.3.0 — Multi-Agent Slide Deck Pipeline
 
-Arsitektur multi-agen untuk mengonversi data mentah bisnis menjadi presentasi slide *Company Profile* berbasis web (Reveal.js) yang teroptimasi SEO dan siap di-deploy ke Vercel.
+Plugin otomatisasi pembuatan Company Profile interaktif berbasis Reveal.js dengan sistem desain **Canva Editorial Theme (Gray-White Modern)** dan deployment Vercel.
+
+## What's New in v2.3.0
+
+Rilis v2.3.0 menghadirkan sistem desain editorial baru dan peningkatan pipeline build:
+
+- **Canva Editorial Theme (Gray-White Modern System)**: Sistem desain slide baru `editorial` dengan kanvas abu-abu lembut `#F4F5F7`, kartu putih `#FFFFFF`, charcoal `#232220`, dan aksen Venturo Teal `#009BAD`.
+- **10 Layout Archetypes Dinamis**: Classifier otomatis memetakan konten Markdown ke 10 arketipe layout (`hero-cover`, `narrative-split`, `mission-pillars`, `workflow-3col`, `features-staggered`, `persona-cards`, `services-grid`, `portfolio-gallery`, `metrics-contact`, `closing-cta`) tanpa hardcode jumlah slide.
+- **Dynamic Markdown Chunking**: Jumlah slide diturunkan dari konten intake; tidak ada slide dummy/forced.
+- **Theme Selector CLI**: `node scripts/build-deck.js --name=<slug> --theme=editorial` (editorial adalah default).
+- **Asset Pipeline Integration**: Font Plus Jakarta Sans & Inter, phone-frame mockup 9:16, dan warna brand Venturo terintegrasi.
+- **Manifest v2.3.0**: Validasi manifest diperbarui untuk memastikan kompatibilitas seluruh 5 Layer 3 skills.
+
+## Tema Slide Deck
+
+Builder (`/builder`) mendukung dua tema build yang dapat dipilih melalui `--theme`:
+
+- **`editorial`** (default, v2.3.0) — Sistem desain *Canva Editorial* gray-white modern: kanvas `#F4F5F7`, kartu `#FFFFFF`, charcoal `#232220`, aksen Venturo Teal `#009BAD`. Konten Markdown dipetakan otomatis ke 10 arketipe layout dinamis (`hero-cover`, `narrative-split`, `mission-pillars`, `workflow-3col`, `features-staggered`, `persona-cards`, `services-grid`, `portfolio-gallery`, `metrics-contact`, `closing-cta`) dan jumlah slide diturunkan langsung dari konten intake.
+- **`profile`** (legacy) — Tema profil bawaan v2.2 dengan template dan CSS klasik.
+
+```bash
+node scripts/build-deck.js --name=<slug> --theme=editorial   # tema default
+node scripts/build-deck.js --name=<slug> --theme=profile      # tema legacy
+```
+
+Tanpa opsi `--theme`, builder memakai `editorial` sebagai default.
 
 ## What's New in v2.2.0
 
@@ -20,7 +45,7 @@ Rilis v2.2.0 menghadirkan peningkatan signifikan pada stabilitas arsitektur, kua
 
 1. **Gate -1 - User Intent & Input Confirmation**: Hard gate sebelum membaca file apapun; menanyakan kesiapan 3 dokumen input dan menunggu konfirmasi eksplisit dari pengguna.
 2. **Gate 0 - Intake Check & Slug Resolution**: Mengecek kelengkapan dokumen input dasar (`input/business-knowledge-base.md`, `business-audit-report.md`, `brand-story-guide.md`), menentukan identifier unik `<slug>` proyek, dan memeriksa potensi *Pipeline Resumability*.
-3. **Phase 1 - Drafting (7–10 Slides)** (`/writer`): Menghasilkan draf narasi per-slide dalam format Markdown (`compros/<slug>/drafts/01-draft.md`) dengan batas overlap repetisi ≤ 40% dan penyesuaian slide dinamis (Differentiator & Social Proof).
+3. **Phase 1 - Drafting (Dynamic Slides)** (`/writer`): Menghasilkan draf narasi per-slide dalam format Markdown (`compros/<slug>/drafts/01-draft.md`) dengan batas overlap repetisi ≤ 40% dan jumlah slide dinamis mengikuti konten.
 4. **Phase 2 - Content QA (Dedup & Contact Check)** (`/reviewer`): Memverifikasi akurasi fakta bisnis, validasi kontak faktual (Zero Hallucination), deduplikasi konten antar-slide, brand voice, dan merumuskan draf On-Page SEO (Meta Title/Description). Iterasi revisi berjalan hingga status `APPROVED` (`compros/<slug>/drafts/02-final.md`).
 5. **Phase 3 - Slide Deck Build (Inline SVG & Dynamic Brand Colors)** (`/builder`): Membangun file presentasi statis *single-file HTML* (Reveal.js) dengan CSS inlined, penanaman inline SVG, dan ekstraksi variabel warna brand dinamis (`compros/<slug>/index.html`).
 6. **Phase 3b - Visual Self-Check** (`/builder` / orchestrator): Memverifikasi integritas visual di browser untuk memastikan tidak ada SVG rusak, teks overflow, atau layout rusak. Hasil dicatat di `build.log` dan bersifat blocking sebelum lanjut ke Phase 4.
@@ -38,12 +63,14 @@ Rilis v2.2.0 menghadirkan peningkatan signifikan pada stabilitas arsitektur, kua
 ├── plugin.json                         # Manifest plugin root
 ├── skills/
 │   ├── compro/SKILL.md                 # Orchestrator State-Machine (Gate -1 s/d Phase 6)
-│   ├── writer/SKILL.md                 # Skill 8: Copywriting & Slide Drafting (7-10 slide)
+│   ├── writer/SKILL.md                 # Skill 8: Copywriting & Slide Drafting (dynamic slides)
 │   ├── reviewer/SKILL.md               # Skill 9: QA, Dedup & Content SEO Validator
-│   ├── builder/                        # Skill 10: HTML/CSS Reveal.js Assembler (Inline SVG)
+│   ├── builder/                        # Skill 10: Theme-based Reveal.js Assembler (Inline SVG)
 │   │   ├── SKILL.md
 │   │   ├── templates/
-│   │   │   ├── profile-shell.html
+│   │   │   ├── profile-shell.html      # Tema legacy (v2.2)
+│   │   │   ├── editorial-shell.html    # Tema Canva Editorial (v2.3.0)
+│   │   │   ├── editorial.css           # Design system gray-white modern
 │   │   │   └── custom.css
 │   │   └── references/
 │   └── publisher/                      # Skill 11: SEO Auto-Fix & Vercel Deployer

@@ -1,7 +1,7 @@
 {
   "name": "compro",
-  "description": "Layer 3 Company Profile Multi-Agent Plugin with Slide Deck Generator & Vercel Deployment",
-  "version": "2.2.0",
+  "description": "Layer 3 Company Profile Multi-Agent Plugin with Canva Editorial Slide Deck Generator & Vercel Deployment",
+  "version": "2.3.0",
   "author": {
     "name": "Aryo Adi Putro"
   },

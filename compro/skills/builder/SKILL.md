@@ -487,6 +487,70 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 
 ---
 
+## 3.5 Canva Editorial Theme (v2.3.0)
+
+Tema editorial menawarkan estetika majalah/corporate light dengan palette terang, typography tajam, dan struktur slide yang diklasifikasikan otomatis berdasarkan sinyal konten. Theme ini diaktifkan via flag `--theme=editorial` pada CLI dan merupakan **DEFAULT** saat `build-deck.js` dijalankan tanpa flag `--theme`.
+
+### Design Tokens (CSS Custom Properties)
+
+| Token | Nilai | Keterangan |
+|-------|-------|------------|
+| `--canvas-bg` | `#F4F5F7` | Latar belakang slide utama |
+| `--canvas-surface` | `#FFFFFF` | Background kartu & kontainer |
+| `--charcoal-solid` | `#232220` | Warna teks utama |
+| `--brand-primary` | `#009BAD` | Warna aksen brand (Venturo Teal) |
+| `--brand-dark` | `#006D79` | Variasi gelap untuk hover/aktif |
+
+**Typography:**
+- **Display / Heading:** Plus Jakarta Sans (700/800)
+- **Body / Keterangan:** Inter (400/500/600)
+
+### Layout Archetypes (10 tipe)
+
+Builder mengklasifikasikan setiap slide ke dalam salah satu dari 10 archetype berdasarkan konten Markdown. 7 archetype aktif dipancarkan oleh classifier (`classifyEditorialArchetype`); 3 lainnya (`features-staggered`, `persona-cards`, `portfolio-gallery`) berstatus reserved — CSS-nya sudah didefinisikan di `editorial.css` tetapi classifier path belum diwiring.
+
+| Archetype Class | Fungsi | Sinyal Pemicu |
+|-----------------|--------|---------------|
+| `.archetype-hero-cover` | Slide pembuka hero | Opening / heading utama |
+| `.archetype-narrative-split` | Narasi 2-kolom | Deskripsi panjang / story |
+| `.archetype-mission-pillars` | Pilar misi / nilai | Brand DNA / 2 bullet poin / "Biaya" |
+| `.archetype-workflow-3col` | Alur kerja 3 langkah | 3 step / proses |
+| `.archetype-features-staggered` | Fitur bertingkat | _reserved — CSS defined, classifier path not yet wired_ |
+| `.archetype-persona-cards` | Kartu persona/role | _reserved — CSS defined, classifier path not yet wired_ |
+| `.archetype-services-grid` | Grid layanan | 4+ poin layanan |
+| `.archetype-portfolio-gallery` | Galeri portofolio | _reserved — CSS defined, classifier path not yet wired_ |
+| `.archetype-metrics-contact` | Metrik & kontak | Angka statistik / data |
+| `.archetype-closing-cta` | CTA penutup | Penutup / kontak akhir |
+
+Slide mockup juga menggunakan class `.phone-frame-editorial` untuk frame smartphone editorial style.
+
+### Dynamic Chunking Principle
+
+Jumlah slide dan pemetaan archetype bersifat **dinamis** — diturunkan dari konten intake, bukan template statis:
+
+1. **Hero → Mission-Pillars:** Jika konten memiliki 2 bullet poin awal atau section Brand DNA / Biaya → `mission-pillars`
+2. **Workflow-3col:** Jika ada 3 langkah/proses → `workflow-3col`
+3. **Metrics-Contact:** Jika konten berisi angka statistik/metrik → `metrics-contact`
+4. **Services-Grid:** Jika ada 4+ poin layanan → `services-grid`
+5. **Closing-CTA:** Section kontak/penutup → `closing-cta`
+
+Slide count ditentukan oleh jumlah section yang di-parse dari Markdown, bukan fixed count.
+
+### Cara Menjalankan
+
+```bash
+node scripts/build-deck.js --name=<slug> --theme=editorial
+```
+
+Contoh:
+```bash
+node scripts/build-deck.js --name=congen-editorial --theme=editorial
+```
+
+Output diproduksi di `compros/<slug>/` dengan struktur yang sama dengan tema default (index.html, compro.md, assets/, reports/build.log, drafts/).
+
+---
+
 ## Error Handling
 
 | Skenario | Tindakan Builder |
