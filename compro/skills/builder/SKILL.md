@@ -505,21 +505,19 @@ Tema editorial menawarkan estetika majalah/corporate light dengan palette terang
 - **Display / Heading:** Plus Jakarta Sans (700/800)
 - **Body / Keterangan:** Inter (400/500/600)
 
-### Layout Archetypes (10 tipe)
+### Layout Archetypes (8 tipe, semua aktif)
 
-Builder mengklasifikasikan setiap slide ke dalam salah satu dari 10 archetype berdasarkan konten Markdown. 7 archetype aktif dipancarkan oleh classifier (`classifyEditorialArchetype`); 3 lainnya (`features-staggered`, `persona-cards`, `portfolio-gallery`) berstatus reserved — CSS-nya sudah didefinisikan di `editorial.css` tetapi classifier path belum diwiring.
+Builder mengklasifikasikan setiap slide ke dalam salah satu dari 8 archetype berdasarkan konten Markdown. Seluruh archetype aktif dan dipancarkan oleh classifier (`classifyEditorialArchetype`) dengan sinyal konten masing-masing saat runtime.
 
 | Archetype Class | Fungsi | Sinyal Pemicu |
 |-----------------|--------|---------------|
 | `.archetype-hero-cover` | Slide pembuka hero | Opening / heading utama |
 | `.archetype-narrative-split` | Narasi 2-kolom | Deskripsi panjang / story |
-| `.archetype-mission-pillars` | Pilar misi / nilai | Brand DNA / 2 bullet poin / "Biaya" |
-| `.archetype-workflow-3col` | Alur kerja 3 langkah | 3 step / proses |
-| `.archetype-features-staggered` | Fitur bertingkat | _reserved — CSS defined, classifier path not yet wired_ |
-| `.archetype-persona-cards` | Kartu persona/role | _reserved — CSS defined, classifier path not yet wired_ |
 | `.archetype-services-grid` | Grid layanan | 4+ poin layanan |
-| `.archetype-portfolio-gallery` | Galeri portofolio | _reserved — CSS defined, classifier path not yet wired_ |
+| `.archetype-ecosystem-orbit` | Diagram ekosistem orbital | Hub platform + node fitur |
 | `.archetype-metrics-contact` | Metrik & kontak | Angka statistik / data |
+| `.archetype-differentiator` | Tabel perbandingan / why us | Diferensiasi / perbandingan kompetitor |
+| `.archetype-pricing-cards` | Kartu paket harga | Paket / harga / lisensi |
 | `.archetype-closing-cta` | CTA penutup | Penutup / kontak akhir |
 
 Slide mockup juga menggunakan class `.phone-frame-editorial` untuk frame smartphone editorial style.
@@ -548,6 +546,16 @@ node scripts/build-deck.js --name=congen-editorial --theme=editorial
 ```
 
 Output diproduksi di `compros/<slug>/` dengan struktur yang sama dengan tema default (index.html, compro.md, assets/, reports/build.log, drafts/).
+
+## Sinkronisasi Plugin
+
+Setelah mengubah script builder, template, atau tema, jalankan:
+
+```bash
+node scripts/sync-plugin.js
+```
+
+Script ini menyalin file sumber root repo (`scripts/build-deck.js`, `scripts/asset-generator.js`, `templates/editorial.css`, `templates/editorial-shell.html`) ke dua lokasi plugin: `.claude/plugins/compro/` (local plugin repo) dan `~/.claude/plugins/cache/aorysan-marketplace/compro/2.3.0/` (global Claude Code cache), sehingga perubahan langsung berlaku di kedua target.
 
 ---
 
