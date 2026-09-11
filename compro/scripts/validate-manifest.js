@@ -9,8 +9,8 @@ if (!fs.existsSync(pluginJsonPath)) {
 
 const manifest = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf8'));
 
-if (manifest.version !== '2.3.0') {
-  console.error(`FAIL: expected version 2.3.0, got ${manifest.version}`);
+if (manifest.version !== '2.4.0') {
+  console.error(`FAIL: expected version 2.4.0, got ${manifest.version}`);
   process.exit(1);
 }
 
@@ -25,5 +25,5 @@ for (const skill of requiredSkills) {
   }
 }
 
-console.log('PASS: manifest is valid with version 2.3.0 and all 5 Layer 3 skills');
+console.log('PASS: manifest is valid with version 2.4.0 and all 5 Layer 3 skills');
 process.exit(0);

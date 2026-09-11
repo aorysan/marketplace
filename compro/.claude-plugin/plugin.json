@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "compro",
   "displayName": "Compro",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Layer 3 Company Profile Multi-Agent Plugin with Canva Editorial Slide Deck Generator & Vercel Deployment",
   "author": {
     "name": "Aryo Adi Putro"

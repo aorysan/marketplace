@@ -555,7 +555,7 @@ Setelah mengubah script builder, template, atau tema, jalankan:
 node scripts/sync-plugin.js
 ```
 
-Script ini menyalin file sumber root repo (`scripts/build-deck.js`, `scripts/asset-generator.js`, `templates/editorial.css`, `templates/editorial-shell.html`) ke dua lokasi plugin: `.claude/plugins/compro/` (local plugin repo) dan `~/.claude/plugins/cache/aorysan-marketplace/compro/2.3.0/` (global Claude Code cache), sehingga perubahan langsung berlaku di kedua target.
+Script ini menyalin file sumber root repo (`scripts/build-deck.js`, `scripts/asset-generator.js`, `templates/editorial.css`, `templates/editorial-shell.html`) ke dua lokasi plugin: `.claude/plugins/compro/` (local plugin repo) dan `~/.claude/plugins/cache/aorysan-marketplace/compro/2.4.0/` (global Claude Code cache), sehingga perubahan langsung berlaku di kedua target.
 
 ---
 

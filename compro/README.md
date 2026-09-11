@@ -1,6 +1,15 @@
-# Compro Plugin v2.3.0 — Multi-Agent Slide Deck Pipeline
+# Compro Plugin v2.4.0 — Multi-Agent Slide Deck Pipeline
 
 Plugin otomatisasi pembuatan Company Profile interaktif berbasis Reveal.js dengan sistem desain **Canva Editorial Theme (Gray-White Modern)** dan deployment Vercel.
+
+## What's New in v2.4.0
+
+Rilis v2.4.0 menghadirkan pembaruan versi plugin, penyesuaian arsitektur manifest, dan sinkronisasi cache:
+
+- **Manifest v2.4.0**: Validasi manifest diperbarui untuk memastikan kompatibilitas seluruh 5 Layer 3 skills pada versi 2.4.0.
+- **Canva Editorial Theme (Gray-White Modern System)**: Sistem desain slide `editorial` dengan kanvas abu-abu lembut `#F4F5F7`, kartu putih `#FFFFFF`, charcoal `#232220`, dan aksen Venturo Teal `#009BAD`.
+- **Layout Archetypes Dinamis & Procedural Slots**: Pemetaan konten Markdown ke arketipe layout dinamis dengan SVG visual slots terintegrasi tanpa hardcode jumlah slide.
+- **Cache Synchronization Protocol**: Penyelarasan cache global `~/.claude/plugins/cache/` ke versi 2.4.0.
 
 ## What's New in v2.3.0
 
@@ -17,7 +26,7 @@ Rilis v2.3.0 menghadirkan sistem desain editorial baru dan peningkatan pipeline 
 
 Builder (`/builder`) mendukung dua tema build yang dapat dipilih melalui `--theme`:
 
-- **`editorial`** (default, v2.3.0) — Sistem desain *Canva Editorial* gray-white modern: kanvas `#F4F5F7`, kartu `#FFFFFF`, charcoal `#232220`, aksen Venturo Teal `#009BAD`. Konten Markdown dipetakan otomatis ke 10 arketipe layout dinamis (`hero-cover`, `narrative-split`, `mission-pillars`, `workflow-3col`, `features-staggered`, `persona-cards`, `services-grid`, `portfolio-gallery`, `metrics-contact`, `closing-cta`) dan jumlah slide diturunkan langsung dari konten intake.
+- **`editorial`** (default, v2.4.0) — Sistem desain *Canva Editorial* gray-white modern: kanvas `#F4F5F7`, kartu `#FFFFFF`, charcoal `#232220`, aksen Venturo Teal `#009BAD`. Konten Markdown dipetakan otomatis ke 10 arketipe layout dinamis (`hero-cover`, `narrative-split`, `mission-pillars`, `workflow-3col`, `features-staggered`, `persona-cards`, `services-grid`, `portfolio-gallery`, `metrics-contact`, `closing-cta`) dan jumlah slide diturunkan langsung dari konten intake.
 - **`profile`** (legacy) — Tema profil bawaan v2.2 dengan template dan CSS klasik.
 
 ```bash
@@ -69,7 +78,7 @@ Rilis v2.2.0 menghadirkan peningkatan signifikan pada stabilitas arsitektur, kua
 │   │   ├── SKILL.md
 │   │   ├── templates/
 │   │   │   ├── profile-shell.html      # Tema legacy (v2.2)
-│   │   │   ├── editorial-shell.html    # Tema Canva Editorial (v2.3.0)
+│   │   │   ├── editorial-shell.html    # Tema Canva Editorial (v2.4.0)
 │   │   │   ├── editorial.css           # Design system gray-white modern
 │   │   │   └── custom.css
 │   │   └── references/
