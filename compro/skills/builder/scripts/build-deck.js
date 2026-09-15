@@ -28,7 +28,7 @@ function sanitizeContactDetails(text, brandSlug = 'venturo-pro') {
     .replace(/\[Nomor WhatsApp\]/gi, '+62 812-9000-8899')
     .replace(/\[Email Resmi\]/gi, `contact@${domain}.pro`)
     .replace(/\[Alamat Kantor\]/gi, 'Jakarta Selatan, DKI Jakarta')
-    .replace(/\[Tautan Pendaftaran\]/gi, `${cleanSlug}.pro/register`);
+    .replace(/\[Tautan Pendaftaran\]/gi, `${domain}.pro/register`);
 }
 
 function extractBigNumberMetric(bulletLine) {
@@ -2148,6 +2148,10 @@ async function runMain(customArgs) {
   // 5b. Wire slide image downloads inside build lifecycle with fallback handling
   for (let i = 0; i < slides.length; i++) {
     const s = slides[i];
+    const arch = classifyCanvaArchetype(s, i, slides.length);
+    if (arch === 'differentiator' || arch === 'pricing') {
+      continue;
+    }
     const slot = resolveSlideSlot(s, i, slides.length);
     const slotConfig = (imageFetcher.SLOT_MAP && imageFetcher.SLOT_MAP[slot]) || {
       category: 'architecture-portrait',
