@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" width="800" height="1200">
+  <defs>
+    <linearGradient id="metBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0B132B"/>
+      <stop offset="100%" stop-color="#1C2541"/>
+    </linearGradient>
+    <linearGradient id="towerGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#004D56"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#metBg)"/>
+  <!-- Skyscraper Silhouettes in Upward Perspective -->
+  <polygon points="120,1200 120,280 340,140 340,1200" fill="url(#towerGrad)"/>
+  <polygon points="340,140 500,240 500,1200 340,1200" fill="#006D79" opacity="0.85"/>
+  <polygon points="460,1200 460,380 680,240 680,1200" fill="#1E293B"/>
+  <!-- Window Matrix & Metric Grid -->
+  <!-- Tower 1 Windows -->
+  <g fill="#009BAD" opacity="0.75">
+    <rect x="150" y="340" width="25" height="14" rx="2"/>
+    <rect x="190" y="340" width="25" height="14" rx="2"/>
+    <rect x="230" y="340" width="25" height="14" rx="2"/>
+    <rect x="150" y="380" width="25" height="14" rx="2"/>
+    <rect x="190" y="380" width="25" height="14" rx="2"/>
+    <rect x="230" y="380" width="25" height="14" rx="2"/>
+    <rect x="150" y="440" width="25" height="14" rx="2"/>
+    <rect x="190" y="440" width="25" height="14" rx="2"/>
+    <rect x="230" y="440" width="25" height="14" rx="2"/>
+    <rect x="150" y="500" width="25" height="14" rx="2"/>
+    <rect x="190" y="500" width="25" height="14" rx="2"/>
+    <rect x="230" y="500" width="25" height="14" rx="2"/>
+    <rect x="150" y="560" width="25" height="14" rx="2"/>
+    <rect x="190" y="560" width="25" height="14" rx="2"/>
+    <rect x="230" y="560" width="25" height="14" rx="2"/>
+  </g>
+  <!-- Growth vector overlaid on building grid -->
+  <path d="M140 920 L280 720 L420 620 L620 360" fill="none" stroke="#00D2E0" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="140" cy="920" r="6" fill="#00D2E0"/>
+  <circle cx="280" cy="720" r="6" fill="#00D2E0"/>
+  <circle cx="420" cy="620" r="6" fill="#00D2E0"/>
+  <circle cx="620" cy="360" r="8" fill="#FFFFFF" stroke="#00D2E0" stroke-width="3"/>
+  <text x="400" y="1120" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="700" fill="#E2E8F0" letter-spacing="4">VENTURO METRICS</text>
+</svg>

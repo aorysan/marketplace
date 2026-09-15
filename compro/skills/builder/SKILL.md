@@ -45,10 +45,12 @@ Builder ini dilengkapi modul referensi desain bawaan yang self-contained di dala
 ## Prinsip Kerja
 
 1. **Self-Contained Design Intelligence:** Seluruh aturan visual, warna, dan tipografi bersumber dari `references/design-tokens.md` dan `references/visual-hierarchy.md`.
-2. **Dynamic HSL Theming:** Builder mendeteksi warna primer brand klien (default Venturo Teal `#009BAD` / `hsl(186, 100%, 34%)`) dan menyuntikkan token CSS HSL dinamis (`--brand-h`, `--brand-s`, `--brand-l`) ke dalam template slide.
-3. **Zero Broken Images & Smart Asset Pipeline:** Jika URL gambar eksternal tidak dapat diakses (bukan status 200) atau tidak disediakan, builder **wajib menghasilkan aset vector SVG inline** (mockup smartphone realistis, circular ecosystem diagram, icon badge Lucide-style) sehingga slide tetap tampil mewah tanpa placeholder rusak atau kotak kosong.
-4. **Deterministic Chunking & Slide Budget:** Satu slide hanya memuat 1 konsep utama dengan batas maksimal ~250 kata atau 3–4 kartu konten untuk menjamin keterbacaan pada rasio 16:9.
-5. **Aksesibilitas & Kontras Ketat:** Memastikan teks body memiliki rasio kontras minimal 4.5:1 terhadap latar belakang slide (`#0f172a`) dan tidak menyampaikan makna hanya melalui warna semata.
+2. **Dynamic HSL Theming & Canva Editorial Default:** Builder mengunci tema default `editorial` (Canva Salford & Co. 1:1, kanvas `#F4F5F7`, kartu `#FFFFFF`, charcoal `#232220`, aksen Venturo Teal `#009BAD` / `hsl(186, 100%, 34%)`) serta menyuntikkan token CSS HSL dinamis (`--brand-h`, `--brand-s`, `--brand-l`).
+3. **Hybrid Asset Pipeline & Curated Direct CDN:** Mengunduh foto arsitektur dan corporate resolusi tinggi dari Unsplash direct CDN (`images.unsplash.com`) berdasarkan slot komentar markdown (`<!-- image: <slot> -- ... -->`), dengan fallback berjenjang ke Lorem Picsum dan aset vektor SVG arsitektur lokal (`templates/assets/fallback/`). Zero API key barrier, deck mandiri tersimpan di `compros/<slug>/assets/`.
+4. **Deterministic Chunking & Slide Budget:** Satu slide memuat 1 konsep utama berukuran 1920×1080 (16:9 1080p) dengan batas maksimal ~250 kata atau 3–4 kartu konten untuk menjamin keterbacaan proporsional.
+5. **Aksesibilitas & Kontras Ketat:** Memastikan teks body memiliki rasio kontras minimal 4.5:1 terhadap latar belakang (teks aksen AA `#007A87` pada latar terang, teks body `#232220` pada kartu `#FFFFFF`).
+6. **Git Worktree & Dynamic Workspace Sync Guarantee:** Builder mendeteksi environment kerja secara dinamis tanpa hardcoded absolute paths (`--root`, `COMPRO_PROJECT_ROOT`, atau auto-inspeksi file pointer `.git` worktree). `postBuildSyncGuarantee()` menjamin file output otomatis disinkronkan ke root workspace pengguna (`compros/<slug>/`) tanpa risiko kehilangan artefak.
+7. **Clean Markdown Sanitization & Big Number Extraction:** Otomatis membersihkan blok frontmatter, `Meta Title:`, `Meta Description:`, `Tagline:`, mengganti placeholder kontak `[...]` dengan nilai demo terformat, dan mengekstrak statistik metrik menjadi big number counter (44px `#007A87`).
 
 ---
 
@@ -487,52 +489,73 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 
 ---
 
-## 3.5 Canva Editorial Theme (v2.3.0)
+## 3.5 Canva Editorial Theme (v2.5.0)
 
-Tema editorial menawarkan estetika majalah/corporate light dengan palette terang, typography tajam, dan struktur slide yang diklasifikasikan otomatis berdasarkan sinyal konten. Theme ini diaktifkan via flag `--theme=editorial` pada CLI dan merupakan **DEFAULT** saat `build-deck.js` dijalankan tanpa flag `--theme`.
+Tema `editorial` merupakan **DEFAULT** standar v2.5.0 pada `build-deck.js` yang mengimplementasikan arsitektur visual **Canva Salford & Co. 1:1** dengan kanvas 1920×1080 (16:9), proporsi vertikal seimbang tanpa vertical void (0% blank space), dan hybrid asset pipeline foto arsitektur/corporate beresolusi tinggi.
 
 ### Design Tokens (CSS Custom Properties)
 
 | Token | Nilai | Keterangan |
 |-------|-------|------------|
-| `--canvas-bg` | `#F4F5F7` | Latar belakang slide utama |
-| `--canvas-surface` | `#FFFFFF` | Background kartu & kontainer |
-| `--charcoal-solid` | `#232220` | Warna teks utama |
-| `--brand-primary` | `#009BAD` | Warna aksen brand (Venturo Teal) |
-| `--brand-dark` | `#006D79` | Variasi gelap untuk hover/aktif |
+| `--canvas-bg` | `#F4F5F7` | Latar belakang kanvas abu-abu lembut |
+| `--canvas-surface` | `#FFFFFF` | Surface kartu putih bersih dengan bayangan lembut |
+| `--charcoal-solid` | `#232220` | Warna teks utama dan kontainer gelap |
+| `--brand-primary` | `#009BAD` | Aksen brand primer (Venturo Teal) |
+| `--brand-accent-text` | `#007A87` | Teks aksen kontras tinggi (WCAG AA compliant) |
+| `--brand-dark` | `#006D79` | Variasi gelap untuk hover/status aktif |
 
-**Typography:**
-- **Display / Heading:** Plus Jakarta Sans (700/800)
+**Typography Scale:**
+- **Display / Heading:** Plus Jakarta Sans (600/700/800)
 - **Body / Keterangan:** Inter (400/500/600)
 
-### Layout Archetypes (8 tipe, semua aktif)
+**Full-Height 1080p Layout Rule:**
+```css
+.reveal .slides section {
+  box-sizing: border-box;
+  padding: 0;
+  height: 1080px !important;
+  max-height: 1080px;
+  overflow: hidden;
+  background: var(--canvas-bg);
+}
+```
+Setiap slide mengeliminasi ruang kosong vertikal (vertical blank void 60%) dengan memastikan seluruh kartu dan frame gambar mengisi ketinggian penuh 1080p secara proporsional.
 
-Builder mengklasifikasikan setiap slide ke dalam salah satu dari 8 archetype berdasarkan konten Markdown. Seluruh archetype aktif dan dipancarkan oleh classifier (`classifyEditorialArchetype`) dengan sinyal konten masing-masing saat runtime.
+### 8 Layout Archetypes Canva Salford & Co. 1:1
 
-| Archetype Class | Fungsi | Sinyal Pemicu |
-|-----------------|--------|---------------|
-| `.archetype-hero-cover` | Slide pembuka hero | Opening / heading utama |
-| `.archetype-narrative-split` | Narasi 2-kolom | Deskripsi panjang / story |
-| `.archetype-services-grid` | Grid layanan | 4+ poin layanan |
-| `.archetype-ecosystem-orbit` | Diagram ekosistem orbital | Hub platform + node fitur |
-| `.archetype-metrics-contact` | Metrik & kontak | Angka statistik / data |
-| `.archetype-differentiator` | Tabel perbandingan / why us | Diferensiasi / perbandingan kompetitor |
-| `.archetype-pricing-cards` | Kartu paket harga | Paket / harga / lisensi |
-| `.archetype-closing-cta` | CTA penutup | Penutup / kontak akhir |
+Builder memetakan setiap bagian Markdown secara otomatis ke salah satu dari 8 arketipe modular:
 
-Slide mockup juga menggunakan class `.phone-frame-editorial` untuk frame smartphone editorial style.
+| Archetype Class | Layout & Proporsi | Elemen Kunci |
+|-----------------|-------------------|--------------|
+| `.archetype-canva-cover` | Split 55/45 | H1 all-caps punchy, category badge, tombol solid Charcoal + outline Teal, dan frame foto arsitektur gedung kaca portrait full-height (`slide-1-hero.jpg`). |
+| `.archetype-canva-welcome` | Split 45/55 | Foto arsitektur/office portrait tinggi 1080p di kiri dengan panel aksen Charcoal di belakangnya, kartu narasi bernomor `01`, `02`, `03` berlatar putih bersih dengan bayangan lembut di kanan. |
+| `.archetype-canva-services` | Split 35/65 | Judul H2 & foto vertikal tech workspace di kiri, grid 2x2 rapi 4 kartu layanan (`01`–`04`) dengan pill charcoal mengisi tinggi penuh slide (0% vertical void). |
+| `.archetype-canva-ecosystem` | Split 50/50 | Diagram SVG sirkular orbit ekosistem AI tajam dan terpusat di kiri, foto landscape workspace tech dan kartu alur komputasi di kanan. |
+| `.archetype-canva-metrics` | Split 40/60 | Foto gedung kaca modern portrait tinggi penuh di kiri, grid 4 kartu metrik dengan angka raksasa (`font-size: 44px; font-weight: 800; color: #007A87;`) untuk rasio, persen, nominal. |
+| `.archetype-canva-differentiator` | Full Table Layout | Tabel komparasi 4–5 kolom Canva editorial dengan sudut melengkung 12px, zebra baris halus, header charcoal, dan kolom brand Venturo Pro di-highlight dengan tint teal dan border aktif. |
+| `.archetype-canva-pricing` | 3-Column Centered | 3 kartu paket harga berjenjang, tier Pro di tengah dibuat elevated (border brand teal, ribbon "Best Seller", dan tombol CTA charcoal solid). |
+| `.archetype-canva-closing` | 3-Column Split (Canva Slide 10) | Foto arsitektur portrait di kiri, Kartu Informasi Kontak & CTA Charcoal elegan di tengah (tanpa placeholder mentah `[...]`), dan foto tim portrait di kanan. |
 
-### Dynamic Chunking Principle
+### Hybrid Asset Pipeline (`image-fetcher.js`)
 
-Jumlah slide dan pemetaan archetype bersifat **dinamis** — diturunkan dari konten intake, bukan template statis:
+Pipeline aset mengambil foto arsitektur dan korporat berkualitas tinggi langsung dari **Curated Direct CDN Unsplash** (`images.unsplash.com`) tanpa memerlukan API Key:
+1. **Slot Mapping Deterministik:** Membaca tag `<!-- image: <slot> -- <prompt> -->` pada draf Markdown dan memetakan ke kategori kurasi:
+   - `hero`, `problem`, `traction`, `metrics` ➔ `architecture-portrait` (800×1200)
+   - `solution` ➔ `creative-meeting` (800×1200)
+   - `features`, `services` ➔ `tech-workspace` (800×1200)
+   - `ecosystem` ➔ `tech-workspace` (1600×900) + In-line SVG Orbit Diagram
+   - `closing` ➔ `architecture-portrait` (kiri) & `corporate-team` (kanan)
+2. **Cascading Fallback:** Direct Unsplash CDN ➔ Lorem Picsum CDN (`https://picsum.photos/`) ➔ Aset SVG vektor geometris lokal (`templates/assets/fallback/`).
+3. **Idempotensi & Offline Safety:** Gambar disimpan permanen di `compros/<slug>/assets/slide-*.jpg` (> 10 KB). Jika sudah ada, builder melewati proses download.
 
-1. **Hero → Mission-Pillars:** Jika konten memiliki 2 bullet poin awal atau section Brand DNA / Biaya → `mission-pillars`
-2. **Workflow-3col:** Jika ada 3 langkah/proses → `workflow-3col`
-3. **Metrics-Contact:** Jika konten berisi angka statistik/metrik → `metrics-contact`
-4. **Services-Grid:** Jika ada 4+ poin layanan → `services-grid`
-5. **Closing-CTA:** Section kontak/penutup → `closing-cta`
+### Git Worktree & Workspace Sync Guarantee
 
-Slide count ditentukan oleh jumlah section yang di-parse dari Markdown, bukan fixed count.
+Builder dilengkapi algoritma deteksi root dinamis (`detectProjectRoot`):
+1. Parameter CLI `--root=<path>`
+2. Environment variable `COMPRO_PROJECT_ROOT`
+3. Inspeksi file pointer `.git` worktree (`gitdir: ...`) yang menavigasi ke root workspace utama.
+
+Pada akhir kompilasi, `postBuildSyncGuarantee()` memverifikasi apakah build dieksekusi di dalam worktree terisolasi. Jika terdeteksi di worktree, skrip secara otomatis menyalin seluruh bundel proyek (`compros/<slug>/`) ke workspace utama pengguna sehingga artefak tidak pernah hilang saat sesi worktree ditutup.
 
 ### Cara Menjalankan
 
@@ -542,10 +565,10 @@ node scripts/build-deck.js --name=<slug> --theme=editorial
 
 Contoh:
 ```bash
-node scripts/build-deck.js --name=congen-editorial --theme=editorial
+node scripts/build-deck.js --name=congen5 --theme=editorial
 ```
 
-Output diproduksi di `compros/<slug>/` dengan struktur yang sama dengan tema default (index.html, compro.md, assets/, reports/build.log, drafts/).
+Output diproduksi di `compros/<slug>/` (index.html, compro.md, assets/, reports/build.log, drafts/).
 
 ## Sinkronisasi Plugin
 
@@ -555,7 +578,7 @@ Setelah mengubah script builder, template, atau tema, jalankan:
 node scripts/sync-plugin.js
 ```
 
-Script ini menyalin file sumber root repo (`scripts/build-deck.js`, `scripts/asset-generator.js`, `templates/editorial.css`, `templates/editorial-shell.html`) ke dua lokasi plugin: `.claude/plugins/compro/` (local plugin repo) dan `~/.claude/plugins/cache/aorysan-marketplace/compro/2.4.0/` (global Claude Code cache), sehingga perubahan langsung berlaku di kedua target.
+Script ini menyalin file sumber ke dua lokasi plugin: `.claude/marketplace/compro/` (submodule marketplace) dan `~/.claude/plugins/cache/aorysan-marketplace/compro/2.5.0/` (global Claude Code cache v2.5.0), sehingga perubahan langsung aktif secara deterministik di kedua target.
 
 ---
 

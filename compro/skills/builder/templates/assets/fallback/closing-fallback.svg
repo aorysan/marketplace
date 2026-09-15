@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" width="800" height="1200">
+  <defs>
+    <linearGradient id="closeBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1A202C"/>
+    </linearGradient>
+    <linearGradient id="splitLeft" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#004D56"/>
+      <stop offset="100%" stop-color="#001F24"/>
+    </linearGradient>
+    <linearGradient id="splitRight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#009BAD" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#closeBg)"/>
+  <!-- Left Half: Architectural Facet -->
+  <polygon points="60,1200 60,260 380,140 380,1200" fill="url(#splitLeft)"/>
+  <line x1="60" y1="420" x2="380" y2="300" stroke="#E2E8F0" stroke-width="1.5" opacity="0.3"/>
+  <line x1="60" y1="580" x2="380" y2="460" stroke="#E2E8F0" stroke-width="1.5" opacity="0.3"/>
+  <line x1="60" y1="740" x2="380" y2="620" stroke="#E2E8F0" stroke-width="1.5" opacity="0.3"/>
+  <!-- Right Half: Team Synergy Nodes & Horizon -->
+  <polygon points="420,1200 420,200 740,320 740,1200" fill="url(#splitRight)"/>
+  <!-- Collaborative Team Nodes -->
+  <circle cx="580" cy="460" r="32" fill="#009BAD" opacity="0.9"/>
+  <circle cx="500" cy="580" r="26" fill="#006D79" opacity="0.85"/>
+  <circle cx="660" cy="580" r="26" fill="#006D79" opacity="0.85"/>
+  <circle cx="580" cy="700" r="30" fill="#00D2E0" opacity="0.95"/>
+  <line x1="580" y1="460" x2="500" y2="580" stroke="#CBD5E1" stroke-width="1.5" opacity="0.5"/>
+  <line x1="580" y1="460" x2="660" y2="580" stroke="#CBD5E1" stroke-width="1.5" opacity="0.5"/>
+  <line x1="500" y1="580" x2="580" y2="700" stroke="#CBD5E1" stroke-width="1.5" opacity="0.5"/>
+  <line x1="660" y1="580" x2="580" y2="700" stroke="#CBD5E1" stroke-width="1.5" opacity="0.5"/>
+  <!-- Unified Central Accent Divide -->
+  <line x1="400" y1="100" x2="400" y2="1050" stroke="#00D2E0" stroke-width="2" stroke-dasharray="8,6" opacity="0.5"/>
+  <text x="400" y="1120" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="700" fill="#E2E8F0" letter-spacing="4">VENTURO PARTNERSHIP</text>
+</svg>

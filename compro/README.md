@@ -1,6 +1,17 @@
-# Compro Plugin v2.4.0 — Multi-Agent Slide Deck Pipeline
+# Compro Plugin v2.5.0 — Multi-Agent Slide Deck Pipeline
 
-Plugin otomatisasi pembuatan Company Profile interaktif berbasis Reveal.js dengan sistem desain **Canva Editorial Theme (Gray-White Modern)** dan deployment Vercel.
+Plugin otomatisasi pembuatan Company Profile interaktif berbasis Reveal.js dengan sistem desain **Canva Editorial Theme (Canva Salford & Co. 1:1)**, hybrid Unsplash direct CDN asset pipeline, dan deployment Vercel.
+
+## What's New in v2.5.0
+
+Rilis v2.5.0 menghadirkan perombakan visual 1:1 Canva Salford & Co., asset downloader tanpa API key, dan garansi sinkronisasi workspace:
+
+- **Canva Editorial 1:1 Overhaul**: 8 arketipe layout modular Canva (`archetype-canva-cover`, `archetype-canva-welcome`, `archetype-canva-services`, `archetype-canva-ecosystem`, `archetype-canva-metrics`, `archetype-canva-differentiator`, `archetype-canva-pricing`, `archetype-canva-closing`).
+- **1080p Full-Height & Zero Vertical Void**: Kontainer slide memberlakukan `height: 1080px !important;` mengeliminasi 60% vertical blank void.
+- **Hybrid Asset Downloader Pipeline (`image-fetcher.js`)**: Mengunduh foto arsitektur dan corporate resolusi tinggi dari Unsplash direct CDN (`images.unsplash.com`) tanpa API key, dengan cascading fallback (Picsum ➔ Local architectural SVGs).
+- **Git Worktree Workspace Sync Guarantee**: Deteksi otomatis git worktree dan penyalinan otomatis artefak hasil build (`postBuildSyncGuarantee()`) ke root workspace pengguna (`compros/<slug>/`).
+- **Clean Markdown Content Sanitizer**: Membersihkan frontmatter/meta tags, format nomor kontak demo profesional (tanpa kurung siku mentah `[...]`), dan ekstraksi big number counter 44px `#007A87`.
+- **Manifest & Cache Synchronization**: Manifest diperbarui ke v2.5.0 dan sinkronisasi ke global cache `~/.claude/plugins/cache/aorysan-marketplace/compro/2.5.0/`.
 
 ## What's New in v2.4.0
 
@@ -26,7 +37,7 @@ Rilis v2.3.0 menghadirkan sistem desain editorial baru dan peningkatan pipeline 
 
 Builder (`/builder`) mendukung dua tema build yang dapat dipilih melalui `--theme`:
 
-- **`editorial`** (default, v2.4.0) — Sistem desain *Canva Editorial* gray-white modern: kanvas `#F4F5F7`, kartu `#FFFFFF`, charcoal `#232220`, aksen Venturo Teal `#009BAD`. Konten Markdown dipetakan otomatis ke 10 arketipe layout dinamis (`hero-cover`, `narrative-split`, `mission-pillars`, `workflow-3col`, `features-staggered`, `persona-cards`, `services-grid`, `portfolio-gallery`, `metrics-contact`, `closing-cta`) dan jumlah slide diturunkan langsung dari konten intake.
+- **`editorial`** (default, v2.5.0) — Sistem desain *Canva Editorial (Canva Salford & Co. 1:1)*: kanvas `#F4F5F7`, kartu `#FFFFFF`, charcoal `#232220`, aksen Venturo Teal `#009BAD` (aksen AA `#007A87`). Konten Markdown dipetakan otomatis ke 8 arketipe layout 1:1 (`archetype-canva-cover`, `archetype-canva-welcome`, `archetype-canva-services`, `archetype-canva-ecosystem`, `archetype-canva-metrics`, `archetype-canva-differentiator`, `archetype-canva-pricing`, `archetype-canva-closing`), kanvas full-height 1080p (0% vertical void), dan hybrid Unsplash direct CDN image fetcher.
 - **`profile`** (legacy) — Tema profil bawaan v2.2 dengan template dan CSS klasik.
 
 ```bash
