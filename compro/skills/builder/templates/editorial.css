@@ -1069,3 +1069,22 @@ html, body, .reveal {
   padding: 24px;
   box-shadow: var(--surface-shadow);
 }
+/* v2.6.0 specificity + anti-clipping overrides (Reveal 0,1,2 beats 0,1,0) */
+.reveal .slides section.archetype-canva-cover,
+.reveal .slides section.archetype-canva-welcome,
+.reveal .slides section.archetype-canva-services,
+.reveal .slides section.archetype-canva-ecosystem,
+.reveal .slides section.archetype-canva-metrics,
+.reveal .slides section.archetype-canva-differentiator,
+.reveal .slides section.archetype-canva-pricing,
+.reveal .slides section.archetype-canva-closing {
+  display: grid !important;
+}
+.reveal .section-title,
+.reveal .slide-title,
+.reveal .cover-title,
+.reveal .closing-title {
+  font-size: 44px;
+}
+.reveal .slides section > * { min-width: 0; }
+.welcome-card, .service-canva-card, .metric-canva-card, .closing-contact-item { line-height: 1.4; }

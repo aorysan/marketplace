@@ -1,0 +1,9 @@
+{
+  "name": "profile",
+  "version": "2.6.0",
+  "archetypes": ["cover", "welcome-problem", "welcome-solution", "services", "ecosystem", "metrics", "differentiator", "pricing", "closing"],
+  "slots": { "cover": "hero", "welcome-problem": "problem", "welcome-solution": "solution", "services": "services", "ecosystem": "ecosystem", "metrics": "metrics", "differentiator": "differentiator", "pricing": "pricing", "closing": "closing" },
+  "cssFile": "custom.css",
+  "shellFile": "profile-shell.html",
+  "renderer": "profile"
+}

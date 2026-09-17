@@ -1,6 +1,16 @@
-# Compro Plugin v2.5.0 — Multi-Agent Slide Deck Pipeline
+# Compro Plugin v2.6.0 — Multi-Agent Slide Deck Pipeline
 
 Plugin otomatisasi pembuatan Company Profile interaktif berbasis Reveal.js dengan sistem desain **Canva Editorial Theme (Canva Salford & Co. 1:1)**, hybrid Unsplash direct CDN asset pipeline, dan deployment Vercel.
+
+## What's New in v2.6.0
+
+Rilis v2.6.0 menghadirkan multi-template `--theme + folder`, tema `modern` baru, dan pipeline gambar hybrid dengan budget waktu ketat:
+
+- **Multi-Template `--theme + folder`**: pilih tema saat build (`--theme=editorial|profile|modern`) dengan dispatcher terpusat dan fallback deterministik ke `editorial` untuk tema tak dikenal.
+- **Tema `modern` Ported dari congen6**: 9 renderer slide (hero, welcome-problem/solution, services, ecosystem, metrics, differentiator, pricing, closing, social-proof) dengan tokens GPU-panel dan zero-hallucination.
+- **Hybrid Image Pipeline 5 s / 15 s**: Tier 1 unduhan katalog terkurasi, Tier 2 generasi AI (strict 5 s), Tier 3 fallback SVG lokal — selalu unbroken dalam budget 15 s.
+- **Writer 85–140 Kata + Image Directives**: kontrak consumability modern — setiap slide 85–140 kata dengan direktif `<!-- image: ... -->` (query, keywords, style).
+- **5 Builder Bug Fixes**: structural assert with named-slide foster-parenting errors, specificity and clipping fixes, CUSTOM_CSS injection restore for profile, pool-parity unique-md5 image picks, dan panel closing-banner anti-duplikat.
 
 ## What's New in v2.5.0
 

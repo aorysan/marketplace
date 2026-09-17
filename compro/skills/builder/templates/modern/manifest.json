@@ -1,0 +1,9 @@
+{
+  "name": "modern",
+  "version": "2.6.0",
+  "archetypes": ["cover", "problem", "solution", "services", "ecosystem", "metrics", "differentiator", "pricing", "closing", "social-proof"],
+  "slots": { "cover": "hero", "problem": "problem", "solution": "solution", "services": "services", "ecosystem": "ecosystem", "metrics": "metrics", "differentiator": "differentiator", "pricing": "pricing", "closing": "closing", "social-proof": "traction" },
+  "cssFile": "theme.css",
+  "shellFile": "shell.html",
+  "renderer": "modern"
+}

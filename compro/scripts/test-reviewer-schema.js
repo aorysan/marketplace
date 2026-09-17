@@ -27,4 +27,23 @@ for (const check of checks) {
 }
 
 console.log('PASS: reviewer skill definition contains all required QA gates and SEO criteria');
+
+// --- v2.6 template-consumability asserts (Task 6) ---
+const consumabilityChecks = [
+  'template-consumability',
+  'image directive',
+  'pricing rows',
+  'differentiator columns',
+  'big-number regex',
+  'honesty callout'
+];
+
+for (const check of consumabilityChecks) {
+  if (!content.includes(check)) {
+    console.error(`FAIL: reviewer SKILL.md missing template-consumability reference "${check}"`);
+    process.exit(1);
+  }
+}
+
+console.log('PASS: reviewer skill definition enforces the template-consumability checklist');
 process.exit(0);

@@ -87,7 +87,7 @@ function downloadFile(url, destPath, timeoutMs = 5000) {
 }
 
 async function fetchImageWithFallback(options = {}) {
-  const { category, destPath, slot = 'hero', forceFallback = false } = options;
+  const { category, destPath, slot = 'hero', forceFallback = false, _forceUrl } = options;
   fs.mkdirSync(path.dirname(destPath), { recursive: true });
 
   const fallbackFile = (SLOT_MAP[slot] && SLOT_MAP[slot].fallback) || 'hero-fallback.svg';
@@ -121,7 +121,7 @@ async function fetchImageWithFallback(options = {}) {
   }
 
   const urls = CURATED_IMAGE_CATALOG[category] || CURATED_IMAGE_CATALOG['architecture-portrait'];
-  const targetUrl = urls[0];
+  const targetUrl = _forceUrl || urls[0];
 
   try {
     await downloadFile(targetUrl, destPath, 5000);
@@ -141,9 +141,31 @@ async function fetchImageWithFallback(options = {}) {
   }
 }
 
+function pickCatalogUrl(poolUrls, slotIndex, slugHash) {
+  if (!poolUrls || poolUrls.length === 0) throw new Error('empty image pool');
+  let h = 0;
+  const s = String(slugHash);
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return poolUrls[(slotIndex + h) % poolUrls.length];
+}
+
+function buildPollinationsUrl(query, width, height) {
+  return `https://image.pollinations.ai/prompt/${encodeURIComponent(query)}?width=${width}&height=${height}&nologo=true`;
+}
+
+function fetchGeneratedImage(query, destPath, opts = {}) {
+  const width = opts.width || 800;
+  const height = opts.height || 1200;
+  const timeoutMs = opts.timeoutMs || 5000;
+  return downloadFile(buildPollinationsUrl(query, width, height), destPath, timeoutMs);
+}
+
 module.exports = {
   CURATED_IMAGE_CATALOG,
   SLOT_MAP,
   mapCommentToSlot,
-  fetchImageWithFallback
+  fetchImageWithFallback,
+  pickCatalogUrl,
+  buildPollinationsUrl,
+  fetchGeneratedImage
 };

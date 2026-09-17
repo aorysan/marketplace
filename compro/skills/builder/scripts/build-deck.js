@@ -198,6 +198,26 @@ function resolveSlideImageUrl(slideNum, slot, assetsDir) {
   return `assets/slide-${slideNum}-${slot}.jpg`;
 }
 
+function assertSlideStructure(slideHtml, totalSlides) {
+  const openTags = (slideHtml.match(/<section[\s>]/g) || []).length;
+  const closeTags = (slideHtml.match(/<\/section>/g) || []).length;
+  if (openTags !== totalSlides || closeTags !== totalSlides) {
+    throw new Error(`slide structure violation: expected ${totalSlides} sections, found ${openTags} opens / ${closeTags} closes`);
+  }
+  // Foster-parenting check: strip outermost sections one by one; any <section> left means nesting.
+  let depth = 0;
+  let closedSlides = 0;
+  const tagRe = /<\/?section[\s>]/g;
+  let m;
+  while ((m = tagRe.exec(slideHtml)) !== null) {
+    depth += m[0][1] === '/' ? -1 : 1;
+    if (m[0][1] === '/' && depth === 0) closedSlides++;
+    if (depth > 1) {
+      throw new Error(`slide structure violation (foster-parenting): a <section> is nested inside another section near slide ${closedSlides + 1}; check unclosed <table> near the differentiator slide`);
+    }
+  }
+}
+
 // Markdown inline helper
 function inline(mdtext) {
   if (!mdtext) return '';
@@ -1431,6 +1451,85 @@ function resolveSlideSlot(slide, index, totalSlides, defaultSlot) {
   }
 }
 
+function parseImageDirective(content) {
+  if (!content) return null;
+  const m = content.match(/<!--\s*image:\s*([a-zA-Z0-9_-]+)\s*--\s*query:\s*([^;]+?)\s*;\s*keywords:\s*([^;]+?)\s*;\s*style:\s*([a-z]+)\s*-->/i);
+  if (!m) return null;
+  return { slot: m[1].toLowerCase(), query: m[2].trim(), keywords: m[3].trim() };
+}
+
+function pickFromPoolDistinct(pool, index, slug, assetsDir, slot, picked) {
+  picked = picked || new Set();
+  let existing = [];
+  try {
+    if (assetsDir && fs.existsSync(assetsDir)) {
+      existing = fs.readdirSync(assetsDir).filter(f => /^slide-\d+-.*\.jpe?g$/i.test(f));
+    }
+  } catch (e) {}
+  for (let k = 0; k < pool.length; k++) {
+    const candidate = imageFetcher.pickCatalogUrl(pool, index + k, slug);
+    const basename = path.basename(String(candidate).split('?')[0]);
+    // NOTE: on-disk filenames are slide-N-slot.jpg so they never contain the
+    // catalog URL basename — the picked-set below is the load-bearing guard
+    // against same-build duplicate bytes (spec: unique-md5 images).
+    if (!existing.some(f => f.includes(basename)) && !picked.has(candidate)) {
+      picked.add(candidate);
+      return candidate;
+    }
+  }
+  // Pool exhausted within this build (more same-category slots than pool
+  // entries): overflow to a seeded Picsum URL — deterministic per slug+slot
+  // so the slot still resolves to a distinct photo instead of a byte-duplicate.
+  const slotCfg = (imageFetcher.SLOT_MAP && imageFetcher.SLOT_MAP[slot]) || {};
+  const dims = slotCfg.orientation === 'landscape' ? '1600/900' : '800/1200';
+  let n = 0;
+  let overflow = `https://picsum.photos/seed/${slug}-${slot}-${n}/${dims}`;
+  while (picked.has(overflow)) {
+    n++;
+    overflow = `https://picsum.photos/seed/${slug}-${slot}-${n}/${dims}`;
+  }
+  picked.add(overflow);
+  return overflow;
+}
+
+async function acquireSlotImage({ slot, query, keywords, index, slug, assetsDir, budget, pickedUrls }) {
+  const started = Date.now();
+  const elapsed = () => Date.now() - started;
+  const destJpg = path.join(assetsDir, `slide-${index + 1}-${slot}.jpg`);
+  // Idempotency first (existing valid file wins, any tier)
+  if (fs.existsSync(destJpg) && fs.statSync(destJpg).size > 1024) {
+    return { path: destJpg, tier: 'cached', elapsedMs: elapsed() };
+  }
+  const slotConfig = (imageFetcher.SLOT_MAP && imageFetcher.SLOT_MAP[slot]) || { category: 'architecture-portrait', orientation: 'portrait', fallback: `${slot}-fallback.svg` };
+  const pool = imageFetcher.CURATED_IMAGE_CATALOG[slotConfig.category] || imageFetcher.CURATED_IMAGE_CATALOG['architecture-portrait'];
+  // Tier 1: distinct pick from category pool (round-robin by slide index + slug hash)
+  // Build-deadline gate (spec §5: 15 s total asset budget): when the caller threads
+  // budget.deadline through, gate on the build deadline instead of the per-slot
+  // elapsed() check; the elapsed() fallback only serves direct callers without one.
+  if (budget?.deadline != null ? Date.now() < budget.deadline : elapsed() < budget.ms) {
+    try {
+      const picked = pickFromPoolDistinct(pool, index, slug, assetsDir, slot, pickedUrls);
+      await imageFetcher.fetchImageWithFallback({ category: slotConfig.category, destPath: destJpg, slot, _forceUrl: picked });
+      return { path: destJpg, tier: 'search', elapsedMs: elapsed() };
+    } catch (e) { console.warn(`[WARN] Tier 1 search failed for slide ${index + 1}: ${e.message}`); }
+  }
+  // Tier 2: pollinations generation (5 s strict), skipped when budget exhausted
+  // (same build-deadline gate as Tier 1; elapsed() fallback for direct callers).
+  if (query && (budget?.deadline != null ? Date.now() < budget.deadline : elapsed() < budget.ms)) {
+    try {
+      const landscape = slotConfig.orientation === 'landscape';
+      await imageFetcher.fetchGeneratedImage(query, destJpg, { width: landscape ? 1600 : 800, height: landscape ? 900 : 1200, timeoutMs: 5000 });
+      if (fs.statSync(destJpg).size > 1024) return { path: destJpg, tier: 'generate', elapsedMs: elapsed() };
+    } catch (e) { console.warn(`[WARN] Tier 2 generate failed for slide ${index + 1}: ${e.message}`); }
+  }
+  // Tier 3: local SVG fallback (never broken)
+  const fallbackFile = slotConfig.fallback || `${slot}-fallback.svg`;
+  const localFallback = path.join(__dirname, '..', 'templates', 'assets', 'fallback', fallbackFile);
+  const svgDest = destJpg.replace(/\.jpe?g$/i, '.svg');
+  if (fs.existsSync(localFallback)) fs.copyFileSync(localFallback, svgDest);
+  return { path: svgDest, tier: 'svg', elapsedMs: elapsed() };
+}
+
 function renderCanvaCover(slide, brand, index = 0, assetsDir = '', totalSlides = 8) {
   const content = sanitizeSlideContent(slide.content || '').replace(/<!--[\s\S]*?-->/g, '').trim();
   const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
@@ -1918,6 +2017,7 @@ function renderCanvaClosing(slide, brand, index = 8, assetsDir = '', totalSlides
 }
 
 function renderSlide(slide, index, totalSlides, brand, theme = 'editorial', assetsDir = '') {
+  if (theme === 'modern') return require('./themes/modern').renderModernSlide(slide, index, totalSlides, brand, assetsDir);
   if (theme === 'editorial') {
     const arch = classifyCanvaArchetype(slide, index, totalSlides);
     switch (arch) {
@@ -1947,6 +2047,36 @@ function renderSlide(slide, index, totalSlides, brand, theme = 'editorial', asse
     case 'closing': return renderClosingSlide(slide, brand);
     default: return renderGeneralSlide(slide, brand);
   }
+}
+
+function loadThemeManifest(themeName, templatesDir) {
+  const known = ['editorial', 'profile', 'modern'];
+  const name = known.includes(themeName) ? themeName : 'editorial';
+  if (name !== themeName) {
+    console.warn(`[WARN] Unknown theme "${themeName}", falling back to editorial.`);
+  }
+  const manifestPath = path.join(templatesDir, name, 'manifest.json');
+  // Back-compat: theme files still live flat in templates/ until Task 4 moves modern in.
+  const flatFallback = path.join(templatesDir, 'manifest.json');
+  const raw = fs.readFileSync(fs.existsSync(manifestPath) ? manifestPath : flatFallback, 'utf8');
+  const manifest = JSON.parse(raw);
+  for (const key of ['name', 'version', 'archetypes', 'slots', 'cssFile', 'shellFile', 'renderer']) {
+    if (manifest[key] === undefined) throw new Error(`invalid manifest for theme ${name}: missing ${key}`);
+  }
+  return manifest;
+}
+
+// Reviewer meta block for the modern shell's {{META}} token: extracted from the
+// Meta Title / Meta Description header lines the reviewer carries in 02-final.md.
+// Returns the <title> + description <meta> block, or '' when absent.
+function buildReviewerMetaBlock(md) {
+  if (!md) return '';
+  const titleMatch = md.match(/^Meta Title:\s*(.+?)\s*$/m);
+  const descMatch = md.match(/^Meta Description:\s*(.+?)\s*$/m);
+  const parts = [];
+  if (titleMatch) parts.push(`<title>${titleMatch[1].replace(/&/g, '&amp;').replace(/</g, '&lt;')}</title>`);
+  if (descMatch) parts.push(`<meta name="description" content="${descMatch[1].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;')}">`);
+  return parts.join('\n  ');
 }
 
 async function runMain(customArgs) {
@@ -2004,27 +2134,30 @@ async function runMain(customArgs) {
     path.join(__dirname, '..', 'skills', 'builder', 'templates')
   ];
 
+  // Theme shell/CSS resolution via manifest (loadThemeManifest falls back to
+  // editorial with a warning on unknown themes, never hard-fails).
+  // Back-compat: editorial/profile shells still live flat in templates/ while
+  // modern ships inside its theme subdir — accept either location.
   let SHELL = null;
   let CSS = null;
-  if (THEME === 'editorial') {
-    for (const dir of templateCandidates) {
-      const s = path.join(dir, 'editorial-shell.html');
-      const c = path.join(dir, 'editorial.css');
-      if (fs.existsSync(s) && fs.existsSync(c)) {
-        SHELL = s;
-        CSS = c;
-        break;
-      }
+  for (const dir of templateCandidates) {
+    if (!fs.existsSync(dir)) continue;
+    let manifest;
+    try {
+      manifest = loadThemeManifest(THEME, dir);
+    } catch (e) {
+      continue;
     }
-  } else {
-    for (const dir of templateCandidates) {
-      const s = path.join(dir, 'profile-shell.html');
-      const c = path.join(dir, 'custom.css');
-      if (fs.existsSync(s) && fs.existsSync(c)) {
-        SHELL = s;
-        CSS = c;
-        break;
-      }
+    const shellFlat = path.join(dir, manifest.shellFile);
+    const shellNested = path.join(dir, manifest.name, manifest.shellFile);
+    const cssFlat = path.join(dir, manifest.cssFile);
+    const cssNested = path.join(dir, manifest.name, manifest.cssFile);
+    const s = fs.existsSync(shellFlat) ? shellFlat : (fs.existsSync(shellNested) ? shellNested : null);
+    const c = fs.existsSync(cssFlat) ? cssFlat : (fs.existsSync(cssNested) ? cssNested : null);
+    if (s && c) {
+      SHELL = s;
+      CSS = c;
+      break;
     }
   }
 
@@ -2146,42 +2279,46 @@ async function runMain(customArgs) {
   const slides = parseAndSanitizeMarkdown(md);
 
   // 5b. Wire slide image downloads inside build lifecycle with fallback handling
+  // Total asset budget (spec §5, binding): ONE build-level deadline shared by all
+  // slots via acquireSlotImage — never a per-slot elapsed() window.
+  const budget = { ms: 15000, deadline: Date.now() + 15000 };
+  const pickedUrls = new Set();
+  const assetsStart = Date.now();
+  const tierCounts = { search: 0, generate: 0, svg: 0, cached: 0 };
   for (let i = 0; i < slides.length; i++) {
     const s = slides[i];
     const arch = classifyCanvaArchetype(s, i, slides.length);
     if (arch === 'differentiator' || arch === 'pricing') {
       continue;
     }
-    const slot = resolveSlideSlot(s, i, slides.length);
-    const slotConfig = (imageFetcher.SLOT_MAP && imageFetcher.SLOT_MAP[slot]) || {
-      category: 'architecture-portrait',
-      orientation: 'portrait',
-      fallback: `${slot}-fallback.svg`
-    };
-    const destPathJpg = path.join(ASSETS_DIR, `slide-${i + 1}-${slot}.jpg`);
+    const directive = parseImageDirective(s.content || '');
+    let slot;
+    let query = '';
+    let keywords = '';
+    if (directive) {
+      slot = directive.slot;
+      query = directive.query;
+      keywords = directive.keywords;
+    } else {
+      slot = resolveSlideSlot(s, i, slides.length);
+    }
     try {
-      await imageFetcher.fetchImageWithFallback({
-        category: slotConfig.category,
-        destPath: destPathJpg,
-        slot: slot
-      });
+      const result = await acquireSlotImage({ slot, query, keywords, index: i, slug, assetsDir: ASSETS_DIR, budget, pickedUrls });
+      tierCounts[result.tier] = (tierCounts[result.tier] || 0) + 1;
+      console.log(`[ASSETS] slide ${i + 1} slot=${slot} tier=${result.tier}`);
     } catch (err) {
       console.warn(`[WARN] Failed downloading image for slide ${i + 1}: ${err.message}`);
-      const destPathSvg = path.join(ASSETS_DIR, `slide-${i + 1}-${slot}.svg`);
-      if (!fs.existsSync(destPathJpg) && !fs.existsSync(destPathSvg)) {
-        const fallbackFile = slotConfig.fallback || `${slot}-fallback.svg`;
-        const localFallbackPath = path.join(__dirname, '..', 'templates', 'assets', 'fallback', fallbackFile);
-        if (fs.existsSync(localFallbackPath)) {
-          try { fs.copyFileSync(localFallbackPath, destPathSvg); } catch (e) {}
-        }
-      }
+      tierCounts.svg = (tierCounts.svg || 0) + 1;
     }
   }
+  console.log(`[ASSETS] elapsed=${((Date.now() - assetsStart) / 1000).toFixed(1)}s tiers(search=${tierCounts.search || 0},generate=${tierCounts.generate || 0},svg=${tierCounts.svg || 0},cached=${tierCounts.cached || 0})`);
 
   // 6. Convert slides into HTML based on detected archetypes
   const slideHtml = slides.map((s, idx) => {
     return renderSlide(s, idx, slides.length, brand, THEME, ASSETS_DIR);
   }).join('\n');
+
+  assertSlideStructure(slideHtml, slides.length);
 
   // 7. Inject into HTML Shell with dynamic CSS variables
   let shell = fs.readFileSync(SHELL, 'utf8');
@@ -2193,13 +2330,29 @@ async function runMain(customArgs) {
     .replace(/--brand-s:\s*\d+%;/, `--brand-s: ${hsl.s}%;`)
     .replace(/--brand-l:\s*\d+%;/, `--brand-l: ${hsl.l}%;`);
 
-  if (THEME === 'editorial') {
-    shell = shell.replace(/<title>.*?<\/title>/, `<title>${brand.name} — Company Profile</title>`);
+  // Shell injection by placeholder sniffing: modern/editorial shells carry
+  // CSS_INLINE_PLACEHOLDER (+ SLIDES_INLINE_PLACEHOLDER) while the profile
+  // shell carries {{CUSTOM_CSS}} (+ {{COMPANY_NAME}} and its own slide range).
+  // The modern shell also carries {{META}}, replaced with the reviewer meta
+  // block when 02-final.md carries it (else empty string).
+  const reviewerMeta = buildReviewerMetaBlock(md);
+  const hasMetaToken = shell.includes('{{META}}');
+  if (hasMetaToken) {
+    shell = shell.replace('{{META}}', reviewerMeta);
+  }
+  if (shell.includes('/* CSS_INLINE_PLACEHOLDER */')) {
     shell = shell.replace('/* CSS_INLINE_PLACEHOLDER */', customCss);
+  } else if (shell.includes('{{CUSTOM_CSS}}')) {
+    shell = shell.replace('/* {{CUSTOM_CSS}} */', customCss);
+  }
+  if (shell.includes('{{COMPANY_NAME}}')) {
+    shell = shell.replace(/{{COMPANY_NAME}}/g, brand.name);
+  } else if (!hasMetaToken || !/<title>[\s\S]*<\/title>/.test(reviewerMeta)) {
+    shell = shell.replace(/<title>.*?<\/title>/, `<title>${brand.name} — Company Profile</title>`);
+  }
+  if (shell.includes('<!-- SLIDES_INLINE_PLACEHOLDER -->')) {
     shell = shell.replace('<!-- SLIDES_INLINE_PLACEHOLDER -->', slideHtml);
   } else {
-    shell = shell.replace('/* {{CUSTOM_CSS}} */', customCss);
-    shell = shell.replace(/{{COMPANY_NAME}}/g, brand.name);
     shell = shell.replace(
       /<!-- Konten slide di-inject di sini oleh builder -->[\s\S]*?<!-- Setiap section adalah satu slide beresolusi 1920x1080 \(16:9\) -->/,
       slideHtml
@@ -2353,6 +2506,7 @@ if (typeof module !== 'undefined' && typeof require !== 'undefined') {
     classifyCanvaArchetype,
     resolveSlideSlot,
     resolveSlideImageUrl,
+    assertSlideStructure,
     renderEditorialNarrativeSplit,
     renderEditorialEcosystem,
     renderEditorialDifferentiator,
@@ -2360,6 +2514,10 @@ if (typeof module !== 'undefined' && typeof require !== 'undefined') {
     renderEditorialServicesGrid,
     sanitizeSlideContent,
     sanitizeContactDetails,
-    extractBigNumberMetric
+    extractBigNumberMetric,
+    loadThemeManifest,
+    parseImageDirective,
+    pickFromPoolDistinct,
+    acquireSlotImage
   };
 }

@@ -17,7 +17,7 @@ Dokumen yang disediakan di folder `input/`:
 ## Aturan Penulisan & Chunking
 1. **Pemisah Slide Deterministic:**
    - Gunakan `# [Judul Slide]` (H1) untuk menandai setiap slide utama baru.
-   - Panjang kata dalam satu slide dibatasi ~150–250 kata agar proporsional pada layar presentasi 16:9.
+   - Panjang kata dalam satu slide dibatasi ~85–140 kata agar proporsional pada layar presentasi 16:9.
 2. **Zero Hallucination:**
    - Semua angka statistik, portofolio, nama klien, dan klaim kompetitif wajib bersumber langsung dari `business-knowledge-base.md`.
 3. **Struktur Urutan Slide Standar (Diperluas):**
@@ -49,7 +49,7 @@ Dokumen yang disediakan di folder `input/`:
 1. Baca ketiga dokumen di `input/`.
 2. Identifikasi USP, masalah pelanggan, dan tone yang harus digunakan.
 3. Susun draf per slide mengikuti struktur standar di atas.
-4. Periksa jumlah kata per section (pastikan 150–250 kata per H1).
+4. Periksa jumlah kata per section (pastikan 85–140 kata per H1).
 5. Tulis hasil akhir ke `compros/<slug>/drafts/01-draft.md` (legacy: `artifacts/01-company-profile-draft.md`).
 
 ## Referensi Nama Slide (English)
@@ -61,3 +61,41 @@ Slide types di bawah menyelaraskan label yang dipakai harness pengujian dengan j
 - **Differentiator / Why Us** → Slide 7
 - **Social Proof / Testimonials** → Slide 8
 - **Contact** → Slide 10 (CTA & Contact)
+
+## Kontrak Modern (Template-Consumable Markdown)
+
+Aturan di bawah WAJIB dipenuhi agar output langsung bisa dikonsumsi tema builder
+(`modern`) tanpa editing manual. Lihat contoh lengkap di
+`test-fixtures/expected/02-final.modern.md`.
+
+1. **Image Directive (satu per slide):**
+   - Setiap slide `# ` diawali/diakhi SATU directive dengan format persis:
+     ```html
+     <!-- image: <slot> -- query: <1 kalimat EN> ; keywords: <3-5 kata> ; style: photo -->
+     ```
+   - `<slot>`: `hero`, `problem`, `solution`, `services`, `ecosystem`, `metrics`,
+     `differentiator`, `pricing`, atau `closing` (huruf kecil, tanpa spasi).
+   - `query`: SATU kalimat Bahasa Inggris yang mendeskripsikan foto untuk slot itu.
+   - `keywords`: 3–5 kata kunci (dipisah koma) untuk scoring pipeline gambar.
+   - `style`: selalu `photo`.
+2. **Pricing (Slide Paket & Kerjasama):** tabel markdown TEPAT 3 baris data dengan
+   header `| Tier | Harga | Fitur |`, baris tengah adalah tier Pro (di-elevate
+   builder sebagai `Best Seller`), kolom Fitur berisi fitur yang dipisah `;`:
+   ```
+   | Tier | Harga | Fitur |
+   |---|---|---|
+   | Venturo Lite | Free | 1 Brand DNA + copilot dengan limit; 5 video/bulan dengan watermark; antrean standar |
+   | Venturo Pro | Rp99rb/bulan | generate unlimited, full pipeline, tanpa watermark; sync lanjutan + priority support; diskon annual Rp990rb/tahun |
+   | Brand / Team | Rp299rb/bulan | multi-seat hingga 5 user; shared asset & kolaborasi; dedicated support |
+   ```
+3. **Differentiator (Slide Mengapa Kami):** tabel 4–5 kolom
+   (`| Aspek | Venturo Pro | <kompetitor...> |`) + baris kejujuran
+   `**Intinya:** ...` yang mengakui aspek di mana kompetitor menang
+   (misal syarat setup GPU) — tanpa baris ini tabel tidak jujur dan DITOLAK reviewer.
+4. **Metrics (Slide Pencapaian & Bukti):** bullet `- **<number>** <title> — <desc>`
+   dengan angka berformat `%`, `:`, `Rp`, atau `vX` (misal `~90%`, `20:1`,
+   `Rp10rb`) agar `extractBigNumberMetric` tidak jatuh ke default `100%`.
+5. **No-Invention (lihat Aturan 2 Zero Hallucination):** semua angka, nama,
+   harga, dan klaim perbandingan WAJIB bersumber dari `business-knowledge-base.md`.
+   Data tidak tersedia → slide opsional DIHILANGKAN + catat di draf, JANGAN mengarang
+   tier, metrik, testimoni, atau kolom kompetitor.
