@@ -93,7 +93,7 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
 4. **Phase 3 — Slide Deck Assembly:**
    - Panggil skill `/builder`.
    - Mengonversi `compros/<slug>/drafts/02-final.md` menjadi:
-     - `<project>/compros/<slug>/index.html` (Single-file Reveal.js HTML 1920×1080 16:9 dengan CSS ter-inline, default theme `editorial`).
+     - `<project>/compros/<slug>/index.html` (Single-file Reveal.js HTML 1920×1080 16:9 dengan CSS ter-inline, template tunggal `modern`).
      - `<project>/compros/<slug>/compro.md`.
      - `<project>/compros/<slug>/assets/` (Foto arsitektur/corporate resolusi tinggi dari Unsplash direct CDN via `image-fetcher.js` dengan cascading fallback).
      - `<project>/compros/<slug>/reports/build.log`.
@@ -103,13 +103,13 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
 
 5. **Phase 3b — Visual Self-Check:**
    - Buka `compros/<slug>/index.html` di browser.
-   - Navigasi setiap slide dan verifikasi kepatuhan 8 Canva Salford & Co. 1:1 Layout Archetypes:
+   - Navigasi setiap slide dan verifikasi kepatuhan layout archetype template `modern`:
      1. Cover: Foto arsitektur portrait full-height (`slide-1-hero.jpg`), CTA buttons, tanpa overflow.
      2. Welcome (Masalah/Solusi): Kartu narasi bernomor tebal `01`, `02`, `03` dengan panel foto vertikal 1080p.
      3. Services: Grid 2x2 rapi 4 kartu layanan (`01`–`04`) mengisi tinggi penuh slide (zero vertical void 60%).
      4. Ecosystem: Diagram orbital SVG AI tajam terpusat + foto tech workspace.
      5. Metrics: Big number counter 44px `#007A87` untuk rasio (misal `20:1`), persentase (`90%`), atau mata uang.
-     6. Differentiator: Tabel perbandingan editorial Canva dengan kolom brand Venturo disorot rapi.
+     6. Differentiator: Tabel perbandingan dengan kolom brand disorot rapi.
      7. Pricing: 3 kartu harga terpusat dengan tier Pro elevated dan ribbon "Best Seller".
      8. Closing: Komposisi 3 kolom (foto arsitektur, kartu kontak & CTA charcoal, foto tim) tanpa kurung siku `[...]`.
    - Pastikan seluruh foto di `compros/<slug>/assets/` berukuran valid (> 10 KB).
@@ -156,21 +156,23 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
 
 ---
 
-## Canva Editorial v2.5.0 Standards & Workspace Sync Guarantee
+## Template Tunggal `modern` & Workspace Sync Guarantee
 
-1. **Default Theme `editorial`:**
-   - Kanvas abu-abu lembut `#F4F5F7`, surface card `#FFFFFF`, teks charcoal `#232220`, dan brand primary Venturo Teal `#009BAD` (aksen AA `#007A87`).
+1. **Template tunggal `modern`:**
+   - Builder hanya memiliki satu template (`skills/builder/templates/modern/`, diekstrak dari congen6): tidak ada pemilihan tema di flow mana pun.
+   - Kanvas `#F8FAFC`, surface `#FFFFFF`, slate `#0F172A`, dan brand primary Venturo Teal `#009BAD` (aksen AA `#007A87`).
    - Resolusi fixed 1920×1080 (16:9). Kontainer slide memberlakukan `height: 1080px !important;` untuk mengeliminasi 60% vertical blank void.
 
-2. **8 Canva Salford & Co. 1:1 Layout Archetypes:**
-   - `.archetype-canva-cover`: Hero Cover split 55/45 dengan foto arsitektur portrait full-height (`slide-1-hero.jpg`).
-   - `.archetype-canva-welcome`: Narrative Masalah/Solusi split 45/55 dengan nomor tebal 01/02/03 dan panel foto vertikal 1080p.
-   - `.archetype-canva-services`: Grid 2x2 rapi 4 kartu layanan (`01`–`04`) mengisi penuh slide (0% vertical void).
-   - `.archetype-canva-ecosystem`: Orbital AI architecture SVG diagram + foto tech workspace.
-   - `.archetype-canva-metrics`: Big numbers counter (44px `#007A87`) untuk rasio, persen, nominal + foto arsitektur.
-   - `.archetype-canva-differentiator`: Tabel komparasi 4–5 kolom bergaya Canva editorial dengan highlight kolom brand.
-   - `.archetype-canva-pricing`: 3-tier pricing terpusat dengan tier Pro elevated dan ribbon "Best Seller".
-   - `.archetype-canva-closing`: Komposisi 3-kolom Canva Slide 10 (foto arsitektur, kontak & CTA charcoal, foto tim) tanpa raw `[...]` placeholders.
+2. **10 Layout Archetype `modern` (diekstrak dari congen6):**
+   - `cover`: Hero split dengan foto arsitektur, stat chips, dan CTA buttons.
+   - `problem` / `solution`: Narasi Masalah/Solusi split dengan kartu bernomor dan panel foto vertikal 1080p.
+   - `services`: Grid 2x2 4 kartu layanan mengisi penuh slide (0% vertical void).
+   - `ecosystem`: Diagram orbital SVG + foto tech workspace.
+   - `metrics`: Big numbers counter (44px `#007A87`) untuk rasio, persen, nominal + foto arsitektur.
+   - `differentiator`: Tabel komparasi dengan highlight kolom brand.
+   - `pricing`: 3-tier pricing terpusat dengan tier tengah elevated dan ribbon "Best Seller".
+   - `closing`: Komposisi 3-kolom (foto arsitektur, kontak & CTA, foto tim) tanpa raw `[...]` placeholders.
+   - `social-proof`: Grid kartu testimoni klien (opsional, bila konten tersedia).
 
 3. **Hybrid Asset Downloader Pipeline (`image-fetcher.js`):**
    - Mendeteksi slot gambar `<!-- image: <slot> -- ... -->`.

@@ -53,17 +53,11 @@ Rilis v2.3.0 menghadirkan sistem desain editorial baru dan peningkatan pipeline 
 
 ## Tema Slide Deck
 
-Builder (`/builder`) mendukung dua tema build yang dapat dipilih melalui `--theme`:
-
-- **`editorial`** (default, v2.5.0) — Sistem desain *Canva Editorial (Canva Salford & Co. 1:1)*: kanvas `#F4F5F7`, kartu `#FFFFFF`, charcoal `#232220`, aksen Venturo Teal `#009BAD` (aksen AA `#007A87`). Konten Markdown dipetakan otomatis ke 8 arketipe layout 1:1 (`archetype-canva-cover`, `archetype-canva-welcome`, `archetype-canva-services`, `archetype-canva-ecosystem`, `archetype-canva-metrics`, `archetype-canva-differentiator`, `archetype-canva-pricing`, `archetype-canva-closing`), kanvas full-height 1080p (0% vertical void), dan hybrid Unsplash direct CDN image fetcher.
-- **`profile`** (legacy) — Tema profil bawaan v2.2 dengan template dan CSS klasik.
+Builder (`/builder`) hanya memiliki satu template — `modern` (diekstrak dari congen6: kanvas `#F8FAFC`, slate `#0F172A`, aksen Venturo Teal `#009BAD`). Tidak ada opsi `--theme` dan tidak ada pemilihan tema di flow mana pun:
 
 ```bash
-node scripts/build-deck.js --name=<slug> --theme=editorial   # tema default
-node scripts/build-deck.js --name=<slug> --theme=profile      # tema legacy
+node scripts/build-deck.js --name=<slug>   # satu-satunya cara build
 ```
-
-Tanpa opsi `--theme`, builder memakai `editorial` sebagai default.
 
 ## What's New in v2.2.0
 
@@ -106,10 +100,8 @@ Rilis v2.2.0 menghadirkan peningkatan signifikan pada stabilitas arsitektur, kua
 │   ├── builder/                        # Skill 10: Theme-based Reveal.js Assembler (Inline SVG)
 │   │   ├── SKILL.md
 │   │   ├── templates/
-│   │   │   ├── profile-shell.html      # Tema legacy (v2.2)
-│   │   │   ├── editorial-shell.html    # Tema Canva Editorial (v2.4.0)
-│   │   │   ├── editorial.css           # Design system gray-white modern
-│   │   │   └── custom.css
+│   │   │   ├── modern/               # Satu-satunya template (shell.html + theme.css + manifest.json + README.md)
+│   │   │   └── assets/               # Shared SVG vector fallbacks
 │   │   ├── references/
 │   │   │   ├── design-tokens.md        # Dynamic HSL brand color tokens
 │   │   │   └── visual-hierarchy.md     # Layout archetypes & composition

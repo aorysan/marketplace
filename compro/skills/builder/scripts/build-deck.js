@@ -2020,52 +2020,18 @@ function renderCanvaClosing(slide, brand, index = 8, assetsDir = '', totalSlides
     </section>`;
 }
 
-const THEME_ALIASES = {
-  'editorial': 'minimal-editorial'
-};
+// Single-template build: only `modern` exists. No --theme selection.
+// THEME_ALIASES kept as an empty map for backward-compat imports.
+const THEME_ALIASES = {};
 
-function renderSlide(slide, index, totalSlides, brand, theme = 'minimal-editorial', assetsDir = '') {
-  const resolved = THEME_ALIASES[theme] || theme;
-  if (resolved === 'modern' || resolved === 'electric-modern') {
-    return require('./themes/modern').renderModernSlide(slide, index, totalSlides, brand, assetsDir);
-  }
-  if (resolved === 'minimal-editorial') {
-    const arch = classifyCanvaArchetype(slide, index, totalSlides);
-    switch (arch) {
-      case 'cover': return renderCanvaCover(slide, brand, index, assetsDir, totalSlides);
-      case 'welcome-problem': return renderCanvaWelcome(slide, brand, index, 'problem', assetsDir, totalSlides);
-      case 'welcome-solution': return renderCanvaWelcome(slide, brand, index, 'solution', assetsDir, totalSlides);
-      case 'services': return renderCanvaServices(slide, brand, index, assetsDir, totalSlides);
-      case 'ecosystem': return renderCanvaEcosystem(slide, brand, index, assetsDir, totalSlides);
-      case 'metrics': return renderCanvaMetrics(slide, brand, index, assetsDir, totalSlides);
-      case 'differentiator': return renderCanvaDifferentiator(slide, brand, index, assetsDir, totalSlides);
-      case 'pricing': return renderCanvaPricing(slide, brand, index, assetsDir, totalSlides);
-      case 'closing': return renderCanvaClosing(slide, brand, index, assetsDir, totalSlides);
-      default: return renderCanvaWelcome(slide, brand, index, 'solution', assetsDir, totalSlides);
-    }
-  }
-  const type = detectSlideType(slide, index, totalSlides);
-  switch (type) {
-    case 'hero': return renderHeroSlide(slide, brand);
-    case 'problem': return renderProblemSlide(slide, brand);
-    case 'solution': return renderSolutionSlide(slide, brand);
-    case 'ecosystem': return renderEcosystemSlide(slide, brand);
-    case 'features': return renderFeaturesSlide(slide, brand);
-    case 'differentiator': return renderDifferentiatorSlide(slide, brand);
-    case 'showcase': return renderShowcaseSlide(slide, brand);
-    case 'pricing': return renderPricingSlide(slide, brand, totalSlides);
-    case 'offer': return renderOfferSlide(slide, brand);
-    case 'closing': return renderClosingSlide(slide, brand);
-    default: return renderGeneralSlide(slide, brand);
-  }
+function renderSlide(slide, index, totalSlides, brand, theme = 'modern', assetsDir = '') {
+  return require('./themes/modern').renderModernSlide(slide, index, totalSlides, brand, assetsDir);
 }
 
 function loadThemeManifest(themeName, templatesDir) {
-  const resolvedName = THEME_ALIASES[themeName] || themeName;
-  const known = ['minimal-editorial', 'electric-modern', 'modern', 'profile'];
-  const name = known.includes(resolvedName) ? resolvedName : 'minimal-editorial';
-  if (name !== resolvedName && !THEME_ALIASES[themeName]) {
-    console.warn(`[WARN] Unknown theme "${themeName}", falling back to minimal-editorial.`);
+  const name = 'modern';
+  if (themeName && themeName !== 'modern') {
+    console.warn(`[WARN] Single-template build: ignoring theme "${themeName}", using "modern".`);
   }
   const manifestPath = path.join(templatesDir, name, 'manifest.json');
   const raw = fs.readFileSync(manifestPath, 'utf8');
@@ -2093,12 +2059,13 @@ async function runMain(customArgs) {
   const argv = customArgs || process.argv.slice(2);
   const ROOT = detectProjectRoot(argv);
 
-  // 1a. CLI argument parser (supports --theme=<theme>, --name=<slug>, and --root=<path>, backward-compat positional)
-  let THEME = 'minimal-editorial';
+  // 1a. CLI argument parser (supports --name=<slug> and --root=<path>, backward-compat positional).
+  // Single-template build: --theme is no longer an option and is ignored with a warning.
+  let THEME = 'modern';
   let slug = 'congen';
   for (const arg of argv) {
     if (arg.startsWith('--theme=')) {
-      THEME = arg.split('=')[1];
+      console.warn(`[WARN] Single-template build: ignoring "${arg}", using "modern".`);
     } else if (arg.startsWith('--name=')) {
       slug = arg.split('=')[1];
     } else if (!arg.startsWith('--')) {
@@ -2144,8 +2111,7 @@ async function runMain(customArgs) {
     path.join(__dirname, '..', 'skills', 'builder', 'templates')
   ];
 
-  // Theme shell/CSS resolution via manifest (loadThemeManifest falls back to
-  // minimal-editorial with a warning on unknown themes, never hard-fails).
+  // Template shell/CSS resolution via manifest (single-template: always modern).
   let SHELL = null;
   let CSS = null;
   for (const dir of templateCandidates) {
@@ -2216,7 +2182,7 @@ async function runMain(customArgs) {
         const fallbackPath = path.join(comprosDir, s, 'drafts', '02-final.md');
         if (fs.existsSync(fallbackPath) && fs.statSync(fallbackPath).isFile()) {
           srcMdPath = fallbackPath;
-          console.log(`  [editorial fallback] Using draft from compros/${s}/drafts/02-final.md`);
+          console.log(`  [fallback] Using draft from compros/${s}/drafts/02-final.md`);
           break;
         }
       }
@@ -2333,17 +2299,14 @@ async function runMain(customArgs) {
   let shell = fs.readFileSync(SHELL, 'utf8');
   let customCss = fs.readFileSync(CSS, 'utf8');
 
-  // Inject dynamic client HSL tokens (no-op when CSS lacks these tokens, e.g. editorial.css)
+  // Inject dynamic client HSL tokens (no-op when CSS lacks these tokens).
   customCss = customCss
     .replace(/--brand-h:\s*\d+;/, `--brand-h: ${hsl.h};`)
     .replace(/--brand-s:\s*\d+%;/, `--brand-s: ${hsl.s}%;`)
     .replace(/--brand-l:\s*\d+%;/, `--brand-l: ${hsl.l}%;`);
 
-  // Shell injection by placeholder sniffing: modern/editorial shells carry
-  // CSS_INLINE_PLACEHOLDER (+ SLIDES_INLINE_PLACEHOLDER) while the profile
-  // shell carries {{CUSTOM_CSS}} (+ {{COMPANY_NAME}} and its own slide range).
-  // The modern shell also carries {{META}}, replaced with the reviewer meta
-  // block when 02-final.md carries it (else empty string).
+  // Shell injection (single-template modern shell): CSS_INLINE_PLACEHOLDER,
+  // SLIDES_INLINE_PLACEHOLDER, and {{META}} (reviewer meta block or '').
   const reviewerMeta = buildReviewerMetaBlock(md);
   const hasMetaToken = shell.includes('{{META}}');
   if (hasMetaToken) {
@@ -2351,21 +2314,15 @@ async function runMain(customArgs) {
   }
   if (shell.includes('/* CSS_INLINE_PLACEHOLDER */')) {
     shell = shell.replace('/* CSS_INLINE_PLACEHOLDER */', customCss);
-  } else if (shell.includes('{{CUSTOM_CSS}}')) {
-    shell = shell.replace('/* {{CUSTOM_CSS}} */', customCss);
   }
-  if (shell.includes('{{COMPANY_NAME}}')) {
-    shell = shell.replace(/{{COMPANY_NAME}}/g, brand.name);
-  } else if (!hasMetaToken || !/<title>[\s\S]*<\/title>/.test(reviewerMeta)) {
+  if (!hasMetaToken || !/<title>[\s\S]*<\/title>/.test(reviewerMeta)) {
     shell = shell.replace(/<title>.*?<\/title>/, `<title>${brand.name} — Company Profile</title>`);
   }
   if (shell.includes('<!-- SLIDES_INLINE_PLACEHOLDER -->')) {
     shell = shell.replace('<!-- SLIDES_INLINE_PLACEHOLDER -->', slideHtml);
   } else {
-    shell = shell.replace(
-      /<!-- Konten slide di-inject di sini oleh builder -->[\s\S]*?<!-- Setiap section adalah satu slide beresolusi 1920x1080 \(16:9\) -->/,
-      slideHtml
-    );
+    console.error('Error: modern shell.html missing <!-- SLIDES_INLINE_PLACEHOLDER -->.');
+    process.exit(1);
   }
 
   // 8. Write primary deliverables
@@ -2431,9 +2388,7 @@ async function runMain(customArgs) {
     '',
     `Total Slides    : ${slides.length}`,
     ...slides.map((s, i) => {
-      const type = (THEME === 'minimal-editorial' || THEME === 'editorial')
-        ? classifyCanvaArchetype(s, i, slides.length)
-        : detectSlideType(s, i, slides.length);
+      const type = detectSlideType(s, i, slides.length);
       const wordCount = s.content.split(/\s+/).filter(Boolean).length;
       return `  Slide ${i + 1} [${type.toUpperCase().padEnd(9)}]: ${s.title} (${wordCount} words)`;
     }),

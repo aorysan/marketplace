@@ -1,40 +1,40 @@
 const fs = require('fs');
 const path = require('path');
 
-const primaryShellPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'profile', 'shell.html');
-const fallbackShellPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'profile-shell.html');
-const shellPath = fs.existsSync(primaryShellPath) ? primaryShellPath : fallbackShellPath;
-
-const primaryCssPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'profile', 'theme.css');
-const fallbackCssPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'custom.css');
-const cssPath = fs.existsSync(primaryCssPath) ? primaryCssPath : fallbackCssPath;
+// Single-template build: the modern shell must be self-contained —
+// inlined CSS via placeholder, slides via placeholder, no external stylesheet link.
+const shellPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'modern', 'shell.html');
+const cssPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'modern', 'theme.css');
 
 if (!fs.existsSync(shellPath) || !fs.existsSync(cssPath)) {
-  console.error('FAIL: template files missing');
+  console.error('FAIL: modern template files missing');
   process.exit(1);
 }
 
 const shellContent = fs.readFileSync(shellPath, 'utf-8');
 const cssContent = fs.readFileSync(cssPath, 'utf-8');
 
-// The shell must contain the CSS injection token <!-- {{CUSTOM_CSS}} --> or <style>{{CUSTOM_CSS}}</style>
-// and must NOT have external <link rel="stylesheet" href="custom.css">
-if (shellContent.includes('<link rel="stylesheet" href="custom.css">')) {
-  console.error('FAIL: profile-shell.html still has external <link rel="stylesheet" href="custom.css">');
+if (/href=["'](custom|theme)\.css["']/.test(shellContent)) {
+  console.error('FAIL: modern shell.html still has external project stylesheet link');
   process.exit(1);
 }
 
-if (!shellContent.includes('/* {{CUSTOM_CSS}} */') && !shellContent.includes('{{CUSTOM_CSS}}')) {
-  console.error('FAIL: profile-shell.html missing CSS injection placeholder {{CUSTOM_CSS}}');
+if (!shellContent.includes('/* CSS_INLINE_PLACEHOLDER */')) {
+  console.error('FAIL: modern shell.html missing CSS injection placeholder /* CSS_INLINE_PLACEHOLDER */');
+  process.exit(1);
+}
+
+if (!shellContent.includes('<!-- SLIDES_INLINE_PLACEHOLDER -->')) {
+  console.error('FAIL: modern shell.html missing <!-- SLIDES_INLINE_PLACEHOLDER -->');
   process.exit(1);
 }
 
 // Verify CSS placeholder replacement
-const inlined = shellContent.replace('/* {{CUSTOM_CSS}} */', cssContent);
-if (!inlined.includes('--brand-primary') || inlined.includes('/* {{CUSTOM_CSS}} */')) {
+const inlined = shellContent.replace('/* CSS_INLINE_PLACEHOLDER */', cssContent);
+if (!inlined.includes('--canvas-bg') || inlined.includes('/* CSS_INLINE_PLACEHOLDER */')) {
   console.error('FAIL: CSS placeholder replacement verification failed');
   process.exit(1);
 }
 
-console.log('PASS: profile-shell.html is configured for self-contained CSS inlining');
+console.log('PASS: modern shell.html is configured for self-contained CSS inlining');
 process.exit(0);

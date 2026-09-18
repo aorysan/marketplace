@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const templatesDir = path.join(__dirname, '..', 'skills', 'builder', 'templates');
-const requiredThemes = ['minimal-editorial', 'electric-modern', 'modern', 'profile'];
+const requiredThemes = ['modern'];
 
 for (const theme of requiredThemes) {
   const dir = path.join(templatesDir, theme);

@@ -13,7 +13,7 @@ const { runMain } = require('../skills/builder/scripts/build-deck');
   );
   const prevCwd = process.cwd();
   process.chdir(tmp);
-  await runMain(['--name=' + slug, '--theme=modern', '--root=' + tmp]);
+  await runMain(['--name=' + slug, '--root=' + tmp]);
   process.chdir(prevCwd);
   const html = fs.readFileSync(path.join(tmp, 'compros', slug, 'index.html'), 'utf8');
   // Assert 1: section count equals slide count in fixture

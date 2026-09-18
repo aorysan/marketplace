@@ -92,7 +92,7 @@ Untuk impeccable, builder membaca reference docs secara langsung (bukan menjalan
 ## Prinsip Kerja
 
 1. **Self-Contained Design Intelligence:** Seluruh aturan visual, warna, dan tipografi bersumber dari `references/design-tokens.md`, `references/visual-hierarchy.md`, serta dua skill desain ter-bundle `skills/ui-ux-pro-max/` (design system generator, palettes, fonts, icons) dan `skills/impeccable/` (craft quality floor, critique, audit, polish).
-2. **Dynamic HSL Theming & Canva Editorial Default:** Builder mengunci tema default `editorial` (Canva Salford & Co. 1:1, kanvas `#F4F5F7`, kartu `#FFFFFF`, charcoal `#232220`, aksen Venturo Teal `#009BAD` / `hsl(186, 100%, 34%)`) serta menyuntikkan token CSS HSL dinamis (`--brand-h`, `--brand-s`, `--brand-l`).
+2. **Single Template `modern` & Dynamic HSL Theming:** Builder hanya memiliki satu template (`templates/modern/`, diekstrak dari congen6 — kanvas `#F8FAFC`, slate `#0F172A`, aksen Venturo Teal `#009BAD` / `hsl(186, 100%, 34%)`). Tidak ada opsi pemilihan tema/flag `--theme`; builder selalu merender via `themes/modern.js` serta menyuntikkan token CSS HSL dinamis (`--brand-h`, `--brand-s`, `--brand-l`).
 3. **Hybrid Asset Pipeline & Curated Direct CDN:** Mengunduh foto arsitektur dan corporate resolusi tinggi dari Unsplash direct CDN (`images.unsplash.com`) berdasarkan slot komentar markdown (`<!-- image: <slot> -- ... -->`), dengan fallback berjenjang ke Lorem Picsum dan aset vektor SVG arsitektur lokal (`templates/assets/fallback/`). Zero API key barrier, deck mandiri tersimpan di `compros/<slug>/assets/`.
 4. **Deterministic Chunking & Slide Budget:** Satu slide memuat 1 konsep utama berukuran 1920×1080 (16:9 1080p) dengan batas maksimal ~250 kata atau 3–4 kartu konten untuk menjamin keterbacaan proporsional.
 5. **Aksesibilitas & Kontras Ketat:** Memastikan teks body memiliki rasio kontras minimal 4.5:1 terhadap latar belakang (teks aksen AA `#007A87` pada latar terang, teks body `#232220` pada kartu `#FFFFFF`).
@@ -156,12 +156,13 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 - **Constraint Retroaktif:** Aturan ini berlaku retroaktif: jika builder menemukan output lama dengan `<img src="assets/*.svg">`, harus di-fix saat rebuild.
 
 ### 4. HTML Assembly & Inlining
-- Muat template kerangka `profile-shell.html`.
+- Muat template kerangka `templates/modern/shell.html` (satu-satunya template).
 - Suntikkan Google Fonts (*Plus Jakarta Sans* 600/700/800 & *Inter* 400/500/600).
 - Konfigurasi Reveal.js untuk ukuran fixed `1920x1080`, margin `0.04`, transisi `slide`.
 - Suntikkan variabel CSS HSL brand ke dalam `:root`.
-- Baca `templates/custom.css` dan masukkan isinya menggantikan komentar placeholder `/* {{CUSTOM_CSS}} */` di dalam `<style>`.
-- Gantikan `{{COMPANY_NAME}}` pada `<title>`.
+- Baca `templates/modern/theme.css` dan masukkan isinya menggantikan placeholder `/* CSS_INLINE_PLACEHOLDER */` di dalam `<style>`.
+- Gantikan `<title>` dengan nama perusahaan (`<nama> — Company Profile`), kecuali `{{META}}` reviewer sudah menyediakan `<title>`.
+- Render masing-masing `<section>` via `themes/modern.js` (`renderModernSlide`) ke dalam `<div class="slides">` menggantikan `<!-- SLIDES_INLINE_PLACEHOLDER -->`.
 - Render masing-masing `<section>` ke dalam `<div class="slides">` dengan class CSS semantik (`.hero-slide`, `.problem-card`, `.solution-card`, `.ecosystem-diagram`, `.phone-frame`, `.pricing-card`, `.closing-banner`, `.slide-differentiator`, `.slide-social-proof`).
 - Tulis file keluaran final ke `<project>/compros/<slug>/index.html`.
 
@@ -536,9 +537,9 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 
 ---
 
-## 3.5 Canva Editorial Theme (v2.5.0)
+## 3.5 Referensi Historis: Canva Editorial Theme (v2.5.0 — tidak lagi dirender)
 
-Tema `editorial` merupakan **DEFAULT** standar v2.5.0 pada `build-deck.js` yang mengimplementasikan arsitektur visual **Canva Salford & Co. 1:1** dengan kanvas 1920×1080 (16:9), proporsi vertikal seimbang tanpa vertical void (0% blank space), dan hybrid asset pipeline foto arsitektur/corporate beresolusi tinggi.
+Template `modern` (`templates/modern/`) adalah **satu-satunya template** pada `build-deck.js`: tidak ada flag `--theme` dan tidak ada pemilihan tema. Arsitektur visual modern diekstrak dari congen6 (token aktual di `templates/modern/theme.css`, didokumentasikan di `templates/modern/README.md`). Isi section ini dipertahankan sebagai referensi historis tema `editorial`/Canva Salford & Co. v2.5.0 dan tidak lagi dirender oleh builder.
 
 ### Design Tokens (CSS Custom Properties)
 
@@ -607,12 +608,12 @@ Pada akhir kompilasi, `postBuildSyncGuarantee()` memverifikasi apakah build diek
 ### Cara Menjalankan
 
 ```bash
-node scripts/build-deck.js --name=<slug> --theme=editorial
+node scripts/build-deck.js --name=<slug>
 ```
 
 Contoh:
 ```bash
-node scripts/build-deck.js --name=congen5 --theme=editorial
+node scripts/build-deck.js --name=congen5
 ```
 
 Output diproduksi di `compros/<slug>/` (index.html, compro.md, assets/, reports/build.log, drafts/).
