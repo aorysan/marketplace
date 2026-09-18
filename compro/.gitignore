@@ -7,6 +7,10 @@
 # --- Node dependencies ---
 node_modules/
 
+# --- Python cache & bytecode (embedded skills) ---
+__pycache__/
+*.pyc
+
 # --- Vercel local state (auth token, project cache, logs) ---
 # Never commit these — they contain account/project credentials.
 .vercel/
@@ -38,6 +42,10 @@ Desktop.ini
 # source. Keep it local so recovery maps are never published.
 .superpowers/
 docs/superpowers/plans
+# NOTE: docs/superpowers/specs/ is intentionally tracked.
+
+# NOTE: skills/builder/skills/ (embedded ui-ux-pro-max & impeccable)
+# MUST be committed — they are part of the plugin source for portability.
 
 # --- Layer 3 runtime outputs (produced from the skills at run time) ---
 # These are generated per-run and ARE the user's private working data.

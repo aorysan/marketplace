@@ -5,7 +5,7 @@
 ---
 
 ## Tujuan
-Mengkonversi dokumen Markdown company profile menjadi single-file HTML presentasi interaktif berukuran 1920×1080 (16:9) menggunakan Reveal.js. Output harus konsisten, memikat secara visual, dan mematuhi panduan desain modern (`ui-ux-pro-max` & `impeccable`) tanpa ketergantungan pada plugin eksternal di sisi user saat runtime.
+Mengkonversi dokumen Markdown company profile menjadi single-file HTML presentasi interaktif berukuran 1920×1080 (16:9) menggunakan Reveal.js. Output harus konsisten, memikat secara visual, dan mematuhi panduan desain modern (lihat skill ter-bundle [`ui-ux-pro-max`](skills/ui-ux-pro-max/SKILL.md) & [`impeccable`](skills/impeccable/SKILL.md)) tanpa ketergantungan pada plugin eksternal di sisi user saat runtime.
 
 ---
 
@@ -22,6 +22,53 @@ Builder ini dilengkapi modul referensi desain bawaan yang self-contained di dala
    - **Layout Archetypes 16:9:** Komposisi slide untuk Hero 2-kolom, Problem cards ber-border dashed, Solution cards berikon SVG, Circular Ecosystem Diagram, Smartphone UI Mockup frame, Pricing table dengan "Best Seller" ribbon badge, serta Closing banner dengan pill badge App Store & Google Play.
    - **Standar Rasio Kontras:** Kepatuhan WCAG AA / AAA (kontras teks normal minimal 4.5:1, teks besar minimal 3:1 pada background gelap `--brand-surface` `#0f172a`).
    - **Scannability & Micro-Interactions:** Z-pattern eye-path, Squint Test, transisi kartu 150–300ms yang hardware-accelerated, dan fidelitas print PDF `@media print`.
+
+## Embedded Design Skills (Self-Contained)
+
+Builder ini menyertakan dua skill desain lengkap yang di-bundle langsung untuk portabilitas penuh:
+
+1. **[ui-ux-pro-max (`skills/ui-ux-pro-max/SKILL.md`)](skills/ui-ux-pro-max/SKILL.md):**
+   - Design system generator dengan 79 searchable styles (50 aktif), 192 product palettes & reasoning profiles, 74 font pairings
+   - Searchable datasets: colors, typography, icons (Lucide/Phosphor), motion presets, UX guidelines, landing patterns
+   - Python CLI: `python3 skills/builder/skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system`
+   - Digunakan untuk: pemilihan palet warna, font pairing, style matching per industri produk klien
+
+2. **[impeccable (`skills/impeccable/SKILL.md`)](skills/impeccable/SKILL.md):**
+   - Design craft intelligence untuk frontend interface — award-winning design director level
+   - Commands: `critique` (UX heuristic scoring), `audit` (a11y, perf, responsive), `polish` (final quality pass), `bolder` (amplify bland designs), `animate` (purposeful motion), `colorize` (strategic color), `typeset` (typography hierarchy), `layout` (spacing & rhythm)
+   - Critical reference: [`craft-floor.md`](skills/impeccable/reference/craft-floor.md) — quality floor & absolute bans
+   - Digunakan untuk: post-build quality audit, visual polish, accessibility check pada HTML output
+   - Di-embed via 35 reference docs lengkap dan launcher script (`scripts/impeccable`), tanpa precompiled binary platform-specific di git (~16MB dihemat). Builder mengonsumsi reference docs secara langsung; launcher script akan mendownload binary sesuai platform atau menggunakan `impeccable` dari PATH jika eksekusi CLI diperlukan.
+
+### Kapan Builder Harus Memanggil Skill Ini
+
+| Tahap Build | Skill yang Dipanggil | Tujuan |
+|-------------|---------------------|--------|
+| 1a. Brand Color Resolution | ui-ux-pro-max (`python3 skills/builder/skills/ui-ux-pro-max/scripts/search.py "<industri> <produk>" --domain color`) | Validasi palet warna terhadap industry best practices |
+| 2. Archetype Mapping | ui-ux-pro-max (`--domain landing`) | Pastikan layout sesuai conversion patterns untuk industri klien |
+| 4. HTML Assembly | impeccable — baca [`craft-floor.md`](skills/impeccable/reference/craft-floor.md) | Enforce quality floor: no placeholder text, no broken layout, no orphaned elements |
+| 4. HTML Assembly | impeccable — baca [`typeset.md`](skills/impeccable/reference/typeset.md) | Pastikan typography hierarchy konsisten (Plus Jakarta Sans + Inter scale) |
+| Phase 3b Visual Self-Check | impeccable — baca [`critique.md`](skills/impeccable/reference/critique.md) | Heuristic UX review per-slide: scannability, visual balance, contrast |
+| Phase 3b Visual Self-Check | impeccable — baca [`audit.md`](skills/impeccable/reference/audit.md) | Technical quality: accessibility (WCAG AA contrast), responsive behavior |
+
+### Cara Menggunakan
+
+Builder WAJIB membaca reference doc yang relevan dari skill ter-bundle pada tahap yang sesuai. Contoh penggunaan:
+
+```bash
+# Generate design system recommendation untuk industri klien
+python3 skills/builder/skills/ui-ux-pro-max/scripts/search.py "fintech digital payment" --design-system
+
+# Cari font pairing recommendation
+python3 skills/builder/skills/ui-ux-pro-max/scripts/search.py "professional corporate" --domain typography
+
+# Cari color palette recommendation
+python3 skills/builder/skills/ui-ux-pro-max/scripts/search.py "healthcare wellness" --domain color
+```
+
+Untuk impeccable, builder membaca reference docs secara langsung (bukan menjalankan CLI):
+- Sebelum HTML assembly: baca `skills/impeccable/reference/craft-floor.md`
+- Saat visual self-check: baca `skills/impeccable/reference/critique.md` dan `skills/impeccable/reference/audit.md`
 
 ---
 
@@ -44,7 +91,7 @@ Builder ini dilengkapi modul referensi desain bawaan yang self-contained di dala
 
 ## Prinsip Kerja
 
-1. **Self-Contained Design Intelligence:** Seluruh aturan visual, warna, dan tipografi bersumber dari `references/design-tokens.md` dan `references/visual-hierarchy.md`.
+1. **Self-Contained Design Intelligence:** Seluruh aturan visual, warna, dan tipografi bersumber dari `references/design-tokens.md`, `references/visual-hierarchy.md`, serta dua skill desain ter-bundle `skills/ui-ux-pro-max/` (design system generator, palettes, fonts, icons) dan `skills/impeccable/` (craft quality floor, critique, audit, polish).
 2. **Dynamic HSL Theming & Canva Editorial Default:** Builder mengunci tema default `editorial` (Canva Salford & Co. 1:1, kanvas `#F4F5F7`, kartu `#FFFFFF`, charcoal `#232220`, aksen Venturo Teal `#009BAD` / `hsl(186, 100%, 34%)`) serta menyuntikkan token CSS HSL dinamis (`--brand-h`, `--brand-s`, `--brand-l`).
 3. **Hybrid Asset Pipeline & Curated Direct CDN:** Mengunduh foto arsitektur dan corporate resolusi tinggi dari Unsplash direct CDN (`images.unsplash.com`) berdasarkan slot komentar markdown (`<!-- image: <slot> -- ... -->`), dengan fallback berjenjang ke Lorem Picsum dan aset vektor SVG arsitektur lokal (`templates/assets/fallback/`). Zero API key barrier, deck mandiri tersimpan di `compros/<slug>/assets/`.
 4. **Deterministic Chunking & Slide Budget:** Satu slide memuat 1 konsep utama berukuran 1920×1080 (16:9 1080p) dengan batas maksimal ~250 kata atau 3–4 kartu konten untuk menjamin keterbacaan proporsional.

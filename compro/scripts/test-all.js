@@ -9,6 +9,7 @@ const testScripts = [
   'test-publisher-workflow.js',
   'test-orchestrator.js',
   'test-theme-dispatch.js',
+  'test-template-bundle.js',
   'test-slide-structure.js',
   'test-asset-pipeline.js',
   'test-modern-theme-files.js',

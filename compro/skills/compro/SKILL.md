@@ -39,6 +39,7 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
 | `compros/<slug>/index.html` ada | Phase 4 (SEO Audit) | "Ditemukan slide deck dari run sebelumnya. Mau langsung audit SEO, atau rebuild dari awal?" |
 | `compros/<slug>/drafts/02-final.md` ada | Phase 3 (Build) | "Ditemukan draf final. Mau langsung build slide, atau mulai ulang dari drafting?" |
 | `compros/<slug>/drafts/01-draft.md` ada | Phase 2 (Review) | "Ditemukan draf awal. Mau lanjut ke review, atau tulis ulang dari awal?" |
+| `compros/<slug>/reports/selling-points-research.md` ada | Phase 1 (Drafting — skip research) | "Ditemukan research selling points. Mau langsung lanjut ke drafting, atau riset ulang dari awal?" |
 | `compros/<slug>/reports/review-report.md` ada + status REVISION_REQUIRED | Phase 1 (Re-draft) | "Ditemukan review yang meminta revisi. Mau lanjut revisi, atau mulai baru?" |
 | Tidak ada artefak | Phase 1 (dari awal) | Lanjut ke Phase 1 seperti biasa |
 
@@ -71,9 +72,15 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
    - Jalankan **Slug Resolution Protocol**: tentukan `<slug>` dari nama perusahaan di `business-knowledge-base.md`, konfirmasikan ke pengguna, dan siapkan folder kerja `compros/<slug>/`.
    - (Resumability Check: jika ada artefak sebelumnya untuk slug ini, tawarkan resume sebelum Phase 1)
 
-2. **Phase 1 — Drafting** (`/writer`):
-   - Panggil skill `/writer`.
-   - Menghasilkan: `compros/<slug>/drafts/01-draft.md` (legacy: `artifacts/01-company-profile-draft.md`).
+2. **Phase 1 — Selling Point Research & Drafting** (`/writer`):
+   - **Phase 0.5 — Competitive Research:**
+     - Writer membaca `input/business-knowledge-base.md`, melakukan research produk serupa di internet (`search_web` + `read_url_content`), dan menyusun perbandingan internal.
+     - *(Graceful Fallback)*: Jika konektivitas internet tidak tersedia (lingkungan offline), web search mengalami error/kegagalan, atau menghasilkan 0 kompetitor relevan, Phase 0.5 secara otomatis beralih (smooth fallback) ke sintesis dokumen internal (`business-knowledge-base.md` & `business-audit-report.md`) tanpa menghentikan atau me-stall pipeline.
+     - Menghasilkan: `compros/<slug>/reports/selling-points-research.md`
+     - **User Review Gate (BLOCKING):** Menunggu user approve selling points sebelum lanjut drafting.
+   - **Phase 1 — Drafting:**
+     - Panggil skill `/writer` dengan selling points sebagai input tambahan.
+     - Menghasilkan: `compros/<slug>/drafts/01-draft.md`.
 
 3. **Phase 2 — Content QA Loop:**
    - Panggil skill `/reviewer`.

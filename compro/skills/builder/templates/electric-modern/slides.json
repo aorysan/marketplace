@@ -1,0 +1,6564 @@
+{
+  "presentation_title": "Light Green and White Modern Company Profile Presentation",
+  "width": 1920.0,
+  "height": 1080.0,
+  "total_slides": 15,
+  "slides": [
+    {
+      "slide_number": 1,
+      "background_color": "#122029",
+      "background_image": {
+        "id": "MADQ5pyWLTY",
+        "title": "Corporate Office Buildings",
+        "url": "https://media-public.canva.com/MADQ5pyWLTY/1/screen_2x.jpg"
+      },
+      "elements": [
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": -303.8809738503154,
+            "x": 285.4107770280773,
+            "h": 1687.7619477006308,
+            "w": 1116.9403936444762,
+            "rotation": 90.0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFG5E3JH-Y",
+            "title": "Blue Shades Linear Gradient",
+            "url": "https://media-public.canva.com/3JH-Y/MAFG5E3JH-Y/1/s3.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 627.1793067643868,
+            "x": 652.4249183305642,
+            "h": 68.48385727110076,
+            "w": 615.1501633388715,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJjTk5UU,0",
+              "font_name": "Canva Sans",
+              "size": "25.3333px",
+              "weight": null,
+              "color": "#ffffff",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 403.3368359645126,
+            "x": 362.66434022642875,
+            "h": 208.559363931307,
+            "w": 1194.6713195471425,
+            "rotation": 0
+          },
+          "text": "Welcome to Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Welcome to Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "122.667px",
+              "weight": "bold",
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "subtitle",
+          "position": {
+            "y": 647.044419399937,
+            "x": 589.9278442229311,
+            "h": 28.753632,
+            "w": 740.1443115541377,
+            "rotation": 0
+          },
+          "text": "Driven by Purpose, Designed for Impact",
+          "text_runs": [
+            {
+              "text": "Driven by Purpose, Designed for Impact",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": null,
+              "color": "#122029",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "subtitle",
+          "position": {
+            "y": 993.6644046628708,
+            "x": 746.2036996723721,
+            "h": 21.973343999999997,
+            "w": 427.59260065525586,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "18.6667px",
+              "weight": null,
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 382.3368359645126,
+            "x": 913.8856449664697,
+            "h": 8.0,
+            "w": 92.22871006706055,
+            "rotation": 3.531316865920082e-14
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 2,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 183.26554886516772,
+            "x": 1092.959456975933,
+            "h": 140.04922432672086,
+            "w": 434.78041347142533,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1812.0,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "justify",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 244.0990165425577,
+            "x": -251.09901654255782,
+            "h": 591.8019669148842,
+            "w": 1079.9999999999998,
+            "rotation": 90.0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qO-46E4",
+            "title": null,
+            "url": "https://media-public.canva.com/-46E4/MAF_qO-46E4/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 224.5040617307796,
+            "x": 180.1826633294172,
+            "h": 630.9918765384408,
+            "w": 701.1514972221038,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 476.5585394250345,
+            "x": 1514.5963965806625,
+            "h": 8.0,
+            "w": 105.88463633702395,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 870.4477791348323,
+            "x": 1135.7490933237982,
+            "h": 26.28667199999993,
+            "w": 26.28667199999993,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFPM4IpyJU",
+            "title": "Icon Website",
+            "url": "https://media-public.canva.com/IpyJU/MAFPM4IpyJU/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 423.521952718758,
+            "x": 764.7215319282099,
+            "h": 232.95609456248405,
+            "w": 233.22525724662236,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "do-not-change",
+          "position": {
+            "y": 207.68760150177673,
+            "x": 1131.7676139569744,
+            "h": 91.20511905350281,
+            "w": 418.61995175390877,
+            "rotation": 0
+          },
+          "text": "Company",
+          "text_runs": [
+            {
+              "text": "Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "101.019px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 145.47692673711612,
+            "x": 1489.9512483193068,
+            "h": 75.57724425610321,
+            "w": 75.57724425610321,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 357.5539596703339,
+            "x": 911.2074293466922,
+            "h": 35.72327700536098,
+            "w": 35.72327700536098,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 936.2767229946389,
+            "x": 1771.2172435212115,
+            "h": 35.72327700536098,
+            "w": 35.72327700536098,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 439.32805837048085,
+            "x": 780.5459003080704,
+            "h": 201.34388325903808,
+            "w": 201.57652048690122,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 323.3147731918888,
+            "x": 1131.7676139569742,
+            "h": 139.9249269676121,
+            "w": 583.5950645505095,
+            "rotation": 0
+          },
+          "text": "profile",
+          "text_runs": [
+            {
+              "text": "profile",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "63.6967px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1682.9762694950405,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "end",
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 704.2363075566828,
+            "x": 1131.7676139569744,
+            "h": 61.2,
+            "w": 656.395319661729,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dol.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dol.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 463.9382811168126,
+            "x": 1131.443340271493,
+            "h": 61.64641203515087,
+            "w": 335.94884162392367,
+            "rotation": 0
+          },
+          "text": "2025-2030",
+          "text_runs": [
+            {
+              "text": "2025-2030",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "116.685px",
+              "weight": "bold",
+              "color": "#e5e5e5",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 872.6044431348323,
+            "x": 1192.8884322624306,
+            "h": 21.973343999999997,
+            "w": 427.59260065525586,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "18.6667px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 3,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 91.17870432776965,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 741.5833713662068,
+            "x": null,
+            "h": 509.6000000000001,
+            "w": 1920.0,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qO-46E4",
+            "title": null,
+            "url": "https://media-public.canva.com/-46E4/MAF_qO-46E4/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 186.56290483903558,
+            "x": 1118.9234415313472,
+            "h": 630.9167916318229,
+            "w": 630.9167916318229,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 206.60115255973847,
+            "x": 1138.96168925205,
+            "h": 590.8402961904171,
+            "w": 590.8402961904171,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 567.021300654947,
+            "x": 929.0910183915364,
+            "h": 379.6648462796215,
+            "w": 379.6648462796215,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 477.69354953629,
+            "x": 1023.5970653731795,
+            "h": 69.23460873417159,
+            "w": 69.23460873417159,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 213.47251638126875,
+            "x": 1702.0860571127994,
+            "h": 47.7541760503706,
+            "w": 47.7541760503706,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 213.47251638126875,
+            "x": 132.5084988317344,
+            "h": 47.7541760503706,
+            "w": 47.7541760503706,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 880.2937591609646,
+            "x": 132.5084988317344,
+            "h": 26.28667199999993,
+            "w": 26.28667199999993,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFPM4IpyJU",
+            "title": "Icon Website",
+            "url": "https://media-public.canva.com/IpyJU/MAFPM4IpyJU/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 627.9588128797993,
+            "x": 132.5084988317344,
+            "h": 8.0,
+            "w": 105.88463633702395,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "pretitle",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 132.50849883173447,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 343.1338161786583,
+            "x": 132.50849883173447,
+            "h": 148.65973335763158,
+            "w": 827.4915011682655,
+            "rotation": 0
+          },
+          "text": "Collaborators. Problem-solvers.",
+          "text_runs": [
+            {
+              "text": "Collaborators. Problem-solvers.",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "64.3961px",
+              "weight": "bold",
+              "color": "#96ae00",
+              "align": null,
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 271.74903193943044,
+            "x": 132.50849883173447,
+            "h": 80.52391323528602,
+            "w": 827.4915011682655,
+            "rotation": 0
+          },
+          "text": "Who We AreInnovators.",
+          "text_runs": [
+            {
+              "text": "Who We AreInnovators.",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "116.685px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 532.8281582704616,
+            "x": 132.5084988317344,
+            "h": 28.2,
+            "w": 639.5212225497967,
+            "rotation": 0
+          },
+          "text": "We're more than a company â we're a movement.",
+          "text_runs": [
+            {
+              "text": "We're more than a company â we're a movement.",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 662.6537237947578,
+            "x": 132.5084988317344,
+            "h": 94.2,
+            "w": 695.3283429810508,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 882.4504231609645,
+            "x": 189.64783777036678,
+            "h": 21.973343999999997,
+            "w": 427.59260065525586,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "18.6667px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 587.6221614413826,
+            "x": 949.6918791779719,
+            "h": 338.46312470675036,
+            "w": 338.46312470675036,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 4,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1812.0,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "justify",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 805.7991382877725,
+            "x": -1.1368683772161603e-13,
+            "h": 477.6000000000002,
+            "w": 1920.0000000000007,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_pUAezCg",
+            "title": "Red Modern Shape Gradient",
+            "url": "https://media-public.canva.com/AezCg/MAF_pUAezCg/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "pretitle",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1682.9762694950405,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "end",
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 131.56539263424975,
+            "x": 668.5776778166438,
+            "h": 79.763616,
+            "w": 582.8446443667124,
+            "rotation": 0
+          },
+          "text": "Our Origin Story",
+          "text_runs": [
+            {
+              "text": "Our Origin Story",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "67.2726px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "center",
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 236.33902448130397,
+            "x": 815.2224709285533,
+            "h": 28.2,
+            "w": 289.55505814289336,
+            "rotation": 0
+          },
+          "text": "Founded in 2000",
+          "text_runs": [
+            {
+              "text": "Founded in 2000",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 350.16757686018923,
+            "x": 770.1675768601892,
+            "h": 379.6648462796215,
+            "w": 379.6648462796215,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 371.68782530894134,
+            "x": 791.6878253089413,
+            "h": 336.6243493821174,
+            "w": 336.6243493821174,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 781.3229792992216,
+            "x": 569.360102071835,
+            "h": 64.239992,
+            "w": 781.2797958563306,
+            "rotation": 0
+          },
+          "text": "Born from a vision to create smart, scalable solutions that improve lives.",
+          "text_runs": [
+            {
+              "text": "Born from a vision to create smart, scalable solutions that improve lives.",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "27.9999px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 348.15317968932936,
+            "x": 698.9185709551576,
+            "h": 69.23460873417159,
+            "w": 69.23460873417159,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 913.2658159749833,
+            "x": 815.2224709285533,
+            "h": 28.2,
+            "w": 289.55505814289336,
+            "rotation": 0
+          },
+          "text": "Jonathan Patterson",
+          "text_runs": [
+            {
+              "text": "Jonathan Patterson",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 948.00002,
+            "x": 798.7851587402204,
+            "h": 23.99998,
+            "w": 322.4296825195597,
+            "rotation": 0
+          },
+          "text": "CEO of Ingoude Company",
+          "text_runs": [
+            {
+              "text": "CEO of Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "20.0001px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 878.4143936371024,
+            "x": 907.0576818314883,
+            "h": 8.0,
+            "w": 105.88463633702395,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 5,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 91.17870432776965,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 236.42998027239287,
+            "x": 1095.52736703504,
+            "h": 556.2003178839946,
+            "w": 1364.7805751201195,
+            "rotation": 77.63059074289251
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qALzd4Y",
+            "title": null,
+            "url": "https://media-public.canva.com/Lzd4Y/MAF_qALzd4Y/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 423.6088915502956,
+            "x": 132.5084988317344,
+            "h": 79.03685024452454,
+            "w": 258.2311418570939,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 423.6088915502956,
+            "x": 232.0005583833913,
+            "h": 9.418425122262306,
+            "w": 59.24702275378013,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#598196"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 423.6088915502956,
+            "x": 419.5682042576368,
+            "h": 79.03685024452454,
+            "w": 258.2311418570939,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 423.6088915502956,
+            "x": 519.0602638092937,
+            "h": 9.418425122262306,
+            "w": 59.24702275378013,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#598196"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 531.1706188999992,
+            "x": 132.5084988317344,
+            "h": 79.03685024452454,
+            "w": 258.2311418570939,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 531.1706188999992,
+            "x": 232.0005583833913,
+            "h": 9.418425122262306,
+            "w": 59.24702275378013,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#2b485f"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 531.1706188999992,
+            "x": 419.5682042576368,
+            "h": 79.03685024452454,
+            "w": 258.2311418570939,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 531.1706188999992,
+            "x": 519.0602638092937,
+            "h": 9.418425122262306,
+            "w": 59.24702275378013,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#598196"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 423.6088915502956,
+            "x": 706.7993461147307,
+            "h": 79.03685024452454,
+            "w": 258.2311418570939,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 423.6088915502956,
+            "x": 806.2914056663876,
+            "h": 9.418425122262306,
+            "w": 59.24702275378013,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#2b485f"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 945.713328,
+            "x": 132.5084988317344,
+            "h": 26.28667199999993,
+            "w": 26.28667199999993,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFPM4IpyJU",
+            "title": "Icon Website",
+            "url": "https://media-public.canva.com/IpyJU/MAFPM4IpyJU/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": null,
+            "x": 996.0304879718245,
+            "h": 1080.0,
+            "w": 785.3954868496132,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 248.6572122868401,
+            "x": 132.50849883173453,
+            "h": 80.52391323528602,
+            "w": 619.6173839318865,
+            "rotation": 0
+          },
+          "text": "What We Believe",
+          "text_runs": [
+            {
+              "text": "What We Believe",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "116.685px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 622.6457417948202,
+            "x": 706.7993461147307,
+            "h": 69.23460873417159,
+            "w": 69.23460873417159,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 171.60216144651207,
+            "x": 1607.9803277695269,
+            "h": 50.11130116556629,
+            "w": 50.11130116556629,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#ffffff"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 215.96657460357437,
+            "x": 132.5084988317344,
+            "h": 32.69063768326576,
+            "w": 32.69063768326576,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 132.50849883173447,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 449.0273166725579,
+            "x": 176.23914561351444,
+            "h": 28.2,
+            "w": 170.76984829353387,
+            "rotation": 0
+          },
+          "text": "Integrity",
+          "text_runs": [
+            {
+              "text": "Integrity",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 449.0273166725579,
+            "x": 463.29885103941683,
+            "h": 28.2,
+            "w": 170.76984829353387,
+            "rotation": 0
+          },
+          "text": "Innovation",
+          "text_runs": [
+            {
+              "text": "Innovation",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 556.5890440222615,
+            "x": 154.37382222262443,
+            "h": 28.2,
+            "w": 214.5004950753139,
+            "rotation": 0
+          },
+          "text": "Accountability",
+          "text_runs": [
+            {
+              "text": "Accountability",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 556.5890440222615,
+            "x": 463.29885103941683,
+            "h": 28.2,
+            "w": 170.76984829353387,
+            "rotation": 0
+          },
+          "text": "Growth",
+          "text_runs": [
+            {
+              "text": "Growth",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 449.0273166725579,
+            "x": 750.5299928965107,
+            "h": 28.2,
+            "w": 170.76984829353387,
+            "rotation": 0
+          },
+          "text": "Passion",
+          "text_runs": [
+            {
+              "text": "Passion",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 767.9721701815822,
+            "x": 132.5084988317344,
+            "h": 94.2,
+            "w": 733.0299295884333,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 947.869992,
+            "x": 189.64783777036678,
+            "h": 21.973343999999997,
+            "w": 427.59260065525586,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "18.6667px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 729.8803505289918,
+            "x": 132.5084988317344,
+            "h": 8.0,
+            "w": 105.88463633702395,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 6,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1812.0,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "justify",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 279.062710293184,
+            "x": 620.1478296514495,
+            "h": 69.23460873417159,
+            "w": 69.23460873417159,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 743.4753865011742,
+            "x": 1114.3470044042406,
+            "h": 35.72327700536098,
+            "w": 35.72327700536098,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 650.2126019791192,
+            "x": -194.55813042576085,
+            "h": 643.5747960417618,
+            "w": 1434.3112980405256,
+            "rotation": 14.12714688554009
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qNoj000",
+            "title": null,
+            "url": "https://media-public.canva.com/oj000/MAF_qNoj000/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 388.4903678369746,
+            "x": 169.4356250123347,
+            "h": 260.1188312651103,
+            "w": 426.780475899105,
+            "rotation": 0
+          },
+          "text": "Our Vision",
+          "text_runs": [
+            {
+              "text": "Our Vision",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "67.2726px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1682.9762694950405,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "end",
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 301.2219938960049,
+            "x": 1296.6039593473583,
+            "h": 95.239992,
+            "w": 465.39620369565523,
+            "rotation": 0
+          },
+          "text": "To lead with purpose and inspire progress through innovation.",
+          "text_runs": [
+            {
+              "text": "To lead with purpose and inspire progress through innovation.",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "27.9999px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 545.1562732781755,
+            "x": 1296.6039593473583,
+            "h": 127.2,
+            "w": 502.4853378317623,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 507.0644536255851,
+            "x": 1296.6039593473583,
+            "h": 8.0,
+            "w": 105.88463633702395,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 752.4913341039951,
+            "x": 1296.6039593473583,
+            "h": 26.28667199999993,
+            "w": 26.28667199999993,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFPM4IpyJU",
+            "title": "Icon Website",
+            "url": "https://media-public.canva.com/IpyJU/MAFPM4IpyJU/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 754.6479981039951,
+            "x": 1353.7432982859905,
+            "h": 21.973343999999997,
+            "w": 302.15425222817134,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "18.6667px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 279.06271029318407,
+            "x": 620.1478296514493,
+            "h": 571.6435720413945,
+            "w": 571.6435720413945,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 311.4647401756204,
+            "x": 652.5498595338858,
+            "h": 506.8395122765217,
+            "w": 506.8395122765217,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 7,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 91.17870432776965,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "pretitle",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 132.50849883173447,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 243.80475982605742,
+            "x": 36.03048797182396,
+            "h": 477.6000000000002,
+            "w": 1920.0000000000007,
+            "rotation": -98.53793641325231
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_pUAezCg",
+            "title": "Red Modern Shape Gradient",
+            "url": "https://media-public.canva.com/AezCg/MAF_pUAezCg/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 222.48592856094717,
+            "x": 169.4356250123347,
+            "h": 260.1188312651103,
+            "w": 533.0946589582622,
+            "rotation": 0
+          },
+          "text": "Our Mission",
+          "text_runs": [
+            {
+              "text": "Our Mission",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "67.2726px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": null,
+            "x": 996.0304879718245,
+            "h": 1080.0,
+            "w": 1334.1755616916473,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 599.0844391182885,
+            "x": 169.43562501233453,
+            "h": 96.68306865110293,
+            "w": 731.3243805325867,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 617.4945880386639,
+            "x": 151.0254760919596,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#2b485f"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "subtitle",
+          "position": {
+            "y": 629.1779269470102,
+            "x": 209.8214729024515,
+            "h": 35.12832,
+            "w": 721.8738501390012,
+            "rotation": 0
+          },
+          "text": "Empower clients with breakthrough solutions",
+          "text_runs": [
+            {
+              "text": "Empower clients with breakthrough solutions",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 713.0155542662217,
+            "x": 169.43562501233487,
+            "h": 96.68306865110293,
+            "w": 731.3243805325867,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 731.4257031865969,
+            "x": 151.02547609195994,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#96ae00"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 743.1090420949431,
+            "x": 209.8214729024515,
+            "h": 35.12832,
+            "w": 721.8738501390012,
+            "rotation": 0
+          },
+          "text": "Foster a culture of learning and excellence",
+          "text_runs": [
+            {
+              "text": "Foster a culture of learning and excellence",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 826.6986229173249,
+            "x": 169.43562501233453,
+            "h": 96.68306865110293,
+            "w": 423.0290967775783,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 845.1087718377,
+            "x": 151.0254760919595,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#96ae00"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 856.7921107460463,
+            "x": 209.8214729024515,
+            "h": 35.12832,
+            "w": 380.04533754391014,
+            "rotation": 0
+          },
+          "text": "Drive impact that lasts",
+          "text_runs": [
+            {
+              "text": "Drive impact that lasts",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 352.54534419350233,
+            "x": 1026.1060821336596,
+            "h": 69.23460873417159,
+            "w": 69.23460873417159,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 972.0,
+            "x": 65.57207472450341,
+            "h": 32.69063768326576,
+            "w": 32.69063768326576,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 897.0950195684279,
+            "x": 666.8124909668561,
+            "h": 26.28667199999993,
+            "w": 26.28667199999993,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFPM4IpyJU",
+            "title": "Icon Website",
+            "url": "https://media-public.canva.com/IpyJU/MAFPM4IpyJU/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 899.2516835684279,
+            "x": 723.9518299054882,
+            "h": 21.973343999999997,
+            "w": 302.15425222817134,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "18.6667px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 826.6986229173249,
+            "x": 794.8753692078973,
+            "h": 8.0,
+            "w": 105.88463633702395,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 8,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1812.0,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "justify",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1682.9762694950405,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "end",
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 131.56539263424975,
+            "x": 668.5776778166438,
+            "h": 79.763616,
+            "w": 582.8446443667124,
+            "rotation": 0
+          },
+          "text": "What We Do",
+          "text_runs": [
+            {
+              "text": "What We Do",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "67.2726px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "center",
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 805.7991382877725,
+            "x": -1.1368683772161603e-13,
+            "h": 477.6000000000002,
+            "w": 1920.0000000000007,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_pUAezCg",
+            "title": "Red Modern Shape Gradient",
+            "url": "https://media-public.canva.com/AezCg/MAF_pUAezCg/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 341.4565707190627,
+            "x": 260.1981690490412,
+            "h": 475.51532567408435,
+            "w": 405.29724694309715,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 359.866719639438,
+            "x": 241.7880201286663,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#2b485f"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 389.7981050446142,
+            "x": 291.5919244043655,
+            "h": 76.12832,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Custom digital solutions",
+          "text_runs": [
+            {
+              "text": "Custom digital solutions",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 765.4806809251137,
+            "x": 611.3689455923845,
+            "h": 102.9824309360667,
+            "w": 102.9824309360667,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 500.527094277025,
+            "x": 436.3756334363338,
+            "h": 3.0,
+            "w": 52.942318168511974,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 564.0067735692562,
+            "x": 314.3246394487951,
+            "h": 193.2,
+            "w": 297.04430614358944,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 341.4565707190628,
+            "x": 757.3513765284513,
+            "h": 475.51532567408435,
+            "w": 405.29724694309715,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 359.8667196394381,
+            "x": 738.9412276080764,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#2b485f"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 389.7981050446143,
+            "x": 761.8499148530872,
+            "h": 76.12832,
+            "w": 396.3001702938255,
+            "rotation": 0
+          },
+          "text": "Business transformation services",
+          "text_runs": [
+            {
+              "text": "Business transformation services",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 765.4806809251138,
+            "x": 1108.5221530717947,
+            "h": 102.9824309360667,
+            "w": 102.9824309360667,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 500.5270942770252,
+            "x": 933.5288409157439,
+            "h": 3.0,
+            "w": 52.942318168511974,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 564.0067735692563,
+            "x": 811.4778469282052,
+            "h": 193.2,
+            "w": 297.04430614358944,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 341.45657071906294,
+            "x": 1254.5045840078615,
+            "h": 475.51532567408435,
+            "w": 405.29724694309715,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 359.8667196394382,
+            "x": 1236.0944350874865,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#2b485f"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 389.79810504461443,
+            "x": 1285.8983393631859,
+            "h": 76.12832,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Smart technology products",
+          "text_runs": [
+            {
+              "text": "Smart technology products",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 765.4806809251139,
+            "x": 1605.675360551205,
+            "h": 102.9824309360667,
+            "w": 102.9824309360667,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 500.5270942770253,
+            "x": 1430.682048395154,
+            "h": 3.0,
+            "w": 52.942318168511974,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 564.0067735692564,
+            "x": 1308.6310544076152,
+            "h": 193.2,
+            "w": 297.04430614358944,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 903.4631118611806,
+            "x": 414.5471936861302,
+            "h": 61.2,
+            "w": 1090.90561262774,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 236.33902448130394,
+            "x": 703.3949895904277,
+            "h": 28.2,
+            "w": 513.2100208191446,
+            "rotation": 0
+          },
+          "text": "From concept we deliver:",
+          "text_runs": [
+            {
+              "text": "From concept we deliver:",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 9,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 91.17870432776965,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 289.67080181990497,
+            "x": 109.47850620832139,
+            "h": 96.68306865110293,
+            "w": 850.5214937916787,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 289.67080181990497,
+            "x": 109.47850620832156,
+            "h": 96.68306865110293,
+            "w": 423.0290967775783,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 308.0809507402801,
+            "x": 91.06835728794653,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#96ae00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 308.08095074028023,
+            "x": 514.0974540655245,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#96ae00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 289.67080181990497,
+            "x": 960.0000000000003,
+            "h": 96.68306865110293,
+            "w": 850.5214937916787,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 289.67080181990497,
+            "x": 960.0000000000005,
+            "h": 96.68306865110293,
+            "w": 423.0290967775783,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 308.0809507402801,
+            "x": 941.5898510796253,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#96ae00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 308.08095074028023,
+            "x": 1364.6189478572035,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#96ae00"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 805.7991382877725,
+            "x": -1.1368683772161603e-13,
+            "h": 477.6000000000002,
+            "w": 1920.0000000000007,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_pUAezCg",
+            "title": "Red Modern Shape Gradient",
+            "url": "https://media-public.canva.com/AezCg/MAF_pUAezCg/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 418.5901168547138,
+            "x": 109.47850620832185,
+            "h": 423.0290967775781,
+            "w": 1701.0429875833568,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "pretitle",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 132.50849883173447,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 131.56539263424975,
+            "x": 668.5776778166438,
+            "h": 79.763616,
+            "w": 582.8446443667124,
+            "rotation": 0
+          },
+          "text": "Our Solutions",
+          "text_runs": [
+            {
+              "text": "Our Solutions",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "67.2726px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "center",
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 320.7642896486264,
+            "x": 130.9703858251557,
+            "h": 34.496092993660056,
+            "w": 380.04533754391014,
+            "rotation": 0
+          },
+          "text": "Tech Development",
+          "text_runs": [
+            {
+              "text": "Tech Development",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 320.7642896486265,
+            "x": 553.9994826027337,
+            "h": 34.496092993660056,
+            "w": 380.04533754391014,
+            "rotation": 0
+          },
+          "text": "Strategic Consulting",
+          "text_runs": [
+            {
+              "text": "Strategic Consulting",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 320.7642896486264,
+            "x": 981.4918796168347,
+            "h": 34.496092993660056,
+            "w": 380.04533754391014,
+            "rotation": 0
+          },
+          "text": "Process Optimization",
+          "text_runs": [
+            {
+              "text": "Process Optimization",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 320.7642896486265,
+            "x": 1404.5209763944124,
+            "h": 34.496092993660056,
+            "w": 380.04533754391014,
+            "rotation": 0
+          },
+          "text": "Innovation Labs",
+          "text_runs": [
+            {
+              "text": "Innovation Labs",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 919.6192136322919,
+            "x": 438.4456169366705,
+            "h": 61.2,
+            "w": 1090.90561262774,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 575.3538704710079,
+            "x": 56.508784531966654,
+            "h": 102.9824309360667,
+            "w": 102.9824309360667,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 578.6134497754695,
+            "x": 1760.5087845319667,
+            "h": 102.9824309360667,
+            "w": 102.9824309360667,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 10,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1812.0,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "justify",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1682.9762694950405,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "end",
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 131.56539263424975,
+            "x": 668.5776778166438,
+            "h": 79.763616,
+            "w": 582.8446443667124,
+            "rotation": 0
+          },
+          "text": "Our Clients",
+          "text_runs": [
+            {
+              "text": "Our Clients",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "67.2726px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "center",
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 650.2126019791192,
+            "x": -194.55813042576085,
+            "h": 643.5747960417618,
+            "w": 1434.3112980405256,
+            "rotation": 14.12714688554009
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qNoj000",
+            "title": null,
+            "url": "https://media-public.canva.com/oj000/MAF_qNoj000/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 284.1168187463712,
+            "x": 245.5485810390656,
+            "h": 653.291685303481,
+            "w": 423.0290967775783,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 657.0960282957564,
+            "x": 285.8082613116304,
+            "h": 35.12832,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Thynk Unlimited",
+          "text_runs": [
+            {
+              "text": "Thynk Unlimited",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 723.2243482957564,
+            "x": 285.8082613116304,
+            "h": 160.2,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 284.1168187463713,
+            "x": 748.4854516112109,
+            "h": 653.291685303481,
+            "w": 423.0290967775783,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 657.0960282957564,
+            "x": 788.7451318837757,
+            "h": 35.12832,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Studio Shodwe",
+          "text_runs": [
+            {
+              "text": "Studio Shodwe",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 723.2243482957564,
+            "x": 788.7451318837757,
+            "h": 160.2,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 284.1168187463712,
+            "x": 1251.514548388789,
+            "h": 653.291685303481,
+            "w": 423.0290967775783,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 657.0960282957562,
+            "x": 1291.7742286613538,
+            "h": 35.12832,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Hanover and Tyke",
+          "text_runs": [
+            {
+              "text": "Hanover and Tyke",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 723.2243482957563,
+            "x": 1291.7742286613538,
+            "h": 160.2,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 73.38269563291422,
+            "x": 73.38269563291419,
+            "h": 69.23460873417159,
+            "w": 69.23460873417159,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 954.1383614973196,
+            "x": 1700.304298754105,
+            "h": 35.72327700536098,
+            "w": 35.72327700536098,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 332.84385071719487,
+            "x": 319.30055662398587,
+            "h": 275.5251456077378,
+            "w": 275.5251456077378,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 348.46122916415845,
+            "x": 334.91793507094934,
+            "h": 244.29038871381064,
+            "w": 244.29038871381064,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 332.8438507171949,
+            "x": 822.2374271961311,
+            "h": 275.5251456077378,
+            "w": 275.5251456077378,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 348.4612291641585,
+            "x": 837.8548056430946,
+            "h": 244.29038871381064,
+            "w": 244.29038871381064,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 332.84385071719487,
+            "x": 1325.2665239737091,
+            "h": 275.5251456077378,
+            "w": 275.5251456077378,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 348.4612291641585,
+            "x": 1340.8839024206725,
+            "h": 244.29038871381064,
+            "w": 244.29038871381064,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 11,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 91.17870432776965,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "pretitle",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 132.50849883173447,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 271.6713421527932,
+            "x": 132.5084988317347,
+            "h": 80.52391323528602,
+            "w": 619.6173839318865,
+            "rotation": 0
+          },
+          "text": "Why Choose Us",
+          "text_runs": [
+            {
+              "text": "Why Choose Us",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "116.685px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 492.19525538807915,
+            "x": 132.5084988317347,
+            "h": 96.68306865110293,
+            "w": 457.7377166990858,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 510.6054043084545,
+            "x": 114.09834991135978,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#2b485f"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "subtitle",
+          "position": {
+            "y": 523.2887432168009,
+            "x": 172.8993775182432,
+            "h": 35.12832,
+            "w": 453.01245150229306,
+            "rotation": 0
+          },
+          "text": "Agile and adaptive teams",
+          "text_runs": [
+            {
+              "text": "Agile and adaptive teams",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 636.7409826369728,
+            "x": 132.50849883173447,
+            "h": 96.68306865110293,
+            "w": 457.7377166990858,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 655.1511315573482,
+            "x": 114.09834991135955,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#2b485f"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 667.8344704656945,
+            "x": 172.8993775182432,
+            "h": 35.12832,
+            "w": 453.01245150229306,
+            "rotation": 0
+          },
+          "text": "Proven track record",
+          "text_runs": [
+            {
+              "text": "Proven track record",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 781.4240512880758,
+            "x": 134.87113143013045,
+            "h": 96.68306865110293,
+            "w": 457.7377166990858,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 799.8342002084512,
+            "x": 116.46098250975552,
+            "h": 11.521236484800873,
+            "w": 48.341534325551535,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#2b485f"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 812.5175391167975,
+            "x": 172.8993775182432,
+            "h": 35.12832,
+            "w": 453.01245150229306,
+            "rotation": 0
+          },
+          "text": "Our fast growing company",
+          "text_runs": [
+            {
+              "text": "Our fast growing company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "medium",
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 277.3172781820217,
+            "x": 852.0056542903408,
+            "h": 665.1291130111081,
+            "w": 665.1291130111081,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 140.04846325736435,
+            "x": 988.0484632573642,
+            "h": 799.9030734852715,
+            "w": 1079.9999999999998,
+            "rotation": -90.0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_pUAezCg",
+            "title": "Red Modern Shape Gradient",
+            "url": "https://media-public.canva.com/AezCg/MAF_pUAezCg/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 303.002479519096,
+            "x": 877.6908556274151,
+            "h": 613.7587103369594,
+            "w": 613.7587103369594,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 954.9672937250385,
+            "x": 1509.8457477718287,
+            "h": 21.973343999999997,
+            "w": 302.15425222817134,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "18.6667px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "end",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 173.48265386667913,
+            "x": 1182.0702814096016,
+            "h": 69.23460873417159,
+            "w": 69.23460873417159,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 948.0923272223581,
+            "x": 1418.3135601673112,
+            "h": 35.72327700536098,
+            "w": 35.72327700536098,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 89.74528745661698,
+            "x": 1251.3048901437733,
+            "h": 480.2893516412044,
+            "w": 480.2893516412044,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 116.96915681374057,
+            "x": 1278.528759500896,
+            "h": 425.8416129269577,
+            "w": 425.8416129269577,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 12,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1812.0,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "justify",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 556.5132043217001,
+            "x": 1018.8719267392034,
+            "h": 643.5747960417618,
+            "w": 1434.3112980405256,
+            "rotation": -33.845485341667434
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qNoj000",
+            "title": null,
+            "url": "https://media-public.canva.com/oj000/MAF_qNoj000/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 650.2126019791192,
+            "x": -194.55813042576085,
+            "h": 643.5747960417618,
+            "w": 1434.3112980405256,
+            "rotation": 14.12714688554009
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qNoj000",
+            "title": null,
+            "url": "https://media-public.canva.com/oj000/MAF_qNoj000/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 311.12735773212427,
+            "x": 255.34071090683165,
+            "h": 567.1732446104564,
+            "w": 1409.3185781863367,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#f5f5f5"
+          ]
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 391.23789329170586,
+            "x": 404.1196741908608,
+            "h": 186.40627101911738,
+            "w": 186.40627101911738,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 358.28823744691977,
+            "x": 849.8689404801751,
+            "h": 220.26211903964966,
+            "w": 220.26211903964966,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 391.23789329170586,
+            "x": 1329.474054790022,
+            "h": 186.40627101911738,
+            "w": 186.40627101911738,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 276.51005336503846,
+            "x": 220.72340653974584,
+            "h": 69.23460873417159,
+            "w": 69.23460873417159,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 963.9999999999999,
+            "x": 907.057681831488,
+            "h": 8.0,
+            "w": 105.88463633702395,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 594.2139800373525,
+            "x": 525.1853181045631,
+            "h": 1.0,
+            "w": 406.95217349129325,
+            "rotation": 90.0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 594.2139800373525,
+            "x": 988.2787813705776,
+            "h": 1.0,
+            "w": 406.95217349129325,
+            "rotation": 90.0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1682.9762694950405,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "end",
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 131.56539263424975,
+            "x": 668.5776778166438,
+            "h": 79.763616,
+            "w": 582.8446443667124,
+            "rotation": 0
+          },
+          "text": "Meet the Team",
+          "text_runs": [
+            {
+              "text": "Meet the Team",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "67.2726px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "center",
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 606.5898914352894,
+            "x": 326.0679415841952,
+            "h": 35.12832,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Juliana Silva",
+          "text_runs": [
+            {
+              "text": "Juliana Silva",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 654.261786782999,
+            "x": 385.64992448581563,
+            "h": 53.72828,
+            "w": 223.34577042920773,
+            "rotation": 0
+          },
+          "text": "Chief Operating Officer (COO)",
+          "text_runs": [
+            {
+              "text": "Chief Operating Officer (COO)",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3586px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 736.9900667829991,
+            "x": 329.19306874594474,
+            "h": 61.2,
+            "w": 336.2594819089495,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 612.7533216482109,
+            "x": 757.6411418944873,
+            "h": 41.50846513478816,
+            "w": 404.7177162110252,
+            "rotation": 0
+          },
+          "text": "Adora Montminy",
+          "text_runs": [
+            {
+              "text": "Adora Montminy",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 668.761786782999,
+            "x": 848.327114785396,
+            "h": 53.72828,
+            "w": 223.34577042920773,
+            "rotation": 0
+          },
+          "text": "Chief Executive Officer (CEO)",
+          "text_runs": [
+            {
+              "text": "Chief Executive Officer (CEO)",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3586px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 756.4900667829991,
+            "x": 791.8702590455251,
+            "h": 61.2,
+            "w": 336.2594819089495,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 606.5898914352894,
+            "x": 1251.4223221833563,
+            "h": 35.12832,
+            "w": 342.50973623244863,
+            "rotation": 0
+          },
+          "text": "Korina Villanueva",
+          "text_runs": [
+            {
+              "text": "Korina Villanueva",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "29.3584px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 654.261786782999,
+            "x": 1311.0043050849767,
+            "h": 53.72828,
+            "w": 223.34577042920773,
+            "rotation": 0
+          },
+          "text": "Chief Financial Officer (CFO)",
+          "text_runs": [
+            {
+              "text": "Chief Financial Officer (CFO)",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3586px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 736.9900667829991,
+            "x": 1254.5474493451056,
+            "h": 61.2,
+            "w": 336.2594819089495,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 13,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 91.17870432776965,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 183.59014075092887,
+            "x": 832.9640795045896,
+            "h": 226.77425701012916,
+            "w": 652.690613663607,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFvVLYphvc",
+            "title": "Infographic Element",
+            "url": "https://media-public.canva.com/Yphvc/MAFvVLYphvc/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 132.50849883173447,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 296.97726925599335,
+            "x": 132.5084988317344,
+            "h": 260.1188312651103,
+            "w": 790.5643749876654,
+            "rotation": 0
+          },
+          "text": "Our Milestones",
+          "text_runs": [
+            {
+              "text": "Our Milestones",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "67.2726px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 426.4684999581495,
+            "x": 981.799464648296,
+            "h": 226.77425701012916,
+            "w": 652.690613663607,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFvVLYphvc",
+            "title": "Infographic Element",
+            "url": "https://media-public.canva.com/Yphvc/MAFvVLYphvc/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 669.635602238942,
+            "x": 1159.3093863363931,
+            "h": 226.77425701012916,
+            "w": 652.690613663607,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFvVLYphvc",
+            "title": "Infographic Element",
+            "url": "https://media-public.canva.com/Yphvc/MAFvVLYphvc/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 650.212601979119,
+            "x": -201.9765652745299,
+            "h": 643.5747960417618,
+            "w": 1434.3112980405256,
+            "rotation": 14.12714688554009
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qNoj000",
+            "title": null,
+            "url": "https://media-public.canva.com/oj000/MAF_qNoj000/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 626.850166052038,
+            "x": 132.5084988317344,
+            "h": 94.2,
+            "w": 695.3283429810508,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 844.4902014182449,
+            "x": 132.5084988317344,
+            "h": 26.28667199999993,
+            "w": 26.28667199999993,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFPM4IpyJU",
+            "title": "Icon Website",
+            "url": "https://media-public.canva.com/IpyJU/MAFPM4IpyJU/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 846.6468654182448,
+            "x": 189.64783777036678,
+            "h": 21.973343999999997,
+            "w": 427.59260065525586,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "18.6667px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "do-not-change",
+          "position": {
+            "y": 240.05667174084832,
+            "x": 894.9993680131116,
+            "h": 113.84119503029007,
+            "w": 86.80009663518432,
+            "rotation": 0
+          },
+          "text": "2015",
+          "text_runs": [
+            {
+              "text": "2015",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "34.6906px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 266.3772692559934,
+            "x": 1085.0399914978257,
+            "h": 61.2,
+            "w": 352.01760712501755,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#ffffff",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "do-not-change",
+          "position": {
+            "y": 484.9051700227639,
+            "x": 1052.1156561752337,
+            "h": 113.84119503029008,
+            "w": 86.80009663518432,
+            "rotation": 0
+          },
+          "text": "2022",
+          "text_runs": [
+            {
+              "text": "2022",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "34.6906px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 511.225767537909,
+            "x": 1242.1562796599478,
+            "h": 61.2,
+            "w": 352.01760712501755,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#ffffff",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "do-not-change",
+          "position": {
+            "y": 727.1021332288616,
+            "x": 1226.6255778633308,
+            "h": 113.84119503029008,
+            "w": 86.80009663518432,
+            "rotation": 0
+          },
+          "text": "2028",
+          "text_runs": [
+            {
+              "text": "2028",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "34.6906px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": "center",
+              "transform": null,
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 753.4227307440066,
+            "x": 1416.666201348045,
+            "h": 61.2,
+            "w": 352.01760712501755,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#ffffff",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 936.3328537049163,
+            "x": 1776.332853704916,
+            "h": 71.3342925901676,
+            "w": 71.3342925901676,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 14,
+      "background_color": "#ffffff",
+      "background_image": null,
+      "elements": [
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1812.0,
+            "h": 48.279246731500514,
+            "w": 14.168016159999068,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#ffffff",
+              "align": "justify",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": -110.99458626894335,
+            "x": -33.95307583210649,
+            "h": 505.30621167095427,
+            "w": 1019.5055449281035,
+            "rotation": -180.0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qNoj000",
+            "title": null,
+            "url": "https://media-public.canva.com/oj000/MAF_qNoj000/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 522.51338299333,
+            "x": 1557.1309333780032,
+            "h": 505.30621167095427,
+            "w": 1019.5055449281035,
+            "rotation": -180.0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAF_qNoj000",
+            "title": null,
+            "url": "https://media-public.canva.com/oj000/MAF_qNoj000/1/s3.png"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": null,
+            "x": 882.7363867696048,
+            "h": 1080.0,
+            "w": 785.3954868496132,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 784.6416732735788,
+            "x": 172.10602387735753,
+            "h": 8.0,
+            "w": 105.88463633702395,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 496.5118158178094,
+            "x": 172.10602387735753,
+            "h": 52.00313435104083,
+            "w": 52.00313435104083,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFX5vnPABo",
+            "title": "web icon",
+            "url": "https://media-public.canva.com/nPABo/MAFX5vnPABo/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 630.4383485067393,
+            "x": 172.10602387735753,
+            "h": 52.00313435104094,
+            "w": 52.00313435104094,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAEsPmLqcQc",
+            "title": "Telephone Call Icon",
+            "url": "https://media-public.canva.com/LqcQc/MAEsPmLqcQc/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": 563.5317457932466,
+            "x": 172.10602387735747,
+            "h": 52.003134351040984,
+            "w": 52.003134351040984,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFX5oKmLdo",
+            "title": "email icon",
+            "url": "https://media-public.canva.com/KmLdo/MAFX5oKmLdo/1/s3-1.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 83.86037663424975,
+            "x": 1682.9762694950405,
+            "h": 47.705016,
+            "w": 106.1026125288515,
+            "rotation": 0
+          },
+          "text": "Ingoude Company",
+          "text_runs": [
+            {
+              "text": "Ingoude Company",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "21.3127px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": "end",
+              "transform": null,
+              "line_height": "1.12em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 201.99208874300191,
+            "x": 172.10602387735747,
+            "h": 103.04689444933018,
+            "w": 677.2405843520777,
+            "rotation": 0
+          },
+          "text": "Don't Hesitate",
+          "text_runs": [
+            {
+              "text": "Don't Hesitate",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "116.685px",
+              "weight": "bold",
+              "color": "#122029",
+              "align": null,
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 292.2376875044284,
+            "x": 172.10602387735747,
+            "h": 102.07393789758247,
+            "w": 677.2405843520777,
+            "rotation": 0
+          },
+          "text": "To Contact Us",
+          "text_runs": [
+            {
+              "text": "To Contact Us",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "67.2726px",
+              "weight": "bold",
+              "color": "#94b500",
+              "align": null,
+              "transform": null,
+              "line_height": "1.04em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "paragraph",
+          "position": {
+            "y": 822.7334929261692,
+            "x": 172.10602387735753,
+            "h": 94.2,
+            "w": 677.2405843520776,
+            "rotation": 0
+          },
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+          "text_runs": [
+            {
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+              "font_ref": "YAFdJvSyp_k,2",
+              "font_name": "Inter",
+              "size": "24px",
+              "weight": null,
+              "color": "#2b485f",
+              "align": null,
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 505.7292672488895,
+            "x": 268.39682007573435,
+            "h": 33.56823148888089,
+            "w": 528.363666364641,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "26.6665px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 572.7491972243266,
+            "x": 268.39682007573435,
+            "h": 33.56823148888089,
+            "w": 528.363666364641,
+            "rotation": 0
+          },
+          "text": "hello@reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "hello@reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "26.6665px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "heading",
+          "position": {
+            "y": 639.3179658014935,
+            "x": 268.39682007573435,
+            "h": 33.56823148888089,
+            "w": 528.363666364641,
+            "rotation": 0
+          },
+          "text": "+123-456-7890 / 123-456-7890",
+          "text_runs": [
+            {
+              "text": "+123-456-7890 / 123-456-7890",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "26.6665px",
+              "weight": "bold",
+              "color": "#2b485f",
+              "align": null,
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 201.99208874300191,
+            "x": 1487.8963246438316,
+            "h": 69.23460873417159,
+            "w": 69.23460873417159,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 992.0963176589233,
+            "x": 1099.7856941634086,
+            "h": 35.72327700536098,
+            "w": 35.72327700536098,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": "normal",
+              "color": "#000000",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        }
+      ]
+    },
+    {
+      "slide_number": 15,
+      "background_color": "#122029",
+      "background_image": {
+        "id": "MADQ5pyWLTY",
+        "title": "Corporate Office Buildings",
+        "url": "https://media-public.canva.com/MADQ5pyWLTY/1/screen_2x.jpg"
+      },
+      "elements": [
+        {
+          "type": "I",
+          "role": null,
+          "position": {
+            "y": -303.8809738503154,
+            "x": 285.4107770280773,
+            "h": 1687.7619477006308,
+            "w": 1116.9403936444762,
+            "rotation": 90.0
+          },
+          "text": "",
+          "text_runs": [],
+          "media": {
+            "id": "MAFG5E3JH-Y",
+            "title": "Blue Shades Linear Gradient",
+            "url": "https://media-public.canva.com/3JH-Y/MAFG5E3JH-Y/1/s3.svg"
+          },
+          "colors": []
+        },
+        {
+          "type": "J",
+          "role": null,
+          "position": {
+            "y": 628.1793067643869,
+            "x": 727.0362880286661,
+            "h": 68.48385727110076,
+            "w": 465.9274239426676,
+            "rotation": 0
+          },
+          "text": "",
+          "text_runs": [
+            {
+              "text": "",
+              "font_ref": "YAFdJjTk5UU,0",
+              "font_name": "Canva Sans",
+              "size": "25.3333px",
+              "weight": null,
+              "color": "#ffffff",
+              "align": "center",
+              "transform": null,
+              "line_height": null
+            }
+          ],
+          "media": null,
+          "colors": [
+            "#dbff00"
+          ]
+        },
+        {
+          "type": "K",
+          "role": "title",
+          "position": {
+            "y": 404.3368359645128,
+            "x": 544.8503141275474,
+            "h": 208.559363931307,
+            "w": 830.2993717449051,
+            "rotation": 0
+          },
+          "text": "thank you so much!",
+          "text_runs": [
+            {
+              "text": "thank you so much!",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "122.667px",
+              "weight": "bold",
+              "color": "#ffffff",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "K",
+          "role": "subtitle",
+          "position": {
+            "y": 648.0444193999372,
+            "x": 751.9067445947004,
+            "h": 28.753632,
+            "w": 416.1865108105992,
+            "rotation": 0
+          },
+          "text": "www.reallygreatsite.com",
+          "text_runs": [
+            {
+              "text": "www.reallygreatsite.com",
+              "font_ref": "YAFdJs2qTWQ,0",
+              "font_name": "Open Sauce",
+              "size": "24.2301px",
+              "weight": null,
+              "color": "#122029",
+              "align": "center",
+              "transform": "uppercase",
+              "line_height": "0.88em"
+            }
+          ],
+          "media": null,
+          "colors": []
+        },
+        {
+          "type": "U",
+          "role": null,
+          "position": {
+            "y": 383.3368359645127,
+            "x": 913.8856449664697,
+            "h": 8.0,
+            "w": 92.22871006706055,
+            "rotation": 3.531316865920082e-14
+          },
+          "text": "",
+          "text_runs": [],
+          "media": null,
+          "colors": []
+        }
+      ]
+    }
+  ]
+}

@@ -620,7 +620,7 @@ function renderShowcaseSlide(slide, brand) {
     </section>`;
 }
 
-function renderPricingSlide(slide, brand) {
+function renderPricingSlide(slide, brand, totalSlides = 8) {
   const content = slide.content.replace(/<!--[\s\S]*?-->/g, '').trim();
   const lines = content.split('\n');
 
@@ -640,12 +640,16 @@ function renderPricingSlide(slide, brand) {
     }
   }
 
+  // Parse Markdown pricing table
   const rows = [];
   for (let i = 0; i < tableLines.length; i++) {
-    const tl = tableLines[i].replace(/^\||\|$/g, '').trim();
-    if (/^(\s*:?-{2,}:?\s*\|?)+$/.test(tl)) continue;
-    const cols = tl.split('|').map(c => c.trim());
-    if (i > 0 && cols.length >= 3) {
+    const row = tableLines[i];
+    if (row.includes('---')) continue; // Separator row
+    const cols = row.split('|').map(c => c.trim()).filter(Boolean);
+    if (cols.length >= 3) {
+      if (cols[0].toLowerCase().includes('fitur') || cols[0].toLowerCase().includes('paket') || cols[0].toLowerCase().includes('tier')) {
+        continue; // Header row
+      }
       rows.push({
         tier: cols[0].replace(/\*\*/g, '').trim(),
         price: cols[1].replace(/\*\*/g, '').trim(),
@@ -671,7 +675,7 @@ function renderPricingSlide(slide, brand) {
         <ul class="pricing-features">
           ${r.features.map(f => `<li>${checkSvg} <span>${inline(f)}</span></li>`).join('\n')}
         </ul>
-        <a href="#/${slides.length - 1}" class="btn ${isFeatured ? 'btn-primary' : 'btn-secondary'}">
+        <a href="#/${totalSlides - 1}" class="btn ${isFeatured ? 'btn-primary' : 'btn-secondary'}">
           ${isFree ? 'Mulai Gratis' : isFeatured ? 'Pilih Paket Pro' : 'Hubungi Tim'}
         </a>
       </div>`;
@@ -2016,9 +2020,16 @@ function renderCanvaClosing(slide, brand, index = 8, assetsDir = '', totalSlides
     </section>`;
 }
 
-function renderSlide(slide, index, totalSlides, brand, theme = 'editorial', assetsDir = '') {
-  if (theme === 'modern') return require('./themes/modern').renderModernSlide(slide, index, totalSlides, brand, assetsDir);
-  if (theme === 'editorial') {
+const THEME_ALIASES = {
+  'editorial': 'minimal-editorial'
+};
+
+function renderSlide(slide, index, totalSlides, brand, theme = 'minimal-editorial', assetsDir = '') {
+  const resolved = THEME_ALIASES[theme] || theme;
+  if (resolved === 'modern' || resolved === 'electric-modern') {
+    return require('./themes/modern').renderModernSlide(slide, index, totalSlides, brand, assetsDir);
+  }
+  if (resolved === 'minimal-editorial') {
     const arch = classifyCanvaArchetype(slide, index, totalSlides);
     switch (arch) {
       case 'cover': return renderCanvaCover(slide, brand, index, assetsDir, totalSlides);
@@ -2042,7 +2053,7 @@ function renderSlide(slide, index, totalSlides, brand, theme = 'editorial', asse
     case 'features': return renderFeaturesSlide(slide, brand);
     case 'differentiator': return renderDifferentiatorSlide(slide, brand);
     case 'showcase': return renderShowcaseSlide(slide, brand);
-    case 'pricing': return renderPricingSlide(slide, brand);
+    case 'pricing': return renderPricingSlide(slide, brand, totalSlides);
     case 'offer': return renderOfferSlide(slide, brand);
     case 'closing': return renderClosingSlide(slide, brand);
     default: return renderGeneralSlide(slide, brand);
@@ -2050,15 +2061,14 @@ function renderSlide(slide, index, totalSlides, brand, theme = 'editorial', asse
 }
 
 function loadThemeManifest(themeName, templatesDir) {
-  const known = ['editorial', 'profile', 'modern'];
-  const name = known.includes(themeName) ? themeName : 'editorial';
-  if (name !== themeName) {
-    console.warn(`[WARN] Unknown theme "${themeName}", falling back to editorial.`);
+  const resolvedName = THEME_ALIASES[themeName] || themeName;
+  const known = ['minimal-editorial', 'electric-modern', 'modern', 'profile'];
+  const name = known.includes(resolvedName) ? resolvedName : 'minimal-editorial';
+  if (name !== resolvedName && !THEME_ALIASES[themeName]) {
+    console.warn(`[WARN] Unknown theme "${themeName}", falling back to minimal-editorial.`);
   }
   const manifestPath = path.join(templatesDir, name, 'manifest.json');
-  // Back-compat: theme files still live flat in templates/ until Task 4 moves modern in.
-  const flatFallback = path.join(templatesDir, 'manifest.json');
-  const raw = fs.readFileSync(fs.existsSync(manifestPath) ? manifestPath : flatFallback, 'utf8');
+  const raw = fs.readFileSync(manifestPath, 'utf8');
   const manifest = JSON.parse(raw);
   for (const key of ['name', 'version', 'archetypes', 'slots', 'cssFile', 'shellFile', 'renderer']) {
     if (manifest[key] === undefined) throw new Error(`invalid manifest for theme ${name}: missing ${key}`);
@@ -2084,7 +2094,7 @@ async function runMain(customArgs) {
   const ROOT = detectProjectRoot(argv);
 
   // 1a. CLI argument parser (supports --theme=<theme>, --name=<slug>, and --root=<path>, backward-compat positional)
-  let THEME = 'editorial';
+  let THEME = 'minimal-editorial';
   let slug = 'congen';
   for (const arg of argv) {
     if (arg.startsWith('--theme=')) {
@@ -2135,9 +2145,7 @@ async function runMain(customArgs) {
   ];
 
   // Theme shell/CSS resolution via manifest (loadThemeManifest falls back to
-  // editorial with a warning on unknown themes, never hard-fails).
-  // Back-compat: editorial/profile shells still live flat in templates/ while
-  // modern ships inside its theme subdir — accept either location.
+  // minimal-editorial with a warning on unknown themes, never hard-fails).
   let SHELL = null;
   let CSS = null;
   for (const dir of templateCandidates) {
@@ -2148,15 +2156,16 @@ async function runMain(customArgs) {
     } catch (e) {
       continue;
     }
-    const shellFlat = path.join(dir, manifest.shellFile);
     const shellNested = path.join(dir, manifest.name, manifest.shellFile);
-    const cssFlat = path.join(dir, manifest.cssFile);
+    const shellFlat = path.join(dir, manifest.shellFile);
     const cssNested = path.join(dir, manifest.name, manifest.cssFile);
-    const s = fs.existsSync(shellFlat) ? shellFlat : (fs.existsSync(shellNested) ? shellNested : null);
-    const c = fs.existsSync(cssFlat) ? cssFlat : (fs.existsSync(cssNested) ? cssNested : null);
+    const cssFlat = path.join(dir, manifest.cssFile);
+    const s = fs.existsSync(shellNested) ? shellNested : (fs.existsSync(shellFlat) ? shellFlat : null);
+    const c = fs.existsSync(cssNested) ? cssNested : (fs.existsSync(cssFlat) ? cssFlat : null);
     if (s && c) {
       SHELL = s;
       CSS = c;
+      THEME = manifest.name;
       break;
     }
   }
@@ -2422,7 +2431,7 @@ async function runMain(customArgs) {
     '',
     `Total Slides    : ${slides.length}`,
     ...slides.map((s, i) => {
-      const type = THEME === 'editorial'
+      const type = (THEME === 'minimal-editorial' || THEME === 'editorial')
         ? classifyCanvaArchetype(s, i, slides.length)
         : detectSlideType(s, i, slides.length);
       const wordCount = s.content.split(/\s+/).filter(Boolean).length;
@@ -2516,6 +2525,7 @@ if (typeof module !== 'undefined' && typeof require !== 'undefined') {
     sanitizeContactDetails,
     extractBigNumberMetric,
     loadThemeManifest,
+    THEME_ALIASES,
     parseImageDirective,
     pickFromPoolDistinct,
     acquireSlotImage

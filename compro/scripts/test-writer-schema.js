@@ -28,6 +28,36 @@ for (const check of checks) {
 
 console.log('PASS: writer skill definition contains all required inputs, outputs, and slide types');
 
+// --- v2.7 selling points research and embedded skills asserts ---
+const v27Checks = [
+  'compros/<slug>/reports/selling-points-research.md',
+  'Phase 0.5: Competitive Selling Point Research',
+  'Zero Competitor Leak',
+  'Internal Synthesis',
+  'fallback'
+];
+
+for (const check of v27Checks) {
+  if (!content.includes(check)) {
+    console.error(`FAIL: writer SKILL.md missing v2.7.0 reference "${check}"`);
+    process.exit(1);
+  }
+}
+
+const embeddedSkills = [
+  path.join(__dirname, '..', 'skills', 'builder', 'skills', 'ui-ux-pro-max', 'SKILL.md'),
+  path.join(__dirname, '..', 'skills', 'builder', 'skills', 'impeccable', 'SKILL.md')
+];
+
+for (const skill of embeddedSkills) {
+  if (!fs.existsSync(skill)) {
+    console.error(`FAIL: embedded design skill missing: ${skill}`);
+    process.exit(1);
+  }
+}
+
+console.log('PASS: writer skill contains v2.7.0 Phase 0.5 research, Zero Competitor Leak, fallback, and embedded design skills exist');
+
 // --- v2.6 modern consumability asserts (Task 6) ---
 const modernPath = path.join(__dirname, '..', 'test-fixtures', 'expected', '02-final.modern.md');
 if (!fs.existsSync(modernPath)) {

@@ -1,0 +1,22 @@
+{
+  "name": "electric-modern",
+  "version": "2.6.0",
+  "archetypes": ["cover", "profile", "welcome", "story", "problem", "solution", "services", "ecosystem", "metrics", "differentiator", "pricing", "closing"],
+  "slots": {
+    "cover": "hero",
+    "profile": "profile",
+    "welcome": "welcome",
+    "story": "story",
+    "problem": "problem",
+    "solution": "solution",
+    "services": "services",
+    "ecosystem": "ecosystem",
+    "metrics": "metrics",
+    "differentiator": "differentiator",
+    "pricing": "pricing",
+    "closing": "closing"
+  },
+  "cssFile": "theme.css",
+  "shellFile": "shell.html",
+  "renderer": "electric-modern"
+}

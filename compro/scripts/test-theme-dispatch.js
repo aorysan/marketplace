@@ -4,23 +4,33 @@ const { loadThemeManifest } = require('../skills/builder/scripts/build-deck');
 
 const templatesDir = path.join(__dirname, '..', 'skills', 'builder', 'templates');
 
+// 1. minimal-editorial
+const minimal = loadThemeManifest('minimal-editorial', templatesDir);
+if (minimal.name !== 'minimal-editorial' || minimal.cssFile !== 'theme.css' || minimal.shellFile !== 'shell.html') {
+  console.error('FAIL: minimal-editorial manifest resolution error');
+  process.exit(1);
+}
+
+// 2. editorial backward-compat alias
 const editorial = loadThemeManifest('editorial', templatesDir);
-if (editorial.cssFile !== 'editorial.css' || editorial.shellFile !== 'editorial-shell.html') {
-  console.error('FAIL: editorial manifest points at wrong files');
+if (editorial.name !== 'minimal-editorial') {
+  console.error('FAIL: editorial alias did not resolve to minimal-editorial');
   process.exit(1);
 }
-// NOTE (Task 1): 9 entries, not 8 — `welcome-problem` and `welcome-solution`
-// are two archetypes sharing one layout family; the 8-layout count in the
-// spec refers to layout families. The brief's manifest lists 9 keys.
-if (!Array.isArray(editorial.archetypes) || editorial.archetypes.length !== 9) {
-  console.error('FAIL: editorial manifest must declare exactly 9 archetypes');
+
+// 3. electric-modern
+const electric = loadThemeManifest('electric-modern', templatesDir);
+if (electric.name !== 'electric-modern' || electric.cssFile !== 'theme.css' || electric.shellFile !== 'shell.html') {
+  console.error('FAIL: electric-modern manifest resolution error');
   process.exit(1);
 }
-// Unknown theme must fall back, never throw
+
+// 4. Unknown theme fallback
 const fallback = loadThemeManifest('does-not-exist', templatesDir);
-if (fallback.name !== 'editorial') {
-  console.error('FAIL: unknown theme did not fall back to editorial');
+if (fallback.name !== 'minimal-editorial') {
+  console.error('FAIL: unknown theme did not fall back to minimal-editorial');
   process.exit(1);
 }
-console.log('PASS: theme manifests load and unknown themes fall back');
+
+console.log('PASS: theme manifests load and aliases resolve correctly');
 process.exit(0);

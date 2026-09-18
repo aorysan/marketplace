@@ -10,6 +10,7 @@ Memastikan draf company profile berkualitas tinggi, bebas kesalahan faktual, ses
 - `input/business-knowledge-base.md`: Sumber fakta bisnis.
 - `input/business-audit-report.md`: Analisis pasar dan diferensiasi.
 - `input/brand-story-guide.md`: Panduan tone of voice dan persona merek.
+- `compros/<slug>/reports/selling-points-research.md` *(opsional)*: Laporan research kompetitif — digunakan untuk verifikasi selling points dan zero competitor leak check.
 
 ## Outputs
 - `compros/<slug>/reports/review-report.md` (legacy: `artifacts/review-report.md`): Laporan evaluasi per kategori dan daftar revisi yang wajib diperbaiki.
@@ -44,8 +45,7 @@ Memastikan draf company profile berkualitas tinggi, bebas kesalahan faktual, ses
      image directive hilang/format salah → REVISION_REQUIRED.
    - pricing rows: tabel pricing WAJIB tepat 3 baris data (`| Tier | Harga | Fitur |`,
      baris tengah = Pro). Bukan 3 baris parseable → REVISION_REQUIRED.
-   - differentiator columns: tabel pembanding WAJIB 4–5 kolom. Kurang dari 4 kolom
-     dan bullet tidak bisa dikonversi ke tabel → REVISION_REQUIRED.
+   - differentiator columns: tabel pembanding WAJIB 4–5 kolom dengan header kolom menggunakan label kategori/arketipe generik (misal `Solusi Konvensional`, `Agency Tradisional`, `Software Generik`, `Pendekatan Manual`). Header dan isi sel DILARANG menyebut nama merek/brand kompetitor spesifik (Zero Competitor Leak). Kurang dari 4 kolom atau menyebut nama merek kompetitor spesifik → REVISION_REQUIRED.
    - big-number regex: setiap bullet metrik WAJIB cocok dengan big-number regex
      (`%`, `:`, `Rp`, `vX` — misal `~90%`, `20:1`, `Rp10rb`) agar tidak jatuh ke
      default `100%`. Tidak cocok → REVISION_REQUIRED, kecuali bullet
@@ -54,6 +54,12 @@ Memastikan draf company profile berkualitas tinggi, bebas kesalahan faktual, ses
    - honesty callout: baris `**Intinya:** ...` WAJIB ada bila kompetitor menang di
      satu aspek (misal syarat setup GPU 8 GB). honesty callout hilang padahal ada
      aspek yang dimenangkan kompetitor → REVISION_REQUIRED.
+8. **Selling Point Verification & Zero Competitor Leak** *(hanya jika `selling-points-research.md` tersedia)*:
+   - Setiap selling point yang diklaim dalam narasi slide harus **traceable** ke entry `SP-N` di `selling-points-research.md`.
+   - **Zero Competitor Leak Check:** Scan seluruh `01-draft.md` — TIDAK BOLEH ada nama kompetitor yang muncul. Jika ditemukan → REVISION_REQUIRED dengan catatan "Competitor leak pada Slide X: nama [kompetitor] terdeteksi".
+   - **Differentiator Table Headers & Cells Rule:** Tabel pembanding pada Slide 7 WAJIB menggunakan label kategori/arketipe generik (misal: `Solusi Konvensional`, `Agency Tradisional`, `Software Generik`, `Pendekatan Manual`, `Alat Manual / In-House`). Jika nama merek atau brand kompetitor spesifik muncul pada header kolom atau sel tabel pembanding, reviewer WAJIB menerbitkan `REVISION_REQUIRED` untuk competitor leak ("Competitor leak pada tabel Slide 7: nama [kompetitor] terdeteksi di header/sel").
+   - Selling points harus dirajut secara natural ke narasi, bukan ditempel sebagai daftar terpisah.
+   - Selling points harus konsisten dengan fakta di `business-knowledge-base.md` (overlap check dengan item 1 Factual Consistency).
 
 ## Status Review
 - **`APPROVED`**: Draf memenuhi semua kriteria checklist. Salin konten ke `compros/<slug>/drafts/02-final.md` (legacy: `artifacts/02-company-profile-final.md`) dan teruskan ke Builder.

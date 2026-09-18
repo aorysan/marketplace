@@ -1,6 +1,14 @@
-# Compro Plugin v2.6.0 — Multi-Agent Slide Deck Pipeline
+# Compro Plugin v2.7.0 — Multi-Agent Slide Deck Pipeline
 
 Plugin otomatisasi pembuatan Company Profile interaktif berbasis Reveal.js dengan sistem desain **Canva Editorial Theme (Canva Salford & Co. 1:1)**, hybrid Unsplash direct CDN asset pipeline, dan deployment Vercel.
+
+## What's New in v2.7.0
+
+Rilis v2.7.0 menghadirkan competitive selling point research otomatis dan design intelligence embedding:
+
+- **Phase 0.5 Competitive Selling Point Research**: Writer melakukan research produk serupa di internet (`search_web` + `read_url_content`), menyusun tabel perbandingan internal, dan mengekstrak 5-8 selling points tervalidasi pasar. Hasil disimpan di `compros/<slug>/reports/selling-points-research.md` untuk user review sebelum drafting dimulai. Nama kompetitor TIDAK PERNAH muncul di slide output (Zero Competitor Leak).
+- **Reviewer Selling Point Verification**: Checklist audit baru memverifikasi traceability selling points ke research report dan memindai competitor leak di narasi draf.
+- **Embedded Design Skills (`ui-ux-pro-max` & `impeccable`)**: Kedua skill desain di-bundle langsung di dalam builder (`skills/builder/skills/`), menjadikan plugin fully self-contained dan portabel tanpa dependensi skill global. Skill `impeccable` menyertakan 35 dokumen referensi lengkap dan launcher script tanpa binary precompiled platform-specific (menghemat ~16MB).
 
 ## What's New in v2.6.0
 
@@ -93,8 +101,8 @@ Rilis v2.2.0 menghadirkan peningkatan signifikan pada stabilitas arsitektur, kua
 ├── plugin.json                         # Manifest plugin root
 ├── skills/
 │   ├── compro/SKILL.md                 # Orchestrator State-Machine (Gate -1 s/d Phase 6)
-│   ├── writer/SKILL.md                 # Skill 8: Copywriting & Slide Drafting (dynamic slides)
-│   ├── reviewer/SKILL.md               # Skill 9: QA, Dedup & Content SEO Validator
+│   ├── writer/SKILL.md                 # Skill 8: Copywriting, Research & Slide Drafting
+│   ├── reviewer/SKILL.md               # Skill 9: QA, Dedup, Selling Point Verify & Content SEO
 │   ├── builder/                        # Skill 10: Theme-based Reveal.js Assembler (Inline SVG)
 │   │   ├── SKILL.md
 │   │   ├── templates/
@@ -102,7 +110,12 @@ Rilis v2.2.0 menghadirkan peningkatan signifikan pada stabilitas arsitektur, kua
 │   │   │   ├── editorial-shell.html    # Tema Canva Editorial (v2.4.0)
 │   │   │   ├── editorial.css           # Design system gray-white modern
 │   │   │   └── custom.css
-│   │   └── references/
+│   │   ├── references/
+│   │   │   ├── design-tokens.md        # Dynamic HSL brand color tokens
+│   │   │   └── visual-hierarchy.md     # Layout archetypes & composition
+│   │   └── skills/                     # ◄── Embedded design intelligence (v2.7.0)
+│   │       ├── ui-ux-pro-max/          # 79 styles, 192 palettes, 74 fonts, Python CLI
+│   │       └── impeccable/             # Craft quality: critique, audit, polish, 35 refs & launcher (tanpa binary blob)
 │   └── publisher/                      # Skill 11: SEO Auto-Fix & Vercel Deployer
 │       ├── SKILL.md
 │       └── scripts/
@@ -129,6 +142,7 @@ Seluruh artefak kerja proyek dikonsolidasikan di dalam direktori `compros/<slug>
 |------------------------|------------------|-----------------|
 | `input/` | Dokumen intake mentah pengguna | Pre-run / User |
 | `compros/<slug>/input/` | Salinan/symlink dokumen input kerja | Gate 0 |
+| `compros/<slug>/reports/selling-points-research.md` | Laporan research kompetitif internal (tabel perbandingan & selling points) | Phase 0.5 (Research) |
 | `compros/<slug>/drafts/` | Draf narasi slide (`01-draft.md`, `02-final.md`) | Phase 1 & Phase 2 |
 | `compros/<slug>/index.html` | File presentasi utama *single-file HTML* (Reveal.js) | Phase 3 (Build) & Phase 4 (Patch) |
 | `compros/<slug>/compro.md` | Draf slide presentasi format Markdown | Phase 3 |

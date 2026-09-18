@@ -1,8 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const shellPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'profile-shell.html');
-const cssPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'custom.css');
+const primaryShellPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'profile', 'shell.html');
+const fallbackShellPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'profile-shell.html');
+const shellPath = fs.existsSync(primaryShellPath) ? primaryShellPath : fallbackShellPath;
+
+const primaryCssPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'profile', 'theme.css');
+const fallbackCssPath = path.join(__dirname, '..', 'skills', 'builder', 'templates', 'custom.css');
+const cssPath = fs.existsSync(primaryCssPath) ? primaryCssPath : fallbackCssPath;
 
 if (!fs.existsSync(shellPath) || !fs.existsSync(cssPath)) {
   console.error('FAIL: template files missing');

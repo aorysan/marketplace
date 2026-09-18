@@ -46,4 +46,22 @@ for (const check of consumabilityChecks) {
 }
 
 console.log('PASS: reviewer skill definition enforces the template-consumability checklist');
+
+// --- v2.7 selling points and reviewer verification asserts ---
+const v27ReviewerChecks = [
+  'selling-points-research.md',
+  'Selling Point Verification',
+  'Zero Competitor Leak Check',
+  'SP-N',
+  'Differentiator Table Headers'
+];
+
+for (const check of v27ReviewerChecks) {
+  if (!content.includes(check)) {
+    console.error(`FAIL: reviewer SKILL.md missing v2.7.0 reference "${check}"`);
+    process.exit(1);
+  }
+}
+
+console.log('PASS: reviewer skill definition enforces selling points verification, zero competitor leak check, and differentiator table headers');
 process.exit(0);
