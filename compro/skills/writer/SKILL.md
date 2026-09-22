@@ -18,7 +18,7 @@ Dokumen yang disediakan di folder `input/`:
 ## Aturan Penulisan & Chunking
 1. **Pemisah Slide Deterministic:**
    - Gunakan `# [Judul Slide]` (H1) untuk menandai setiap slide utama baru.
-   - Panjang kata dalam satu slide dibatasi ~85–140 kata agar proporsional pada layar presentasi 16:9.
+   - Panjang kata dalam satu slide dibatasi 40-60 kata agar enak dilihat pada layar presentasi 16:9. Setiap bullet memakai format `**Judul** — desc 8-12 kata` (contoh: `**Bayar Iuran** — VA, QRIS, multibank langsung dari aplikasi`). Dilarang paragraf 3 baris. Jika poin melebihi 6 bullets, writer menyusun prioritas 4 utama dan menandai sisa untuk slide lanjutan `Part 2` — fakta tidak dibuang.
 2. **Zero Hallucination:**
    - Semua angka statistik, portofolio, nama klien, dan klaim kompetitif wajib bersumber langsung dari `business-knowledge-base.md`.
 3. **Struktur Urutan Slide Standar (Diperluas):**
@@ -149,7 +149,7 @@ Sebelum menulis draf narasi, Writer WAJIB melakukan research kompetitif untuk me
 4. Tunggu user review dan approval terhadap `selling-points-research.md`.
 5. Baca `selling-points-research.md` yang sudah di-approve dan integrasikan selling points ke narasi.
 6. Susun draf per slide mengikuti struktur standar di atas — rajut selling points secara natural ke narasi tanpa menyebut nama kompetitor.
-7. Periksa jumlah kata per section (pastikan 85–140 kata per H1).
+7. Periksa jumlah kata per section (pastikan 40-60 kata per H1).
 8. Tulis hasil akhir ke `compros/<slug>/drafts/01-draft.md`.
 
 ## Referensi Nama Slide (English)

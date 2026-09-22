@@ -13,6 +13,12 @@ if (!services.includes('services-layout-grid') || !services.includes('Brand DNA'
 if (/Paket \d|Fitur Utama \d/.test(services)) { console.error('FAIL: services invented defaults'); process.exit(1); }
 
 if (modern.classifyModernArchetype({ title: 'Paket & Kerjasama', content: '' }, 7, 9) !== 'pricing') { console.error('FAIL: classify'); process.exit(1); }
+// Classifier routing (§5.3): density-first feature-cards, opt-in feature-split
+const dense5 = Array.from({length: 5}, (_, i) => `- **F${i+1}** — desc`).join('\n');
+if (modern.classifyModernArchetype({ title: 'Solusi & Nilai Tambah', content: dense5 }, 3, 9) !== 'feature-cards') { console.error('FAIL: classify dense generic solution -> feature-cards'); process.exit(1); }
+if (modern.classifyModernArchetype({ title: 'Layanan Unggulan', content: Array.from({length: 6}, (_, i) => `- **F${i+1}** — desc`).join('\n') }, 3, 9) !== 'feature-cards') { console.error('FAIL: classify 6-bullet services -> feature-cards'); process.exit(1); }
+if (modern.classifyModernArchetype({ title: 'WhatsApp AI Agent', content: '- **Cek tagihan** — tanya via chat' }, 4, 9) !== 'feature-split') { console.error('FAIL: classify WA narrative -> feature-split'); process.exit(1); }
+if (modern.classifyModernArchetype({ title: 'Layanan Unggulan', content: '- **A** — x\n- **B** — y' }, 3, 9) !== 'services') { console.error('FAIL: classify sparse services stays services'); process.exit(1); }
 const eco = modern.renderModernEcosystem({ title: 'Arsitektur & Ekosistem', content: '- **Groq** — chat copilot\n- **ComfyUI** — render lokal' }, brand, 4, '', 9);
 if (!eco.includes('ecosystem-grid-split') || !eco.includes('Groq') || !eco.includes('<svg')) { console.error('FAIL: ecosystem'); process.exit(1); }
 
@@ -30,4 +36,9 @@ if (!close.includes('closing-3col-grid') || !close.includes('+62 812-0000-0000')
 const proof = modern.renderModernSocialProof({ title: 'Testimoni & Kepercayaan', content: '- **Budi, CTO** — "Memangkas waktu 60%"\n- **Siti, VP** — "Stabil dan intuitif"' }, brand, 7, '', 9);
 if (!proof.includes('quote') || !proof.includes('Budi')) { console.error('FAIL: social-proof'); process.exit(1); }
 console.log('PASS: modern hero/welcome/services render');
+const feat = modern.renderFeatureCards({ title: 'Warga dan Iuran', content: 'Intro\n\n- **Hak Akses** — atur peran pengurus\n- **Bayar Iuran** — VA QRIS multibank\n- **Reminder** — notifikasi otomatis\n- **Laporan Kas** — grafik realtime' }, brand, 3, '', 9);
+if (!feat.includes('feature-cards-grid') || !feat.includes('Hak Akses')) { console.error('FAIL: feature-cards'); process.exit(1); }
+const split = modern.renderFeatureSplit({ title: 'WhatsApp AI Agent', content: '<!-- image: solution -- query: support agent; keywords: chat, ai, phone; style: photo -->\nUrusan beres lewat WA\n\n- **Cek tagihan** — tanya status via chat' }, brand, 4, '', 9);
+if (!split.includes('feature-split') || !split.includes('WhatsApp AI Agent')) { console.error('FAIL: feature-split'); process.exit(1); }
+console.log('PASS: feature-cards + feature-split render');
 process.exit(0);

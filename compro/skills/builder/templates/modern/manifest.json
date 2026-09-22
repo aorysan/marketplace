@@ -1,8 +1,8 @@
 {
   "name": "modern",
-  "version": "2.6.0",
-  "archetypes": ["cover", "problem", "solution", "services", "ecosystem", "metrics", "differentiator", "pricing", "closing", "social-proof"],
-  "slots": { "cover": "hero", "problem": "problem", "solution": "solution", "services": "services", "ecosystem": "ecosystem", "metrics": "metrics", "differentiator": "differentiator", "pricing": "pricing", "closing": "closing", "social-proof": "traction" },
+  "version": "2.8.0",
+  "archetypes": ["cover", "problem", "solution", "services", "ecosystem", "metrics", "differentiator", "pricing", "closing", "social-proof", "feature-split", "feature-cards"],
+  "slots": { "cover": "hero", "problem": "problem", "solution": "solution", "services": "services", "ecosystem": "ecosystem", "metrics": "metrics", "differentiator": "differentiator", "pricing": "pricing", "closing": "closing", "social-proof": "traction", "feature-cards": "services", "feature-split": "solution" },
   "cssFile": "theme.css",
   "shellFile": "shell.html",
   "renderer": "modern"

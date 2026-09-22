@@ -47,6 +47,28 @@ const { runMain } = require('../skills/builder/scripts/build-deck');
   for (const cls of ['hero-layout-grid', 'two-col-layout-grid', 'diff-table', 'pricing-cards-grid', 'metric-big-number', 'closing-3col-grid']) {
     if (!html.includes(cls)) { console.error('FAIL: missing key element ' + cls); process.exit(1); }
   }
+  // NOTE (Task 4): count rendered grid divs, not bare class mentions — theme.css
+  // inlines `.feature-cards-grid {...}` into index.html, so a bare /feature-cards-grid/
+  // regex passes vacuously even with zero rendered cards.
+  const cardGrids = (html.match(/<div class="feature-cards-grid">/g) || []).length;
+  if (cardGrids < 1) { console.error('FAIL: no feature-cards-grid rendered'); process.exit(1); }
+  // NOTE (Task 4): exempt by-design per-build closing art (build-deck.js writes
+  // assets/closing-banner.svg every build; renderModernClosing always embeds it).
+  // The assert's intent is: no slide-photo SVG fallbacks — slot images must be .jpg.
+  if (/<img[^>]+src="assets\/(?!closing-banner\.svg)[^"]*\.svg"/.test(html)) { console.error('FAIL: local SVG img reference found'); process.exit(1); }
+  // Assert 5: HTML density guardrails (§7). Strict 40-60 word budget is enforced
+  // at markdown level (test-writer-schema.js) + splitter unit tests
+  // (test-density-split.js); HTML allows chrome overhead (badges, CTAs, captions),
+  // so cap is 100 words/section to catch runaway dense slides without false positives.
+  const sectionHtml = [...html.matchAll(/<section[\s>][\s\S]*?<\/section>/g)].map(m => m[0]);
+  for (let i = 0; i < sectionHtml.length; i++) {
+    const sHtml = sectionHtml[i];
+    const liCount = (sHtml.match(/<li[\s>]/g) || []).length;
+    if (liCount > 6) { console.error(`FAIL: section ${i + 1} has ${liCount} <li> (expected <=6)`); process.exit(1); }
+    const textOnly = sHtml.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ');
+    const wCount = textOnly.split(/\s+/).filter(Boolean).length;
+    if (wCount > 100) { console.error(`FAIL: section ${i + 1} has ${wCount} words (expected <=100 incl. chrome; markdown budget 40-60)`); process.exit(1); }
+  }
   console.log('PASS: modern golden DOM asserts hold');
   process.exit(0);
 })().catch(e => { console.error('FAIL: ' + e.message); process.exit(1); });

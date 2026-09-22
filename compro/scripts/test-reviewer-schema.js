@@ -64,4 +64,14 @@ for (const check of v27ReviewerChecks) {
 }
 
 console.log('PASS: reviewer skill definition enforces selling points verification, zero competitor leak check, and differentiator table headers');
+// --- density guardrail asserts (Task 2) ---
+const revSkill = fs.readFileSync(skillPath, 'utf-8');
+for (const s of ['40-60 kata', '>6 bullets', 'bullet >20 kata']) {
+  if (!revSkill.includes(s)) {
+    console.error(`FAIL: reviewer SKILL.md missing density rule "${s}"`);
+    process.exit(1);
+  }
+}
+console.log('PASS: reviewer density guardrail present');
+
 process.exit(0);

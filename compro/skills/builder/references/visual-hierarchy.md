@@ -307,6 +307,54 @@ Corporate decks require strict structural discipline to look polished both in in
 
 ---
 
+### 2.10 Feature Cards Archetype (Light Deck v2.8.0)
+*Purpose:* Present dense feature or service content as a scannable 2×2 card grid on the light canvas.
+
+```
++------------------------------------------------------------------------------------+
+|  [SLIDE TITLE: Layanan / Fitur Unggulan]                                           |
+|  Value proposition lead sentence                                                   |
+|                                                                                    |
+|  +-------------------------------+  +-------------------------------+              |
+|  | [*] Icon 28px                 |  | [*] Icon 28px                 |              |
+|  | Feature Title (H3, 22px)      |  | Feature Title (H3, 22px)      |              |
+|  | Description (15px, 1.5)       |  | Description (15px, 1.5)       |              |
+|  +-------------------------------+  +-------------------------------+              |
+|  +-------------------------------+  +-------------------------------+              |
+|  | [*] Icon 28px                 |  | [*] Icon 28px                 |              |
+|  | Feature Title (H3, 22px)      |  | Feature Title (H3, 22px)      |              |
+|  | Description (15px, 1.5)       |  | Description (15px, 1.5)       |              |
+|  +-------------------------------+  +-------------------------------+              |
++------------------------------------------------------------------------------------+
+```
+
+- **Layout Structure:** 2-column grid (`.feature-cards-grid`, `grid-template-columns: 1fr 1fr; gap: 20px;`), maximum **4 cards per slide**.
+- **Card Styling:** White card (`.feature-card`, `background: #FFFFFF; border: 1px solid rgba(11,59,130,0.10); border-radius: 16px; padding: 24px;`), H3 headline (`22px`, `700`, `#0B3B82`), body (`15px`, `1.5`, `#334155`), brand icon (`.card-icon-brand`, 28px).
+- **Part Rule:** When dense content exceeds 4 cards, chunk into subsequent slides (Part 1, Part 2) with continued H2, per the §1 Slide Budget rule.
+
+---
+
+### 2.11 Feature Split Archetype (Light Deck v2.8.0)
+*Purpose:* Pair narrative text (hero, closing, or ecosystem copy) with a single adaptive photo on the light canvas.
+
+```
++------------------------------------------------------------------------------------+
+|  [SLIDE TITLE: Narasi Layanan / Penutup]                                           |
+|                                                                                    |
+|  +--------------------------------------------------+  +-------------------------+  |
+|  | Narrative text (left, 78%)                       |  | Adaptive photo          |  |
+|  | - Lead sentence + supporting bullets             |  | (right, 22%,           |  |
+|  | - Key benefit or ecosystem flow                  |  | radius 16px +           |  |
+|  |                                                  |  | 20% brand overlay)      |  |
+|  +--------------------------------------------------+  +-------------------------+  |
++------------------------------------------------------------------------------------+
+```
+
+- **Layout Structure:** Asymmetric split (`.feature-split`, `grid-template-columns: 78% 22%; gap: 24px; align-items: stretch;`), text left, adaptive photo right.
+- **Photo Treatment:** Photo frame (`.split-photo`, `border-radius: 16px; overflow: hidden;`) with brand overlay (`.split-photo::after`, `background: rgba(0,155,173,0.20);`).
+
+---
+
 ## 3. Contrast Ratio Standards (WCAG AA / AAA)
 
 Visual accessibility is non-negotiable. Text must remain effortlessly readable under challenging projection environments (ambient office lighting, low-contrast projectors).
@@ -322,7 +370,7 @@ Visual accessibility is non-negotiable. Text must remain effortlessly readable u
 
 ### 3.2 Slide Deck Color Contrast Audit
 
-Computed against the slide background `--brand-surface` (`#0f172a`):
+Dark rows computed against the slide background `--brand-surface` (`#0f172a`); light-deck row computed against `#FFFFFF`:
 
 | Token | Hex Value | Contrast Ratio | Result |
 |-------|-----------|----------------|--------|
@@ -332,6 +380,7 @@ Computed against the slide background `--brand-surface` (`#0f172a`):
 | `--brand-primary` (Venturo Teal) | `#009BAD` | **4.7 : 1** | PASS (AA Normal, AAA Large) |
 | `--color-success` | `#10b981` | **5.4 : 1** | PASS (AA Normal, AAA Large) |
 | `--color-problem` (Warning Red) | `#ef4444` | **4.6 : 1** | PASS (AA Normal, AAA Large) |
+| `--text-headline` on `#FFFFFF` (light deck) | `#0B3B82` | **10.7 : 1** | PASS (AAA) |
 
 ### 3.3 Strict Anti-Patterns to Avoid
 

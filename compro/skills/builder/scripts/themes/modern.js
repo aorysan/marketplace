@@ -42,8 +42,19 @@ function classifyModernArchetype(slide, index, totalSlides) {
   if (/arsitektur|ekosistem|ecosystem|stack/.test(t)) return 'ecosystem';
   if (/pencapaian|bukti|traction|showcase|metric|statistik|angka|kpi/.test(t)) return 'metrics';
   if (/masalah|tantangan|pain|problem/.test(t)) return 'problem';
+  const bulletCount = ((slide.content || '').match(/^[-*]\s/gm) || []).length;
+  // Dense services/solution slides -> feature-cards (§4-§5.3). Density signal first,
+  // title keywords only as scope guard so pricing/ecosystem/metrics/differentiator
+  // (matched above) keep their dedicated renderers. Generic dense titles are covered:
+  // any services/solution-scope title with >=4 bullets routes here, not just RT vocabulary.
+  // Placed before `solution`/`services` so dense slides don't fall through to welcome layouts.
+  if (bulletCount >= 4 && /layanan|fitur|services|feature|keunggulan|solusi|solution|nilai tambah|value|warga|iuran|kependudukan|mobile|whatsapp/i.test(t)) return 'feature-cards';
   if (/solusi|solution|nilai tambah|value/.test(t)) return 'solution';
   if (/profil|profile|tentang|cover/.test(t)) return 'cover';
+  // Narrative / WA AI / spotlight slides -> feature-split (§4): text + adaptive photo.
+  // Opt-in by content type (narrative/spotlight/WA keywords) + low bullet count so
+  // dense card slides stay on feature-cards and hero/closing keeps its dedicated renderer.
+  if (bulletCount <= 4 && /whatsapp|wa ai|narrative|narasi|sorotan|spotlight|cerita|aplikasi mobile/i.test(t)) return 'feature-split';
   if (/layanan|fitur|services|feature|keunggulan/.test(t)) return 'services';
   return index === 1 ? 'problem' : 'solution';
 }
@@ -210,11 +221,74 @@ function renderModernServices(slide, brand, index = 3, assetsDir = '', totalSlid
     </section>`;
 }
 
+function renderFeatureCards(slide, brand, index = 3, assetsDir = '', totalSlides = 9) {
+  const content = sanitizeSlideContent(slide.content || '').trim();
+  const { introText, cards } = parseEditorialCards(content);
+  // Zero-bullet guard: the paragraph fallback in parseEditorialCards can invent a
+  // card from prose, so gate on raw bullet lines — zero bullets means empty grid.
+  const bulletCount = (content.match(/^[-*]\s/gm) || []).length;
+  if (bulletCount === 0) console.warn(`[modern] feature-cards slide ${index + 1} has zero bullets; rendering empty grid`);
+  else if (cards.length === 0) console.warn(`[modern] feature-cards slide ${index + 1} has zero cards; rendering empty grid`);
+  if (cards.length > 4) console.warn(`[modern] feature-cards slide ${index + 1} has ${cards.length} cards; rendering first 4, remainder needs Part split`);
+  const visibleCards = bulletCount === 0 ? [] : cards;
+  const cardsHtml = visibleCards.slice(0, 4).map((c) => `
+    <div class="feature-card">
+      <div class="card-icon-brand"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg></div>
+      <h3>${inline(c.title)}</h3>
+      <p>${inline(c.desc)}</p>
+    </div>`).join('\n');
+  return `
+    <section>
+      <div class="editorial-slide-container">
+        <div class="slide-header">
+          <div class="slide-header-left">
+            <span class="slide-kicker-badge">Fitur Unggulan</span>
+            <h2 class="slide-title">${inline(slide.title)}</h2>
+          </div>
+          <div class="slide-header-right">
+            ${introText ? `<p class="slide-subtitle">${inline(introText)}</p>` : ''}
+            <span class="slide-index-badge">${slideBadge(index, totalSlides)}</span>
+          </div>
+        </div>
+        <div class="feature-cards-grid">${cardsHtml}</div>
+      </div>
+    </section>`;
+}
+
+function renderFeatureSplit(slide, brand, index = 4, assetsDir = '', totalSlides = 9) {
+  const content = sanitizeSlideContent(slide.content || '').trim();
+  const { introText, cards } = parseEditorialCards(content);
+  // 'solution' default slot: hero/solution/closing/ecosystem consumption depends on
+  // the image directive (known limitation — directive wins, see resolveSlideSlot).
+  const targetSlot = resolveSlideSlot(slide, index, totalSlides, 'solution');
+  const imgSrc = resolveSlideImageUrl(index + 1, targetSlot, assetsDir);
+  if (cards.length === 0) console.warn(`[modern] feature-split slide ${index + 1} has zero cards; rendering empty grid`);
+  if (cards.length > 4) console.warn(`[modern] feature-split slide ${index + 1} has ${cards.length} cards; rendering first 4, remainder needs Part split`);
+  const miniHtml = cards.slice(0, 4).map((c) => `
+    <div class="feature-card"><h3>${inline(c.title)}</h3><p>${inline(c.desc)}</p></div>`).join('\n');
+  return `
+    <section>
+      <div class="editorial-slide-container">
+        <div class="feature-split">
+          <div>
+            <span class="slide-kicker-badge">Sorotan Fitur</span>
+            <h2 class="slide-title">${inline(slide.title)}</h2>
+            ${introText ? `<p class="slide-subtitle">${inline(introText)}</p>` : ''}
+            <div class="feature-cards-grid">${miniHtml}</div>
+          </div>
+          <div class="split-photo editorial-image-frame"><img src="${imgSrc}" alt="${inline(slide.title)}" /></div>
+        </div>
+      </div>
+    </section>`;
+}
+
 module.exports = {
   classifyModernArchetype,
   renderModernHero,
   renderModernWelcome,
   renderModernServices,
+  renderFeatureCards,
+  renderFeatureSplit,
   renderModernEcosystem,
   renderModernMetrics,
   renderModernDifferentiator,
@@ -655,7 +729,9 @@ function renderModernSocialProof(slide, brand, index = 7, assetsDir = '', totalS
     </section>`;
 }
 
-// Modern dispatcher: archetype -> renderer (10 cases, default `solution`).
+// Modern dispatcher: archetype -> renderer (12 cases, default `solution`).
+// feature-split routes via classifier (narrative/WA/spotlight opt-in, <=4 bullets);
+// feature-cards routes via density (>=4 bullets, services/solution scope).
 function renderModernSlide(slide, index, totalSlides, brand, assetsDir = '') {
   const arch = classifyModernArchetype(slide, index, totalSlides);
   switch (arch) {
@@ -663,6 +739,8 @@ function renderModernSlide(slide, index, totalSlides, brand, assetsDir = '') {
     case 'problem': return renderModernWelcome(slide, brand, index, 'problem', assetsDir, totalSlides);
     case 'solution': return renderModernWelcome(slide, brand, index, 'solution', assetsDir, totalSlides);
     case 'services': return renderModernServices(slide, brand, index, assetsDir, totalSlides);
+    case 'feature-cards': return renderFeatureCards(slide, brand, index, assetsDir, totalSlides);
+    case 'feature-split': return renderFeatureSplit(slide, brand, index, assetsDir, totalSlides);
     case 'ecosystem': return renderModernEcosystem(slide, brand, index, assetsDir, totalSlides);
     case 'metrics': return renderModernMetrics(slide, brand, index, assetsDir, totalSlides);
     case 'differentiator': return renderModernDifferentiator(slide, brand, index, assetsDir, totalSlides);

@@ -1,0 +1,80 @@
+{
+  "document": {
+    "title": "RT ONLINE - Manajemen Berkualitas Pengurus Berkelas",
+    "source_file": "/home/aorysan/Downloads/compro.pdf",
+    "total_pages": 15,
+    "page_size_pts": "720 x 405 (16:9 widescreen)",
+    "rendered_resolution": "1920 x 1080 (Full HD @ 192 DPI)",
+    "creator": "Google (Slides/Presentation)"
+  },
+  "company": {
+    "name": "RT Online",
+    "slug": "rt-online",
+    "tagline": "Manajemen Berkualitas Pengurus Berkelas",
+    "subtagline": "RT dengan Asisten AI Pertama di Indonesia",
+    "description": "Platform digital all-in-one untuk manajemen dan tata kelola rukun tetangga (RT), dilengkapi aplikasi mobile dan asisten AI WhatsApp untuk pengelolaan iuran, kependudukan, pengumuman, dan laporan keuangan transparan.",
+    "developer": "Venturo",
+    "address": "Jl. Rinjani No 26 Oro-Oro Dowo, Kec. Klojen, Kota Malang, Jawa Timur",
+    "phone": "0851-2270-2290",
+    "instagram": "@rtonline_id",
+    "website": "rtonline.id"
+  },
+  "key_metrics": {
+    "warga_terbantu": "1.000++ warga",
+    "disiplin_bayar_iuran": "90% warga lebih disiplin berkat reminder otomatis",
+    "rt_mitra": "40+ Perumahan & RT di seluruh Indonesia"
+  },
+  "modules": [
+    "Mobile Apps",
+    "Whatsapp AI Agent",
+    "Warga & Iuran",
+    "Data Kependudukan",
+    "Pengumuman & Tata Tertib"
+  ],
+  "pricing_plans": [
+    {
+      "tier": "< 100 Hunian",
+      "mobile_apps_price": 1500,
+      "whatsapp_ai_price": 1000,
+      "bundling_price": 2000,
+      "bundling_original_price": 2500,
+      "unit": "hunian / bulan"
+    },
+    {
+      "tier": "< 300 Hunian",
+      "mobile_apps_price": 1250,
+      "whatsapp_ai_price": 750,
+      "bundling_price": 1600,
+      "bundling_original_price": 2000,
+      "discount": "17% lebih murah",
+      "unit": "hunian / bulan"
+    },
+    {
+      "tier": "> 300 Hunian",
+      "badge": "Best Seller",
+      "mobile_apps_price": 1000,
+      "whatsapp_ai_price": 500,
+      "bundling_price": 1200,
+      "bundling_original_price": 1500,
+      "discount": "33% lebih murah",
+      "unit": "hunian / bulan"
+    }
+  ],
+  "promotions": [
+    {
+      "name": "Berlangganan 1 Tahun Bayar 10 Bulan",
+      "valid_until": "31 Desember 2025",
+      "benefits": [
+        "Free Unlimited Support 1x24 jam",
+        "Free Buku Panduan langkah demi langkah"
+      ]
+    },
+    {
+      "name": "Fasilitas Premium Terbatas (20 RT Pertama Bulan Ini)",
+      "benefits": [
+        "Free pendampingan khusus via WhatsApp Group selama berlangganan",
+        "Google Meet Support 2 kali tatap muka daring"
+      ]
+    }
+  ]
+}

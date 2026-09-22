@@ -29,12 +29,12 @@ for (const relPath of manifestFiles) {
     process.exit(1);
   }
 
-  if (manifest.version !== '2.7.0') {
-    console.error(`FAIL: ${relPath} expected version 2.7.0, got '${manifest.version}'`);
+  if (manifest.version !== '2.8.0') {
+    console.error(`FAIL: ${relPath} expected version 2.8.0, got '${manifest.version}'`);
     process.exit(1);
   }
 
-  console.log(`PASS: ${relPath} is valid (name: compro, version: 2.7.0)`);
+  console.log(`PASS: ${relPath} is valid (name: compro, version: 2.8.0)`);
 }
 
 const requiredSkills = ['compro', 'writer', 'reviewer', 'builder', 'publisher'];
@@ -49,5 +49,5 @@ for (const skill of requiredSkills) {
 }
 
 console.log('PASS: all 5 Layer 3 skill definitions exist');
-console.log('PASS: manifest is valid with version 2.7.0 and all 5 Layer 3 skills');
+console.log('PASS: manifest is valid with version 2.8.0 and all 5 Layer 3 skills');
 process.exit(0);

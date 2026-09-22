@@ -64,3 +64,9 @@ qa/
 
 # Deployment status reports
 deploy/
+
+# --- Scraped PDF reference binaries (RT Online overhaul) ---
+# Text stays tracked (content.md, metadata.json, slides-text/, input-drafts/, README.md);
+# heavy render binaries stay local (regenerable from source PDF).
+assets/compro/slides/
+assets/compro/images/

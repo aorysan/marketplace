@@ -5,12 +5,12 @@
 
 :root {
   /* Surface & Canvas System */
-  --canvas-bg: #F8FAFC;
+  --canvas-bg: #FFFFFF;
   --canvas-surface: #FFFFFF;
-  --surface-border: rgba(15, 23, 42, 0.08);
-  --surface-border-subtle: rgba(15, 23, 42, 0.04);
+  --surface-border: rgba(11, 59, 130, 0.10);
+  --surface-border-subtle: rgba(11, 59, 130, 0.05);
   --surface-border-hover: rgba(0, 155, 173, 0.4);
-  --surface-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --surface-shadow: 0 4px 20px -2px rgba(11, 59, 130, 0.08);
   --surface-shadow-elevated: 0 20px 35px -8px rgba(0, 155, 173, 0.2), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
 
   /* Contrast Solids */
@@ -19,7 +19,7 @@
   --slate-subtle: rgba(15, 23, 42, 0.03);
 
   /* Typography Colors */
-  --text-headline: #0F172A;
+  --text-headline: #0B3B82;
   --text-body: #334155;
   --text-muted: #64748B;
   --text-inverse: #FFFFFF;
@@ -1854,3 +1854,11 @@ html, body, .reveal {
   align-items: center;
   gap: 6px;
 }
+.feature-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.feature-card { background: #FFFFFF; border: 1px solid rgba(11,59,130,0.10); border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px -2px rgba(11,59,130,0.08); }
+.feature-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 700; color: #0B3B82; margin: 12px 0 6px; }
+.feature-card p { font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; color: #334155; margin: 0; }
+.feature-split { display: grid; grid-template-columns: 78% 22%; gap: 24px; align-items: stretch; }
+.split-photo { border-radius: 16px; overflow: hidden; position: relative; min-height: 100%; }
+.split-photo::after { content: ''; position: absolute; inset: 0; background: rgba(0,155,173,0.20); }
+.card-icon-brand { color: #009BAD; line-height: 1; }

@@ -89,8 +89,8 @@ for (const slide of slides) {
     process.exit(1);
   }
   const words = countBodyWords(slide);
-  if (words < 85 || words > 140) {
-    console.error(`FAIL: slide "${title}" body is ${words} words (expected 85-140)`);
+  if (words < 40 || words > 60) {
+    console.error(`FAIL: slide "${title}" body is ${words} words (expected 40-60)`);
     process.exit(1);
   }
 }
@@ -108,5 +108,12 @@ if (dataRows.length - 1 !== 3) {
   process.exit(1);
 }
 
-console.log('PASS: modern fixture has per-slide image directives, 85-140 words/slide, and a 3-row pricing table');
+const writerSkill = fs.readFileSync(skillPath, 'utf-8');
+if (!writerSkill.includes('40-60 kata') || !writerSkill.includes('**Judul**')) {
+  console.error('FAIL: writer SKILL.md missing 40-60 condensed-bullet contract');
+  process.exit(1);
+}
+console.log('PASS: writer density contract present');
+
+console.log('PASS: modern fixture has per-slide image directives, 40-60 words/slide, and a 3-row pricing table');
 process.exit(0);

@@ -94,7 +94,7 @@ Untuk impeccable, builder membaca reference docs secara langsung (bukan menjalan
 1. **Self-Contained Design Intelligence:** Seluruh aturan visual, warna, dan tipografi bersumber dari `references/design-tokens.md`, `references/visual-hierarchy.md`, serta dua skill desain ter-bundle `skills/ui-ux-pro-max/` (design system generator, palettes, fonts, icons) dan `skills/impeccable/` (craft quality floor, critique, audit, polish).
 2. **Single Template `modern` & Dynamic HSL Theming:** Builder hanya memiliki satu template (`templates/modern/`, diekstrak dari congen6 — kanvas `#F8FAFC`, slate `#0F172A`, aksen Venturo Teal `#009BAD` / `hsl(186, 100%, 34%)`). Tidak ada opsi pemilihan tema/flag `--theme`; builder selalu merender via `themes/modern.js` serta menyuntikkan token CSS HSL dinamis (`--brand-h`, `--brand-s`, `--brand-l`).
 3. **Hybrid Asset Pipeline & Curated Direct CDN:** Mengunduh foto arsitektur dan corporate resolusi tinggi dari Unsplash direct CDN (`images.unsplash.com`) berdasarkan slot komentar markdown (`<!-- image: <slot> -- ... -->`), dengan fallback berjenjang ke Lorem Picsum dan aset vektor SVG arsitektur lokal (`templates/assets/fallback/`). Zero API key barrier, deck mandiri tersimpan di `compros/<slug>/assets/`.
-4. **Deterministic Chunking & Slide Budget:** Satu slide memuat 1 konsep utama berukuran 1920×1080 (16:9 1080p) dengan batas maksimal ~250 kata atau 3–4 kartu konten untuk menjamin keterbacaan proporsional.
+4. **Deterministic Chunking & Slide Budget:** Satu slide memuat 1 konsep utama berukuran 1920×1080 (16:9 1080p) dengan batas maksimal 60 kata atau 4 kartu; >4 bullets atau >60 kata dipecah otomatis via splitDenseSlides() menjadi Part 1/2/3 (`Lanjutan: [Title] (Part N)`) untuk menjamin keterbacaan proporsional. Threshold 4 card-safe: reviewer mengizinkan hingga 6 plain bullets, builder split konservatif di 5+ agar §4 4-card cap selalu terpenuhi; prose-only >60 kata di-split per kalimat dengan budget 60 kata.
 5. **Aksesibilitas & Kontras Ketat:** Memastikan teks body memiliki rasio kontras minimal 4.5:1 terhadap latar belakang (teks aksen AA `#007A87` pada latar terang, teks body `#232220` pada kartu `#FFFFFF`).
 6. **Git Worktree & Dynamic Workspace Sync Guarantee:** Builder mendeteksi environment kerja secara dinamis tanpa hardcoded absolute paths (`--root`, `COMPRO_PROJECT_ROOT`, atau auto-inspeksi file pointer `.git` worktree). `postBuildSyncGuarantee()` menjamin file output otomatis disinkronkan ke root workspace pengguna (`compros/<slug>/`) tanpa risiko kehilangan artefak.
 7. **Clean Markdown Sanitization & Big Number Extraction:** Otomatis membersihkan blok frontmatter, `Meta Title:`, `Meta Description:`, `Tagline:`, mengganti placeholder kontak `[...]` dengan nilai demo terformat, dan mengekstrak statistik metrik menjadi big number counter (44px `#007A87`).
@@ -138,6 +138,8 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 - **Kontak / CTA Penutup** ➔ **Closing Slide Archetype** (Banner ajakan kolaborasi, tombol pill download App Store & Google Play, grid kontak 4 kolom WA/Email/Web/Alamat).
 - **Diferensiasi / Mengapa Kami** ➔ **Differentiator Table Archetype** (Tabel perbandingan 4–5 kolom brand vs kompetitor, highlight kolom brand, status indikator centang/silang/peringatan, honesty callout).
 - **Testimoni / Social Proof** ➔ **Social Proof Slide Archetype** (Header terpusat, 2–3 kartu kutipan testimoni klien dengan atribusi lengkap, logo trust bar grayscale atau fallback company pill badges).
+- **Layanan / Fitur Dense (`services`/`solution`)** ➔ **Feature Cards Archetype** (Grid 2x2 `.feature-cards-grid`, maksimal 4 kartu per slide, selebihnya split Part 1/Part 2).
+- **Narasi Hero / Closing / Ekosistem (`hero`/`closing`/`ecosystem`)** ➔ **Feature Split Archetype** (Split 78/22 `.feature-split`, teks narasi kiri + foto adaptif kanan dengan overlay brand 20%).
 
 ### 3. Smart Asset Pipeline & Vector Fallbacks
 - Untuk setiap referensi gambar:
@@ -153,6 +155,7 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
   - Gambar dari CDN eksternal (URL `https://`)
   - Gambar raster yang disediakan user (PNG/JPG) yang memang harus jadi file terpisah
 - **Post-build self-check:** Setelah menulis `index.html`, scan semua tag `<img>`. Jika ada yang me-reference path lokal relatif (`src="assets/..."` atau `src="./..."`), itu adalah ERROR — baca file tersebut, inline isinya sebagai `<svg>`, dan hapus tag `<img>`.
+- **Pengecualian per-build `closing-banner.svg`:** `renderModernClosing` (`themes/modern.js`) menyematkan `<img src="assets/closing-banner.svg">` — file art bermerek yang di-generate ke `assets/` pada setiap build. Ini BUKAN pelanggaran aturan inline: panel kiri membutuhkan byte gambar yang unik agar tidak melanggar aturan unique-md5 image (pakai ulang byte foto hero akan menggandakan hash).
 - **Constraint Retroaktif:** Aturan ini berlaku retroaktif: jika builder menemukan output lama dengan `<img src="assets/*.svg">`, harus di-fix saat rebuild.
 
 ### 4. HTML Assembly & Inlining

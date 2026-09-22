@@ -24,7 +24,7 @@ Memastikan draf company profile berkualitas tinggi, bebas kesalahan faktual, ses
    - Alur narasi mengalir logis: Problem -> Solution -> Proof -> Offer -> CTA.
 3. **Slide Layout & Capacity:**
    - Setiap slide diawali `# ` (H1).
-   - Panjang kata per slide proporsional (85–140 kata). Tidak ada slide yang kepanjangan.
+   - Panjang kata per slide proporsional (40-60 kata). Tidak ada slide yang kepanjangan.
 4. **Content SEO & Metadata Formulation:**
    - Judul slide deskriptif dan ramah pencarian.
    - Reviewer menyusun `Meta Title` (maksimal 60 karakter) dan `Meta Description` (150–160 karakter) yang merangkum proposisi nilai perusahaan, disisipkan pada bagian header draf final.
@@ -60,6 +60,10 @@ Memastikan draf company profile berkualitas tinggi, bebas kesalahan faktual, ses
    - **Differentiator Table Headers & Cells Rule:** Tabel pembanding pada Slide 7 WAJIB menggunakan label kategori/arketipe generik (misal: `Solusi Konvensional`, `Agency Tradisional`, `Software Generik`, `Pendekatan Manual`, `Alat Manual / In-House`). Jika nama merek atau brand kompetitor spesifik muncul pada header kolom atau sel tabel pembanding, reviewer WAJIB menerbitkan `REVISION_REQUIRED` untuk competitor leak ("Competitor leak pada tabel Slide 7: nama [kompetitor] terdeteksi di header/sel").
    - Selling points harus dirajut secara natural ke narasi, bukan ditempel sebagai daftar terpisah.
    - Selling points harus konsisten dengan fakta di `business-knowledge-base.md` (overlap check dengan item 1 Factual Consistency).
+
+9. **Density Guardrail (text-heavy guard):**
+   - Tolak (`REVISION_REQUIRED`) jika: >6 bullets/slide, >60 kata/slide, atau ada bullet >20 kata.
+   - Minta writer memadatkan ke `**Judul** — desc 8-12 kata` atau memecah ke `Part 2`.
 
 ## Status Review
 - **`APPROVED`**: Draf memenuhi semua kriteria checklist. Salin konten ke `compros/<slug>/drafts/02-final.md` (legacy: `artifacts/02-company-profile-final.md`) dan teruskan ke Builder.

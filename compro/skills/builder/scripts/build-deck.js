@@ -72,6 +72,85 @@ function parseAndSanitizeMarkdown(md) {
   });
 }
 
+function countBullets(content) {
+  return ((content || '').match(/^[-*]\s/gm) || []).length;
+}
+function countWords(content) {
+  const body = (content || '').replace(/<!--[\s\S]*?-->/g, '');
+  return body.split(/\s+/).map(w => w.trim()).filter(w => w && w !== '---').length;
+}
+function splitProseByWords(text, maxWords) {
+  const max = maxWords || 60;
+  const clean = (text || '').trim();
+  if (!clean) return [];
+  if (countWords(clean) <= max) return [clean];
+  const sentences = clean.split(/(?<=[.!?])\s+/).filter(Boolean);
+  // Fallback: no sentence boundaries -> hard split by words
+  if (sentences.length <= 1 && countWords(clean) > max) {
+    const words = clean.split(/\s+/);
+    const chunks = [];
+    for (let i = 0; i < words.length; i += max) chunks.push(words.slice(i, i + max).join(' '));
+    return chunks;
+  }
+  const chunks = [];
+  let cur = '';
+  for (const s of sentences) {
+    const next = cur ? cur + ' ' + s : s;
+    if (countWords(next) > max && cur) { chunks.push(cur); cur = s; }
+    else cur = next;
+  }
+  if (cur) chunks.push(cur);
+  // Hard-split any chunk still over budget (e.g. single 70-word sentence) by words
+  const final = [];
+  for (const c of chunks) {
+    if (countWords(c) <= max) { final.push(c); continue; }
+    const words = c.split(/\s+/);
+    for (let i = 0; i < words.length; i += max) final.push(words.slice(i, i + max).join(' '));
+  }
+  return final.length ? final : [clean];
+}
+function splitDenseSlides(slides) {
+  const out = [];
+  for (const s of slides) {
+    const lines = (s.content || '').split('\n');
+    const bullets = lines.filter(l => /^[-*]\s/.test(l.trim()));
+    const words = countWords(s.content);
+    const bulletCount = countBullets(s.content);
+    // Card-safe threshold: split at >4 bullets even though reviewer allows up
+    // to 6 plain bullets — guarantees §4 4-card cap for feature-cards slides.
+    // Plain 5-6 bullet slides split conservatively (still readable, never truncated).
+    if (bulletCount <= 4 && words <= 60) { out.push(s); continue; }
+    const directives = s.content.match(/<!--[\s\S]*?-->/g) || [];
+    if (directives.length > 1) console.log(`[DENSE-WARN] "${s.title}" has ${directives.length} image directives, keeping first per chunk`);
+    const directive = directives[0] || '';
+    const nonBullets = lines.filter(l => !/^[-*]\s/.test(l.trim())).join('\n').replace(/<!--[\s\S]*?-->/g, '').trim();
+    // Prose-only overflow (§6 force-split): no bullets, words > 60 -> word-budget Part slides
+    if (bulletCount === 0) {
+      const proseChunks = splitProseByWords(nonBullets, 60);
+      proseChunks.forEach((chunk, idx) => {
+        const title = idx === 0 ? s.title : `Lanjutan: ${s.title} (Part ${idx + 1})`;
+        const content = [chunk, directive].filter(Boolean).join('\n');
+        out.push({ title, content });
+        if (countWords(content) > 60) console.log(`[DENSE] "${s.title}" (${countWords(content)} words, over 60-word budget)`);
+        if (idx > 0) console.log(`[CHUNK] "${s.title}" -> Part ${idx + 1} (prose split)`);
+      });
+      continue;
+    }
+    const chunks = [];
+    for (let i = 0; i < bulletCount; i += 4) chunks.push(bullets.slice(i, i + 4));
+    if (chunks.length === 0) chunks.push([]);
+    chunks.forEach((ch, idx) => {
+      const title = idx === 0 ? s.title : `Lanjutan: ${s.title} (Part ${idx + 1})`;
+      const intro = idx === 0 ? nonBullets : '';
+      const content = [intro, directive, ...ch].filter(Boolean).join('\n');
+      out.push({ title, content });
+      if (ch.length <= 4 && countWords(content) > 60) console.log(`[DENSE] "${s.title}" (${countWords(content)} words, over 60-word budget)`);
+      if (idx > 0) console.log(`[CHUNK] "${s.title}" -> Part ${idx + 1} (${ch.length} bullets)`);
+    });
+  }
+  return out;
+}
+
 // Editorial card parser: "**Bold.** body" bullet cards become { title, desc }, with an
 // intro-text capture and a paragraph fallback when no bullet cards exist.
 function parseEditorialCards(content) {
@@ -2251,7 +2330,7 @@ async function runMain(customArgs) {
   fs.writeFileSync(path.join(ASSETS_DIR, 'logo.svg'), assetGenerator.generateLogoSvg(brandName, primaryColor));
 
   // 5. Parse & chunking: H1 = new slide — now via shared parseAndSanitizeMarkdown()
-  const slides = parseAndSanitizeMarkdown(md);
+  const slides = splitDenseSlides(parseAndSanitizeMarkdown(md));
 
   // 5b. Wire slide image downloads inside build lifecycle with fallback handling
   // Total asset budget (spec §5, binding): ONE build-level deadline shared by all
@@ -2457,6 +2536,8 @@ if (typeof module !== 'undefined' && typeof require !== 'undefined') {
     copyRecursiveSync,
     runMain,
     parseAndSanitizeMarkdown,
+    splitDenseSlides,
+    splitProseByWords,
     parseEditorialCards,
     renderCanvaCover,
     renderCanvaWelcome,
