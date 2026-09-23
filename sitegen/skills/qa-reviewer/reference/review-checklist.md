@@ -4,8 +4,10 @@ Rubrik ini digunakan untuk menilai planning yang dihasilkan skill `planner`.
 Agent memilih bagian yang relevan sesuai mode review:
 - Mode `global` → gunakan Bagian A
 - Mode `page` → gunakan Bagian B
+- Mode global-extended → gunakan Bagian A + C + D + E
 
 Skor minimum lolos: **90/100**
+Skor minimum: A ≥ 90/100, subtotal C+D+E ≥ 60/75
 Batas revisi: **2 putaran**
 
 ---
@@ -177,6 +179,44 @@ Bonus berdasar tipe halaman:
 | About | Ada management/team section | +2 |
 | Blog | 3 artikel backlink dengan gambar clickable | +3 |
 | Portofolio | Ada showcase proyek detail | +2 |
+
+---
+
+## BAGIAN C — Review User Needs (25 poin)
+
+Digunakan saat me-review `PLAN-USER-NEEDS.md` (mode `global-extended`).
+
+| Item | Poin | Kriteria |
+|---|---|---|
+| C1 Kelengkapan Struktur | 10 | Psikografis spesifik industri; pain points min. 5 (pain point + intensitas + relevansi ke layanan); JTBD min. 3 format "Ketika...ingin...agar..."; objection + counter-messaging min. 3 yang spesifik dan actionable |
+| C2 Kedalaman Insight | 10 | FAQ min. 5 pra-pembelian (jawaban + lokasi di website); user journey 5 tahap (channel + konten dicari + section website relevan); trigger pembelian min. 3 kontekstual; insight berbasis data nyata |
+| C3 Anti-Generik | 5 | Tidak ada placeholder "[...]"; tidak ada insight generik tanpa dasar data |
+
+---
+
+## BAGIAN D — Review Competitor (25 poin)
+
+Digunakan saat me-review `PLAN-COMPETITOR.md` (mode `global-extended`).
+
+| Item | Poin | Kriteria |
+|---|---|---|
+| D1 Kelengkapan Kompetitor | 10 | Min. 3 kompetitor (nama bisnis + URL valid/dapat diverifikasi); analisis positioning lengkap (tagline, target audience, kekuatan, kelemahan); data website tercatat (section + fitur interaktif) |
+| D2 Kedalaman Analisis | 10 | Tone of voice per kompetitor (formal/casual, teknikal/sederhana, kata kunci dominan); keyword SEO dari title tag/meta description nyata; gap analysis min. 3 gap konkret dengan rekomendasi eksploitasi spesifik |
+| D3 Akurasi Data | 5 | Kompetitor nyata, dapat diverifikasi online; keyword gap memuat rekomendasi konkret untuk brand ini |
+
+---
+
+## BAGIAN E — Review Design System (25 poin)
+
+Digunakan saat me-review `PLAN-DESIGN-SYSTEM.md` (mode `global-extended`).
+
+| Item | Poin | Kriteria |
+|---|---|---|
+| E1 Color System | 8 | Primary palette 3 shade + secondary palette 3 shade (hex valid + CSS token + use case); neutral min. 5 shade (dark, min. 2 gray, white); semantic 4 warna (success, error, warning, info) |
+| E2 Typography & Spacing | 7 | Typography scale 8 level (H1–H4, body-lg, body, body-sm, caption) dengan size/weight/line-height; spacing min. 8 step berbasis 4px grid; border radius min. 5 level |
+| E3 Layout & Component | 10 | Grid 4 breakpoint (container max-width + jumlah kolom); button min. 3 variant dengan state lengkap; card style lengkap (shadow, radius, padding, hover, transition); navbar glassmorphism sticky + aturan logo tercantum |
+
+> Cross-check: semua hex di Bagian E harus konsisten dengan Section 3 `PLAN-GLOBAL.md`.
 
 ---
 

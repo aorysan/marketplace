@@ -1,0 +1,9 @@
+# QA Code Review — <halaman> — {{BRAND}}
+
+1. Strict Slug & struktur: [OK/KURANG]
+2. Section PRD hadir semua: [OK/KURANG]
+3. Logo & gambar (`public/assets/` + alt & title): [OK/KURANG]
+4. Token sisa `{{...}}`: [BERSIH/KOTOR]
+
+## Instruksi revisi (baris-per-baris)
+1. ...

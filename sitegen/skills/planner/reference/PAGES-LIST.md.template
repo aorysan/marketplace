@@ -1,0 +1,8 @@
+# Pages List — {{BRAND}}
+
+| Halaman | Slug/route | Disetujui |
+|---|---|---|
+| Beranda | `/` | ☐ |
+| Layanan | `/layanan` | ☐ |
+
+Ganti ☐ menjadi ✅ setelah halaman lulus Visual QA Review + review user (master Step 7c). Slug DILARANG diterjemahkan/diubah.

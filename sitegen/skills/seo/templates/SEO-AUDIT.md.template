@@ -1,0 +1,29 @@
+# SEO Audit — {{BRAND}} — <tanggal>
+
+## 0. Based Content from Company Profile
+- [ ] Kalimat menarik & persuasi dari company profile tetap muncul di website
+
+## 1. Keyword & halaman (anti-kanibalisasi: 1 halaman = 1 grup)
+- [ ] buying keyword + ≥2 LSI per halaman
+- [ ] URL memuat keyword utama
+- [ ] Data keyword dari GSC (Google Search Console) 3 bulan terakhir
+- [ ] Prioritaskan keyword: impression tinggi & CTR rendah (opportunity keyword)
+- [ ] Halaman baru: topik dari layanan inti, tervalidasi riset keyword via Google Ads Keyword Planner
+
+## 2. Title & Meta (cek otomatis: scripts/check-technical.js)
+- [ ] Title ≤55 char, 2-3 keyword, CTR-oriented
+- [ ] Description ≤155 char, LSI di luar title
+
+## 3. Struktur & file
+- [ ] sitemap.ts, robots.ts, llms.txt (H1 + absolute link), JSON-LD per tipe halaman
+- [ ] alt+title di tiap <img>/<Image>; title di tiap <a>
+
+## 4. Backlink & SMO
+- [ ] Blog: 3 artikel + gambar clickable ke situs utama
+- [ ] 1 section video SMO per halaman
+- [ ] 3 artikel backlink diposting di wajibaca.com; judul memuat 1 buying keyword sesuai search intent
+- [ ] 1 video relevan per keyword utama (SMO)
+
+## Temuan (STATUS: LULUS / PERBAIKI)
+| # | Lokasi | Masalah | Perbaikan |
+|---|---|---|---|

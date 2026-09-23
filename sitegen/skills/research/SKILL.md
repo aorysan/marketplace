@@ -21,10 +21,12 @@ Baca file `landings/<brand>/intake/intake_compro.md`. Identifikasi dan catat:
 
 ---
 
+> Path template di bawah relatif ke folder skill ini (skills/research/).
+
 ## STEP 2 — User Needs Analysis
 
 Buat file `landings/<brand>/planning/PLAN-USER-NEEDS.md`.
-Gunakan template `planner/reference/prd-user-needs-template.md` sebagai panduan format output.
+Gunakan template `../planner/reference/prd-user-needs-template.md` sebagai panduan format output.
 
 ### Yang harus ada di PLAN-USER-NEEDS.md:
 
@@ -72,7 +74,7 @@ Petakan tahapan user dari awal mengenal hingga memutuskan beli:
 ## STEP 3 — Competitor Analysis
 
 Buat file `landings/<brand>/planning/PLAN-COMPETITOR.md`.
-Gunakan template `planner/reference/prd-competitor-template.md` sebagai panduan format output.
+Gunakan template `../planner/reference/prd-competitor-template.md` sebagai panduan format output.
 
 ### Yang harus ada di PLAN-COMPETITOR.md:
 

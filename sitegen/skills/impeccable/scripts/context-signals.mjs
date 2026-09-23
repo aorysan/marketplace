@@ -161,7 +161,7 @@ const SOURCE_DIRS = ['src', 'app', 'components', 'pages', 'public'];
 
 /**
  * Local paths the agent should point the bundled detector at — never a URL.
- * A URL means a costly Puppeteer browser render, and a probed dev-server port
+ * A URL means a costly headless-browser render, and a probed dev-server port
  * may not even belong to this project. An HTML *file* or a source tree is
  * scanned by the cheap, jsdom-free static engine. This script does NOT run the
  * detector; it just surfaces the target(s) so the agent can run

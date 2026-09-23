@@ -48,6 +48,8 @@ BACA dan GUNAKAN dokumen PRD spesifik halaman (misalnya `PLAN-<halaman>.md`). Na
 Gunakan pemetaan halaman dari `PAGES-LIST.md` / `landings/<brand>/planning/PRD.md`, keyword, Title Tag, Meta Description, struktur section, dan instruksi spesifik (seperti Auto-slide Carousel) yang sudah ada di PRD. JANGAN membuat file JSON terpisah. JANGAN melakukan riset keyword atau merencanakan ulang konten. Langsung gunakan PRD sebagai referensi cetak biru untuk tahap selanjutnya.
 
 ### GATE 2 — SCAFFOLDING (TypeScript)
+> **GATE 2 RULE:** TOLAK template berbasis Tailwind/Astro: bila PRD merujuknya tanpa rencana konversi Vanilla, HENTIKAN proses dan minta user memilih opsi 2 (konversi) atau 3 (custom).
+
 **Guard**: Jika file `landings/<brand>/web/package.json` sudah ada, SKIP scaffolding dan langsung ke GATE 3. Hanya scaffold jika project belum ada.
 
 Beralihlah ke folder `landings/` di root workspace, dan buat folder `<brand>` jika belum ada.
@@ -57,9 +59,30 @@ npx -y create-next-app@latest ./landings/<brand>/web --use-npm --eslint --tailwi
 ```
 - Jika ada warning Turbopack/lockfile, atur `next.config.ts`.
 - Instal dependensi animasi Lenis, Anime.js, Framer Motion & Ikon: `cd landings/<brand>/web && npm install -y --no-fund lenis lucide-react animejs @types/animejs framer-motion`.
+- Instal test-runner Playwright (devDependency) agar template spec `tests/<slug_tepat>.spec.ts` bisa dijalankan pada scaffold baru: `cd landings/<brand>/web && npm install -D @playwright/test`.
 
 ### GATE 3 — DEVELOPMENT, MOBILE UX & SEO INTEGRATION
 Setelah Next.js siap:
+
+**COPY-MAP TEMPLATE (WAJIB — mulai dari `skills/generator/templates/`, jangan menulis ulang boilerplate dari nol):**
+
+| File di `skills/generator/templates/` | Destinasi di `landings/<brand>/web/` |
+| --- | --- |
+| `layout.tsx` | `app/layout.tsx` |
+| `next.config.ts.snippet` | **merge** isinya ke `next.config.ts` (root proyek) |
+| `globals-tokens.css` | **merge** ke `app/globals.css` (file scaffold hasil create-next-app) |
+| `llms.txt` | `public/llms.txt` |
+| `sitemap.ts`, `robots.ts` | `app/sitemap.ts`, `app/robots.ts` |
+| `Header.tsx`, `Footer.tsx`, `AnimatedSection.tsx`, `SmoothScroll.tsx`, `SwipeableCards.tsx` + `SwipeableCards.module.css` | `components/` |
+| `sections/*.tsx` (11 tipe) | `components/sections/` — import `../AnimatedSection` di tiap snippet langsung resolve |
+| `tests/page.spec.ts.template` | `tests/<slug_tepat>.spec.ts` per halaman, nama file 100% dari `PAGES-LIST.md` |
+
+Aturan copy-map:
+- **GANTI SEMUA token `{{...}}`** dengan nilai dari `PLAN-GLOBAL.md` + `ASSET-MAPPING.md` sebelum file dipakai. Token tersisa = **QA FAIL**. Whitelist token: `BRAND`, `BRAND_SLUG`, `PRIMARY`, `SECONDARY`, `DARK`, `FONT_HEADING`, `FONT_BODY`, `LOGO_PATH`, `BASE_URL`, `YEAR`, `META_TITLE`, `META_DESCRIPTION`, `TAGLINE`.
+- `layout.tsx` mengimpor `./globals.css` — langkah **merge** `globals-tokens.css` ke `app/globals.css` pada tabel di atas itulah yang membuat import tersebut resolve.
+- `Header.tsx` hanya menyetel class hook `site-header-scrolled`; style glass/*scroll state* untuk `.site-header-scrolled` WAJIB disediakan generator sendiri di CSS proyek (`app/globals.css`) — Header tidak membawa style-nya.
+- Copy-map hanya mempercepat boilerplate; PRD tetap sumber kebenaran konten, section, dan tata letak.
+
 1. **MANAJEMEN ASET GAMBAR (CRITICAL - ZERO DUPLICATION):** Anda WAJIB memindahkan total (*Move-Item* atau `mv`, BUKAN di-copy atau symlink) seluruh isi folder `landings/<brand>/intake/assets/` ke dalam folder statis Next.js yaitu `landings/<brand>/web/public/assets/`. Jika file gambar sudah terisi di `web/public/assets/` dan folder `intake/assets/` sudah kosong (misal karena pengulangan eksekusi), maka abaikan/SKIP langkah pemindahan ini dengan aman. Pastikan pemanggilan komponen `<Image src="/assets/..." />` merujuk tepat ke path tersebut. Jika Anda menggunakan gambar dari URL eksternal, WAJIB pastikan gambar tersebut membalas HTTP 200 OK (DILARANG placeholder seperti `picsum.photos`; jika tidak ada gambar valid, HENTIKAN proses dan minta pengguna menaruh gambar di `public/assets/`). Anda WAJIB mendaftarkan domain eksternal tersebut ke dalam properti `images.remotePatterns` pada file `next.config.ts`.
 2. **CSS System & Anti-Overflow:** Atur CSS variables dari warna brand PDF di `app/globals.css`. Pastikan `html, body` diset `max-width: 100vw; overflow-x: hidden;` untuk mencegah bug konten keluar layar di mobile.
 3. **Lenis Provider & SEO Meta:** Konfigurasi Smooth Scroll Lenis di `app/layout.tsx` bersama global metadata.

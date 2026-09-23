@@ -1,0 +1,10 @@
+# Asset Mapping — {{BRAND}}
+
+| Aset | URL/Path | Verifikasi 200 OK | Section target |
+|---|---|---|---|
+| Logo resmi brand |  | belum | Header, Footer |
+| Logo produk/game 1 |  | belum |  |
+| Foto konvensi/dokumentasi |  | belum |  |
+| Video YouTube (embed) |  | belum | section video tiap halaman |
+
+Aturan: DILARANG placeholder/stok tak relevan; tiap URL eksternal wajib 200 OK sebelum dipakai di kode.
