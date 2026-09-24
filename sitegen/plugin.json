@@ -5,7 +5,7 @@
   "skills": [
     {
       "name": "sitegen",
-      "path": "skills/SKILL.md",
+      "path": "SKILL.md",
       "description": "Master orchestrator for full website generation flow"
     },
     {

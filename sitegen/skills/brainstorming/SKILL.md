@@ -42,9 +42,11 @@ Ajukan pertanyaan **satu per satu**, tunggu jawaban user sebelum pertanyaan beri
 4. **Pendekatan Visual & Template**
    - "Untuk desain visual, apakah ingin menggunakan template atau membuat desain baru?"
    - Opsi: 
-     1. Pakai Template Saja (Pilih dari: https://show.saasfly.io/en, https://launch-pad-roan.vercel.app/en, https://screwfast.uk/, https://jawara-woad.vercel.app/)
-     2. Pakai Template + Modifikasi (Pilih template di atas lalu beri masukan desain/warna tambahan)
-     3. Desain Baru/Custom
+     1. Pakai Template Saja — HANYA untuk template Next.js + Vanilla CSS (terverifikasi: `jawara-woad` ✅ aman).
+     2. Pakai Template + Modifikasi Konversi — untuk template berbasis Tailwind/Astro
+        (`screwfast.uk` = Astro + Tailwind ⚠️, `launch-pad-roan` = Next.js + Tailwind ⚠️, `show.saasfly.io` = stack CSS belum terverifikasi ⚠️):
+        wajib konversi penuh ke Vanilla CSS Modules, tambah estimasi +30-50% waktu generate.
+     3. Desain Baru/Custom (Rekomendasi default) — tanpa warisan stack asing.
    - Jika memilih (2) atau (3), gali lebih lanjut warna (di luar warna PDF), gaya visual spesifik, dan preferensi dark/light mode.
 
 5. **Fitur & Section Prioritas**
@@ -105,7 +107,7 @@ Setelah user setuju dengan pendekatan:
 [Catatan lain dari diskusi]
 ```
 
-2. **[HARD STOP]**: Perlihatkan isi `user_preferences.md` ke user. BERHENTI MENGEKSEKUSI TOOL APA PUN DAN AKHIRI GILIRAN (END TURN). Tunggu konfirmasi persetujuan dari user secara eksplisit sebelum mengembalikan kontrol ke master orchestrator (melompat ke tahap berikutnya). Dilarang memanfaatkan momentum untuk meneruskan eksekusi secara mandiri.
+2. **[HARD STOP]**: Perlihatkan isi `user_preferences.md` ke user, lalu kembalikan kontrol ke master orchestrator. BERHENTI MENGEKSEKUSI TOOL APA PUN DAN AKHIRI GILIRAN (END TURN). Tunggu konfirmasi persetujuan dari user secara eksplisit sebelum melanjutkan ke tahap berikutnya. Dilarang memanfaatkan momentum untuk meneruskan eksekusi secara mandiri.
 
 ## Prinsip
 

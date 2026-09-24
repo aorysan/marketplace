@@ -1,0 +1,37 @@
+.wrapper { width: 100%; }
+.track { width: 100%; }
+/* Aturan swipe aktif HANYA di mobile agar dots tidak berantakan di desktop. */
+@media (max-width: 768px) {
+  .track {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-block: 20px;
+    margin-block: -20px;
+  }
+  .track::-webkit-scrollbar { display: none; }
+  .track > * {
+    flex: 0 0 85vw !important;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+  }
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+}
+@media (min-width: 769px) {
+  .dots { display: none; }
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--color-neutral-300, #d4d4d4);
+}
+.dotActive { background: var(--color-primary, #111111); }

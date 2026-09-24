@@ -1,0 +1,6 @@
+# {{BRAND}}
+
+> {{TAGLINE}}
+
+- Situs utama: {{BASE_URL}}/
+- Kontak: {{BASE_URL}}/kontak

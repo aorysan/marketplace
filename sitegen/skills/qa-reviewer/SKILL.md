@@ -160,6 +160,7 @@ Review hasil KODE eksekusi halaman di Next.js terhadap PRD.
 2. **Kesesuaian Fitur & Section**: Cek kehadiran semua section dari PRD di dalam file kode.
 3. **Pengecekan Atribut Logo & Gambar**: Verifikasi bahwa `<Image>` memanggil path yang benar dari folder `public/assets/` sesuai `ASSET-MAPPING.md` dan memiliki `alt` & `title`.
 4. **Instruksi Revisi**: Hasilkan instruksi baris-per-baris untuk generator jika ada pelanggaran.
+5. **Cek Token Kotor**: Jalankan `rg "{{[A-Z_]+}}"` pada file halaman (page + komponen terkait) — ada match apa pun = **KOTOR**, tolak hasilnya.
 
 ---
 
@@ -184,6 +185,7 @@ Baca file planning yang akan di-review (PLAN-GLOBAL atau PLAN-<halaman>).
 Buka `reference/review-checklist.md`. Pilih bagian yang relevan:
 - Mode global → Bagian A
 - Mode page → Bagian B
+- Mode global-extended → Bagian A + C + D + E (lihat reference/review-checklist.md).
 
 ### STEP 3 — Penilaian
 Cek setiap item di rubrik satu per satu. Beri skor per item.
