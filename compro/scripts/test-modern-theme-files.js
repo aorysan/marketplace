@@ -5,29 +5,58 @@ for (const f of ['theme.css', 'shell.html', 'manifest.json']) {
   if (!fs.existsSync(path.join(dir, f))) { console.error(`FAIL: modern/${f} missing`); process.exit(1); }
 }
 const shell = fs.readFileSync(path.join(dir, 'shell.html'), 'utf8');
-for (const token of ['/* CSS_INLINE_PLACEHOLDER */', '<!-- SLIDES_INLINE_PLACEHOLDER -->', '{{META}}']) {
+for (const token of ['/* CSS_INLINE_PLACEHOLDER */', '<!-- SLIDES_INLINE_PLACEHOLDER -->', '{{META}}', '{{BRAND_TITLE}}']) {
   if (!shell.includes(token)) { console.error(`FAIL: shell.html missing ${token}`); process.exit(1); }
 }
 const css = fs.readFileSync(path.join(dir, 'theme.css'), 'utf8');
-for (const token of ['--canvas-bg: #FFFFFF', '.hero-layout-grid', '.narrative-grid', '.services-layout-grid', '.ecosystem-grid-split', '.metrics-layout-grid', '.pricing-cards-grid', '.closing-3col-grid', 'display: grid !important', '.reveal .slide-title']) {
+for (const token of [
+  '--background: #ffffff',
+  '--foreground: #0a0a0a',
+  '--muted-foreground: #6b6b6b',
+  '--accent: var(--brand-primary, #ff3b1d)',
+  '--border: #e4e4e4',
+  '--ghost: #f1f1f1',
+  '--hover-bg: #fafafa',
+  '--font-display',
+  '--font-body',
+  '--font-mono',
+  '.deck-container',
+  '.deck-stage',
+  '.slide-item',
+  '.slide-cover',
+  '.slide-problem',
+  '.slide-product',
+  '.slide-features',
+  '.slide-usp',
+  '.slide-pricing'
+]) {
   if (!css.includes(token)) { console.error(`FAIL: theme.css missing ${token}`); process.exit(1); }
 }
 const manifest = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
-if (manifest.name !== 'modern' || manifest.renderer !== 'modern' || manifest.archetypes.length !== 12) {
-  console.error('FAIL: modern manifest must declare 12 archetypes with renderer modern');
+if (manifest.name !== 'modern' || manifest.renderer !== 'modern' || manifest.archetypes.length !== 6) {
+  console.error('FAIL: modern manifest must declare 6 archetypes with renderer modern');
   process.exit(1);
 }
-console.log('PASS: modern theme files complete');
-for (const t of ['--canvas-bg: #FFFFFF', '--text-headline: #0B3B82', '.feature-cards-grid', '.feature-split']) {
-  if (!css.includes(t)) { console.error(`FAIL: theme.css missing "${t}"`); process.exit(1); }
+const expectedArchetypes = ['cover', 'problem', 'product', 'features', 'usp', 'pricing'];
+for (const arch of expectedArchetypes) {
+  if (!manifest.archetypes.includes(arch)) {
+    console.error(`FAIL: manifest missing archetype "${arch}"`);
+    process.exit(1);
+  }
 }
-// Spec §3 light tokens (exact values)
-for (const t of ['--text-body: #334155', '--brand-primary: #009BAD', '--brand-dark: #007A87', 'rgba(11, 59, 130, 0.10)', 'rgba(11, 59, 130, 0.08)']) {
-  if (!css.includes(t)) { console.error(`FAIL: theme.css missing spec §3 token "${t}"`); process.exit(1); }
+const expectedSlots = {
+  cover: 'hero',
+  problem: 'problem',
+  product: 'macro',
+  features: 'hands',
+  usp: 'viewfinder',
+  pricing: 'lens'
+};
+for (const [arch, slot] of Object.entries(expectedSlots)) {
+  if (manifest.slots && manifest.slots[arch] !== slot) {
+    console.error(`FAIL: manifest slots[${arch}] !== "${slot}"`);
+    process.exit(1);
+  }
 }
-console.log('PASS: spec §3 light tokens present');
-if (manifest.version !== '2.8.0' || !manifest.archetypes.includes('feature-cards') || !manifest.archetypes.includes('feature-split')) {
-  console.error('FAIL: manifest must be 2.8.0 with feature-cards + feature-split'); process.exit(1);
-}
-console.log('PASS: light theme + manifest 2.8.0');
+console.log('PASS: modern Aperture Cinematic theme files and manifest complete');
 process.exit(0);

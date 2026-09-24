@@ -1,65 +1,49 @@
-# Modern Template (`modern`)
+# Modern Template (`modern`) — Aperture Cinematic Minimalist
 
-Sistem desain presentasi Company Profile korporat tech modern berbasis **Bento Grid & Dark Slate Architecture**.
+Sistem desain presentasi Company Profile sinematik berbasis **Aperture Cinematic Minimalist** (scrape Figma 1:1), runtime standalone zero-dependency (Vanilla HTML5/CSS3/JS).
 
 ---
 
 ## 1. Identitas Visual & Filosofi Desain
 
-Template `modern` mengusung arsitektur visual modern tech lookbook dengan susunan bento grid proporsional, permukaan kontras tinggi, kartu elevated melayang, dan aksen Venturo Teal dinamis.
+Template `modern` mengusung estetika cinematic editorial: kontras dark/light penuh full-bleed visual, tipografi display berbobot tinggi, kicker monospaced teknis, dan aksen vermilion.
 
 - **Target Resolusi:** 1920×1080 piksel (Native 16:9).
-- **Arsitektur Zero Dead Space:** Memaksimalkan kanvas 1080p dengan pembagian area grid geometris yang seimbang dan rapi.
-- **Hirarki Visual:** Tipografi kontras tinggi Plus Jakarta Sans untuk display headline dan Inter untuk body text yang tajam.
+- **Runtime:** Standalone Vanilla HTML5/CSS3/JS — tanpa CDN Reveal.js atau library eksternal.
+- **Tipografi:** *Archivo* untuk display headline, *Inter* untuk body, *JetBrains Mono* untuk category kickers/counter/label.
 
 ---
 
 ## 2. Design System Tokens (`theme.css`)
 
-### Surface & Canvas
-- Kanvas Utama: `--canvas-bg: #FFFFFF;`
-- Kartu / Permukaan: `--canvas-surface: #FFFFFF;`
-- Border: `--surface-border: rgba(11, 59, 130, 0.10);`
-- Border Hover: `--surface-border-hover: rgba(0, 155, 173, 0.4);`
-- Elevation Shadow: `--surface-shadow: 0 4px 20px -2px rgba(11, 59, 130, 0.08);`
-
-### Kontras Slate
-- Slate Dark: `--slate-dark: #0F172A;`
-- Slate Card: `--slate-card: #1E293B;`
-- Slate Subtle: `--slate-subtle: rgba(15, 23, 42, 0.03);`
+### Surface & Palette
+- Background: `--background: #ffffff;`
+- Foreground: `--foreground: #0a0a0a;`
+- Muted: `--muted-foreground: #6b6b6b;`
+- Accent: `--accent: var(--brand-primary, #ff3b1d);`
+- Border: `--border: #e4e4e4;`
+- Ghost: `--ghost: #f1f1f1;`
+- Hover: `--hover-bg: #fafafa;`
+- Dark Surface: `#000000` (cover / USP canvas)
+- Glass Surface: `rgba(0, 0, 0, 0.45)` (frosted cards on dark slides)
 
 ### Tipografi
-- Headline: `--text-headline: #0B3B82;`
-- Body: `--text-body: #334155;`
-- Muted: `--text-muted: #64748B;`
-- Inverse: `--text-inverse: #FFFFFF;`
-- Font Display: `'Plus Jakarta Sans', sans-serif;`
-- Font Body: `'Inter', sans-serif;`
-
-### Brand Venturo & Status
-- Primary Brand: `--brand-primary: #009BAD;`
-- Dark Brand: `--brand-dark: #007A87;`
-- Light Brand: `--brand-light: #38BDF8;`
-- Success: `--color-success: #10B981;`
-- Danger: `--color-danger: #DC2626;`
-- Warning: `--color-warning: #D97706;`
+- Display: `--font-display: 'Archivo', sans-serif;` (weights 600–800)
+- Body: `--font-body: 'Inter', sans-serif;` (weights 400–600)
+- Mono: `--font-mono: 'JetBrains Mono', monospace;` (weights 400–500)
 
 ---
 
-## 3. Arketipe Layout
+## 3. Arketipe Layout (6 Core)
 
 | Arketipe | Slot ID | Deskripsi Layout |
 |---|---|---|
-| `cover` | `hero` | Split hero bento grid dengan headline besar, badge, dan media visual |
-| `problem` | `problem` | Grid kartu masalah dengan pain-point callout berbobot |
-| `solution` | `solution` | Solusi terstruktur dengan diagram dan pilar nilai |
-| `services` | `services` | Multi-card bento grid menampilkan layanan utama |
-| `ecosystem` | `ecosystem` | Framework arsitektur ekosistem terpadu |
-| `metrics` | `metrics` | Stat counter cards dengan big numbers & metric progress |
-| `differentiator` | `differentiator` | Matriks kapabilitas komparatif keunggulan kompetitif |
-| `pricing` | `pricing` | Tabel paket komersial modern dengan tier unggulan |
-| `closing` | `closing` | Slide penutup ringkas dengan saluran kontak & CTA |
-| `social-proof` | `traction` | Testimoni, logo mitra, atau bukti sosial |
+| `cover` | `hero` | Full-bleed cinematic hero, gradient overlay ganda, status pill, headline raksasa |
+| `problem` | `problem` | 12-col split (4-col grayscale image + 8-col text), ghost watermark "NO", numbered list |
+| `product` | `macro` | 50/50 macro image + spec matrix, floating glass badge, 2×2 stat block |
+| `features` | `hands` | Rail image vertikal + 4 baris fitur bernomor `01`–`04` |
+| `usp` | `viewfinder` | Dark canvas full-bleed + 3 frosted glass cards |
+| `pricing` | `lens` | Vertical image rail + 3 tier matrix (featured tier inverted) |
 
 ---
 
@@ -67,44 +51,26 @@ Template `modern` mengusung arsitektur visual modern tech lookbook dengan susuna
 
 ```text
 skills/builder/templates/modern/
-├── manifest.json   # Registrasi metadata tema, archetypes, slots, renderer
-├── shell.html      # Reveal.js presentation shell (1920x1080)
-├── theme.css       # Bento grid stylesheet & modern CSS tokens
+├── manifest.json   # Registrasi metadata tema, 6 archetypes, slots, renderer
+├── shell.html      # Standalone Aperture deck shell (1920x1080)
+├── theme.css       # Aperture Cinematic stylesheet & tokens
 └── README.md       # Dokumentasi spesifikasi template modern
 ```
 
 ---
 
-## 5. RT Online Light Tokens (v2.8.0)
+## 5. Shell Chrome & Controls
 
-White canvas + blue headline system:
+- **Top rail:** Brand title + subtitle kiri, slide counter (`01 / 06`) kanan.
+- **Progress line:** Hairline 3px di atas stage, terisi vermilion mengikuti progres slide.
+- **Bottom rail:** Dot navigation per slide (label + active pulse vermilion) + tombol ←/→.
+- **Keyboard:** `ArrowRight`/`PageDown`/`Space` next; `ArrowLeft`/`PageUp` prev; `Home`/`End` first/last.
 
-| Token | Nilai |
-|---|---|
-| `--canvas-bg` | `#FFFFFF` |
-| `--text-headline` | `#0B3B82` |
-| `--text-body` | `#334155` |
-| `--text-muted` | `#64748B` |
-| `--brand-primary` | `#009BAD` |
-| `--brand-dark` | `#007A87` |
+---
 
-### Feature Archetype Classes
+## 6. Asset Slot Fallback
 
-- `.feature-cards-grid` — grid 2 kolom (`1fr 1fr`, gap 20px) untuk arketipe `feature-cards`.
-- `.feature-card` — kartu putih (`#FFFFFF`), border `rgba(11,59,130,0.10)`, radius 16px, padding 24px, shadow `rgba(11,59,130,0.08)`; `h3` headline `#0B3B82` 22px, `p` body `#334155` 15px.
-- `.feature-split` — grid split `78% 22%`, gap 24px untuk arketipe `feature-split`.
-- `.split-photo` — bingkai foto radius 16px dengan overlay `rgba(0,155,173,0.20)` via `::after`.
-- `.card-icon-brand` — ikon kartu brand (`#009BAD`, `line-height: 1`).
+Cascading fallback per slot: Direct Unsplash CDN ➔ Lorem Picsum ➔ local SVG.
 
-### Generated Art Exemption (spec §5.4 carve-out)
-
-`assets/closing-banner.svg` adalah vector art per-build yang ditulis `build-deck.js`
-setiap kompilasi dan di-embed slide closing by-design — bukan foto slot, jadi
-dikecualikan dari aturan "slot images must be .jpg". Aturan SVG-inlined tetap
-berlaku untuk fallback foto slot (harus `<svg>` inline, bukan `<img src="assets/*.svg">`).
-
-### Classifier Routing (§5.3)
-
-- `services`/`solution`-scope + ≥4 bullets → `feature-cards` (density-first; judul generik tercakup, bukan cuma kosakata RT).
-- Narasi/WA/spotlight (`whatsapp|wa ai|narrative|narasi|sorotan|spotlight|cerita|aplikasi mobile`) + ≤4 bullets → `feature-split`.
-- `services` jarang (≤3 bullets) tetap → `services`; `pricing`/`ecosystem`/`metrics`/`differentiator`/`problem` menyimpan renderer khusus masing-masing.
+- Slot `.jpg` direferensikan sebagai `assets/slide-N-<slot>.jpg`.
+- Fallback SVG di-inline sebagai `data:image/svg+xml;base64,...` — **bukan** `<img src="assets/*.svg">` (zero broken image, golden assertion aman walau network Tier-3).

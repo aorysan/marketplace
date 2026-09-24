@@ -1,241 +1,238 @@
-# Design Tokens Reference — Corporate Slide Presentations
+# Design Tokens Reference — Aperture Cinematic Minimalist
 
 > **Self-contained design intelligence for the `builder` skill.**  
-> Derived from `ui-ux-pro-max` and `impeccable` systems, tailored specifically for **1920×1080 (16:9) corporate presentation decks (Reveal.js)**.
+> Derived from the Figma Make *Product Presentation Slide* design system, tailored specifically for **1920×1080 (16:9) Aperture Cinematic Minimalist presentation decks (standalone zero-dependency HTML5/CSS3/JS presentation engine)**.
 
 ---
 
-## 1. Dynamic HSL Brand Color System
+## 1. Aperture Cinematic Color Palette System
 
-Slides use dynamic HSL (Hue, Saturation, Lightness) color tokens. By defining the primary brand color as HSL components, the entire color palette (tints, shades, surfaces, borders, glow effects) is procedurally generated without requiring manual hex code lookups.
+The Aperture Cinematic Minimalist deck uses a high-contrast editorial color system with crisp vermilion (`#ff3b1d`) accents, light-mode and dark-mode slide canvases, and subtle ghost watermarks.
 
-### 1.1 Base Variables
+### 1.1 Official Color Tokens
+
+| Token Name | Hex / Value | Usage & Role |
+|---|---|---|
+| `--background` | `#ffffff` | Light slide background canvas |
+| `--foreground` | `#0a0a0a` | Primary text and dark card background |
+| `--muted-foreground` | `#6b6b6b` | Secondary text, captions, slide metadata, mono labels |
+| `--accent` | `var(--brand-primary, #ff3b1d)` | Vermilion accent: category kickers, active dots, featured CTA |
+| `--accent-glow` | `rgba(255, 59, 29, 0.2)` | Glowing pulse on active status dot and interactive elements |
+| `--border` | `#e4e4e4` | Clean hairline 1px grid, matrix, and card borders |
+| `--ghost` | `#f1f1f1` | Giant decorative ghost watermark letters (22rem) |
+| `--hover-bg` | `#fafafa` | Row hover highlight in list and feature items |
+| Dark Surface | `#000000` | Full-bleed black canvas for `cover` and `usp` slides |
+| Glass Surface | `rgba(0, 0, 0, 0.45)` | Frosted glass cards on dark slides (`backdrop-filter: blur(12px)`) |
+
+### 1.2 Brand Color Dynamic Overrides
+
+The primary accent defaults to vermilion (`#ff3b1d`), but client brand colors can be dynamically injected via `--brand-primary`:
 
 ```css
 :root {
-  /* =======================================================
-     BRAND HSL PARAMETERS (Injected per client / company)
-     Default: Venturo Teal (#009BAD) -> H: 186, S: 100%, L: 34%
-     ======================================================= */
-  --brand-h: 186;
-  --brand-s: 100%;
-  --brand-l: 34%;
+  /* Dynamic Client Brand Override (Defaults to Vermilion #ff3b1d) */
+  --brand-primary: #ff3b1d;
 
-  /* Dynamic Brand Tokens */
-  --brand-primary: hsl(var(--brand-h), var(--brand-s), var(--brand-l));
-  --brand-primary-light: hsl(var(--brand-h), var(--brand-s), calc(var(--brand-l) + 18%));
-  --brand-primary-dark: hsl(var(--brand-h), var(--brand-s), calc(var(--brand-l) - 12%));
-  --brand-primary-subtle: hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.12);
-  --brand-primary-glow: hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.28);
-
-  /* Secondary & Complementary Accents */
-  --brand-secondary: hsl(calc(var(--brand-h) + 35), 90%, 52%); /* Warm accent / highlight */
-  --brand-secondary-light: hsl(calc(var(--brand-h) + 35), 95%, 65%);
-  --brand-secondary-subtle: hsla(calc(var(--brand-h) + 35), 90%, 52%, 0.15);
-
-  /* Light Canvas & Headline Tones (RT Online Light Deck v2.8.0) */
-  /* NOTE: legacy dark-deck rows below are non-authoritative for the light deck. */
-  --canvas-bg: #FFFFFF;           /* Light deck canvas backdrop */
-  --text-headline: #0B3B82;       /* Slide headline on light canvas */
-  --brand-surface-elevated: #1e293b; /* Elevated container / modal */
-  --brand-card-bg: rgba(255, 255, 255, 0.04);
-  --brand-card-bg-hover: rgba(255, 255, 255, 0.07);
-  --brand-card-border: rgba(255, 255, 255, 0.08);
-  --brand-card-border-hover: hsla(var(--brand-h), var(--brand-s), 50%, 0.4);
-
-  /* Text & Typography Hierarchy */
-  --brand-text-primary: #f8fafc;  /* 98% white, contrast ratio ~16.8:1 against --brand-surface */
-  --brand-text-secondary: #cbd5e1;/* Slate-300, contrast ratio ~10.5:1 */
-  --brand-text-muted: #94a3b8;    /* Slate-400, contrast ratio ~5.8:1 */
-  --brand-text-inverse: #0f172a;  /* Dark text on bright badge/pill */
-
-  /* Functional Semantic Status Colors */
-  --color-problem: #ef4444;       /* Red-500 for pain points */
-  --color-problem-subtle: rgba(239, 68, 68, 0.12);
-  --color-problem-border: rgba(239, 68, 68, 0.35);
-
-  --color-success: #10b981;       /* Emerald-500 for checkmarks, solutions, traction */
-  --color-success-subtle: rgba(16, 185, 129, 0.12);
-  --color-success-border: rgba(16, 185, 129, 0.35);
-
-  --color-warning: #f59e0b;       /* Amber-500 for alerts, urgency badges */
-  --color-warning-subtle: rgba(245, 158, 11, 0.12);
-  --color-warning-border: rgba(245, 158, 11, 0.35);
+  /* Official Aperture Cinematic Minimalist Tokens */
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --muted-foreground: #6b6b6b;
+  --accent: var(--brand-primary, #ff3b1d);
+  --accent-glow: rgba(255, 59, 29, 0.2);
+  --border: #e4e4e4;
+  --ghost: #f1f1f1;
+  --hover-bg: #fafafa;
 }
 ```
 
-### 1.2 Preset Industry Palettes
+### 1.3 Preset Industry Accent Palettes
 
-When generating company profiles for specific industries, inject these corresponding HSL values into `--brand-h`, `--brand-s`, `--brand-l`:
+When generating company profiles for specific industries, `--brand-primary` can be adapted while preserving the Aperture Cinematic contrast foundation:
 
-| Industry / Theme | Hue (`--brand-h`) | Saturation (`--brand-s`) | Lightness (`--brand-l`) | Primary Hex | Vibe / Personality |
-|------------------|-------------------|--------------------------|-------------------------|-------------|--------------------|
-| **Tech / IT (Venturo)** | `186` | `100%` | `34%` | `#009BAD` | Modern, trustworthy, crisp |
-| **Enterprise / B2B SaaS** | `220` | `90%` | `56%` | `#2563EB` | Corporate, authoritative, secure |
-| **Fintech / Wealth** | `158` | `82%` | `38%` | `#0D9488` | Stable, prosperous, precise |
-| **Creative / Agency** | `265` | `85%` | `62%` | `#8B5CF6` | Innovative, bold, premium |
-| **Health / Medical** | `199` | `89%` | `48%` | `#0284C7` | Clean, reassuring, sterile |
-| **Industrial / Logistics** | `28` | `95%` | `50%` | `#F97316` | Dynamic, energetic, dependable |
+| Industry / Theme | Accent Hex | Personality | Accent Role |
+|---|---|---|---|
+| **Cinematic / Hardware (Default)** | `#ff3b1d` | Bold, precise, editorial | Vermilion kickers & CTAs |
+| **Tech / IT Enterprise** | `#009bad` | Modern, authoritative, crisp | Teal kickers & active dots |
+| **B2B SaaS / Corporate** | `#2563eb` | Authoritative, secure, structured | Royal blue highlights |
+| **Fintech / Wealth** | `#0d9488` | Stable, prosperous, precise | Deep emerald accents |
+| **Creative Agency / Design** | `#8b5cf6` | Innovative, expressive, bold | Violet accents & buttons |
+| **Industrial / Logistics** | `#f97316` | Dynamic, energetic, dependable | Amber-orange accents |
 
 ---
 
 ## 2. Typography Scale (1920×1080 16:9 Presentation)
 
-Presentation typography requires larger optical sizing and tighter leading than standard desktop web pages to ensure instant legibility at 1920×1080 resolution when viewed across a boardroom or projected on display screens.
+Presentation typography requires large optical hierarchy, tight display leading, and clean monospaced meta labels to command attention across the 1920×1080 canvas.
 
-### 2.1 Font Family Pairings
+### 2.1 Font Family Tokens
 
-- **Titles, Headings, Numbers & Badges:** `Plus Jakarta Sans`, sans-serif (Weights: `600`, `700`, `800`)
-  - *Rationale:* Geometric, high-energy sans-serif with bold apertures that command authority in pitch decks.
-- **Body, Captions, Features & Tables:** `Inter`, -apple-system, BlinkMacSystemFont, sans-serif (Weights: `400`, `500`, `600`)
-  - *Rationale:* Neutral, tall x-height, engineered for micro-reading and scannability without visual fatigue.
-- **Metrics & Monetary Figures:** `Plus Jakarta Sans` with `font-variant-numeric: tabular-nums` to eliminate layout wobble during presentation view.
+```css
+--font-display: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+--font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+--font-mono: 'JetBrains Mono', monospace;
+```
+
+**Google Fonts Import:**
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+```
 
 ### 2.2 Scale Breakdown
 
-| Role | Font Size (px) | Size (rem) | Weight | Line Height | Letter Spacing | Font Family | Usage |
-|------|----------------|------------|--------|-------------|----------------|-------------|-------|
-| **Display / Hero H1** | `56px` | `3.5rem` | `800` | `1.12` | `-0.025em` | Plus Jakarta Sans | Hero slide company title |
-| **Slide Title (H1)** | `44px` | `2.75rem` | `800` | `1.18` | `-0.02em` | Plus Jakarta Sans | Main slide header |
-| **Section Header (H2)** | `32px` | `2.0rem` | `700` | `1.25` | `-0.015em` | Plus Jakarta Sans | Content section groupings |
-| **Card Header (H3)** | `22px` | `1.375rem` | `700` | `1.30` | `-0.01em` | Plus Jakarta Sans | Feature/problem card titles |
-| **Big Stat Number** | `68px` | `4.25rem` | `800` | `1.0` | `-0.03em` | Plus Jakarta Sans | Traction & KPI highlights |
-| **Lead / Tagline** | `22px` | `1.375rem` | `500` | `1.45` | `0` | Inter | Hero tagline / intro lead |
-| **Body Regular** | `16px` | `1.0rem` | `400` | `1.6` | `0` | Inter | Card descriptions, body text |
-| **Table & List Item** | `15px` | `0.9375rem` | `500` | `1.5` | `0` | Inter | Pricing rows, feature bullets |
-| **Pill / Badge / Meta** | `12px` | `0.75rem` | `700` | `1.0` | `+0.05em` | Plus Jakarta Sans | Caps badges, status indicators |
+| Role | Size | Weight | Line Height | Tracking | Font Family | Usage |
+|---|---|---|---|---|---|---|
+| **Giant Hero Headline** | `6rem` – `9rem` | `800` | `0.88` | `-0.04em` | Archivo | Cover slide company title |
+| **Slide Title (H1)** | `2.5rem` – `3.25rem` | `700` | `1.05` | `-0.03em` | Archivo | Main slide headline |
+| **Section Header (H2)** | `1.5rem` – `2.0rem` | `600` | `1.20` | `-0.02em` | Archivo | Section headings & card titles |
+| **Big Stat Number** | `3.5rem` – `5.0rem` | `800` | `0.95` | `-0.03em` | Archivo | Spec matrix & USP stat counters |
+| **Lead / Subtitle** | `1.125rem` – `1.25rem` | `400` | `1.45` | `0` | Inter | Hero lead & section intros |
+| **Body Regular** | `0.9375rem` – `1.0rem` | `400` | `1.60` | `0` | Inter | Explanatory copy, card bodies |
+| **Category Kicker** | `11px` (`0.6875rem`) | `500` | `1.0` | `+0.30em` | JetBrains Mono | Uppercase category tags |
+| **Slide Counter & Meta** | `12px` (`0.75rem`) | `500` | `1.0` | `+0.15em` | JetBrains Mono | Deck header `01 / 06` counter |
+| **Ghost Watermark** | `18rem` – `22rem` | `800` | `0.80` | `-0.05em` | Archivo | Decorative backdrop letters |
 
 ### 2.3 Typographic Rules & Constraints
 
-1. **Line Measure Limit:** Body paragraphs must not exceed **60 characters per line** (`max-width: 55ch`). Runaway text lines in 16:9 slides kill scannability.
-2. **Squint Contrast:** Primary headings (`--brand-text-primary`) must have at least `2.5x` the visual weight of body copy.
-3. **No All-Caps Paragraphs:** Reserve uppercase only for short badges and eyebrow labels (`text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem;`).
-4. **Dark Surface Readability:** Use slightly elevated line-height (`1.6` vs standard `1.5`) and lighter font weights (`400`/`500` with antialiasing `-webkit-font-smoothing: antialiased`) when rendering light text against dark background.
+1. **Ultra-Tight Display Leading:** Large Archivo headlines must maintain tight line-height (`0.85` to `0.95`) to preserve cinematic punch without vertical bloat.
+2. **Monospaced Category Kickers:** Category labels must always be rendered in `JetBrains Mono`, uppercase, with letter-spacing `0.3em` and accent color `--accent`.
+3. **Line Measure Limit:** Body paragraphs must not exceed **55 characters per line** (`max-width: 50ch`) to guarantee scan speed.
+4. **Contrast Integrity:** Body text on light slides must maintain a minimum contrast ratio of `7:1` against `--background` (`#ffffff`), using `#0a0a0a` or `#6b6b6b`.
 
 ---
 
 ## 3. Spacing Scale (8-Point Base System)
 
-Strict adherence to an 8-point geometric scale prevents arbitrary layout gaps and ensures mathematical rhythm across slide components.
+Strict adherence to an 8-point geometric scale ensures mathematical rhythm and grid harmony across slides:
 
-| Token Name | Value (px) | Relative (rem) | Typical Role in Slide Deck |
-|------------|------------|----------------|----------------------------|
-| `--space-1` | `4px` | `0.25rem` | Badge padding inline, micro-gaps between icon and text |
-| `--space-2` | `8px` | `0.5rem` | List item vertical spacing, small tag padding |
-| `--space-3` | `12px` | `0.75rem` | Input padding, compact card internal padding |
-| `--space-4` | `16px` | `1.0rem` | Standard gap between card title and body |
-| `--space-5` | `20px` | `1.25rem` | Gap between grid items in dense lists |
-| `--space-6` | `24px` | `1.5rem` | Standard card internal padding (`padding: var(--space-6)`) |
+| Token Name | Value (px) | Value (rem) | Typical Usage in Deck Shell |
+|---|---|---|---|
+| `--space-1` | `4px` | `0.25rem` | Kicker dot gap, micro-margins |
+| `--space-2` | `8px` | `0.5rem` | Tag padding, dot navigation spacing |
+| `--space-3` | `12px` | `0.75rem` | Spec matrix cell padding |
+| `--space-4` | `16px` | `1.0rem` | Standard gap between title and description |
+| `--space-6` | `24px` | `1.5rem` | Card padding, feature list row gap |
 | `--space-8` | `32px` | `2.0rem` | Grid gap between columns in 2-col or 3-col layouts |
-| `--space-10` | `40px` | `2.5rem` | Margin below slide title, separating header from content |
-| `--space-12` | `48px` | `3.0rem` | Section outer separation |
-| `--space-16` | `64px` | `4.0rem` | Hero layout split gap, slide canvas padding safe zone |
-| `--space-20` | `80px` | `5.0rem` | Major slide boundary margins |
+| `--space-10` | `40px` | `2.5rem` | Header-to-content separation margin |
+| `--space-12` | `48px` | `3.0rem` | Major section outer separation |
+| `--space-16` | `64px` | `4.0rem` | Viewport stage padding safe zone |
+| `--space-20` | `80px` | `5.0rem` | Hero title bottom offset |
 
 ---
 
-## 4. Border Radius Scale
+## 4. Grid Architecture & Archetype Layouts
 
-Consistent curvature defines the modern, friendly yet precise aesthetic of corporate software presentations:
+The Aperture Cinematic presentation shell enforces structured 12-column and 50/50 splits:
 
-| Token Name | Value | Applied To |
-|------------|-------|------------|
-| `--radius-sm` | `6px` | Small status badges, inline code tags, table cells |
-| `--radius-md` | `10px` | Buttons, dropdown triggers, icon container boxes |
-| `--radius-lg` | `16px` | Standard cards (Feature cards, Problem cards, Pricing tiers) |
-| `--radius-xl` | `24px` | Highlighted feature containers, Smartphone outer bezel |
-| `--radius-2xl`| `36px` | Device frames, floating showcase panels |
-| `--radius-full`| `9999px`| Pill badges, download store buttons, avatar circles |
+| Archetype | Grid Split | Layout Structure | Key Components |
+|---|---|---|---|
+| `cover` | 100% Full Viewport | Full-bleed dark photography with double gradient overlay | Brand tag, live status dot, vermilion kicker, giant headline bottom-anchored, lead subtitle |
+| `problem` | 4-col : 8-col | 12-column asymmetric split | Left: grayscale image. Right: kicker, H1, giant ghost watermark ("NO"), 3-item numbered list with hover highlight |
+| `product` | 50% : 50% | 2-column balanced split | Left: macro photo with floating glass badge. Right: headline, lead prose, 2x2 spec matrix stat block |
+| `features` | 3-col : 9-col | Rail image + wide list | Left: rail photo with 90° rotated technical caption rail. Right: 4 feature rows with giant numbers `01`–`04` |
+| `usp` | 3-Column Trio | Centered dark viewfinder canvas | 3 frosted glass cards (`backdrop-filter: blur(12px)`), hairline white border, kicker, counter, giant stat |
+| `pricing` | 3-col : 9-col | Image rail + tier matrix | Left: rail photo with watermark ("Ship it."). Right: 3-column pricing matrix, inverted featured tier with vermilion CTA |
 
 ---
 
-## 5. Elevation & 3D Drop Shadow Tokens
+## 5. Elevation, Borders & Micro-Interactions
 
-Corporate slide presentations rely on multi-layered ambient occlusion shadows to lift cards off the dark background and establish depth.
+Unlike legacy presentations with heavy 3D drop shadows, Aperture Cinematic relies on clean hairline borders, glassmorphism, and responsive motion:
+
+### 5.1 Hairline Borders & Glass Surfaces
 
 ```css
-:root {
-  /* Subtle border rim for dark-mode card separation */
-  --border-rim: 1px solid rgba(255, 255, 255, 0.08);
-  --border-rim-highlight: 1px solid hsla(var(--brand-h), var(--brand-s), 55%, 0.4);
+/* 1px Hairline Borders */
+--border-hairline: 1px solid var(--border);
+--border-glass: 1px solid rgba(255, 255, 255, 0.15);
 
-  /* Elevation 1: Flat resting card */
-  --shadow-resting: 
-    0 4px 12px -2px rgba(0, 0, 0, 0.3),
-    0 1px 3px 0 rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
-
-  /* Elevation 2: Hovered card / interactive element */
-  --shadow-hover: 
-    0 16px 32px -6px rgba(0, 0, 0, 0.45),
-    0 6px 12px -2px rgba(0, 0, 0, 0.25),
-    0 0 24px -2px hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.2),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-
-  /* Elevation 3: Highlighted Tier (Best Seller Pricing Card) */
-  --shadow-featured: 
-    0 24px 48px -8px rgba(0, 0, 0, 0.55),
-    0 12px 24px -4px hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.35),
-    inset 0 1px 0 0 hsla(var(--brand-h), var(--brand-s), 70%, 0.4);
-
-  /* Elevation 4: 3D Smartphone Device Shadow */
-  --shadow-device: 
-    0 32px 64px -12px rgba(0, 0, 0, 0.65),
-    0 16px 32px -8px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.12),
-    0 0 40px -8px hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.25);
-
-  /* Ambient Backdrop Glows */
-  --glow-radial: radial-gradient(circle at 50% 30%, hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.15) 0%, transparent 70%);
+/* Frosted Glassmorphism (USP Cards & Badges) */
+.glass-surface {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 ```
 
+### 5.2 Micro-Interactions & State Transitions
+
+1. **Hairline Progress Bar:**
+   - 3px high progress bar at top of stage.
+   - Smooth expansion: `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`.
+   - Background: `var(--accent)`.
+2. **Dot Navigation & Counter:**
+   - Footer dot indicator for each slide; active dot highlights with `var(--accent)`.
+   - Slide counter dynamically updates (`01 / 06`) on navigation.
+3. **Interactive Numbered Rows:**
+   - Numbers `01`–`04` on `problem` and `features` slides transition from `#e4e4e4` to `var(--accent)` on row hover.
+   - Row background highlights smoothly to `var(--hover-bg)` (`#fafafa`).
+4. **Keyboard Navigation:**
+   - Arrow keys (`ArrowRight`, `ArrowLeft`), `Space`, `PageDown`, `PageUp`, `Home`, and `End` support instant slide navigation without external libraries.
+
 ---
 
-## 6. CSS Custom Properties Implementation Template
+## 6. Semantic Component Classes
 
-When assembling slides, the builder automatically emits this consolidated CSS variable block into `templates/custom.css` or the inlined slide `<style>` header:
+The presentation shell and slide renderers utilize standardized CSS classes:
+
+### 6.1 Shell Chrome Classes
+- `.deck-container`: Root container filling `100vw` × `100vh` with `overflow: hidden`.
+- `.deck-header`: Top chrome containing `.brand-wrapper` and `.slide-counter`.
+- `.brand-title`: Bold display brand name in the header rail.
+- `.brand-sub`: Monospaced subtitle in the header rail.
+- `.deck-progress-track`: 3px hairline container track across the top stage.
+- `.deck-progress-bar`: Dynamic colored fill bar indicating presentation progress.
+- `.deck-stage`: Main stage containing all slide sections (1920×1080 fixed canvas).
+- `.deck-footer`: Bottom chrome containing `.deck-nav-dots` and `.deck-nav-arrows`.
+- `.arrow-btn`: Square navigation buttons (`←` and `→`).
+
+### 6.2 Slide Archetype Classes
+- `.slide-item`: Base class for every presentation slide.
+- `.slide-cover`: Full-bleed cinematic hero slide.
+- `.slide-problem`: 12-column asymmetric problem slide with ghost watermark.
+- `.slide-product`: 50/50 macro image and spec matrix slide.
+- `.slide-features`: Vertical rail image and giant numbered feature list slide.
+- `.slide-usp`: Dark viewfinder slide with frosted glass cards.
+- `.slide-pricing`: Vertical image rail with 3-column tier matrix.
+
+### 6.3 Content & Typography Classes
+- `.mono-kicker`: Monospaced uppercase category kicker in `JetBrains Mono`.
+- `.kicker-dot`: Live status glowing dot (`● Now shipping`).
+- `.ghost-watermark`: Giant absolute background text (`#f1f1f1`).
+- `.spec-matrix`: 2×2 high-contrast metric stat grid.
+- `.stat-big-num`: Big metric number (`0.9s`, `14`, `214g`, `99.9%`).
+- `.stat-mono-label`: Monospaced uppercase metric label.
+- `.glass-card`: Frosted glass container with backdrop blur.
+- `.pricing-featured`: Inverted dark card for the highlighted pricing tier.
+- `.btn-cta`: Call-to-action button with vermilion fill or crisp border.
+
+---
+
+## 7. Official CSS Variables Template (`:root`)
+
+The authoritative CSS variable block defined in `skills/builder/templates/modern/theme.css`:
 
 ```css
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
 :root {
-  /* Dynamic Hue */
-  --brand-h: 186;
-  --brand-s: 100%;
-  --brand-l: 34%;
+  /* Surface & Canvas Tokens */
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --muted-foreground: #6b6b6b;
 
-  /* Brand Palette */
-  --brand-primary: hsl(var(--brand-h), var(--brand-s), var(--brand-l));
-  --brand-primary-light: hsl(var(--brand-h), var(--brand-s), calc(var(--brand-l) + 18%));
-  --brand-primary-dark: hsl(var(--brand-h), var(--brand-s), calc(var(--brand-l) - 12%));
-  --brand-primary-subtle: hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.12);
-  --brand-secondary: hsl(calc(var(--brand-h) + 35), 90%, 52%);
-  /* NOTE: legacy dark-deck rows below are non-authoritative for the light deck. */
-  --brand-dark: #090d16;
-  --brand-surface: #0f172a;
-  --brand-card-bg: rgba(255, 255, 255, 0.04);
-  --brand-card-border: rgba(255, 255, 255, 0.08);
+  /* Accent & Interaction Tokens */
+  --accent: var(--brand-primary, #ff3b1d);
+  --accent-glow: rgba(255, 59, 29, 0.2);
+  --border: #e4e4e4;
+  --ghost: #f1f1f1;
+  --hover-bg: #fafafa;
 
-  /* Typography */
-  --font-display: 'Plus Jakarta Sans', sans-serif;
+  /* Typography Tokens */
+  --font-display: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-
-  /* Spacing */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-
-  /* Radius & Shadows */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-full: 9999px;
-  --shadow-card: 0 4px 12px -2px rgba(0,0,0,0.3), 0 1px 3px 0 rgba(0,0,0,0.2);
-  --shadow-featured: 0 24px 48px -8px rgba(0,0,0,0.55), 0 0 24px hsla(var(--brand-h), var(--brand-s), var(--brand-l), 0.35);
+  --font-mono: 'JetBrains Mono', monospace;
 }
 ```

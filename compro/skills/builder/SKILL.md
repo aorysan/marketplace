@@ -1,11 +1,11 @@
 # Builder
 
-> **Skill untuk:** Mengubah Company Profile (Markdown) menjadi HTML presentasi slide-based (Reveal.js) 16:9 yang siap di-deploy, berstandar visual enterprise, dan fully self-contained.
+> **Skill untuk:** Mengubah Company Profile (Markdown) menjadi HTML presentasi slide-based 16:9 (Aperture Cinematic Minimalist) yang siap di-deploy, berstandar visual enterprise, dan fully self-contained dengan runtime standalone zero-dependency (Vanilla HTML5/CSS3/JS).
 
 ---
 
 ## Tujuan
-Mengkonversi dokumen Markdown company profile menjadi single-file HTML presentasi interaktif berukuran 1920×1080 (16:9) menggunakan Reveal.js. Output harus konsisten, memikat secara visual, dan mematuhi panduan desain modern (lihat skill ter-bundle [`ui-ux-pro-max`](skills/ui-ux-pro-max/SKILL.md) & [`impeccable`](skills/impeccable/SKILL.md)) tanpa ketergantungan pada plugin eksternal di sisi user saat runtime.
+Mengkonversi dokumen Markdown company profile menjadi single-file HTML presentasi interaktif berukuran 1920×1080 (16:9) menggunakan shell Aperture Cinematic Minimalist mandiri (zero-dependency Vanilla HTML5/CSS3/JS). Output harus konsisten, memikat secara visual, dan mematuhi panduan desain Aperture Cinematic (lihat skill ter-bundle [`ui-ux-pro-max`](skills/ui-ux-pro-max/SKILL.md) & [`impeccable`](skills/impeccable/SKILL.md)) tanpa ketergantungan pada CDN atau plugin eksternal di sisi user saat runtime.
 
 ---
 
@@ -14,14 +14,14 @@ Mengkonversi dokumen Markdown company profile menjadi single-file HTML presentas
 Builder ini dilengkapi modul referensi desain bawaan yang self-contained di dalam skill:
 
 1. **[Design Tokens (`references/design-tokens.md`)](references/design-tokens.md):**
-   - **Dynamic HSL Brand Color Tokens:** `--brand-primary`, `--brand-primary-light`, `--brand-secondary`, `--brand-dark`, `--brand-muted`, `--brand-surface`, `--brand-card-bg`, `--brand-border`.
-   - **Typography Scale:** Formula skala tipografi untuk resolusi 1920×1080 (*Plus Jakarta Sans* untuk title, heading, angka statistik, badge; *Inter* untuk body teks, keterangan, dan tabel data).
-   - **Spacing & Elevation:** Skala 8-point (`--space-1` hingga `--space-20`), radius kelengkungan (`--radius-sm` hingga `--radius-full`), dan layered 3D drop shadows (`--shadow-resting`, `--shadow-hover`, `--shadow-featured`, `--shadow-device`).
+   - **Aperture Cinematic Palette:** `--background` (`#ffffff`), `--foreground` (`#0a0a0a`), `--muted-foreground` (`#6b6b6b`), `--accent` (`var(--brand-primary, #ff3b1d)`), `--border` (`#e4e4e4`), `--ghost` (`#f1f1f1`), `--hover-bg` (`#fafafa`).
+   - **Typography Scale:** Formula skala tipografi untuk resolusi 1920×1080 (*Archivo* untuk display headline; *Inter* untuk body teks dan deskripsi; *JetBrains Mono* untuk category kickers, counter, dan labels).
+   - **Spacing & Structure:** 12-column grid splits (3:9, 4:8, 50/50), hairline 1px borders, frosted glass surfaces (`backdrop-filter: blur(12px)`), dan minimal clean elevation.
 
 2. **[Visual Hierarchy & Layout Composition (`references/visual-hierarchy.md`)](references/visual-hierarchy.md):**
-   - **Layout Archetypes 16:9:** Komposisi slide untuk Hero 2-kolom, Problem cards ber-border dashed, Solution cards berikon SVG, Circular Ecosystem Diagram, Smartphone UI Mockup frame, Pricing table dengan "Best Seller" ribbon badge, serta Closing banner dengan pill badge App Store & Google Play.
-   - **Standar Rasio Kontras:** Kepatuhan WCAG AA / AAA (kontras teks normal minimal 4.5:1, teks besar minimal 3:1 pada background gelap `--brand-surface` `#0f172a`).
-   - **Scannability & Micro-Interactions:** Z-pattern eye-path, Squint Test, transisi kartu 150–300ms yang hardware-accelerated, dan fidelitas print PDF `@media print`.
+   - **6 Slide Archetypes 16:9:** Komposisi slide untuk Cover (Full-Bleed Cinematic Hero), Problem (12-Col Split with Ghost Watermark), Product (50/50 Macro & Spec Matrix), Features (Rail Image + Giant Numbered List), USP (Frosted Glass Trio), dan Pricing (Vertical Image Rail + Tier Matrix).
+   - **Standar Rasio Kontras:** Kepatuhan WCAG AA / AAA (kontras teks normal minimal 4.5:1, teks besar minimal 3:1 pada kanvas terang maupun kanvas gelap).
+   - **Scannability & Micro-Interactions:** Hairline progress bar, active dot indicator berdenyut vermilion, interactive row hover effects, dan keyboard shortcuts navigation.
 
 ## Embedded Design Skills (Self-Contained)
 
@@ -47,7 +47,7 @@ Builder ini menyertakan dua skill desain lengkap yang di-bundle langsung untuk p
 | 1a. Brand Color Resolution | ui-ux-pro-max (`python3 skills/builder/skills/ui-ux-pro-max/scripts/search.py "<industri> <produk>" --domain color`) | Validasi palet warna terhadap industry best practices |
 | 2. Archetype Mapping | ui-ux-pro-max (`--domain landing`) | Pastikan layout sesuai conversion patterns untuk industri klien |
 | 4. HTML Assembly | impeccable — baca [`craft-floor.md`](skills/impeccable/reference/craft-floor.md) | Enforce quality floor: no placeholder text, no broken layout, no orphaned elements |
-| 4. HTML Assembly | impeccable — baca [`typeset.md`](skills/impeccable/reference/typeset.md) | Pastikan typography hierarchy konsisten (Plus Jakarta Sans + Inter scale) |
+| 4. HTML Assembly | impeccable — baca [`typeset.md`](skills/impeccable/reference/typeset.md) | Pastikan typography hierarchy konsisten (Archivo + Inter + JetBrains Mono scale) |
 | Phase 3b Visual Self-Check | impeccable — baca [`critique.md`](skills/impeccable/reference/critique.md) | Heuristic UX review per-slide: scannability, visual balance, contrast |
 | Phase 3b Visual Self-Check | impeccable — baca [`audit.md`](skills/impeccable/reference/audit.md) | Technical quality: accessibility (WCAG AA contrast), responsive behavior |
 
@@ -80,7 +80,7 @@ Untuk impeccable, builder membaca reference docs secara langsung (bukan menjalan
 - Gambar/mockup lokal atau URL eksternal (opsional)
 
 ### Output
-- `<project>/compros/<slug>/index.html` — single-file HTML presentasi 16:9 Reveal.js interaktif, inlined CSS, & print-ready
+- `<project>/compros/<slug>/index.html` — single-file HTML presentasi 16:9 Aperture Cinematic interaktif (zero-dependency standalone engine), inlined CSS, & print-ready
 - `<project>/compros/<slug>/compro.md` — Markdown final (copy)
 - `<project>/compros/<slug>/assets/` — folder aset gambar, diagram SVG, dan mockup antarmuka
 - `<project>/compros/<slug>/reports/build.log` — log kompilasi slide, mapping archetype, dan penanganan aset
@@ -92,12 +92,12 @@ Untuk impeccable, builder membaca reference docs secara langsung (bukan menjalan
 ## Prinsip Kerja
 
 1. **Self-Contained Design Intelligence:** Seluruh aturan visual, warna, dan tipografi bersumber dari `references/design-tokens.md`, `references/visual-hierarchy.md`, serta dua skill desain ter-bundle `skills/ui-ux-pro-max/` (design system generator, palettes, fonts, icons) dan `skills/impeccable/` (craft quality floor, critique, audit, polish).
-2. **Single Template `modern` & Dynamic HSL Theming:** Builder hanya memiliki satu template (`templates/modern/`, diekstrak dari congen6 — kanvas `#F8FAFC`, slate `#0F172A`, aksen Venturo Teal `#009BAD` / `hsl(186, 100%, 34%)`). Tidak ada opsi pemilihan tema/flag `--theme`; builder selalu merender via `themes/modern.js` serta menyuntikkan token CSS HSL dinamis (`--brand-h`, `--brand-s`, `--brand-l`).
-3. **Hybrid Asset Pipeline & Curated Direct CDN:** Mengunduh foto arsitektur dan corporate resolusi tinggi dari Unsplash direct CDN (`images.unsplash.com`) berdasarkan slot komentar markdown (`<!-- image: <slot> -- ... -->`), dengan fallback berjenjang ke Lorem Picsum dan aset vektor SVG arsitektur lokal (`templates/assets/fallback/`). Zero API key barrier, deck mandiri tersimpan di `compros/<slug>/assets/`.
+2. **Single Template `modern` & Aperture Cinematic System:** Builder hanya memiliki satu template (`templates/modern/`) dengan sistem desain Aperture Cinematic Minimalist (kanvas `#ffffff`, teks `#0a0a0a`, muted `#6b6b6b`, aksen vermilion `--accent: var(--brand-primary, #ff3b1d)`, border hairline `#e4e4e4`, ghost `#f1f1f1`, hover `#fafafa`). Tidak ada opsi pemilihan tema/flag `--theme`; builder selalu merender via `themes/modern.js` (`renderCinematicSlide`) serta menyuntikkan variabel CSS brand ke dalam `:root`.
+3. **Hybrid Asset Pipeline & Curated Direct CDN:** Mengunduh foto arsitektur, teknologi, dan produk resolusi tinggi dari Unsplash direct CDN (`images.unsplash.com`) berdasarkan slot komentar markdown (`<!-- image: <slot> -- ... -->`) untuk 6 cinematic slots (`hero`, `problem`, `macro`, `hands`, `viewfinder`, `lens`), dengan fallback berjenjang ke Lorem Picsum dan aset vektor SVG lokal (`templates/assets/fallback/`). Zero API key barrier, deck mandiri tersimpan di `compros/<slug>/assets/`.
 4. **Deterministic Chunking & Slide Budget:** Satu slide memuat 1 konsep utama berukuran 1920×1080 (16:9 1080p) dengan batas maksimal 60 kata atau 4 kartu; >4 bullets atau >60 kata dipecah otomatis via splitDenseSlides() menjadi Part 1/2/3 (`Lanjutan: [Title] (Part N)`) untuk menjamin keterbacaan proporsional. Threshold 4 card-safe: reviewer mengizinkan hingga 6 plain bullets, builder split konservatif di 5+ agar §4 4-card cap selalu terpenuhi; prose-only >60 kata di-split per kalimat dengan budget 60 kata.
-5. **Aksesibilitas & Kontras Ketat:** Memastikan teks body memiliki rasio kontras minimal 4.5:1 terhadap latar belakang (teks aksen AA `#007A87` pada latar terang, teks body `#232220` pada kartu `#FFFFFF`).
+5. **Aksesibilitas & Kontras Ketat:** Memastikan teks body memiliki rasio kontras minimal 4.5:1 terhadap latar belakang (teks utama `#0a0a0a` pada kanvas terang `#ffffff`, teks inverse `#ffffff` pada kanvas gelap `#000000`/`#0a0a0a`).
 6. **Git Worktree & Dynamic Workspace Sync Guarantee:** Builder mendeteksi environment kerja secara dinamis tanpa hardcoded absolute paths (`--root`, `COMPRO_PROJECT_ROOT`, atau auto-inspeksi file pointer `.git` worktree). `postBuildSyncGuarantee()` menjamin file output otomatis disinkronkan ke root workspace pengguna (`compros/<slug>/`) tanpa risiko kehilangan artefak.
-7. **Clean Markdown Sanitization & Big Number Extraction:** Otomatis membersihkan blok frontmatter, `Meta Title:`, `Meta Description:`, `Tagline:`, mengganti placeholder kontak `[...]` dengan nilai demo terformat, dan mengekstrak statistik metrik menjadi big number counter (44px `#007A87`).
+7. **Clean Markdown Sanitization & Big Number Extraction:** Otomatis membersihkan blok frontmatter, `Meta Title:`, `Meta Description:`, `Tagline:`, mengganti placeholder kontak `[...]` dengan nilai demo terformat, dan mengekstrak statistik metrik menjadi spec matrix dan stat counter.
 
 ---
 
@@ -128,18 +128,13 @@ Tentukan warna brand primer dengan urutan prioritas berikut:
   ```
 
 ### 2. Archetype Mapping & Chunking
-Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
-- **Heading Utama / Pembuka** ➔ **Hero Slide Archetype** (Headline H1 punchy, tagline, 3 chip metrik besar, visual container).
-- **Masalah / Pain Points** ➔ **Problem Slide Archetype** (Grid 2–3 kartu ber-border dashed merah/amber, badge peringatan SVG, impact metrics).
-- **Solusi / Pilar Fitur** ➔ **Solution Slide Archetype** (Grid kartu solid ber-border glow brand, icon box SVG 48×48px, poin benefit bercentang hijau).
-- **Ekosistem Platform / Alur Sistem** ➔ **Circular Ecosystem Diagram Archetype** (Hub lingkaran inti brand dikelilingi 4–6 node satelit fitur).
-- **Tampilan Produk / Aplikasi** ➔ **Smartphone UI Mockup Archetype** (Frame smartphone realistis ber-Dynamic Island dengan preview UI fungsional).
-- **Paket / Harga / Lisensi** ➔ **Pricing Slide Archetype** (Grid 3 kartu harga, tier rekomendasi berskala 1.04x dengan badge ribbon "Best Seller", harga coret diskon).
-- **Kontak / CTA Penutup** ➔ **Closing Slide Archetype** (Banner ajakan kolaborasi, tombol pill download App Store & Google Play, grid kontak 4 kolom WA/Email/Web/Alamat).
-- **Diferensiasi / Mengapa Kami** ➔ **Differentiator Table Archetype** (Tabel perbandingan 4–5 kolom brand vs kompetitor, highlight kolom brand, status indikator centang/silang/peringatan, honesty callout).
-- **Testimoni / Social Proof** ➔ **Social Proof Slide Archetype** (Header terpusat, 2–3 kartu kutipan testimoni klien dengan atribusi lengkap, logo trust bar grayscale atau fallback company pill badges).
-- **Layanan / Fitur Dense (`services`/`solution`)** ➔ **Feature Cards Archetype** (Grid 2x2 `.feature-cards-grid`, maksimal 4 kartu per slide, selebihnya split Part 1/Part 2).
-- **Narasi Hero / Closing / Ekosistem (`hero`/`closing`/`ecosystem`)** ➔ **Feature Split Archetype** (Split 78/22 `.feature-split`, teks narasi kiri + foto adaptif kanan dengan overlay brand 20%).
+Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai (6 Aperture Cinematic Archetypes):
+- **Heading Utama / Pembuka** ➔ **`cover` (Full-Bleed Cinematic Hero):** Dark photography background, double gradient overlay, live status dot ("● Now shipping"), vermilion kicker, giant headline (9rem), dan subtitle.
+- **Masalah / Pain Points** ➔ **`problem` (12-Col Split with Ghost Watermark):** Asymmetric split (4-col image kiri + 8-col text kanan), watermark ghost text ("NO"), kicker, dan 3-item numbered list dengan highlight hover.
+- **Tampilan Produk / Solusi / Value** ➔ **`product` (50/50 Macro & Spec Matrix):** 50% foto makro produk kiri dengan floating glass badge + 50% kanan berisi headline, paragraf deskriptif, dan 2x2 high-contrast stat counter block.
+- **Fitur / Layanan / Kapabilitas** ➔ **`features` (Rail Image + Giant Numbered List):** 3-col rail image vertikal kiri dengan caption rotasi 90° + 9-col container dengan 4 baris fitur bernomor raksasa `01`–`04` (interaktif hover vermilion).
+- **Keunggulan Kompetitif / Mengapa Kami** ➔ **`usp` (Frosted Glass Trio):** Dark viewfinder background canvas dengan 3 kartu frosted glass trio (`backdrop-filter: blur(12px)`), hairline white border, kicker, counter `01`–`03`, giant stat, headline, dan eksplanasi.
+- **Paket / Harga / Lisensi / Kontak** ➔ **`pricing` (Vertical Image Rail + Tier Matrix):** 3-col vertical image rail dengan watermark "Ship it." di kiri + 9-col container dengan 3 tier pricing di kanan (featured tier inverted black background dengan tombol CTA vermilion).
 
 ### 3. Smart Asset Pipeline & Vector Fallbacks
 - Untuk setiap referensi gambar:
@@ -160,23 +155,19 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 
 ### 4. HTML Assembly & Inlining
 - Muat template kerangka `templates/modern/shell.html` (satu-satunya template).
-- Suntikkan Google Fonts (*Plus Jakarta Sans* 600/700/800 & *Inter* 400/500/600).
-- Konfigurasi Reveal.js untuk ukuran fixed `1920x1080`, margin `0.04`, transisi `slide`.
-- Suntikkan variabel CSS HSL brand ke dalam `:root`.
+- Suntikkan Google Fonts (*Archivo* 500/600/700/800 display, *Inter* 400/500/600 body, *JetBrains Mono* 400/500 mono).
+- Konfigurasi standalone zero-dependency Vanilla presentation shell untuk ukuran fixed `1920x1080` (16:9), hairline progress bar, dot navigation interaktif, dan keyboard shortcuts.
+- Suntikkan variabel CSS brand ke dalam `:root` (`--accent: var(--brand-primary, #ff3b1d)`).
 - Baca `templates/modern/theme.css` dan masukkan isinya menggantikan placeholder `/* CSS_INLINE_PLACEHOLDER */` di dalam `<style>`.
-- Gantikan `<title>` dengan nama perusahaan (`<nama> — Company Profile`), kecuali `{{META}}` reviewer sudah menyediakan `<title>`.
-- Render masing-masing `<section>` via `themes/modern.js` (`renderModernSlide`) ke dalam `<div class="slides">` menggantikan `<!-- SLIDES_INLINE_PLACEHOLDER -->`.
-- Render masing-masing `<section>` ke dalam `<div class="slides">` dengan class CSS semantik (`.hero-slide`, `.problem-card`, `.solution-card`, `.ecosystem-diagram`, `.phone-frame`, `.pricing-card`, `.closing-banner`, `.slide-differentiator`, `.slide-social-proof`).
+- Gantikan `<title>` dengan nama perusahaan (`<nama> — Company Profile`), serta suntikkan `{{BRAND_TITLE}}` ke header rail shell.
+- Render masing-masing slide via `themes/modern.js` (`renderCinematicSlide`) ke dalam `<section class="deck-stage">` menggantikan `<!-- SLIDES_INLINE_PLACEHOLDER -->`.
+- Render masing-masing slide dengan class CSS semantik (`.slide-cover`, `.slide-problem`, `.slide-product`, `.slide-features`, `.slide-usp`, `.slide-pricing`).
 - Tulis file keluaran final ke `<project>/compros/<slug>/index.html`.
 
-### Badge-Title Alignment Consistency Rule
-- Badge eyebrow dan slide title HARUS memiliki alignment yang sama:
-  - Centered slides: Ecosystem (Slide 5), Pricing (Slide 9), Social Proof (Slide 8) → badge must also be centered (`margin-left: auto; margin-right: auto;` atau `margin: 0 auto;`)
-  - Left-aligned slides: Hero (Slide 1), Problem (Slide 2), Solution (Slide 3), Traction (Slide 6), Differentiator (Slide 7) → badge also left-aligned
-- Slide yang wajib centered: Ecosystem (Slide 5), Pricing (Slide 9)
-- Slide yang wajib left-aligned: Hero (Slide 1), Problem (Slide 2), Solution (Slide 3), Traction (Slide 6)
-- Slide opsional mengikuti: Differentiator (Slide 7) → left, Social Proof (Slide 8) → centered
-- No slide may have mismatched badge vs title alignment (DILARANG keras mismatch badge vs title alignment pada slide mana pun).
+### Visual Hierarchy & Alignment Consistency Rule
+- Category kicker mono (`font-mono`, `text-[11px]`, `tracking-[0.3em]`) diletakkan di atas slide title dengan warna aksen vermilion (`var(--accent)`).
+- Left-aligned content slides: `problem`, `product`, `features`, `pricing` mempertahankan struktur grid teratur dan rapi.
+- Centered / atmospheric slides: `usp` (frosted glass trio) dan `cover` (headline bottom-anchored) memaksimalkan kedalaman visual dengan dark canvas.
 
 ### 5. Konsolidasi Folder
 - Simpan seluruh hasil kerja secara rapi dalam 1 root folder khusus proyek:
@@ -540,64 +531,78 @@ Petakan setiap bagian Markdown ke dalam arsitektur slide 16:9 yang sesuai:
 
 ---
 
-## 3.5 Referensi Historis: Canva Editorial Theme (v2.5.0 — tidak lagi dirender)
+### 3.5 Sistem Desain Aperture Cinematic Minimalist (Template `modern`)
 
-Template `modern` (`templates/modern/`) adalah **satu-satunya template** pada `build-deck.js`: tidak ada flag `--theme` dan tidak ada pemilihan tema. Arsitektur visual modern diekstrak dari congen6 (token aktual di `templates/modern/theme.css`, didokumentasikan di `templates/modern/README.md`). Isi section ini dipertahankan sebagai referensi historis tema `editorial`/Canva Salford & Co. v2.5.0 dan tidak lagi dirender oleh builder.
+Template `modern` (`templates/modern/`) adalah **satu-satunya template** pada `build-deck.js`: tidak ada flag `--theme` dan tidak ada pemilihan tema. Arsitektur visual mengadopsi sistem desain sinematik **Aperture Cinematic Minimalist** beresolusi 1920×1080 (16:9) dengan runtime standalone zero-dependency (Vanilla HTML5/CSS3/JS, tanpa dependensi CDN Reveal.js).
 
 ### Design Tokens (CSS Custom Properties)
 
 | Token | Nilai | Keterangan |
-|-------|-------|------------|
-| `--canvas-bg` | `#F4F5F7` | Latar belakang kanvas abu-abu lembut |
-| `--canvas-surface` | `#FFFFFF` | Surface kartu putih bersih dengan bayangan lembut |
-| `--charcoal-solid` | `#232220` | Warna teks utama dan kontainer gelap |
-| `--brand-primary` | `#009BAD` | Aksen brand primer (Venturo Teal) |
-| `--brand-accent-text` | `#007A87` | Teks aksen kontras tinggi (WCAG AA compliant) |
-| `--brand-dark` | `#006D79` | Variasi gelap untuk hover/status aktif |
+|---|---|---|
+| `--background` | `#ffffff` | Kanvas latar belakang slide terang |
+| `--foreground` | `#0a0a0a` | Warna teks primer dan latar belakang kartu gelap |
+| `--muted-foreground` | `#6b6b6b` | Teks sekunder, label mono, metadata slide |
+| `--accent` | `var(--brand-primary, #ff3b1d)` | Aksen vermilion untuk kickers, active dot, tombol featured |
+| `--accent-glow` | `rgba(255, 59, 29, 0.2)` | Efek glow pada aksen aktif / status indicator |
+| `--border` | `#e4e4e4` | Border hairline 1px untuk grid dan kartu |
+| `--ghost` | `#f1f1f1` | Tipografi dekoratif ghost watermarks (22rem) |
+| `--hover-bg` | `#fafafa` | Highlight baris list / hover state |
+| Dark Surface | `#000000` | Kanvas hitam untuk slide cover dan slide USP |
+| Glass Surface | `rgba(0, 0, 0, 0.45)` | Permukaan frosted glass card (`backdrop-filter: blur(12px)`) |
 
 **Typography Scale:**
-- **Display / Heading:** Plus Jakarta Sans (600/700/800)
-- **Body / Keterangan:** Inter (400/500/600)
+- **Display / Headline:** Archivo (500/600/700/800) — headline ultra-besar 6rem hingga 9rem dengan leading rapat (0.85–0.95).
+- **Body / Keterangan:** Inter (400/500/600) — body text netral, tinggi x-height optimal, terbaca tajam dan jernih.
+- **Kickers / Mono Badges:** JetBrains Mono (400/500) — huruf kapital monospaced teknis dengan letter spacing lebar (`letter-spacing: 0.3em`).
 
-**Full-Height 1080p Layout Rule:**
-```css
-.reveal .slides section {
-  box-sizing: border-box;
-  padding: 0;
-  height: 1080px !important;
-  max-height: 1080px;
-  overflow: hidden;
-  background: var(--canvas-bg);
-}
+**Standalone Presentation Shell:**
+```html
+<main class="deck-container">
+  <!-- Top Rail: Brand title, sub-label, counter 01 / 06 -->
+  <!-- Progress Line: 3px hairline progress bar (0% -> 100%) -->
+  <!-- Main Stage: <section class="deck-stage"> (1920×1080 16:9 fixed canvas) -->
+  <!-- Bottom Rail: Dot navigation & arrow navigation buttons -->
+</main>
 ```
-Setiap slide mengeliminasi ruang kosong vertikal (vertical blank void 60%) dengan memastikan seluruh kartu dan frame gambar mengisi ketinggian penuh 1080p secara proporsional.
+Slide dirender langsung ke dalam `.deck-stage` tanpa framework eksternal. Script inlined vanilla JS mengontrol perpindahan slide, pembaruan nomor counter, progress bar, dot aktif, serta navigasi keyboard (`ArrowRight`, `ArrowLeft`, `Space`, `Home`, `End`).
 
-### 8 Layout Archetypes Canva Salford & Co. 1:1
+### 6 Slide Archetypes Aperture Cinematic
 
-Builder memetakan setiap bagian Markdown secara otomatis ke salah satu dari 8 arketipe modular:
+Builder memetakan setiap bagian Markdown secara otomatis ke salah satu dari 6 arketipe cinematic:
 
 | Archetype Class | Layout & Proporsi | Elemen Kunci |
-|-----------------|-------------------|--------------|
-| `.archetype-canva-cover` | Split 55/45 | H1 all-caps punchy, category badge, tombol solid Charcoal + outline Teal, dan frame foto arsitektur gedung kaca portrait full-height (`slide-1-hero.jpg`). |
-| `.archetype-canva-welcome` | Split 45/55 | Foto arsitektur/office portrait tinggi 1080p di kiri dengan panel aksen Charcoal di belakangnya, kartu narasi bernomor `01`, `02`, `03` berlatar putih bersih dengan bayangan lembut di kanan. |
-| `.archetype-canva-services` | Split 35/65 | Judul H2 & foto vertikal tech workspace di kiri, grid 2x2 rapi 4 kartu layanan (`01`–`04`) dengan pill charcoal mengisi tinggi penuh slide (0% vertical void). |
-| `.archetype-canva-ecosystem` | Split 50/50 | Diagram SVG sirkular orbit ekosistem AI tajam dan terpusat di kiri, foto landscape workspace tech dan kartu alur komputasi di kanan. |
-| `.archetype-canva-metrics` | Split 40/60 | Foto gedung kaca modern portrait tinggi penuh di kiri, grid 4 kartu metrik dengan angka raksasa (`font-size: 44px; font-weight: 800; color: #007A87;`) untuk rasio, persen, nominal. |
-| `.archetype-canva-differentiator` | Full Table Layout | Tabel komparasi 4–5 kolom Canva editorial dengan sudut melengkung 12px, zebra baris halus, header charcoal, dan kolom brand Venturo Pro di-highlight dengan tint teal dan border aktif. |
-| `.archetype-canva-pricing` | 3-Column Centered | 3 kartu paket harga berjenjang, tier Pro di tengah dibuat elevated (border brand teal, ribbon "Best Seller", dan tombol CTA charcoal solid). |
-| `.archetype-canva-closing` | 3-Column Split (Canva Slide 10) | Foto arsitektur portrait di kiri, Kartu Informasi Kontak & CTA Charcoal elegan di tengah (tanpa placeholder mentah `[...]`), dan foto tim portrait di kanan. |
+|---|---|---|
+| `cover` (`.slide-cover`) | Full-Bleed Cinematic Hero | Dark photography background dengan double gradient fade (ke hitam), live status dot (`● Now shipping`), category kicker vermilion, headline raksasa bottom-anchored (9rem), dan lead subtitle. |
+| `problem` (`.slide-problem`) | 12-Col Split with Ghost Watermark | Grid 12 kolom (4-col image kiri + 8-col konten kanan), giant ghost text watermark ("NO" di `#f1f1f1`), category kicker, headline tegas, dan 3-item numbered list (`01`–`03` vermilion) dengan hover highlight (`#fafafa`). |
+| `product` (`.slide-product`) | 50/50 Macro & Spec Matrix | Grid 2 kolom seimbang. Sisi kiri: macro product image resolusi tinggi dengan floating glass badge. Sisi kanan: headline, paragraf deskriptif, dan 2x2 spec matrix stat block dengan angka kontras tinggi dan label mono. |
+| `features` (`.slide-features`) | Rail Image + Giant Numbered List | Sisi kiri: 3-col vertical rail image dengan caption teknis rotasi 90° (`writing-mode: vertical-rl`). Sisi kanan: 9-col container dengan 4 baris fitur bernomor raksasa `01`–`04` (`#e4e4e4` berubah vermilion saat hover). |
+| `usp` (`.slide-usp`) | Frosted Glass Trio | Dark viewfinder background canvas dengan vertical gradient. 3 kartu frosted glass trio (`backdrop-filter: blur(12px)`, `bg-black/40`, 1px hairline border putih). Tiap kartu memiliki kicker, counter `01`–`03`, giant stat, headline, dan eksplanasi. |
+| `pricing` (`.slide-pricing`) | Vertical Image Rail + Tier Matrix | Sisi kiri: 3-col vertical image rail dengan watermark "Ship it." dan tag pengiriman. Sisi kanan: 9-col container dengan 3 pricing tiers. Featured tier mengusung inverted black background (`#0a0a0a`), teks putih, dan tombol CTA solid vermilion. |
 
-### Hybrid Asset Pipeline (`image-fetcher.js`)
+### Imagery Guidelines & Asset Pipeline Slots
 
-Pipeline aset mengambil foto arsitektur dan korporat berkualitas tinggi langsung dari **Curated Direct CDN Unsplash** (`images.unsplash.com`) tanpa memerlukan API Key:
-1. **Slot Mapping Deterministik:** Membaca tag `<!-- image: <slot> -- <prompt> -->` pada draf Markdown dan memetakan ke kategori kurasi:
-   - `hero`, `problem`, `traction`, `metrics` ➔ `architecture-portrait` (800×1200)
-   - `solution` ➔ `creative-meeting` (800×1200)
-   - `features`, `services` ➔ `tech-workspace` (800×1200)
-   - `ecosystem` ➔ `tech-workspace` (1600×900) + In-line SVG Orbit Diagram
-   - `closing` ➔ `architecture-portrait` (kiri) & `corporate-team` (kanan)
-2. **Cascading Fallback:** Direct Unsplash CDN ➔ Lorem Picsum CDN (`https://picsum.photos/`) ➔ Aset SVG vektor geometris lokal (`templates/assets/fallback/`).
-3. **Idempotensi & Offline Safety:** Gambar disimpan permanen di `compros/<slug>/assets/slide-*.jpg` (> 10 KB). Jika sudah ada, builder melewati proses download.
+Pipeline aset mengambil foto resolusi tinggi langsung dari **Curated Direct CDN Unsplash** (`images.unsplash.com`) tanpa memerlukan API Key:
+
+1. **Deterministic Slot Mapping:**
+   Membaca tag komentar `<!-- image: <slot> -- <prompt> -->` pada draf Markdown dan memetakan ke 6 slot visual cinematic:
+   - `hero` (`cover`): Foto lanskap/arsitektur berskala sinematik (1920×1080) dengan pencahayaan dramatis.
+   - `problem` (`problem`): Foto portrait struktural atau lingkungan industrial monokromatis/grayscale (800×1200).
+   - `macro` (`product`): Foto makro close-up produk, hardware, atau instrumen presisi tinggi (1200×1200).
+   - `hands` (`features`): Foto vertikal interaksi pengguna, pengoperasian sistem, atau craftsmanship (800×1200).
+   - `viewfinder` (`usp`): Foto viewfinder kamera, optik, atau horizon gelap (1920×1080) untuk background glassmorphism.
+   - `lens` (`pricing`): Foto vertikal optik, packaging produk, atau industrial rail (800×1200).
+
+2. **Cascading Fallback:**
+   Direct Unsplash CDN ➔ Lorem Picsum CDN (`https://picsum.photos/`) ➔ Aset SVG vektor geometris lokal (`templates/assets/fallback/`).
+
+3. **Micro-Interactions & Motion Dynamics:**
+   - **Hairline Progress Bar:** Garis progress 3px di bagian atas panggung yang terisi secara halus (`transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1)`) dari 0% ke 100% mengikuti slide aktif.
+   - **Dot Navigation:** Lingkaran navigasi di footer rail dengan indikator slide aktif berdenyut aksen vermilion (`background: var(--accent)`).
+   - **Numbered List & Row Hover:** Nomor raksasa `01`–`04` pada slide features dan problem bertransisi dari `#e4e4e4` menjadi `#ff3b1d` dengan background baris berubah menjadi `#fafafa` saat disentuh kursor.
+   - **Elevated Featured Tier:** Kartu paket unggulan pada slide pricing memiliki kontras inversi visual (`#0a0a0a`) yang dominan dan tombol CTA aksen vermilion terang.
+
+4. **Idempotensi & Offline Safety:**
+   Gambar disimpan permanen di `compros/<slug>/assets/slide-*.jpg` (> 10 KB). Jika sudah ada, builder melewati proses download.
 
 ### Git Worktree & Workspace Sync Guarantee
 
@@ -629,7 +634,7 @@ Setelah mengubah script builder, template, atau tema, jalankan:
 node scripts/sync-plugin.js
 ```
 
-Script ini menyalin file sumber ke dua lokasi plugin: `.claude/marketplace/compro/` (submodule marketplace) dan `~/.claude/plugins/cache/aorysan-marketplace/compro/2.5.0/` (global Claude Code cache v2.5.0), sehingga perubahan langsung aktif secara deterministik di kedua target.
+Script ini menyalin file sumber ke dua lokasi plugin: `.claude/marketplace/compro/` (submodule marketplace) dan `~/.claude/plugins/cache/aorysan-marketplace/compro/2.8.0/` (global Claude Code cache v2.8.0), sehingga perubahan langsung aktif secara deterministik di kedua target.
 
 ---
 
@@ -640,5 +645,5 @@ Script ini menyalin file sumber ke dua lokasi plugin: `.claude/marketplace/compr
 | File Markdown tidak ditemukan | Hentikan proses dan beri pesan: `Error: Markdown file not found at <path>` |
 | File Markdown kosong | Hentikan proses dan beri pesan: `Error: Markdown file is empty` |
 | URL gambar gagal diakses (bukan 200) | Generate vector SVG fallback, catat detail di `reports/build.log`, dan lanjutkan build tanpa error |
-| Warna brand tidak didefinisikan | Gunakan default Venturo Teal (`hsl(186, 100%, 34%)` / `#009BAD`) |
+| Warna brand tidak didefinisikan | Gunakan default Aperture Vermilion (`#ff3b1d`) |
 | Konten slide sangat panjang (>250 kata) | Split section menjadi slide berseri (Part 1, Part 2) dengan H2 berlanjut |

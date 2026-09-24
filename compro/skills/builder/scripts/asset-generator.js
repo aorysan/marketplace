@@ -1,7 +1,7 @@
 /**
  * asset-generator.js — Procedural Vector Asset Pipeline
  * Generates vector SVG mockups, circular ecosystem diagrams, tech banners,
- * brand logos, and inline icons for the Reveal.js Company Profile builder.
+ * brand logos, and inline icons for the Aperture Cinematic Company Profile builder.
  */
 
 /**

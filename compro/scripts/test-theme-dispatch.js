@@ -21,8 +21,8 @@ if (legacy.name !== 'modern') {
 // 3. renderSlide dispatches to the modern renderer (no theme branching)
 const brand = { name: 'Venturo Pro', primaryColor: '#009BAD', secondaryColor: '#006D79' };
 const html = renderSlide({ title: 'Layanan Unggulan', content: 'Intro\n\n- **Brand DNA** — kunci identitas' }, 3, 9, brand, 'modern', '');
-if (!html.includes('<section')) {
-  console.error('FAIL: renderSlide did not produce a modern slide section');
+if (!html.includes('<article') && !html.includes('<section')) {
+  console.error('FAIL: renderSlide did not produce a modern slide container');
   process.exit(1);
 }
 

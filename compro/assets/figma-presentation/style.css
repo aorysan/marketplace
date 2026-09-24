@@ -4,7 +4,7 @@
   --background: #ffffff;
   --foreground: #0a0a0a;
   --muted-foreground: #6b6b6b;
-  --accent: var(--brand-primary, #ff3b1d);
+  --accent: #ff3b1d;
   --accent-glow: rgba(255, 59, 29, 0.2);
   --border: #e4e4e4;
   --ghost: #f1f1f1;
@@ -1208,23 +1208,4 @@ html, body {
 .tier-card.featured .tier-btn:hover {
   background: #e03217;
   color: #ffffff;
-}
-
-/* ---------------- Dynamic brand override (Task 2) ----------------
-   Figma source above is preserved verbatim (Ruling-4). This appended
-   :root block re-points --accent at the per-client brand color.
-   build-deck.js appends :root{--brand-primary:<client>;...} to the
-   inlined CSS on every build; the var() fallback keeps the Figma
-   vermilion (#ff3b1d) when no brand color is injected. */
-:root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --muted-foreground: #6b6b6b;
-  --accent: var(--brand-primary, #ff3b1d);
-  --border: #e4e4e4;
-  --ghost: #f1f1f1;
-  --hover-bg: #fafafa;
-  --font-display: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
 }

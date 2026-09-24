@@ -23,7 +23,7 @@ Menerima file HTML presentasi dari builder, memvalidasi, melakukan technical SEO
 2. **Validasi dulu:** Cek file ada dan bisa dibaca sebelum deploy.
 3. **SEO dulu, deploy kemudian:** Lakukan audit dan auto-fix technical SEO sebelum deployment.
 4. **Konfirmasi dulu:** Jangan pernah deploy tanpa persetujuan eksplisit user (User Confirmation Gate).
-5. **CDN dependency check:** Pastikan CDN Reveal.js reachable (karena HTML bergantung ke CDN).
+5. **Self-contained deck check:** Engine presentasi standalone (Vanilla HTML5/CSS3/JS, tanpa CDN library). Pastikan referensi asset lokal `assets/*` ada; Google Fonts (Archivo/Inter/JetBrains Mono) opsional — deck tetap render dengan fallback font sistem bila offline.
 
 ## Langkah Kerja
 

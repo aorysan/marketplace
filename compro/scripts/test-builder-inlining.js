@@ -31,7 +31,7 @@ if (!shellContent.includes('<!-- SLIDES_INLINE_PLACEHOLDER -->')) {
 
 // Verify CSS placeholder replacement
 const inlined = shellContent.replace('/* CSS_INLINE_PLACEHOLDER */', cssContent);
-if (!inlined.includes('--canvas-bg') || inlined.includes('/* CSS_INLINE_PLACEHOLDER */')) {
+if (!inlined.includes('--background') || inlined.includes('/* CSS_INLINE_PLACEHOLDER */')) {
   console.error('FAIL: CSS placeholder replacement verification failed');
   process.exit(1);
 }

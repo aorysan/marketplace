@@ -1,6 +1,6 @@
 # Compro Orchestrator (Main Skill)
 
-> **Skill untuk:** Menjalankan pipeline Layer 3 — Company Profile v2.5.0 secara end-to-end dari dokumen bisnis hingga presentasi web live di Vercel dengan tema default Canva Editorial, 8 layout archetypes 1:1, hybrid Unsplash direct CDN asset pipeline, dan Git Worktree workspace sync guarantee.
+> **Skill untuk:** Menjalankan pipeline Layer 3 — Company Profile v2.8.0 secara end-to-end dari dokumen bisnis hingga presentasi web live di Vercel dengan tema default Aperture Cinematic Minimalist, 6 core layout archetypes, standalone zero-dependency presentation engine (HTML5/CSS3/JS), hybrid Unsplash direct CDN asset pipeline, dan Git Worktree workspace sync guarantee.
 
 ## Slug Resolution Protocol
 
@@ -93,42 +93,38 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
 4. **Phase 3 — Slide Deck Assembly:**
    - Panggil skill `/builder`.
    - Mengonversi `compros/<slug>/drafts/02-final.md` menjadi:
-     - `<project>/compros/<slug>/index.html` (Single-file Reveal.js HTML 1920×1080 16:9 dengan CSS ter-inline, template tunggal `modern`).
+     - `<project>/compros/<slug>/index.html` (Single-file presentation HTML 1920×1080 16:9 dengan zero-dependency vanilla engine, CSS ter-inline, tema Aperture Cinematic Minimalist).
      - `<project>/compros/<slug>/compro.md`.
-     - `<project>/compros/<slug>/assets/` (Foto arsitektur/corporate resolusi tinggi dari Unsplash direct CDN via `image-fetcher.js` dengan cascading fallback).
+     - `<project>/compros/<slug>/assets/` (Foto arsitektur/produk resolusi tinggi dari Unsplash direct CDN via `image-fetcher.js` untuk 6 slot cinematic: hero, problem, macro, hands, viewfinder, lens, dengan cascading fallback).
      - `<project>/compros/<slug>/reports/build.log`.
      - Mengonsolidasikan semua file kerja ke folder proyek `compros/<slug>/` (`index.html`, `compro.md`, `assets/`, `reports/`, `drafts/`).
    - **Workspace Sync Guarantee:** Eksekusi di Git worktree manapun secara otomatis memicu `postBuildSyncGuarantee()` yang menjamin seluruh bundel `compros/<slug>/` tersalin utuh ke root workspace utama pengguna.
-   - **Content Sanitization:** Otomatis membersihkan frontmatter & meta tags, memformat kontak demo tanpa kurung siku mentah `[...]`, dan mengekstrak metrik angka besar 44px `#007A87`.
+   - **Content Sanitization:** Otomatis membersihkan frontmatter & meta tags, memformat kontak demo tanpa kurung siku mentah `[...]`, dan mengekstrak metrik data untuk spec matrix/stat counter.
 
 5. **Phase 3b — Visual Self-Check:**
    - Buka `compros/<slug>/index.html` di browser.
-   - Navigasi setiap slide dan verifikasi kepatuhan layout archetype template `modern`:
-     1. Cover: Foto arsitektur portrait full-height (`slide-1-hero.jpg`), CTA buttons, tanpa overflow.
-     2. Welcome (Masalah/Solusi): Kartu narasi bernomor tebal `01`, `02`, `03` dengan panel foto vertikal 1080p.
-     3. Services: Grid 2x2 rapi 4 kartu layanan (`01`–`04`) mengisi tinggi penuh slide (zero vertical void 60%).
-     4. Ecosystem: Diagram orbital SVG AI tajam terpusat + foto tech workspace.
-     5. Metrics: Big number counter 44px `#007A87` untuk rasio (misal `20:1`), persentase (`90%`), atau mata uang.
-     6. Differentiator: Tabel perbandingan dengan kolom brand disorot rapi.
-     7. Pricing: 3 kartu harga terpusat dengan tier Pro elevated dan ribbon "Best Seller".
-     8. Closing: Komposisi 3 kolom (foto arsitektur, kartu kontak & CTA charcoal, foto tim) tanpa kurung siku `[...]`.
+   - Navigasi setiap slide dan verifikasi kepatuhan 6 layout archetype Aperture Cinematic Minimalist:
+     1. Cover: Full-bleed cinematic hero, foto arsitektur/produk gelap dengan gradient overlay, brand title, status dot "● Now shipping", vermilion kicker, dan giant headline.
+     2. Problem: 12-col asymmetric split (4-col image kiri + 8-col teks kanan), giant ghost watermark "NO", 3-item numbered list dengan angka vermilion dan hover highlight.
+     3. Product: 50/50 split dengan foto macro + floating glass badge di kiri, headline + 2x2 spec matrix stat block dengan angka kontras tinggi di kanan.
+     4. Features: 3-col rail image vertikal dengan caption rotasi 90° di kiri, 9-col container dengan 4 baris fitur bernomor raksasa 01-04 (berubah vermilion saat hover) di kanan.
+     5. USP: Dark viewfinder background dengan 3 kartu frosted glass trio (backdrop blur, border hairline putih), masing-masing dengan kicker, counter 01-03, giant stat, dan penjelasan.
+     6. Pricing: 3-col vertical image rail dengan watermark "Ship it." di kiri, 9-col container dengan 3 tier pricing di kanan (featured tier inverted black background dengan CTA vermilion).
    - Pastikan seluruh foto di `compros/<slug>/assets/` berukuran valid (> 10 KB).
    - Verifikasi keberadaan file di root workspace pengguna (`compros/<slug>/index.html` dan `assets/`).
+   - Verifikasi interaktivitas chrome: hairline progress bar (0-100%), dot navigation aktif memancarkan vermilion, tombol panah dan keyboard shortcuts berfungsi lancar tanpa error konsol.
    - Jika ditemukan masalah:
-     - Untuk broken SVG → inline ulang SVG ke HTML
-     - Untuk overflow teks / vertical void → sesuaikan proporsi kartu atau split slide
+     - Untuk broken image/SVG → inline ulang SVG atau periksa slot asset
+     - Untuk overflow teks / clipping → sesuaikan proporsi kartu atau split slide
      - Untuk layout salah → re-render section yang bermasalah
    - Catat hasil verifikasi di `<project>/compros/<slug>/reports/build.log` dengan format:
      ```
      [VISUAL CHECK] Slide 1 (Cover): OK
-     [VISUAL CHECK] Slide 2 (Welcome Problem): OK
-     [VISUAL CHECK] Slide 3 (Welcome Solution): OK
-     [VISUAL CHECK] Slide 4 (Services): OK
-     [VISUAL CHECK] Slide 5 (Ecosystem): OK
-     [VISUAL CHECK] Slide 6 (Metrics): OK
-     [VISUAL CHECK] Slide 7 (Differentiator): OK
-     [VISUAL CHECK] Slide 8 (Pricing): OK
-     [VISUAL CHECK] Slide 9 (Closing): OK
+     [VISUAL CHECK] Slide 2 (Problem): OK
+     [VISUAL CHECK] Slide 3 (Product): OK
+     [VISUAL CHECK] Slide 4 (Features): OK
+     [VISUAL CHECK] Slide 5 (USP): OK
+     [VISUAL CHECK] Slide 6 (Pricing): OK
      ```
    - Phase 3b bersifat **blocking**: tidak boleh lanjut ke Phase 4 jika ada slide yang masih bermasalah.
 
@@ -158,24 +154,29 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
 
 ## Template Tunggal `modern` & Workspace Sync Guarantee
 
-1. **Template tunggal `modern`:**
-   - Builder hanya memiliki satu template (`skills/builder/templates/modern/`, diekstrak dari congen6): tidak ada pemilihan tema di flow mana pun.
-   - Kanvas `#F8FAFC`, surface `#FFFFFF`, slate `#0F172A`, dan brand primary Venturo Teal `#009BAD` (aksen AA `#007A87`).
-   - Resolusi fixed 1920×1080 (16:9). Kontainer slide memberlakukan `height: 1080px !important;` untuk mengeliminasi 60% vertical blank void.
+1. **Template tunggal `modern` (Aperture Cinematic Minimalist):**
+   - Builder hanya memiliki satu template (`skills/builder/templates/modern/`): tidak ada pemilihan tema di flow mana pun.
+   - Palet warna resmi Aperture Cinematic Minimalist:
+     - Kanvas: `--background` (`#ffffff`)
+     - Teks/Surface gelap: `--foreground` (`#0a0a0a`)
+     - Teks sekunder: `--muted-foreground` (`#6b6b6b`)
+     - Aksen brand: `--accent` (`var(--brand-primary, #ff3b1d)`)
+     - Border: `--border` (`#e4e4e4`)
+     - Ghost letter: `--ghost` (`#f1f1f1`)
+     - Hover background: `--hover-bg` (`#fafafa`)
+   - Tipografi resmi: `Archivo` (display/headline), `Inter` (body), `JetBrains Mono` (kickers/mono).
+   - Resolusi fixed 1920×1080 (16:9). Standalone zero-dependency HTML5/CSS3/Vanilla JS presentation shell (tanpa dependensi CDN Reveal.js).
 
-2. **10 Layout Archetype `modern` (diekstrak dari congen6):**
-   - `cover`: Hero split dengan foto arsitektur, stat chips, dan CTA buttons.
-   - `problem` / `solution`: Narasi Masalah/Solusi split dengan kartu bernomor dan panel foto vertikal 1080p.
-   - `services`: Grid 2x2 4 kartu layanan mengisi penuh slide (0% vertical void).
-   - `ecosystem`: Diagram orbital SVG + foto tech workspace.
-   - `metrics`: Big numbers counter (44px `#007A87`) untuk rasio, persen, nominal + foto arsitektur.
-   - `differentiator`: Tabel komparasi dengan highlight kolom brand.
-   - `pricing`: 3-tier pricing terpusat dengan tier tengah elevated dan ribbon "Best Seller".
-   - `closing`: Komposisi 3-kolom (foto arsitektur, kontak & CTA, foto tim) tanpa raw `[...]` placeholders.
-   - `social-proof`: Grid kartu testimoni klien (opsional, bila konten tersedia).
+2. **6 Layout Archetypes Aperture Cinematic:**
+   - `cover`: Full-Bleed Cinematic Hero dengan background foto gelap, gradient fade, live status indicator (`● Now shipping`), vermilion kicker, dan headline raksasa.
+   - `problem`: 12-Col Asymmetric Split (4-col foto kiri + 8-col konten kanan), giant ghost text watermark ("NO"), dan 3-item numbered list dengan nomor vermilion dan highlight hover.
+   - `product`: 50/50 Macro & Spec Matrix (50% foto makro produk kiri dengan floating glass badge + 50% kanan berisi headline, deskripsi, dan 2x2 high-contrast stat counter).
+   - `features`: Rail Image + Giant Numbered List (3-col rail image vertikal kiri dengan caption rotasi 90° + 9-col kanan dengan 4 baris fitur bernomor raksasa `01`–`04` yang reaktif hover).
+   - `usp`: Frosted Glass Trio di atas dark viewfinder canvas dengan 3 kartu semi-transparan (`backdrop-filter: blur(12px)`), hairline white border, kicker, counter, giant stat, dan teks penjelasan.
+   - `pricing`: Vertical Image Rail + Tier Matrix (3-col rail foto vertikal kiri dengan tag watermark "Ship it." + 9-col kanan dengan 3 tier harga; featured tier inverted black background dengan tombol CTA vermilion).
 
 3. **Hybrid Asset Downloader Pipeline (`image-fetcher.js`):**
-   - Mendeteksi slot gambar `<!-- image: <slot> -- ... -->`.
+   - Mendeteksi slot gambar `<!-- image: <slot> -- ... -->` dengan 6 cinematic slots: `hero` (cover), `problem` (problem), `macro` (product), `hands` (features), `viewfinder` (usp), `lens` (pricing).
    - Mengunduh foto beresolusi tinggi langsung dari curated Unsplash direct CDN (`images.unsplash.com`) tanpa API key.
    - Cascading fallback: Direct CDN Unsplash ➔ Lorem Picsum ➔ Local architectural vector SVG (`templates/assets/fallback/`).
 
@@ -184,4 +185,4 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
    - `postBuildSyncGuarantee` otomatis menyalin seluruh bundel proyek ke root workspace pengguna (`compros/<slug>/`) sehingga file tidak hilang ketika worktree ditutup.
 
 5. **Plugin & Cache Synchronization:**
-   - Sinkronisasi kode builder dan template ke `.claude/marketplace/compro/` dan global cache `~/.claude/plugins/cache/aorysan-marketplace/compro/2.5.0/`.
+   - Sinkronisasi kode builder dan template ke `.claude/marketplace/compro/` dan global cache `~/.claude/plugins/cache/aorysan-marketplace/compro/2.8.0/`.

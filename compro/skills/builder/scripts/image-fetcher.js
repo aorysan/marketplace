@@ -37,7 +37,15 @@ const SLOT_MAP = {
   'metrics': { category: 'architecture-portrait', orientation: 'portrait', fallback: 'metrics-fallback.svg' },
   'differentiator': { category: 'architecture-portrait', orientation: 'portrait', fallback: 'problem-fallback.svg' },
   'pricing': { category: 'tech-workspace', orientation: 'portrait', fallback: 'services-fallback.svg' },
-  'closing': { category: 'corporate-team', orientation: 'portrait', fallback: 'closing-fallback.svg' }
+  'closing': { category: 'corporate-team', orientation: 'portrait', fallback: 'closing-fallback.svg' },
+  // Aperture Cinematic slots (Task 1): every CINEMATIC_SLOT_MAP value must
+  // resolve here so acquireSlotImage never falls through to an undefined
+  // category/fallback. Categories reuse the existing curated catalog;
+  // fallbacks reuse existing on-disk SVGs (no new fallback art added).
+  'macro': { category: 'tech-workspace', orientation: 'landscape', fallback: 'solution-fallback.svg' },
+  'hands': { category: 'creative-meeting', orientation: 'portrait', fallback: 'services-fallback.svg' },
+  'viewfinder': { category: 'architecture-modern', orientation: 'landscape', fallback: 'problem-fallback.svg' },
+  'lens': { category: 'tech-workspace', orientation: 'portrait', fallback: 'services-fallback.svg' }
 };
 
 function mapCommentToSlot(commentStr) {

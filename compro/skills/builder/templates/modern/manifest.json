@@ -1,8 +1,22 @@
 {
   "name": "modern",
   "version": "2.8.0",
-  "archetypes": ["cover", "problem", "solution", "services", "ecosystem", "metrics", "differentiator", "pricing", "closing", "social-proof", "feature-split", "feature-cards"],
-  "slots": { "cover": "hero", "problem": "problem", "solution": "solution", "services": "services", "ecosystem": "ecosystem", "metrics": "metrics", "differentiator": "differentiator", "pricing": "pricing", "closing": "closing", "social-proof": "traction", "feature-cards": "services", "feature-split": "solution" },
+  "archetypes": [
+    "cover",
+    "problem",
+    "product",
+    "features",
+    "usp",
+    "pricing"
+  ],
+  "slots": {
+    "cover": "hero",
+    "problem": "problem",
+    "product": "macro",
+    "features": "hands",
+    "usp": "viewfinder",
+    "pricing": "lens"
+  },
   "cssFile": "theme.css",
   "shellFile": "shell.html",
   "renderer": "modern"

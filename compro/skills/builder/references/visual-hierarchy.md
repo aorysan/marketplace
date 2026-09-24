@@ -1,7 +1,7 @@
 # Visual Hierarchy & Layout Composition Reference — 16:9 Slide Decks
 
 > **Self-contained visual architecture guidelines for the `builder` skill.**  
-> Synthesized from `impeccable` layout principles and `ui-ux-pro-max` UX standards, tailored for **1920×1080 widescreen presentation decks (Reveal.js)**.
+> Synthesized from `impeccable` layout principles and `ui-ux-pro-max` UX standards, tailored for **1920×1080 widescreen Aperture Cinematic presentation decks (standalone Vanilla HTML5/CSS3/JS)**.
 
 ---
 
@@ -10,11 +10,10 @@
 Corporate decks require strict structural discipline to look polished both in interactive browser view and in exported PDF print format.
 
 - **Target Resolution:** Fixed 1920×1080 pixels (16:9 aspect ratio).
-- **Reveal.js Configuration:**
-  - `width: 1920`
-  - `height: 1080`
-  - `margin: 0.04` (4% outer safety margin)
-  - `minScale: 0.2`, `maxScale: 2.0`
+- **Deck Stage Configuration:**
+  - Stage canvas: `1920×1080`
+  - Outer safety margin: `4%` (`margin: 0.04`)
+  - Scale range: `minScale: 0.2`, `maxScale: 2.0`
 - **Safe Zone:** All primary content must remain within an inner bounding box of **1760×960 pixels** (80px inward from the canvas boundaries). Never place critical text or interactive targets against the viewport edge.
 - **Slide Budget:** **One core concept per slide.** Maximum **250 words** or 3–4 card items per slide. If content exceeds this limit, chunk into subsequent slides.
 
@@ -442,7 +441,7 @@ Polished transitions create perceived technical excellence without distracting f
 
 ## 6. Print & PDF Export Parity
 
-Slide presentations must export seamlessly to PDF via browser print (`Ctrl+P` / Reveal print mode):
+Slide presentations must export seamlessly to PDF via browser print (`Ctrl+P`):
 
 ```css
 @media print {
@@ -452,8 +451,8 @@ Slide presentations must export seamlessly to PDF via browser print (`Ctrl+P` / 
     margin: 0;
   }
 
-  body, .reveal {
-    background-color: var(--brand-surface) !important;
+  body, .deck-container {
+    background-color: var(--background) !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
