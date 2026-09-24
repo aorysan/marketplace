@@ -420,6 +420,52 @@ ${featuresListHtml}
 }
 
 // 5. USP: Full-bleed dark background, 3 frosted glass cards with metrics
+// Comparison table → 3 glass cards (kicker=aspect, title=brand value, desc=alternatives).
+// Returns null when content has no usable markdown table.
+function parseUspComparisonCards(content) {
+  const stripped = String(content || '').replace(/<!--[\s\S]*?-->/g, '').trim();
+  const lines = stripped.split('\n').map(l => l.trim()).filter(Boolean);
+  const tableLines = lines.filter(l => l.startsWith('|'));
+  if (tableLines.length < 3) return null;
+
+  const rawRows = [];
+  for (const tl of tableLines) {
+    const cleaned = tl.replace(/^\||\|$/g, '').trim();
+    if (/^(\s*:?-{2,}:?\s*\|?)+$/.test(cleaned)) continue;
+    const cols = cleaned.split('|').map(c => c.replace(/\*\*/g, '').trim());
+    if (cols.length >= 2) rawRows.push(cols);
+  }
+  if (rawRows.length < 2) return null;
+
+  const headers = rawRows[0];
+  const rows = rawRows.slice(1);
+  const cards = rows.slice(0, 3).map(r => ({
+    kicker: r[0] || '',
+    metric: '',
+    title: r[1] || headers[1] || '',
+    desc: headers.slice(2)
+      .map((h, i) => (r[i + 2] ? `${h}: ${r[i + 2]}` : ''))
+      .filter(Boolean)
+      .join(' · ')
+  }));
+
+  let honesty = '';
+  let intro = '';
+  for (const line of lines) {
+    if (line.startsWith('|')) continue;
+    if (/^\*\*intinya/i.test(line) || /^intinya[:\s]/i.test(line)) {
+      honesty = line
+        .replace(/^\*\*intinya[:\s]*\*\*\s*/i, '')
+        .replace(/^intinya[:\s]*/i, '')
+        .replace(/\*\*/g, '')
+        .trim();
+    } else if (!intro && !line.startsWith('#')) {
+      intro = line;
+    }
+  }
+  return { cards, honesty, intro };
+}
+
 function renderUsp(slide, brand, indexOrAsset = 4, assetsDir = '', totalSlides = 6) {
   slide = slide || {};
   const { index, imgSrc } = resolveSlideParams(slide, brand, 4, 'viewfinder', indexOrAsset, assetsDir, totalSlides);
@@ -428,14 +474,20 @@ function renderUsp(slide, brand, indexOrAsset = 4, assetsDir = '', totalSlides =
   const kicker = slide.kicker || 'Why it wins';
 
   let cards = [];
+  let honesty = '';
   if (Array.isArray(slide.items)) {
     cards = slide.items;
   } else if (Array.isArray(slide.cards)) {
     cards = slide.cards;
   } else {
     const content = sanitizeSlideContent(slide.content || slide.raw || '').trim();
-    const { cards: parsedCards } = parseEditorialCards(content);
-    cards = parsedCards.map(c => {
+    const comparison = parseUspComparisonCards(content);
+    if (comparison && comparison.cards.length > 0) {
+      cards = comparison.cards;
+      honesty = comparison.honesty;
+    } else {
+      const { cards: parsedCards } = parseEditorialCards(content);
+      cards = parsedCards.map(c => {
       const pm = parseMetricBullet(`- **${c.title}** — ${c.desc}`);
       let kicker = c.kicker || c.tag || '';
       let metric = c.metric || (pm.metric && /\d/.test(pm.metric) ? pm.metric : '');
@@ -458,6 +510,7 @@ function renderUsp(slide, brand, indexOrAsset = 4, assetsDir = '', totalSlides =
         desc
       };
     });
+    }
   }
 
   if (cards.length === 0) {
@@ -491,6 +544,7 @@ function renderUsp(slide, brand, indexOrAsset = 4, assetsDir = '', totalSlides =
           <div class="content">
             <span class="mono-kicker">${inline(kicker)}</span>
             <h2 class="headline">${inline(title)}</h2>
+            ${honesty ? `<p class="usp-honesty">${inline(honesty)}</p>` : ''}
             <div class="usp-grid">
 ${uspCardsHtml}
             </div>
@@ -633,7 +687,17 @@ function renderCinematicSlide(slide, arg2, arg3, arg4, arg5) {
     case 'product': return renderProduct(slide, brand, index, assetsDir, totalSlides);
     case 'features': return renderFeatures(slide, brand, index, assetsDir, totalSlides);
     case 'usp': return renderUsp(slide, brand, index, assetsDir, totalSlides);
-    case 'pricing': return renderPricing(slide, brand, index, assetsDir, totalSlides);
+    case 'pricing': {
+      // Zero-tier safety: contact/CTA slides misclassified as pricing would
+      // otherwise ship an empty tier grid. Fall back to features list layout.
+      const content = String(slide.content || slide.raw || '').replace(/<!--[\s\S]*?-->/g, '');
+      const tableRows = content.split('\n').filter(l => l.trim().startsWith('|')).length;
+      const hasTiers = (Array.isArray(slide.tiers) && slide.tiers.length > 0)
+        || (Array.isArray(slide.items) && slide.items.length > 0)
+        || tableRows >= 3;
+      if (!hasTiers) return renderFeatures(slide, brand, index, assetsDir, totalSlides);
+      return renderPricing(slide, brand, index, assetsDir, totalSlides);
+    }
     default: return renderProduct(slide, brand, index, assetsDir, totalSlides);
   }
 }

@@ -21,11 +21,15 @@ const testScripts = [
 
 console.log('--- Running Layer 3 Compro Plugin Verification Suite ---');
 
+// Offline for tests: skip live web image search so the suite stays hermetic
+// and does not burn Openverse anonymous rate limits (20/min).
+const testEnv = { ...process.env, COMPRO_OFFLINE: '1' };
+
 for (const script of testScripts) {
   const scriptPath = path.join(__dirname, script);
   console.log(`\n[RUN] ${script}...`);
   try {
-    const output = execSync(`node "${scriptPath}"`, { encoding: 'utf-8' });
+    const output = execSync(`node "${scriptPath}"`, { encoding: 'utf-8', env: testEnv });
     process.stdout.write(output);
   } catch (err) {
     console.error(`[FAIL] ${script}`);

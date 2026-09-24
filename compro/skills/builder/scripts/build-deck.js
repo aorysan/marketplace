@@ -155,7 +155,8 @@ function splitDenseSlides(slides) {
 // Editorial card parser: "**Bold.** body" bullet cards become { title, desc }, with an
 // intro-text capture and a paragraph fallback when no bullet cards exist.
 function parseEditorialCards(content) {
-  const lines = content.replace(/<!--[\s\S]*?-->/g, '').split('\n').map(l => l.trim()).filter(Boolean);
+  const stripped = String(content || '').replace(/<!--[\s\S]*?-->/g, '');
+  const lines = stripped.split('\n').map(l => l.trim()).filter(Boolean);
   let introText = '';
   const cards = [];
 
@@ -177,18 +178,19 @@ function parseEditorialCards(content) {
           cards.push({ title: text.slice(0, 40), desc: text });
         }
       }
-    } else if (!introText && !line.startsWith('#') && !line.startsWith('Tagline:')) {
+    } else if (!introText && !line.startsWith('#') && !line.startsWith('Tagline:') && !line.startsWith('|')) {
       introText = line;
     }
   }
 
-  // Fallback: if no bullet cards found, treat non-empty paragraphs as cards
+  // Fallback: non-table paragraphs only (tables are handled by archetype renderers;
+  // raw pipe rows / image comments must never become truncated card titles).
   if (cards.length === 0 && lines.length > 0) {
-    const paragraphs = content.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+    const paragraphs = stripped.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
     for (const p of paragraphs) {
-      if (!p.startsWith('Tagline:') && p !== introText) {
-        cards.push({ title: p.slice(0, 35) + '...', desc: p });
-      }
+      if (p.startsWith('Tagline:') || p === introText) continue;
+      if (p.startsWith('|') || p.startsWith('#')) continue;
+      cards.push({ title: p.slice(0, 35) + '...', desc: p });
     }
   }
 
@@ -418,36 +420,69 @@ function pickFromPoolDistinct(pool, index, slug, assetsDir, slot, picked) {
   return overflow;
 }
 
-async function acquireSlotImage({ slot, query, keywords, index, slug, assetsDir, budget, pickedUrls }) {
+async function acquireSlotImage({ slot, query, keywords, title, index, slug, assetsDir, budget, pickedUrls }) {
   const started = Date.now();
   const elapsed = () => Date.now() - started;
   const destJpg = path.join(assetsDir, `slide-${index + 1}-${slot}.jpg`);
+  const destSvg = destJpg.replace(/\.jpe?g$/i, '.svg');
   // Idempotency first (existing valid file wins, any tier)
   if (fs.existsSync(destJpg) && fs.statSync(destJpg).size > 1024) {
     return { path: destJpg, tier: 'cached', elapsedMs: elapsed() };
   }
+  if (fs.existsSync(destSvg) && fs.statSync(destSvg).size > 100) {
+    return { path: destSvg, tier: 'cached', elapsedMs: elapsed() };
+  }
   const slotConfig = (imageFetcher.SLOT_MAP && imageFetcher.SLOT_MAP[slot]) || { category: 'architecture-portrait', orientation: 'portrait', fallback: `${slot}-fallback.svg` };
   const pool = imageFetcher.CURATED_IMAGE_CATALOG[slotConfig.category] || imageFetcher.CURATED_IMAGE_CATALOG['architecture-portrait'];
-  // Tier 1: distinct pick from category pool (round-robin by slide index + slug hash)
-  // Build-deadline gate (spec §5: 15 s total asset budget): when the caller threads
-  // budget.deadline through, gate on the build deadline instead of the per-slot
-  // elapsed() check; the elapsed() fallback only serves direct callers without one.
-  if (budget?.deadline != null ? Date.now() < budget.deadline : elapsed() < budget.ms) {
+  const hasBudget = () => (budget?.deadline != null ? Date.now() < budget.deadline : elapsed() < (budget?.ms || 15000));
+  const offline = process.env.COMPRO_OFFLINE === '1';
+
+  // Tier 1a: real web image search (Openverse, keyless) from keywords/query/title
+  if (!offline && hasBudget()) {
+    const searchQuery = imageFetcher.buildWebSearchQuery({ keywords, query, title, slot });
+    if (searchQuery) {
+      try {
+        const hit = await imageFetcher.fetchWebSearchImage({
+          searchQuery,
+          destPath: destJpg,
+          orientation: slotConfig.orientation,
+          timeoutMs: 4000,
+          picked: pickedUrls,
+          slot
+        });
+        if (hit && fs.existsSync(hit) && fs.statSync(hit).size > 1024) {
+          return { path: hit, tier: 'search', query: searchQuery, elapsedMs: elapsed() };
+        }
+      } catch (e) { console.warn(`[WARN] Tier 1a web search failed for slide ${index + 1}: ${e.message}`); }
+    }
+  }
+
+  // Tier 1b: curated catalog + Picsum (no SVG here — let lower tiers decide)
+  if (hasBudget()) {
     try {
       const picked = pickFromPoolDistinct(pool, index, slug, assetsDir, slot, pickedUrls);
-      await imageFetcher.fetchImageWithFallback({ category: slotConfig.category, destPath: destJpg, slot, _forceUrl: picked });
-      return { path: destJpg, tier: 'search', elapsedMs: elapsed() };
-    } catch (e) { console.warn(`[WARN] Tier 1 search failed for slide ${index + 1}: ${e.message}`); }
+      const out = await imageFetcher.fetchImageWithFallback({
+        category: slotConfig.category,
+        destPath: destJpg,
+        slot,
+        _forceUrl: picked,
+        allowSvgFallback: false
+      });
+      if (out && /\.jpe?g$/i.test(out) && fs.existsSync(out) && fs.statSync(out).size > 1024) {
+        return { path: out, tier: 'catalog', elapsedMs: elapsed() };
+      }
+    } catch (e) { console.warn(`[WARN] Tier 1b catalog failed for slide ${index + 1}: ${e.message}`); }
   }
+
   // Tier 2: pollinations generation (5 s strict), skipped when budget exhausted
-  // (same build-deadline gate as Tier 1; elapsed() fallback for direct callers).
-  if (query && (budget?.deadline != null ? Date.now() < budget.deadline : elapsed() < budget.ms)) {
+  if (query && hasBudget()) {
     try {
       const landscape = slotConfig.orientation === 'landscape';
       await imageFetcher.fetchGeneratedImage(query, destJpg, { width: landscape ? 1600 : 800, height: landscape ? 900 : 1200, timeoutMs: 5000 });
-      if (fs.statSync(destJpg).size > 1024) return { path: destJpg, tier: 'generate', elapsedMs: elapsed() };
+      if (fs.existsSync(destJpg) && fs.statSync(destJpg).size > 1024) return { path: destJpg, tier: 'generate', elapsedMs: elapsed() };
     } catch (e) { console.warn(`[WARN] Tier 2 generate failed for slide ${index + 1}: ${e.message}`); }
   }
+
   // Tier 3: local SVG fallback (never broken)
   const fallbackFile = slotConfig.fallback || `${slot}-fallback.svg`;
   let localFallback = path.join(__dirname, '..', 'templates', 'assets', 'fallback', fallbackFile);
@@ -733,12 +768,16 @@ async function runMain(customArgs) {
   // 5b. Wire slide image downloads inside build lifecycle with fallback handling
   // Total asset budget (spec §5, binding): ONE build-level deadline shared by all
   // slots via acquireSlotImage — never a per-slot elapsed() window.
-  const budget = { ms: 15000, deadline: Date.now() + 15000 };
+  // Web search needs a bit more headroom than the old catalog-only 15 s path.
+  const offlineAssets = process.env.COMPRO_OFFLINE === '1';
+  const budgetMs = Number(process.env.COMPRO_ASSET_BUDGET_MS) || (offlineAssets ? 15000 : 25000);
+  const budget = { ms: budgetMs, deadline: Date.now() + budgetMs };
   const pickedUrls = new Set();
   const assetsStart = Date.now();
-  const tierCounts = { search: 0, generate: 0, svg: 0, cached: 0 };
-  for (let i = 0; i < slides.length; i++) {
-    const s = slides[i];
+  const tierCounts = { search: 0, catalog: 0, generate: 0, svg: 0, cached: 0 };
+  // Parallel acquisition: web search is latency-bound; sequential 9×4 s would
+  // blow the shared deadline. Shared Set/Map are safe under JS single-thread.
+  await Promise.all(slides.map(async (s, i) => {
     const directive = parseImageDirective(s.content || '');
     let slot;
     let query = '';
@@ -751,15 +790,31 @@ async function runMain(customArgs) {
       slot = resolveSlideSlot(s, i, slides.length);
     }
     try {
-      const result = await acquireSlotImage({ slot, query, keywords, index: i, slug, assetsDir: ASSETS_DIR, budget, pickedUrls });
+      const result = await acquireSlotImage({
+        slot,
+        query,
+        keywords,
+        title: s.title || s.h1 || '',
+        index: i,
+        slug,
+        assetsDir: ASSETS_DIR,
+        budget,
+        pickedUrls
+      });
       tierCounts[result.tier] = (tierCounts[result.tier] || 0) + 1;
-      console.log(`[ASSETS] slide ${i + 1} slot=${slot} tier=${result.tier}`);
+      const extra = result.query ? ` q="${result.query}"` : '';
+      console.log(`[ASSETS] slide ${i + 1} slot=${slot} tier=${result.tier}${extra}`);
     } catch (err) {
       console.warn(`[WARN] Failed downloading image for slide ${i + 1}: ${err.message}`);
       tierCounts.svg = (tierCounts.svg || 0) + 1;
     }
-  }
-  console.log(`[ASSETS] elapsed=${((Date.now() - assetsStart) / 1000).toFixed(1)}s tiers(search=${tierCounts.search || 0},generate=${tierCounts.generate || 0},svg=${tierCounts.svg || 0},cached=${tierCounts.cached || 0})`);
+  }));
+  console.log(
+    `[ASSETS] elapsed=${((Date.now() - assetsStart) / 1000).toFixed(1)}s tiers(` +
+    `search=${tierCounts.search || 0},catalog=${tierCounts.catalog || 0},` +
+    `generate=${tierCounts.generate || 0},svg=${tierCounts.svg || 0},cached=${tierCounts.cached || 0})` +
+    (offlineAssets ? ' offline=1' : '')
+  );
 
   // 6. Convert slides into HTML based on detected archetypes
   const slideHtml = slides.map((s, idx) => {

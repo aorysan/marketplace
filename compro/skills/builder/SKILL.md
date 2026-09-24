@@ -581,28 +581,26 @@ Builder memetakan setiap bagian Markdown secara otomatis ke salah satu dari 6 ar
 
 ### Imagery Guidelines & Asset Pipeline Slots
 
-Pipeline aset mengambil foto resolusi tinggi langsung dari **Curated Direct CDN Unsplash** (`images.unsplash.com`) tanpa memerlukan API Key:
+Pipeline aset mencari gambar yang cocok untuk tiap slide — **tanpa asset diawal pun build tetap jalan**:
 
 1. **Deterministic Slot Mapping:**
-   Membaca tag komentar `<!-- image: <slot> -- <prompt> -->` pada draf Markdown dan memetakan ke 6 slot visual cinematic:
-   - `hero` (`cover`): Foto lanskap/arsitektur berskala sinematik (1920×1080) dengan pencahayaan dramatis.
-   - `problem` (`problem`): Foto portrait struktural atau lingkungan industrial monokromatis/grayscale (800×1200).
-   - `macro` (`product`): Foto makro close-up produk, hardware, atau instrumen presisi tinggi (1200×1200).
-   - `hands` (`features`): Foto vertikal interaksi pengguna, pengoperasian sistem, atau craftsmanship (800×1200).
-   - `viewfinder` (`usp`): Foto viewfinder kamera, optik, atau horizon gelap (1920×1080) untuk background glassmorphism.
-   - `lens` (`pricing`): Foto vertikal optik, packaging produk, atau industrial rail (800×1200).
+   Membaca tag komentar `<!-- image: <slot> -- query: ... ; keywords: ... ; style: photo -->` pada draf Markdown dan memetakan ke slot visual cinematic (`hero`, `problem`, `macro`/`solution`, `hands`/`features`/`services`, `viewfinder`/`usp`, `lens`/`pricing`, plus `differentiator`, `metrics`, `ecosystem`, `closing`).
 
-2. **Cascading Fallback:**
-   Direct Unsplash CDN ➔ Lorem Picsum CDN (`https://picsum.photos/`) ➔ Aset SVG vektor geometris lokal (`templates/assets/fallback/`).
+2. **Tier cascade (urutan pencarian):**
+   - **`search`** — query web image search **Openverse** (keyless, `api.openverse.org`) memakai `keywords` → `query` → `judul slide + slot`. Hasil diurutkan per orientasi slot (portrait/landscape). Bisa dimatikan dengan env `COMPRO_OFFLINE=1`.
+   - **`catalog`** — fallback katalog Unsplash hardcode 10 URL + Picsum.
+   - **`generate`** — Pollinations AI dari `query:` (kalau search+catalog gagal).
+   - **`svg`** — fallback vektor lokal (`templates/assets/fallback/`), deck tidak pernah broken.
+   - **`cached`** — file `assets/slide-N-slot.jpg|svg` sudah valid, skip.
 
 3. **Micro-Interactions & Motion Dynamics:**
    - **Hairline Progress Bar:** Garis progress 3px di bagian atas panggung yang terisi secara halus (`transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1)`) dari 0% ke 100% mengikuti slide aktif.
-   - **Dot Navigation:** Lingkaran navigasi di footer rail dengan indikator slide aktif berdenyut aksen vermilion (`background: var(--accent)`).
+   - **Dot Navigation:** Lingkaran navigasi di footer rail dengan slide aktif berdenyut aksen vermilion (`background: var(--accent)`).
    - **Numbered List & Row Hover:** Nomor raksasa `01`–`04` pada slide features dan problem bertransisi dari `#e4e4e4` menjadi `#ff3b1d` dengan background baris berubah menjadi `#fafafa` saat disentuh kursor.
-   - **Elevated Featured Tier:** Kartu paket unggulan pada slide pricing memiliki kontras inversi visual (`#0a0a0a`) yang dominan dan tombol CTA aksen vermilion terang.
+   - **Elevated Featured Tier:** Kartu paket unggulan pada slide pricing memiliki kontras invers visual (`#0a0a0a`) yang dominan dan tombol CTA aksen vermilion terang.
 
 4. **Idempotensi & Offline Safety:**
-   Gambar disimpan permanen di `compros/<slug>/assets/slide-*.jpg` (> 10 KB). Jika sudah ada, builder melewati proses download.
+   Gambar disimpan permanen di `compros/<slug>/assets/slide-*.jpg` (> 1 KB) atau `slide-*.svg`. Jika sudah ada, builder melewati proses download. `COMPRO_OFFLINE=1` melewati web search (pakai catalog). Budget aset default 25 s (override: `COMPRO_ASSET_BUDGET_MS`).
 
 ### Git Worktree & Workspace Sync Guarantee
 
