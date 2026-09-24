@@ -1,6 +1,6 @@
 {
   "name": "sitegen",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Master orchestrator for end-to-end website generation from PDF intake to deployment. Handles intake, generation, SEO validation, debugging, and deployment.",
   "skills": [
     {
