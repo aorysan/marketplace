@@ -31,7 +31,7 @@ Safety Valve:
 - 1: Major planned sections missing
 
 **Consistency** (cross-page):
-- 5: Terminology, tone, formatting uniform
+- 5: Terminology, tone, formatting uniform across all sections, consistently written in Bahasa Indonesia
 - 3: Minor inconsistencies
 - 1: Same concept different names, mixed tone, inconsistent formatting
 
@@ -56,9 +56,9 @@ Safety Valve:
 - 1: Documentation describes patterns not found in the codebase, or misrepresents the architecture
 
 **Business Alignment** (matches business policies and user journeys):
-- 5: User journeys, state machines, and business policies are logically sound, accurately extracted, and well-represented
+- 5: User journeys, state machines, and business policies are logically sound, accurately extracted, and well-represented; Feature Catalog strictly contains functional business capabilities without UI styling/layout leakage
 - 3: Minor logical gaps in user journeys or missing some business policies
-- 1: State machines or user journeys make no business sense, or business policies are entirely ignored
+- 1: State machines or user journeys make no business sense, or business policies are entirely ignored, or Feature Catalog misclassifies UI styling/primitives as product features
 
 **Scannability** (density and structure):
 - 5: High density throughout; processes/endpoints/architecture rendered as cards, grids, or tables; paragraphs ≤1 sentence; instantly scannable headings

@@ -8,11 +8,13 @@ Extracted knowledge MUST be categorized into archetype-specific files under `[OU
 4. `state-and-data.md`: Global and local state stores, data models, hooks, selectors, persistence.
 5. `design-system.md`: Reusable UI primitives, components inventory, design tokens, accessibility.
 6. `api-patterns.md`: API client patterns, endpoints, hooks, request/response models.
-7. `features-and-journeys.md`: Feature catalog, personas, end-to-end task flows, requirements, user interactions.
+7. `features-and-journeys.md`: Feature catalog, personas, end-to-end task flows, requirements, user interactions. (MUST strictly represent functional business capabilities; NEVER include UI styles, layout patterns, or UI primitives like toasts or dialogs—those belong in `design-system.md` or `architecture.md`).
 8. `business-policies.md`: Business rules, validation policies, SLAs, compliance, shared concerns (auth, logging, error handling), domain glossary.
 9. `constraints-and-limits.md`: Technical limitations, performance budgets, version constraints, security, known issues.
 10. `workflows.md`: Step-by-step procedures, execution flows, CI/CD, deployment, release.
 11. `unanswered.md`: Gaps, contradictions, ambiguities, missing information.
+
+*Language Standard: All extracted documentation content, summaries, and explanations MUST be written in Bahasa Indonesia, retaining technical identifiers and code symbols in backticks.*
 
 Each file MUST contain YAML frontmatter:
 

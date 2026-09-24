@@ -80,6 +80,13 @@ Content headings normalized to start at H2 (`##`). Manifest format: table with S
 8. `business-policies.md` — Business rules, validation policies, cross-cutting concerns, domain glossary
 9. `constraints-and-limits.md` — Technical limits, performance budgets, security, known issues
 
+**Feature Boundary & Negative Constraints:**
+- Features MUST represent functional product capabilities and business workflows (e.g., Content Planner, Video Generation Pipeline, Auth, Sheets Sync, AI Copilot).
+- NEVER classify UI styling (glassmorphism, color themes), UI layout structures (bento grid, sidecar split layout), or generic UI primitives (toasts, modals, buttons) as features—even if the source README or documentation lists them under 'features'. Direct UI styles, tokens, and primitives strictly to `design-system.md` or `architecture.md`.
+
+**Language (Bahasa Indonesia):**
+- All extracted summaries, knowledge content, and the documentation plan MUST be written in **Bahasa Indonesia** (clear, professional, client-ready Indonesian). Preserve code identifiers, API endpoints, variable names, and technical terms in code formatting or backticks.
+
 **Conflict Handling:** Keep both facts, flag in `unanswered.md`.
 **Confidence:** `high` (explicit), `medium` (inferred), `low` (ambiguous).
 **Edge Cases:** Uncategorized → `unanswered.md`; thin sources → min `product.md` + `unanswered.md`; empty → skip, log.

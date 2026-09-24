@@ -33,9 +33,9 @@ Note: Source citations (`> **Source:**`) are intentionally omitted from user-fac
 - 1: Major planned sections missing
 
 **Consistency** (internal consistency):
-- 5: Terminology, tone, formatting uniform across all sections
+- 5: Terminology, tone, formatting uniform across all sections, consistently in Bahasa Indonesia
 - 3: Minor inconsistencies
-- 1: Same concept different names, mixed tone, inconsistent formatting
+- 1: Same concept different names, mixed tone, inconsistent formatting, or mixed languages
 
 **Structure** (heading/link integrity):
 - 5: Heading levels incremental, all internal section links valid, no orphans
@@ -58,9 +58,9 @@ Note: Source citations (`> **Source:**`) are intentionally omitted from user-fac
 - 1: Documentation describes patterns not found in the codebase, or misrepresents the architecture
 
 **Business Alignment** (matches business policies and user journeys):
-- 5: User journeys, state machines, and business policies are logically sound, accurately extracted, and well-represented (user-journeys.md, business-policies.md, state-management.md / data-models.md)
+- 5: User journeys, state machines, and business policies are logically sound, accurately extracted, and well-represented (user-journeys.md, business-policies.md, state-management.md / data-models.md); Feature Catalog strictly contains functional business capabilities without UI styling/layout leakage
 - 3: Minor logical gaps in user journeys or missing some business policies
-- 1: State machines or user journeys make no business sense, or business policies are entirely ignored
+- 1: State machines or user journeys make no business sense, or business policies are entirely ignored, or Feature Catalog misclassifies UI styling/primitives as product features
 
 **Scannability** (density and structure):
 - 5: High density throughout; processes/endpoints/architecture rendered as cards, grids, or tables; paragraphs ≤1 sentence; instantly scannable headings
@@ -80,6 +80,8 @@ Note: Source citations (`> **Source:**`) are intentionally omitted from user-fac
 ## Issue Classification
 
 - **Critical**: Factual error, missing entire planned section, broken navigation, TypeScript errors, architecture violations
+- **Critical**: Feature catalog violations — UI styling (e.g. glassmorphism), layout patterns (e.g. bento grids), or UI primitives (e.g. toasts) categorized as features instead of in design system
+- **Critical**: Language violations — Documentation written in English or mixed language instead of Bahasa Indonesia
 - **Critical**: Dense prose — any paragraph exceeding 1 sentence or wall-of-text blocks
 - **Critical**: Brevity violations — full TypeScript interface/type dumps, localStorage/env variable dumps, numbering prose after diagrams, or total length exceeding 700 lines
 - **Minor**: Typo, slightly inconsistent tone, suboptimal heading level, document length between 500-700 lines

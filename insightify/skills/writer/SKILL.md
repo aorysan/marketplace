@@ -17,9 +17,10 @@ description: Stage 2 - Execute documentation plan by generating a single compreh
 ## Writing Style
 
 - Tone: Client-friendly and business-oriented. Focus on "What it does" and "Business Value" (What & Why).
+- Language: All generated documentation MUST be written in **Bahasa Indonesia** (clear, professional, client-ready Indonesian). Standard technical terms, variable/function names, component names, and code identifiers remain in their original code format (e.g., `ClientLayout`, `localStorage`, `server actions`).
 - Technical Depth: Avoid excessive technical jargon or deep code implementation details (How). Keep explanations short, concise, and accessible. Even for technical categories (like state management or routing), translate the explanation to be understandable for a client.
-- Person: second person ("you") for instructions, third person for concepts
-- Voice: active voice preferred ("Run the command" not "The command should be run")
+- Person: second person ("you" / "Anda") for instructions, third person for concepts
+- Voice: active voice preferred ("Jalankan perintah" / "Run the command")
 - Avoid jargon without explanation — if a term is in `knowledge/business-policies.md` (glossary), link or define it on first use
 - **NO Source Citations in Final Documentation**: Do NOT output `> **Source:** ...` or any blockquote source citations in the rendered markdown documentation. The user-facing documentation must be clean, readable, and client-ready. Source citations belong strictly to the internal extraction knowledge base (`.insightify/knowledge/`).
 
@@ -27,6 +28,7 @@ description: Stage 2 - Execute documentation plan by generating a single compreh
 
 - **Target Length**: The generated documentation must be concise, targeting a maximum of ~500 lines total.
 - **Product-Level Abstraction**: Focus strictly on product and business capabilities. NO full TypeScript interface/type dumps (summarize key fields only); NO localStorage or environment variable dumps.
+- **Pure Functional Feature Catalog**: The Feature Catalog MUST strictly contain functional business capabilities (e.g. Content Planner, Video Pipeline, Auth, Sheets Sync, AI Copilot). Filter out and exclude any UI visual styling (glassmorphism, color schemes), layout structures (bento grids, split-screen sidebars), or generic UI components (toasts, modals). Ensure those items are documented under Design System or Architecture, never in the Feature Catalog.
 - **No Redundant Sections**: Do NOT duplicate architecture, configuration, or data definitions across sections. Use anchor links (`[Section Title](#section-title)`) to cross-reference existing sections.
 - **Concise Diagram Explanations**: Mermaid flows must be followed by at most 1 sentence per step or node—avoid long narrative paragraphs explaining diagrams.
 - **Shallow Directory Trees**: Directory structures must be limited strictly to the top 2 levels max.
