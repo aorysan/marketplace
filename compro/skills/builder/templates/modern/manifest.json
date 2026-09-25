@@ -7,7 +7,10 @@
     "product",
     "features",
     "usp",
-    "pricing"
+    "pricing",
+    "metrics",
+    "ecosystem",
+    "closing"
   ],
   "slots": {
     "cover": "hero",
@@ -15,7 +18,10 @@
     "product": "macro",
     "features": "hands",
     "usp": "viewfinder",
-    "pricing": "lens"
+    "pricing": "lens",
+    "metrics": "metrics",
+    "ecosystem": "ecosystem",
+    "closing": "closing"
   },
   "cssFile": "theme.css",
   "shellFile": "shell.html",

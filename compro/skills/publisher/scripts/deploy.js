@@ -90,14 +90,16 @@ async function verifyLiveUrl(url) {
 
   let output;
   try {
-    // On Windows the npm-global `vercel` is a .cmd shim that cannot be
-    // spawned directly (ENOENT). `cmd.exe /c` runs it, and args stay
-    // separate argv elements (no shell-string concatenation => no
-    // injection, space-safe). The positional FOLDER arg already targets
-    // the folder, so no cwd override is needed.
-    const result = spawnSync('cmd.exe', ['/c', 'vercel', ...args], {
-      encoding: 'utf-8',
-    });
+    // On Windows the npm-global `vercel` is a .cmd shim that cannot be spawned
+    // directly (ENOENT), so it must go through `cmd.exe /c`. On POSIX the
+    // binary is directly executable — hardcoding cmd.exe here made every
+    // deploy fail with ENOENT on macOS/Linux. Args stay separate argv elements
+    // in both branches (no shell-string concatenation => no injection,
+    // space-safe). The positional FOLDER arg already targets the folder, so no
+    // cwd override is needed.
+    const result = process.platform === 'win32'
+      ? spawnSync('cmd.exe', ['/c', 'vercel', ...args], { encoding: 'utf-8' })
+      : spawnSync('vercel', args, { encoding: 'utf-8' });
     if (result.error) throw result.error;
     if (result.status !== 0) {
       throw new Error((result.stderr || result.stdout || '').trim() || 'vercel exited with an error');

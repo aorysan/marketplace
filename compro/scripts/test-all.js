@@ -3,6 +3,7 @@ const path = require('path');
 
 const testScripts = [
   'validate-manifest.js',
+  'test-cinematic-classifier.js',
   'test-writer-schema.js',
   'test-reviewer-schema.js',
   'test-builder-inlining.js',
@@ -15,6 +16,7 @@ const testScripts = [
   'test-modern-theme-files.js',
   'test-modern-render.js',
   'test-modern-golden.js',
+  'test-cli-entry.js',
   'test-density-split.js',
   'test-density-e2e.js'
 ];

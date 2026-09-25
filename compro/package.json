@@ -1,0 +1,15 @@
+{
+  "name": "compro-plugin",
+  "version": "2.8.0",
+  "private": true,
+  "description": "Layer 3 Company Profile Multi-Agent Plugin — Aperture Cinematic slide deck pipeline & Vercel deployment",
+  "license": "MIT",
+  "scripts": {
+    "test": "node scripts/test-all.js",
+    "build": "node skills/builder/scripts/build-deck.js",
+    "validate": "node scripts/validate-manifest.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

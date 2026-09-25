@@ -132,7 +132,8 @@ The Aperture Cinematic presentation shell enforces structured 12-column and 50/5
 | `product` | 50% : 50% | 2-column balanced split | Left: macro photo with floating glass badge. Right: headline, lead prose, 2x2 spec matrix stat block |
 | `features` | 3-col : 9-col | Rail image + wide list | Left: rail photo with 90° rotated technical caption rail. Right: 4 feature rows with giant numbers `01`–`04` |
 | `usp` | 3-Column Trio | Centered dark viewfinder canvas | 3 frosted glass cards (`backdrop-filter: blur(12px)`), hairline white border, kicker, counter, giant stat |
-| `pricing` | 3-col : 9-col | Image rail + tier matrix | Left: rail photo with watermark ("Ship it."). Right: 3-column pricing matrix, inverted featured tier with vermilion CTA |
+| `pricing` | 3-col : 9-col | Image rail + tier matrix | Left: rail photo with watermark ("Siap mulai."). Right: 3-column pricing matrix, inverted featured tier with vermilion CTA |
+| `closing` | 3-col : 9-col | Image rail + contact matrix | Left: rail photo with rotated "Langkah berikutnya" caption. Right: headline, `.closing-notes` list, 2-column `.closing-contacts` grid, vermilion `.closing-cta` |
 
 ---
 
@@ -196,6 +197,14 @@ The presentation shell and slide renderers utilize standardized CSS classes:
 - `.slide-features`: Vertical rail image and giant numbered feature list slide.
 - `.slide-usp`: Dark viewfinder slide with frosted glass cards.
 - `.slide-pricing`: Vertical image rail with 3-column tier matrix.
+- `.slide-closing`: Image rail + contact matrix & CTA (the 7th archetype).
+
+### 6.2.1 Archetype Sub-Classes
+- `.cover-stats` / `.cover-stat` / `.cover-stat-value` / `.cover-stat-label`: Hero key-stat strip (slide 1).
+- `.stat-cell.no-metric`: Degraded spec-matrix cell (no figure in the bullet).
+- `.closing-desc`, `.closing-notes`, `.closing-contacts`, `.closing-actions`: Closing body blocks.
+- `.contact-row` / `.contact-icon` / `.contact-meta` / `.contact-label` / `.contact-value`: Contact matrix row.
+- `.closing-cta`: Solid vermilion call-to-action (rendered as `<a href>` only when real contact data exists, otherwise `<button>`).
 
 ### 6.3 Content & Typography Classes
 - `.mono-kicker`: Monospaced uppercase category kicker in `JetBrains Mono`.

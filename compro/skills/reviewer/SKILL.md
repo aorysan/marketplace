@@ -37,20 +37,32 @@ Memastikan draf company profile berkualitas tinggi, bebas kesalahan faktual, ses
    - Jika input docs TIDAK menyediakan kontak tertentu:
      - Gunakan placeholder eksplisit: `[Nomor WhatsApp]`, `[Email Resmi]`, `[Alamat Kantor]`
      - Tandai di review report: "Kontak X belum tersedia di input docs — menggunakan placeholder"
-   - **DILARANG KERAS** mengarang/memfabrikasi nomor telepon, email, atau alamat yang tidak ada di dokumen sumber. Ini merupakan pelanggaran Zero Hallucination yang serius.
+     - Builder akan merender placeholder tersebut sebagai penanda `Belum tersedia`
+       (bukan kurung siku mentah, bukan data demo) dan mencatatnya di
+       `reports/build.log` bagian `Contact Placeholders`. Deck tetap lolos audit
+       tetapi tetap jujur kepada audiens.
+   - **DILARANG KERAS** mengarang/memfabrikasi nomor telepon, email, atau alamat yang tidak ada di dokumen sumber. Ini merupakan pelanggaran Zero Hallucination yang serius — termasuk seolah-olah "mengisi" placeholder dengan nilai demo yang terlihat nyata.
 7. **Template-Consumability** (template-consumability — output harus langsung bisa
    dirender tema builder `modern` tanpa editing manual):
    - Setiap slide `# ` membawa SATU image directive valid
      (`<!-- image: <slot> -- query: ...; keywords: ...; style: photo -->`).
-     image directive hilang/format salah → REVISION_REQUIRED.
+     Slot WAJIB salah satu nama di `imageFetcher.SLOT_MAP` (disarankan: `hero`,
+     `problem`, `solution`, `services`, `ecosystem`, `metrics`, `differentiator`,
+     `pricing`, `closing`) — slot di luar daftar itu jatuh ke default `hero` dan
+     kehilangan topik. image directive hilang/format salah → REVISION_REQUIRED.
+   - contact/CTA slide: slide kontak terakhir WAJIB berjudul dengan kosakata
+     kontak (`Hubungi Kami`/`Kontak`/`Terima Kasih`) agar dipetakan ke arketipe
+     `closing`, dan tidak boleh membawa angka metrik. Judul kontak yang dibiarkan
+     netral (mis. "Paket & Kerjasama") → REVISION_REQUIRED.
    - pricing rows: tabel pricing WAJIB tepat 3 baris data (`| Tier | Harga | Fitur |`,
      baris tengah = Pro). Bukan 3 baris parseable → REVISION_REQUIRED.
    - differentiator columns: tabel pembanding WAJIB 4–5 kolom dengan header kolom menggunakan label kategori/arketipe generik (misal `Solusi Konvensional`, `Agency Tradisional`, `Software Generik`, `Pendekatan Manual`). Header dan isi sel DILARANG menyebut nama merek/brand kompetitor spesifik (Zero Competitor Leak). Kurang dari 4 kolom atau menyebut nama merek kompetitor spesifik → REVISION_REQUIRED.
-   - big-number regex: setiap bullet metrik WAJIB cocok dengan big-number regex
-     (`%`, `:`, `Rp`, `vX` — misal `~90%`, `20:1`, `Rp10rb`) agar tidak jatuh ke
-     default `100%`. Tidak cocok → REVISION_REQUIRED, kecuali bullet
-     struktural/prosa yang tidak membawa klaim metrik (misal label pipeline
-     seperti `3-tier`).
+   - big-number regex: token bold pada bullet metrik dianggap metrik hanya bila
+     seluruh tokennya berbentuk figur (`1×`, `5–20`, `~90%`, `20:1`, `3-tier`,
+     `< Rp100rb`, `0.4s`). Angka yang hanya muncul di narasi (misal "ritme 5–20
+     video/bulan") TIDAK dianggap metrik oleh builder. Klaim metrik yang tidak
+     berbentuk figur → REVISION_REQUIRED, kecuali bullet struktural/prosa yang
+     memang tidak membawa klaim metrik.
    - honesty callout: baris `**Intinya:** ...` WAJIB ada bila kompetitor menang di
      satu aspek (misal syarat setup GPU 8 GB). honesty callout hilang padahal ada
      aspek yang dimenangkan kompetitor → REVISION_REQUIRED.

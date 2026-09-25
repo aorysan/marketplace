@@ -28,6 +28,19 @@ Pilihannya dulu hanya dua: bayar mahal, atau puas dengan hasil generik. Tidak pe
 
 
 
+# Produk Unggulan
+
+Venturo Pro menyatukan seluruh alur produksi video ber-brand dalam satu aplikasi desktop.
+
+- **8GB** — VRAM minimum agar pipeline lokal berjalan lancar
+- **5–20** — video per bulan pada ritme creator mikro
+- **1×** — pengisian Brand DNA, berlaku untuk semua video
+- **1080p** — resolusi ekspor bawaan tanpa biaya tambahan
+
+<!-- image: services -- query: desktop workstation rendering a local video pipeline ; keywords: workstation, desktop, rendering, pipeline ; style: photo -->
+
+
+
 # Solusi & Nilai Tambah
 
 Satu tempat: masukkan Brand DNA sekali, hasilkan video pendek ber-brand konsisten dengan biaya yang terprediksi.

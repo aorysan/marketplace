@@ -18,9 +18,22 @@ const expectedExports = [
   'renderFeatures',
   'renderUsp',
   'renderPricing',
+  'renderMetrics',
+  'renderEcosystem',
+  'renderClosing',
   'renderCinematicSlide',
   'renderModernSlide'
 ];
+// Legacy multi-theme renderers were removed with the template consolidation:
+// keeping them around while their CSS is gone silently produced unstyled slides.
+for (const deadName of [
+  'renderModernHero', 'renderModernWelcome', 'renderModernServices', 'renderFeatureCards',
+  'renderFeatureSplit', 'renderModernEcosystem', 'renderModernMetrics',
+  'renderModernDifferentiator', 'renderModernPricing', 'renderModernClosing',
+  'renderModernSocialProof'
+]) {
+  assert(modern[deadName] === undefined, `Legacy renderer ${deadName} must not be exported (dead code)`);
+}
 for (const fnName of expectedExports) {
   assert(typeof modern[fnName] === 'function', `Export ${fnName} must be a function`);
 }
@@ -224,9 +237,9 @@ for (const fnName of expectedExports) {
   assert(html.includes('overlay-gradient'), 'renderPricing: overlay-gradient');
   assert(html.includes('rail-content'), 'renderPricing: rail-content');
   assert(html.includes('rail-title'), 'renderPricing: rail-title');
-  assert(html.includes('Ship it.'), 'renderPricing: Ship it. rail title');
+  assert(html.includes('Siap mulai.'), 'renderPricing: default rail title is Indonesian');
   assert(html.includes('rail-sub'), 'renderPricing: rail-sub');
-  assert(html.includes('Free delivery worldwide'), 'renderPricing: rail sub text');
+  assert(html.includes('Pendampingan dari awal'), 'renderPricing: default rail sub is Indonesian');
   assert(html.includes('<div class="content-col">'), 'renderPricing: content-col');
   assert(html.includes('Get yours'), 'renderPricing: kicker');
   assert(html.includes('Pick a configuration.'), 'renderPricing: headline');
@@ -250,7 +263,114 @@ for (const fnName of expectedExports) {
   assert(customAssetHtml.includes('src="https://example.com/pricing.jpg"'), 'renderPricing: accepts assetUrl as 3rd arg');
 }
 
-// 7. Test dispatcher renderCinematicSlide across all 6 archetypes
+// 7. Test renderClosing (7th archetype: CTA & contact)
+{
+  const slide = {
+    title: 'Hubungi Kami',
+    content: 'Dari template generik menuju produksi ber-brand konsisten.\n\n- **WhatsApp** : [Nomor WhatsApp]\n- **Email & Alamat** : [Email Resmi], [Alamat Kantor]'
+  };
+  const html = modern.renderClosing(slide, brand, 6, '', 7);
+  assert(html.includes('<article class="slide-item" id="slide-6">'), 'renderClosing: article container');
+  assert(html.includes('<div class="slide-closing">'), 'renderClosing: slide-closing class');
+  assert(html.includes('<div class="img-col">'), 'renderClosing: img-col');
+  assert(html.includes('rail-label'), 'renderClosing: rail-label');
+  assert(html.includes('Langkah berikutnya'), 'renderClosing: Indonesian default rail label');
+  assert(html.includes('mono-kicker'), 'renderClosing: kicker');
+  assert(html.includes('Hubungi kami'), 'renderClosing: Indonesian default kicker');
+  assert(html.includes('headline'), 'renderClosing: headline');
+  assert(html.includes('closing-desc'), 'renderClosing: desc');
+  assert(html.includes('closing-contacts'), 'renderClosing: contacts grid');
+  assert(html.includes('contact-row'), 'renderClosing: contact-row');
+  assert(html.includes('contact-label'), 'renderClosing: contact-label');
+  assert(html.includes('contact-value'), 'renderClosing: contact-value');
+  assert(html.includes('WhatsApp'), 'renderClosing: contact label WhatsApp');
+  // Contract: reviewer placeholders must never leak as raw brackets AND must
+  // never be replaced with fabricated phone numbers/e-mails (Zero-Hallucination).
+  assert(!/\[Nomor WhatsApp\]/.test(html), 'renderClosing: raw [Nomor WhatsApp] placeholder must not leak');
+  assert(!/\[Email Resmi\]|\[Alamat Kantor\]/.test(html), 'renderClosing: raw contact placeholders must not leak');
+  assert(!/\+62 812-9000-8899/.test(html), 'renderClosing: must not fabricate a phone number');
+  assert(!/contact@/.test(html), 'renderClosing: must not fabricate an e-mail address');
+  assert(html.includes('Belum tersedia'), 'renderClosing: unresolved contact renders the explicit marker');
+  assert(html.includes('closing-cta'), 'renderClosing: CTA present');
+  assert(!/<a class="closing-cta" href/.test(html), 'renderClosing: no fabricated href when no real contact was supplied');
+
+  // Real contact data in -> real link out (mailto), never invented
+  const linkedHtml = modern.renderClosing(
+    { title: 'Hubungi Kami', content: '- **Email** : halo@maju.co.id' }, brand, 6, '', 7);
+  assert(linkedHtml.includes('href="mailto:halo@maju.co.id"'), 'renderClosing: derives a mailto link from supplied data');
+
+  // Flexible assetUrl signature
+  const customAssetHtml = modern.renderClosing(slide, brand, 'https://example.com/closing.jpg');
+  assert(customAssetHtml.includes('src="https://example.com/closing.jpg"'), 'renderClosing: accepts assetUrl as 3rd arg');
+}
+
+// 8. Test renderMetrics (8th archetype: traction & proof band)
+// Native Aperture extension — the Figma export only shipped 6 pages, so this
+// layout was designed to match DESIGN_SYSTEM.md instead of being ported.
+{
+  const slide = {
+    title: 'Pencapaian & Bukti',
+    content: 'Unit economics yang sehat sudah tercapai di volume saat ini.\n\n- **~90%** — margin kotor per user\n- **20:1** — rasio LTV:CAC\n- **3-tier** — Free, Pro, Brand/Team\n\n**Intinya:** butuh GPU 8 GB awal.'
+  };
+  const html = modern.renderMetrics(slide, brand, 7, '', 9);
+  assert(html.includes('<article class="slide-item" id="slide-7">'), 'renderMetrics: article container');
+  assert(html.includes('<div class="slide-metrics">'), 'renderMetrics: slide-metrics class');
+  assert(html.includes('band-col'), 'renderMetrics: band-col');
+  assert(html.includes('metrics-band'), 'renderMetrics: metrics-band');
+  assert(html.includes('metric-cell'), 'renderMetrics: metric-cell');
+  assert(html.includes('metric-value'), 'renderMetrics: metric-value');
+  assert(html.includes('metric-label'), 'renderMetrics: metric-label');
+  assert(html.includes('~90%'), 'renderMetrics: renders the ~90% figure');
+  assert(html.includes('20:1'), 'renderMetrics: renders the 20:1 figure');
+  assert(html.includes('3-tier'), 'renderMetrics: renders the 3-tier token intact');
+  assert(!html.includes('>3:1<'), 'renderMetrics: must NOT misread 20:1 as the 3:1 narrative figure');
+  assert(html.includes('Validasi &amp; metrik'), 'renderMetrics: Indonesian default kicker (HTML-escaped)');
+  assert(html.includes('rail-label'), 'renderMetrics: rail-label over the figure band');
+  assert(html.includes('metrics-note'), 'renderMetrics: honesty note from the **Intinya:** line');
+  assert(html.includes('butuh GPU 8 GB awal.'), 'renderMetrics: honesty note keeps its text');
+
+  const customAssetHtml = modern.renderMetrics(slide, brand, 'https://example.com/metrics.jpg');
+  assert(customAssetHtml.includes('src="https://example.com/metrics.jpg"'), 'renderMetrics: accepts assetUrl as 3rd arg');
+
+  // Zero metrics -> empty band + warn, never an invented figure.
+  const emptyHtml = modern.renderMetrics({ title: 'Pencapaian', content: 'Tanpa bullet.' }, brand, 7, '', 9);
+  assert(!emptyHtml.includes('metric-value'), 'renderMetrics: zero metrics must NOT render an invented figure');
+}
+
+// 9. Test renderEcosystem (9th archetype: system map)
+// Nodes are { name, role } pairs; the layout must never invent structural
+// defaults when the draft carries no bullets.
+{
+  const slide = {
+    title: 'Arsitektur & Ekosistem',
+    content: 'Orkestrasi pipeline multi-AI; satu state menjaga konteks tetap utuh.\n\n- **Groq (chat)** — Percakapan copilot pengguna.\n- **Gemini (director)** — Struktur dan arahan produksi.\n- **Cloudflare (gambar)** — Opening still tiap video.\n- **ComfyUI (GPU lokal)** — Render video di komputermu.'
+  };
+  const html = modern.renderEcosystem(slide, brand, 6, '', 9);
+  assert(html.includes('<article class="slide-item" id="slide-6">'), 'renderEcosystem: article container');
+  assert(html.includes('<div class="slide-ecosystem">'), 'renderEcosystem: slide-ecosystem class');
+  assert(html.includes('<div class="img-col">'), 'renderEcosystem: img-col');
+  assert(html.includes('class="caption"'), 'renderEcosystem: caption');
+  assert(html.includes('Arsitektur sistem'), 'renderEcosystem: Indonesian default kicker');
+  assert(html.includes('ecosystem-grid'), 'renderEcosystem: ecosystem-grid');
+  assert(html.includes('ecosystem-node'), 'renderEcosystem: ecosystem-node');
+  assert(html.includes('node-index'), 'renderEcosystem: node-index');
+  assert(html.includes('node-name'), 'renderEcosystem: node-name');
+  assert(html.includes('node-role'), 'renderEcosystem: node-role');
+  assert(html.includes('Groq (chat)'), 'renderEcosystem: first node name');
+  assert(html.includes('Percakapan copilot pengguna.'), 'renderEcosystem: first node role');
+  assert(html.includes('ComfyUI (GPU lokal)'), 'renderEcosystem: fourth node rendered');
+  assert(html.includes('Orkestrasi pipeline multi-AI'), 'renderEcosystem: intro text becomes the desc');
+  assert(!html.includes('Node 1'), 'renderEcosystem: must NOT invent "Node 1" placeholder labels');
+
+  const customAssetHtml = modern.renderEcosystem(slide, brand, 'https://example.com/ecosystem.jpg');
+  assert(customAssetHtml.includes('src="https://example.com/ecosystem.jpg"'), 'renderEcosystem: accepts assetUrl as 3rd arg');
+
+  // Zero nodes -> empty matrix + warn, never an invented node list.
+  const emptyHtml = modern.renderEcosystem({ title: 'Ekosistem', content: 'Tanpa bullet.' }, brand, 6, '', 9);
+  assert(!emptyHtml.includes('ecosystem-node'), 'renderEcosystem: zero nodes must NOT render invented nodes');
+}
+
+// 10. Test dispatcher renderCinematicSlide across all 9 archetypes
 {
   const slides = [
     { title: 'Aperture Cinema', content: 'Hero cover slide', expectedClass: 'slide-cover' },
@@ -258,13 +378,16 @@ for (const fnName of expectedExports) {
     { title: 'Overview Produk Sensor', content: 'Product overview', expectedClass: 'slide-product' },
     { title: 'Fitur dan Kapabilitas', content: '- **A** — x', expectedClass: 'slide-features' },
     { title: 'Mengapa Kami Berbeda', content: 'Keunggulan kompetitif', expectedClass: 'slide-usp' },
-    { title: 'Paket dan Harga', content: '| Tier | Harga | Fitur |\n|---|---|---|\n| A | $10 | F1 |', expectedClass: 'slide-pricing' }
+    { title: 'Paket dan Harga', content: '| Tier | Harga | Fitur |\n|---|---|---|\n| A | $10 | F1 |', expectedClass: 'slide-pricing' },
+    { title: 'Pencapaian & Bukti', content: '- **~90%** — margin kotor', expectedClass: 'slide-metrics' },
+    { title: 'Arsitektur & Ekosistem', content: '- **Groq** — chat', expectedClass: 'slide-ecosystem' },
+    { title: 'Hubungi Kami', content: '- **Email** : halo@maju.co.id', expectedClass: 'slide-closing' }
   ];
 
   for (let i = 0; i < slides.length; i++) {
     const s = slides[i];
     // Signature A: (slide, index, totalSlides, brand, assetsDir)
-    const outA = modern.renderCinematicSlide(s, i, 6, brand, '');
+    const outA = modern.renderCinematicSlide(s, i, 9, brand, '');
     assert(outA.includes(s.expectedClass), `renderCinematicSlide (sig A) @${i} contains ${s.expectedClass}`);
 
     // Signature B: (slide, brand, assetMap)
@@ -275,10 +398,11 @@ for (const fnName of expectedExports) {
     // Verify renderModernSlide delegates to renderCinematicSlide
     const outModern = modern.renderModernSlide(s, i, 6, brand, '');
     assert(outModern === outA, `renderModernSlide delegates to renderCinematicSlide for archetype @${i}`);
+    assert(i === 0 || !outA.includes('slide-item active'), `non-cover slide @${i} must not carry the active class`);
   }
 }
 
-// 8. Test generic company profile (No hallucinated camera demo defaults)
+// 11. Test generic company profile (No hallucinated camera demo defaults)
 {
   const genericBrand = { name: 'PT Maju Digital' };
 
@@ -313,5 +437,5 @@ for (const fnName of expectedExports) {
   assert(genericUsp.includes('Sistem terjamin dengan proteksi multi-region.'), 'generic USP contains card description');
 }
 
-console.log('PASS: all 6 cinematic archetypes + dispatcher + alias tests passed');
+console.log('PASS: all 9 cinematic archetypes + dispatcher + closing contract + alias tests passed');
 process.exit(0);

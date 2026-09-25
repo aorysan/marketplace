@@ -13,7 +13,10 @@ const CURATED_IMAGE_CATALOG = {
   ],
   'architecture-modern': [
     'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&h=900&q=80',
-    'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=1600&h=900&q=80'
+    // Replaces photo-1541888946425-d0fbb186c5f7, which Unsplash now serves as a
+    // hard 404 — every build that picked it burned a request and degraded to the
+    // content-blind Picsum tier. Verified live: HTTP 200, real JPEG, 199 KB.
+    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&h=900&q=80'
   ],
   'creative-meeting': [
     'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&h=1200&q=80',
@@ -35,7 +38,9 @@ const SLOT_MAP = {
   'solution': { category: 'creative-meeting', orientation: 'portrait', fallback: 'solution-fallback.svg' },
   'features': { category: 'tech-workspace', orientation: 'portrait', fallback: 'services-fallback.svg' },
   'services': { category: 'tech-workspace', orientation: 'portrait', fallback: 'services-fallback.svg' },
-  'ecosystem': { category: 'tech-workspace', orientation: 'landscape', fallback: 'services-fallback.svg' },
+  // portrait: the ecosystem archetype renders this slot as a 4-col vertical rail
+  // (`.slide-ecosystem .img-col`), and the curated tech-workspace pool is portrait.
+  'ecosystem': { category: 'tech-workspace', orientation: 'portrait', fallback: 'services-fallback.svg' },
   'traction': { category: 'architecture-portrait', orientation: 'portrait', fallback: 'metrics-fallback.svg' },
   'metrics': { category: 'architecture-portrait', orientation: 'portrait', fallback: 'metrics-fallback.svg' },
   'differentiator': { category: 'architecture-portrait', orientation: 'portrait', fallback: 'problem-fallback.svg' },
@@ -51,12 +56,41 @@ const SLOT_MAP = {
   'lens': { category: 'tech-workspace', orientation: 'portrait', fallback: 'services-fallback.svg' }
 };
 
-function mapCommentToSlot(commentStr) {
-  if (!commentStr) return { slot: 'hero', ...SLOT_MAP['hero'] };
-  const match = commentStr.match(/<!--\s*image:\s*([a-zA-Z0-9_-]+)/i);
-  const slot = match ? match[1].toLowerCase() : 'hero';
-  const mapped = SLOT_MAP[slot] || SLOT_MAP['hero'];
-  return { slot, ...mapped };
+// Detect the real format of downloaded bytes. A CDN error page, a rate-limit
+// JSON body or a Cloudflare challenge is a perfectly valid HTTP 200 that is
+// larger than the >1 KB size guard, so size alone can never prove the slot
+// holds an image.
+function sniffImageFormat(head) {
+  if (!head || head.length < 12) return '';
+  if (head[0] === 0xff && head[1] === 0xd8 && head[2] === 0xff) return 'jpeg';
+  if (head[0] === 0x89 && head.toString('latin1', 1, 4) === 'PNG') return 'png';
+  if (head.toString('latin1', 0, 3) === 'GIF') return 'gif';
+  if (head.toString('latin1', 0, 4) === 'RIFF' && head.toString('latin1', 8, 12) === 'WEBP') return 'webp';
+  if (head[0] === 0x42 && head[1] === 0x4d) return 'bmp';
+  const text = head.toString('utf8', 0, 512).trim().toLowerCase();
+  if (text.startsWith('<?xml') || text.startsWith('<svg')) return 'svg';
+  return '';
+}
+
+/** Returns '' when the file is a real image, otherwise the reason it is not. */
+function validateImageFile(filePath, contentType) {
+  let head;
+  try {
+    const fd = fs.openSync(filePath, 'r');
+    head = Buffer.alloc(512);
+    const read = fs.readSync(fd, head, 0, 512, 0);
+    fs.closeSync(fd);
+    head = head.slice(0, read);
+  } catch (e) {
+    return `unreadable response body: ${e.message}`;
+  }
+  const format = sniffImageFormat(head);
+  if (!format) {
+    const ct = String(contentType || '').split(';')[0].trim() || 'unknown content-type';
+    return `response is not an image (${ct}, ${head.length} byte(s) read). ` +
+      `Likely a CDN error/challenge page saved as an image file.`;
+  }
+  return '';
 }
 
 function downloadFile(url, destPath, timeoutMs = 5000) {
@@ -84,7 +118,17 @@ function downloadFile(url, destPath, timeoutMs = 5000) {
         const file = fs.createWriteStream(destPath);
         response.pipe(file);
         file.on('finish', () => {
-          file.close(() => resolve(destPath));
+          file.close(() => {
+            // Never let a non-image response occupy an image slot: delete it and
+            // let the caller cascade to the next tier (that is what keeps the
+            // "no broken image ever ships" guarantee true).
+            const reason = validateImageFile(destPath, response.headers && response.headers['content-type']);
+            if (reason) {
+              fs.unlink(destPath, () => {});
+              return reject(new Error(reason));
+            }
+            resolve(destPath);
+          });
         });
         file.on('error', err => {
           file.close();
@@ -324,6 +368,12 @@ async function fetchWebSearchImage(opts = {}) {
 
 async function fetchImageWithFallback(options = {}) {
   const { category, destPath, slot = 'hero', forceFallback = false, _forceUrl, allowSvgFallback = true } = options;
+  // Optional out-param: callers that must report WHICH source actually produced
+  // the bytes (curated CDN vs Picsum vs local SVG) pass an object here. Without
+  // it the tier label in build.log claimed "catalog" even when the curated URL
+  // had failed and Picsum served a content-blind photo instead.
+  const report = options.report || null;
+  const mark = source => { if (report) report.source = source; };
   fs.mkdirSync(path.dirname(destPath), { recursive: true });
 
   const fallbackFile = (SLOT_MAP[slot] && SLOT_MAP[slot].fallback) || 'hero-fallback.svg';
@@ -346,13 +396,16 @@ async function fetchImageWithFallback(options = {}) {
 
   // Idempotency: skip if already valid (> 1024 bytes for jpg, > 100 bytes for svg)
   if (fs.existsSync(destPath) && fs.statSync(destPath).size > 1024) {
+    mark('cache');
     return destPath;
   }
   if (fs.existsSync(svgDestPath) && fs.statSync(svgDestPath).size > 100) {
+    mark('cache');
     return svgDestPath;
   }
 
   if (forceFallback) {
+    mark('svg');
     return applyFallback();
   }
 
@@ -361,20 +414,26 @@ async function fetchImageWithFallback(options = {}) {
 
   try {
     await downloadFile(targetUrl, destPath, 5000);
+    mark('cdn');
     return destPath;
   } catch (err) {
     console.warn(`[WARN] Primary CDN download failed for ${slot}: ${err.message}. Trying Picsum fallback...`);
     try {
-      const picsumUrl = (SLOT_MAP[slot] && SLOT_MAP[slot].orientation === 'landscape')
+      // `_picsumUrl` is a testability seam: tests point it at a local server so
+      // the curated-URL-failed → Picsum degradation path can be exercised without
+      // touching the network.
+      const picsumUrl = options._picsumUrl || ((SLOT_MAP[slot] && SLOT_MAP[slot].orientation === 'landscape')
         ? 'https://picsum.photos/1600/900'
-        : 'https://picsum.photos/800/1200';
+        : 'https://picsum.photos/800/1200');
       await downloadFile(picsumUrl, destPath, 4000);
+      mark('picsum');
       return destPath;
     } catch (picsumErr) {
       if (!allowSvgFallback) {
         throw picsumErr;
       }
       console.warn(`[WARN] Picsum fallback failed: ${picsumErr.message}. Applying local SVG fallback.`);
+      mark('svg');
       return applyFallback();
     }
   }
@@ -402,7 +461,9 @@ function fetchGeneratedImage(query, destPath, opts = {}) {
 module.exports = {
   CURATED_IMAGE_CATALOG,
   SLOT_MAP,
-  mapCommentToSlot,
+  sniffImageFormat,
+  validateImageFile,
+  downloadFile,
   fetchImageWithFallback,
   pickCatalogUrl,
   buildPollinationsUrl,

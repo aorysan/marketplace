@@ -21,16 +21,49 @@ function sanitizeSlideContent(text) {
   return cleaned;
 }
 
-function sanitizeContactDetails(text, brandSlug = 'venturo-pro') {
+// Reviewer-mandated contact placeholders. They must never reach the published
+// deck as raw brackets, and the Zero-Hallucination rule forbids replacing them
+// with invented phone numbers / e-mails either — so unresolved entries become an
+// explicit "Belum tersedia" marker and get reported in reports/build.log.
+const CONTACT_PLACEHOLDERS = [
+  [/\[Nomor WhatsApp\]/gi, 'Nomor WhatsApp'],
+  [/\[Email Resmi\]/gi, 'Email Resmi'],
+  [/\[Alamat Kantor\]/gi, 'Alamat Kantor'],
+  [/\[Tautan Pendaftaran\]/gi, 'Tautan Pendaftaran'],
+  [/\[Nomor Telepon\]/gi, 'Nomor Telepon'],
+  [/\[Kontak PIC\]/gi, 'Kontak PIC'],
+  [/\[(?:Nomor|Email|Alamat|Tautan|Kontak|PIC|Website|Telepon|Sosial Media)[^\]]{0,40}\]/gi, 'Kontak lainnya']
+];
+
+const CONTACT_UNAVAILABLE = 'Belum tersedia';
+
+function sanitizeContactDetails(text) {
   if (!text) return '';
-  const cleanSlug = brandSlug.replace(/[^a-z0-9]/gi, '');
-  const domain = brandSlug.toLowerCase().endsWith('-pro') ? brandSlug.slice(0, -4).replace(/[^a-z0-9]/gi, '') : cleanSlug;
-  return text
-    .replace(/\[Nomor WhatsApp\]/gi, '+62 812-9000-8899')
-    .replace(/\[Email Resmi\]/gi, `contact@${domain}.pro`)
-    .replace(/\[Alamat Kantor\]/gi, 'Jakarta Selatan, DKI Jakarta')
-    .replace(/\[Tautan Pendaftaran\]/gi, `${domain}.pro/register`);
+  let out = String(text);
+  for (const [re] of CONTACT_PLACEHOLDERS) {
+    out = out.replace(re, CONTACT_UNAVAILABLE);
+  }
+  // Multi-placeholder lines ("[Email Resmi], [Alamat Kantor]") collapse to one.
+  return out.replace(/(?:Belum tersedia)(?:\s*,\s*Belum tersedia)+/g, CONTACT_UNAVAILABLE);
 }
+
+/** Labels of reviewer placeholders still present in a draft (for build.log). */
+function findContactPlaceholders(text) {
+  if (!text) return [];
+  const found = new Set();
+  for (const [re] of CONTACT_PLACEHOLDERS) {
+    const hits = String(text).match(re);
+    if (hits) hits.forEach(hit => found.add(hit.replace(/^\[|\]$/g, '')));
+  }
+  return [...found];
+}
+
+// A whole bold token counts as the metric only when it reads as a figure
+// (`1×`, `5–20`, `~90%`, `20:1`, `3-tier`, `< Rp100rb`, `0.9s`). This keeps
+// `**Biaya tak terprediksi**` a card title and stops narrative numbers
+// ("ritme 5–20 video/bulan") from being promoted into the metric slot.
+// Single SSOT: themes/modern.js imports this same regex.
+const METRIC_TOKEN_RE = /^[$€£~<>]?\s*(?:Rp\s*)?\d[\d.,]*(?:\s*(?:rb|ribu|jt|juta|k|m))?(?:(?:[%×xX+])|(?:[:/–—-]\s*\d[\d.,]*)|(?:[:/–—-][a-zA-Z]{2,})|(?:[a-zA-Z]{1,3}))?$/;
 
 function extractBigNumberMetric(bulletLine) {
   if (!bulletLine || typeof bulletLine !== 'string') {
@@ -45,8 +78,20 @@ function extractBigNumberMetric(bulletLine) {
   const title = rawTitle ? (rawTitle.endsWith('.') ? rawTitle : `${rawTitle}.`) : '';
   const cleanLine = bulletLine.replace(/^[-*]\s*/, '').replace(/\*\*.+?\*\*/, '').trim();
 
-  // Metric regex: extracts currency (Rp...), percentage, ratio, or version
-  const numMatch = cleanLine.match(/\b(Rp\s*[\d\.]+(?:\s*(?:rb|ribu|jt|juta|k|m))?|v\d+\.\d+\.\d+|\d+:\d+|\d+(?::\d+)?%?)(?=\b|\s|$|[.,—–-])/i);
+  // The bold token IS the metric when it reads as a figure, even if the line has
+  // no other number ("**1×** — Brand DNA sekali..."). Checked first because the
+  // old fallback scan promoted the first narrative number instead.
+  if (rawTitle && METRIC_TOKEN_RE.test(rawTitle)) {
+    return {
+      number: rawTitle,
+      title,
+      desc: cleanLine.replace(/^[—–-]\s*/, '').trim()
+    };
+  }
+
+  // Fallback scan is restricted to explicitly figure-shaped tokens (currency,
+  // percentage, ratio, version) so it can never invent a bare number metric.
+  const numMatch = cleanLine.match(/\b(Rp\s*[\d.]+(?:\s*(?:rb|ribu|jt|juta|k|m))?|v\d+\.\d+\.\d+|\d+:\d+|\d+(?:[.,]\d+)?\s*%)(?=\b|\s|$|[.,—–-])/i);
   const number = numMatch ? numMatch[1].trim() : '100%';
   const desc = cleanLine.replace(number, '').replace(/^[—–-]\s*/, '').trim();
 
@@ -55,6 +100,18 @@ function extractBigNumberMetric(bulletLine) {
     title,
     desc: desc || cleanLine
   };
+}
+
+// Build-log word count: markdown emphasis/list markers, table pipes and image
+// directives are chrome, not prose. The raw split inflated counts by ~30-40%
+// against the reviewer's 40-60 word budget.
+function countContentWords(content) {
+  return (String(content || '')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/^\s*[-*]\s+/gm, ' ')
+    .replace(/\*\*/g, '')
+    .replace(/^\s*\|-.*$/gm, ' ')
+    .match(/[^\s|]+/g) || []).filter(w => w !== '---').length;
 }
 
 // Frontmatter sanitization + slide split (spec §3.1). Strips the YAML frontmatter block,
@@ -346,44 +403,60 @@ function classifyCanvaArchetype(slide, index, totalSlides) {
 }
 
 function resolveSlideSlot(slide, index, totalSlides, defaultSlot) {
-  if (slide && slide.content) {
-    const match = slide.content.match(/<!--\s*image:\s*([a-zA-Z0-9_-]+)/i);
-    if (match) {
-      return match[1].toLowerCase();
-    }
-  }
+  // Same tolerant parser as acquireSlotImage — keeping a second, looser regex
+  // here is how the two code paths drift apart.
+  const directive = parseImageDirective(slide && slide.content);
+  if (directive) return directive.slot;
   if (defaultSlot) {
     return defaultSlot;
   }
-  // Unified cinematic classifier (Task 1): archetype -> slot via CINEMATIC_SLOT_MAP.
+  // Unified cinematic classifier: archetype -> slot via CINEMATIC_SLOT_MAP.
+  // Single SSOT — every archetype maps to a slot that resolves in
+  // imageFetcher.SLOT_MAP (asserted by scripts/test-cinematic-classifier.js),
+  // so there is no legacy fallback table to drift out of sync.
   // Lazy require mirrors the renderSlide pattern below and avoids a top-level
   // require cycle (themes/modern.js requires this module for shared parsers).
-  // The legacy switch is retained as a safety net for pre-migration archetype
-  // names; the cinematic classifier only returns the 6 mapped names above.
   const cinematic = require('./themes/modern');
   const arch = cinematic.classifyCinematicArchetype(slide, index, totalSlides);
-  if (cinematic.CINEMATIC_SLOT_MAP && cinematic.CINEMATIC_SLOT_MAP[arch]) {
-    return cinematic.CINEMATIC_SLOT_MAP[arch];
-  }
-  switch (arch) {
-    case 'cover': return 'hero';
-    case 'welcome-problem': return 'problem';
-    case 'welcome-solution': return 'solution';
-    case 'services': return 'services';
-    case 'ecosystem': return 'ecosystem';
-    case 'metrics': return 'metrics';
-    case 'differentiator': return 'differentiator';
-    case 'pricing': return 'pricing';
-    case 'closing': return 'closing';
-    default: return 'hero';
-  }
+  return (cinematic.CINEMATIC_SLOT_MAP && cinematic.CINEMATIC_SLOT_MAP[arch]) || 'hero';
 }
 
+// Tolerant image-directive parser — the single source of truth for both the
+// slot and the search text. Accepted forms (all documented in writer/SKILL.md):
+//   <!-- image: hero -->
+//   <!-- image: hero modern office desk -->                          (free text)
+//   <!-- image: hero -- query: ...; keywords: ...; style: photo -->  (structured)
+//   any partial combination of the structured parts.
+// The old regex demanded the FULL 4-part structured form, so every other form
+// returned null and silently discarded the content words: the search tier then
+// queried "<slide title> <slot>" (often an Indonesian title plus an English slot
+// name) and the generative tier was skipped entirely because query was empty.
 function parseImageDirective(content) {
   if (!content) return null;
-  const m = content.match(/<!--\s*image:\s*([a-zA-Z0-9_-]+)\s*--\s*query:\s*([^;]+?)\s*;\s*keywords:\s*([^;]+?)\s*;\s*style:\s*([a-z]+)\s*-->/i);
+  const m = content.match(/<!--\s*image:\s*([^\s>]+)([\s\S]*?)(?:-->|$)/i);
   if (!m) return null;
-  return { slot: m[1].toLowerCase(), query: m[2].trim(), keywords: m[3].trim() };
+  const slot = m[1].toLowerCase().replace(/[^a-z0-9_-]/g, '');
+  if (!slot) return null;
+  // '--' only ever introduces a structured part; turn it into a separator so
+  // 'query:'/'keywords:'/'style:' can be read independently of each other.
+  const segments = String(m[2] || '').replace(/--/g, ';').split(';');
+  const parts = {};
+  const free = [];
+  for (const segment of segments) {
+    const kv = segment.match(/^\s*(query|keywords|style)\s*:\s*(.*)$/i);
+    if (kv) {
+      const key = kv[1].toLowerCase();
+      if (!parts[key]) parts[key] = kv[2].trim();
+    } else if (segment.trim()) {
+      free.push(segment.trim());
+    }
+  }
+  return {
+    slot,
+    query: parts.query || free.join(' '),
+    keywords: parts.keywords || '',
+    style: parts.style || ''
+  };
 }
 
 function pickFromPoolDistinct(pool, index, slug, assetsDir, slot, picked) {
@@ -433,6 +506,14 @@ async function acquireSlotImage({ slot, query, keywords, title, index, slug, ass
     return { path: destSvg, tier: 'cached', elapsedMs: elapsed() };
   }
   const slotConfig = (imageFetcher.SLOT_MAP && imageFetcher.SLOT_MAP[slot]) || { category: 'architecture-portrait', orientation: 'portrait', fallback: `${slot}-fallback.svg` };
+  if (!(imageFetcher.SLOT_MAP && imageFetcher.SLOT_MAP[slot])) {
+    // An unknown slot usually means a malformed directive: the legacy free-text
+    // form ("<!-- image: high-tech platform engineering ... -->") is read as
+    // slot "high-tech", so the topic words still drive the search but the
+    // category/orientation/fallback silently degrade to the portrait default.
+    console.warn(`[WARN] Slide ${index + 1}: unknown image slot "${slot}" — using the portrait architecture default. ` +
+      `Use a slot from imageFetcher.SLOT_MAP (hero, problem, solution, services, ecosystem, metrics, differentiator, pricing, closing, macro, hands, viewfinder, lens).`);
+  }
   const pool = imageFetcher.CURATED_IMAGE_CATALOG[slotConfig.category] || imageFetcher.CURATED_IMAGE_CATALOG['architecture-portrait'];
   const hasBudget = () => (budget?.deadline != null ? Date.now() < budget.deadline : elapsed() < (budget?.ms || 15000));
   const offline = process.env.COMPRO_OFFLINE === '1';
@@ -461,15 +542,23 @@ async function acquireSlotImage({ slot, query, keywords, title, index, slug, ass
   if (hasBudget()) {
     try {
       const picked = pickFromPoolDistinct(pool, index, slug, assetsDir, slot, pickedUrls);
+      // `report.source` tells us which origin actually supplied the bytes, so a
+      // dead curated URL that silently degraded to Picsum is labelled picsum
+      // instead of hiding behind "catalog".
+      const report = {};
       const out = await imageFetcher.fetchImageWithFallback({
         category: slotConfig.category,
         destPath: destJpg,
         slot,
         _forceUrl: picked,
-        allowSvgFallback: false
+        allowSvgFallback: false,
+        report
       });
       if (out && /\.jpe?g$/i.test(out) && fs.existsSync(out) && fs.statSync(out).size > 1024) {
-        return { path: out, tier: 'catalog', elapsedMs: elapsed() };
+        // Picsum photos are content-blind by definition, whether they came from
+        // the seeded pool overflow or from a failed curated download.
+        const viaPicsum = report.source === 'picsum' || /picsum\.photos/i.test(String(picked));
+        return { path: out, tier: viaPicsum ? 'picsum' : 'catalog', elapsedMs: elapsed() };
       }
     } catch (e) { console.warn(`[WARN] Tier 1b catalog failed for slide ${index + 1}: ${e.message}`); }
   }
@@ -499,9 +588,8 @@ async function acquireSlotImage({ slot, query, keywords, title, index, slug, ass
   return { path: svgDest, tier: 'svg', elapsedMs: elapsed() };
 }
 
-// Single-template build: only `modern` exists. No --theme selection.
-// THEME_ALIASES kept as an empty map for backward-compat imports.
-const THEME_ALIASES = {};
+// Single-template build: only `modern` exists. No --theme selection, and no
+// theme alias table (removed with the multi-theme engine).
 
 function renderSlide(slide, index, totalSlides, brand, theme = 'modern', assetsDir = '') {
   return require('./themes/modern').renderModernSlide(slide, index, totalSlides, brand, assetsDir);
@@ -702,6 +790,8 @@ async function runMain(customArgs) {
   let brandName = '';
   let primaryColor = '#ff3b1d';
   let secondaryColor = '#ff3b1d';
+  let brandNameSource = 'input docs';
+  let brandColorSource = '';
 
   let brandStoryPath = path.join(ROOT, 'input', 'brand-story-guide.md');
   let bkbPath = path.join(ROOT, 'input', 'business-knowledge-base.md');
@@ -716,10 +806,10 @@ async function runMain(customArgs) {
     const bsContent = fs.readFileSync(brandStoryPath, 'utf8');
     let brandMatch = bsContent.match(/#\s*(?:Brand Story Guide|Company Profile|Profil Perusahaan)?:\s*([^\n\r#]+)/i)
       || bsContent.match(/#\s*([^\n\r#]+)/);
-    if (brandMatch) brandName = brandMatch[1].trim();
+    if (brandMatch) { brandName = brandMatch[1].trim(); brandNameSource = 'input docs'; }
 
     const primaryMatch = bsContent.match(/\|\s*Primary\s*\|[^|]*\|\s*(`?#[0-9A-Fa-f]{6}`?)/i);
-    if (primaryMatch) primaryColor = primaryMatch[1].replace(/`/g, '').trim();
+    if (primaryMatch) { primaryColor = primaryMatch[1].replace(/`/g, '').trim(); brandColorSource = path.basename(brandStoryPath); }
 
     const secondaryMatch = bsContent.match(/\|\s*(?:Secondary|Accent)[^|]*\|[^|]*\|\s*(`?#[0-9A-Fa-f]{6}`?)/i);
     if (secondaryMatch) secondaryColor = secondaryMatch[1].replace(/`/g, '').trim();
@@ -727,10 +817,10 @@ async function runMain(customArgs) {
     const bkbContent = fs.readFileSync(bkbPath, 'utf8');
     let brandMatch = bkbContent.match(/#\s*(?:Brand Story Guide|Company Profile|Profil Perusahaan|Business Knowledge Base)?:\s*([^\n\r#]+)/i)
       || bkbContent.match(/#\s*([^\n\r#]+)/);
-    if (brandMatch) brandName = brandMatch[1].trim();
+    if (brandMatch) { brandName = brandMatch[1].trim(); brandNameSource = 'input docs'; }
 
     const primaryMatch = bkbContent.match(/\|\s*Primary\s*\|[^|]*\|\s*(`?#[0-9A-Fa-f]{6}`?)/i);
-    if (primaryMatch) primaryColor = primaryMatch[1].replace(/`/g, '').trim();
+    if (primaryMatch) { primaryColor = primaryMatch[1].replace(/`/g, '').trim(); brandColorSource = path.basename(bkbPath); }
 
     const secondaryMatch = bkbContent.match(/\|\s*(?:Secondary|Accent)[^|]*\|[^|]*\|\s*(`?#[0-9A-Fa-f]{6}`?)/i);
     if (secondaryMatch) secondaryColor = secondaryMatch[1].replace(/`/g, '').trim();
@@ -739,6 +829,16 @@ async function runMain(customArgs) {
   if (!brandName) {
     const mdTitleMatch = md.match(/^#\s*([^\n\r#]+)/m);
     brandName = mdTitleMatch ? mdTitleMatch[1].trim() : 'Company Profile';
+    brandNameSource = 'markdown heading';
+  }
+
+  // These fallbacks used to be silent: a malformed palette table shipped the
+  // default vermilion accent with no trace anywhere in the build output.
+  if (!brandColorSource) {
+    console.warn(`[WARN] Brand primary color not found in input/brand-story-guide.md or input/business-knowledge-base.md; using default ${primaryColor}.`);
+  }
+  if (brandNameSource === 'markdown heading') {
+    console.warn(`[WARN] Company name not found in input docs; falling back to the first markdown heading: "${brandName}".`);
   }
 
   const hsl = assetGenerator.hexToHsl(primaryColor);
@@ -774,7 +874,7 @@ async function runMain(customArgs) {
   const budget = { ms: budgetMs, deadline: Date.now() + budgetMs };
   const pickedUrls = new Set();
   const assetsStart = Date.now();
-  const tierCounts = { search: 0, catalog: 0, generate: 0, svg: 0, cached: 0 };
+  const tierCounts = { search: 0, catalog: 0, picsum: 0, generate: 0, svg: 0, cached: 0 };
   // Parallel acquisition: web search is latency-bound; sequential 9×4 s would
   // blow the shared deadline. Shared Set/Map are safe under JS single-thread.
   await Promise.all(slides.map(async (s, i) => {
@@ -812,7 +912,8 @@ async function runMain(customArgs) {
   console.log(
     `[ASSETS] elapsed=${((Date.now() - assetsStart) / 1000).toFixed(1)}s tiers(` +
     `search=${tierCounts.search || 0},catalog=${tierCounts.catalog || 0},` +
-    `generate=${tierCounts.generate || 0},svg=${tierCounts.svg || 0},cached=${tierCounts.cached || 0})` +
+    `picsum=${tierCounts.picsum || 0},generate=${tierCounts.generate || 0},` +
+    `svg=${tierCounts.svg || 0},cached=${tierCounts.cached || 0})` +
     (offlineAssets ? ' offline=1' : '')
   );
 
@@ -827,9 +928,21 @@ async function runMain(customArgs) {
   let shell = fs.readFileSync(SHELL, 'utf8');
   let customCss = fs.readFileSync(CSS, 'utf8');
 
-  // Task 2 Ledger Note:
-  // 1. Inject --brand-primary into CSS so var(--brand-primary, #ff3b1d) receives the client's brand primary color.
-  customCss = `:root { --brand-primary: ${brand.primaryColor}; }\n` + customCss;
+  // CSS `@import` must sit at the very top of the stylesheet: a rule placed
+  // before it makes the import invalid and browsers drop it. Hoist the theme's
+  // @import lines, then inject the per-build brand override *below* them.
+  const importLines = [];
+  customCss = customCss.replace(/^\s*@import[^\n]*\n?/gm, (line) => {
+    importLines.push(line.trim());
+    return '';
+  });
+
+  // Inject --brand-primary into CSS so var(--brand-primary, #ff3b1d) receives the client's brand primary color.
+  customCss = [
+    ...importLines,
+    `:root { --brand-primary: ${brand.primaryColor}; }`,
+    customCss.replace(/^\s+/, '')
+  ].filter(Boolean).join('\n');
 
   // Inject dynamic client HSL tokens (no-op when CSS lacks these tokens).
   customCss = customCss
@@ -913,6 +1026,10 @@ async function runMain(customArgs) {
   }
 
   // 10. Write build.log into compros/<slug>/reports/build.log
+  const contactPlaceholders = findContactPlaceholders(md);
+  if (contactPlaceholders.length > 0) {
+    console.warn(`[WARN] ${contactPlaceholders.length} contact placeholder(s) unresolved in the draft: ${contactPlaceholders.map(p => `[${p}]`).join(', ')} — rendered as "${CONTACT_UNAVAILABLE}".`);
+  }
   const log = [
     'Company Profile Build Log',
     '========================================',
@@ -925,9 +1042,16 @@ async function runMain(customArgs) {
     `Total Slides    : ${slides.length}`,
     ...slides.map((s, i) => {
       const type = require('./themes/modern').classifyCinematicArchetype(s, i, slides.length);
-      const wordCount = s.content.split(/\s+/).filter(Boolean).length;
+      const wordCount = countContentWords(s.content);
       return `  Slide ${i + 1} [${type.toUpperCase().padEnd(9)}]: ${s.title} (${wordCount} words)`;
     }),
+    '',
+    `Brand Name Src  : ${brandNameSource}`,
+    `Brand Color Src : ${brandColorSource || `default (${brand.primaryColor})`}`,
+    'Contact Placeholders:',
+    ...(contactPlaceholders.length === 0
+      ? ['  - (none)']
+      : contactPlaceholders.map(p => `  - [${p}] not in input docs -> rendered as "${CONTACT_UNAVAILABLE}"`)),
     '',
     'Smart Asset Pipeline (Procedurally Generated):',
     `  - ${path.join(ASSETS_DIR, 'smartphone-mockup.svg')} (Vector Titanium Phone UI)`,
@@ -979,13 +1103,17 @@ async function runMain(customArgs) {
   console.log(`  Drafts : source drafts consolidated in ${DRAFTS_DIR}\n`);
 }
 
-if (require.main === module) {
-  runMain().catch(err => {
-    console.error('Fatal build error:', err);
-    process.exit(1);
-  });
-}
-
+// Exports MUST be assigned before the CLI entry below calls runMain().
+// `themes/modern.js` requires this module back (circular dependency) and
+// build-deck reaches it again from inside runMain's synchronous prefix
+// (resolveSlideSlot → require('./themes/modern') for any slide without an image
+// directive). If the exports were still `{}` at that point, modern.js would
+// destructure undefined for inline/parseEditorialCards/resolveSlideSlot and
+// every render would then fail with "resolveSlideSlot is not a function" —
+// reproducible only through the documented CLI entry with a draft that has at
+// least one directive-less slide, never through `require('./build-deck')` in the
+// test suite (there, exports are complete before runMain is called).
+// Guarded by scripts/test-cli-entry.js.
 if (typeof module !== 'undefined' && typeof require !== 'undefined') {
   module.exports = {
     detectProjectRoot,
@@ -1004,12 +1132,22 @@ if (typeof module !== 'undefined' && typeof require !== 'undefined') {
     inline,
     sanitizeSlideContent,
     sanitizeContactDetails,
+    findContactPlaceholders,
     extractBigNumberMetric,
+    countContentWords,
+    METRIC_TOKEN_RE,
+    CONTACT_UNAVAILABLE,
     loadThemeManifest,
-    THEME_ALIASES,
     parseImageDirective,
     pickFromPoolDistinct,
     acquireSlotImage,
     buildReviewerMetaBlock
   };
+}
+
+if (require.main === module) {
+  runMain().catch(err => {
+    console.error('Fatal build error:', err);
+    process.exit(1);
+  });
 }

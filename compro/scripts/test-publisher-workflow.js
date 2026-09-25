@@ -23,6 +23,18 @@ if (!deployScript.includes('vercel.app')) {
   process.exit(1);
 }
 
+// deploy.js must spawn the vercel binary per-platform: hardcoding cmd.exe made
+// every deploy fail with ENOENT on macOS/Linux, and calling the Windows shim
+// without cmd.exe fails on Windows.
+if (!/process\.platform\s*===\s*'win32'/.test(deployScript)) {
+  console.error("FAIL: deploy.js must branch on process.platform === 'win32' before spawning vercel");
+  process.exit(1);
+}
+if (/spawnSync\(\s*'cmd\.exe'/.test(deployScript) && !/process\.platform\s*===\s*'win32'\s*\n?\s*\?/.test(deployScript)) {
+  console.error('FAIL: deploy.js spawns cmd.exe unconditionally (POSIX regression)');
+  process.exit(1);
+}
+
 // Check SKILL.md has User Confirmation Gate and SEO Auto-Fix
 if (!skillContent.includes('Auto-Fix') || !skillContent.includes('Konfirmasi') || !skillContent.includes('User Confirmation')) {
   console.error('FAIL: SKILL.md missing Auto-Fix or User Confirmation Gate documentation');

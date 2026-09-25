@@ -95,21 +95,22 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
    - Mengonversi `compros/<slug>/drafts/02-final.md` menjadi:
      - `<project>/compros/<slug>/index.html` (Single-file presentation HTML 1920×1080 16:9 dengan zero-dependency vanilla engine, CSS ter-inline, tema Aperture Cinematic Minimalist).
      - `<project>/compros/<slug>/compro.md`.
-     - `<project>/compros/<slug>/assets/` (Foto arsitektur/produk resolusi tinggi dari Unsplash direct CDN via `image-fetcher.js` untuk 6 slot cinematic: hero, problem, macro, hands, viewfinder, lens, dengan cascading fallback).
+     - `<project>/compros/<slug>/assets/` (Foto resolusi tinggi via `image-fetcher.js`: Openverse web search ➔ kurasi Unsplash direct CDN ➔ Lorem Picsum ➔ SVG vektor lokal. Slot default per arketipe: cover→hero, problem→problem, product→macro, features→hands, usp→viewfinder, pricing→lens, closing→closing; directive gambar di draf selalu menang).
      - `<project>/compros/<slug>/reports/build.log`.
      - Mengonsolidasikan semua file kerja ke folder proyek `compros/<slug>/` (`index.html`, `compro.md`, `assets/`, `reports/`, `drafts/`).
    - **Workspace Sync Guarantee:** Eksekusi di Git worktree manapun secara otomatis memicu `postBuildSyncGuarantee()` yang menjamin seluruh bundel `compros/<slug>/` tersalin utuh ke root workspace utama pengguna.
-   - **Content Sanitization:** Otomatis membersihkan frontmatter & meta tags, memformat kontak demo tanpa kurung siku mentah `[...]`, dan mengekstrak metrik data untuk spec matrix/stat counter.
+   - **Content Sanitization:** Otomatis membersihkan frontmatter & meta tags, mengekstrak metrik data untuk spec matrix/stat counter, dan menangani placeholder kontak reviewer: `[Nomor WhatsApp]`, `[Email Resmi]`, `[Alamat Kantor]`, dsb. dirender sebagai penanda eksplisit `Belum tersedia` — tidak pernah tampil mentah dan **tidak pernah diganti dengan nomor/email/alamat karangan** (Zero Hallucination). Daftarnya dicatat di `reports/build.log`.
 
 5. **Phase 3b — Visual Self-Check:**
    - Buka `compros/<slug>/index.html` di browser.
-   - Navigasi setiap slide dan verifikasi kepatuhan 6 layout archetype Aperture Cinematic Minimalist:
-     1. Cover: Full-bleed cinematic hero, foto arsitektur/produk gelap dengan gradient overlay, brand title, status dot "● Now shipping", vermilion kicker, dan giant headline.
+   - Navigasi setiap slide dan verifikasi kepatuhan 7 layout archetype Aperture Cinematic Minimalist:
+     1. Cover: Full-bleed cinematic hero, foto arsitektur/produk gelap dengan gradient overlay, brand title, status dot "● Now shipping", vermilion kicker, giant headline, dan glass strip statistik kunci (2–3 angka).
      2. Problem: 12-col asymmetric split (4-col image kiri + 8-col teks kanan), giant ghost watermark "NO", 3-item numbered list dengan angka vermilion dan hover highlight.
      3. Product: 50/50 split dengan foto macro + floating glass badge di kiri, headline + 2x2 spec matrix stat block dengan angka kontras tinggi di kanan.
      4. Features: 3-col rail image vertikal dengan caption rotasi 90° di kiri, 9-col container dengan 4 baris fitur bernomor raksasa 01-04 (berubah vermilion saat hover) di kanan.
      5. USP: Dark viewfinder background dengan 3 kartu frosted glass trio (backdrop blur, border hairline putih), masing-masing dengan kicker, counter 01-03, giant stat, dan penjelasan.
-     6. Pricing: 3-col vertical image rail dengan watermark "Ship it." di kiri, 9-col container dengan 3 tier pricing di kanan (featured tier inverted black background dengan CTA vermilion).
+     6. Pricing: 3-col vertical image rail dengan watermark "Siap mulai." di kiri, 9-col container dengan 3 tier pricing di kanan (featured tier inverted black background dengan CTA vermilion).
+     7. Closing: 3-col rail image dengan caption rotasi "Langkah berikutnya" di kiri, 9-col container dengan headline, daftar komitmen/benefit, matriks kontak 2 kolom (ikon + label mono + nilai), dan CTA vermilion di kanan. Pastikan tidak ada kurung siku mentah `[...]` yang terlihat pada nilai kontak.
    - Pastikan seluruh foto di `compros/<slug>/assets/` berukuran valid (> 10 KB).
    - Verifikasi keberadaan file di root workspace pengguna (`compros/<slug>/index.html` dan `assets/`).
    - Verifikasi interaktivitas chrome: hairline progress bar (0-100%), dot navigation aktif memancarkan vermilion, tombol panah dan keyboard shortcuts berfungsi lancar tanpa error konsol.
@@ -167,18 +168,19 @@ Setelah Gate 0 (setelah slug proyek ditentukan dan dikonfirmasi), sebelum memula
    - Tipografi resmi: `Archivo` (display/headline), `Inter` (body), `JetBrains Mono` (kickers/mono).
    - Resolusi fixed 1920×1080 (16:9). Standalone zero-dependency HTML5/CSS3/Vanilla JS presentation shell (tanpa dependensi CDN Reveal.js).
 
-2. **6 Layout Archetypes Aperture Cinematic:**
+2. **7 Layout Archetypes Aperture Cinematic:**
    - `cover`: Full-Bleed Cinematic Hero dengan background foto gelap, gradient fade, live status indicator (`● Now shipping`), vermilion kicker, dan headline raksasa.
    - `problem`: 12-Col Asymmetric Split (4-col foto kiri + 8-col konten kanan), giant ghost text watermark ("NO"), dan 3-item numbered list dengan nomor vermilion dan highlight hover.
    - `product`: 50/50 Macro & Spec Matrix (50% foto makro produk kiri dengan floating glass badge + 50% kanan berisi headline, deskripsi, dan 2x2 high-contrast stat counter).
    - `features`: Rail Image + Giant Numbered List (3-col rail image vertikal kiri dengan caption rotasi 90° + 9-col kanan dengan 4 baris fitur bernomor raksasa `01`–`04` yang reaktif hover).
    - `usp`: Frosted Glass Trio di atas dark viewfinder canvas dengan 3 kartu semi-transparan (`backdrop-filter: blur(12px)`), hairline white border, kicker, counter, giant stat, dan teks penjelasan.
-   - `pricing`: Vertical Image Rail + Tier Matrix (3-col rail foto vertikal kiri dengan tag watermark "Ship it." + 9-col kanan dengan 3 tier harga; featured tier inverted black background dengan tombol CTA vermilion).
+   - `pricing`: Vertical Image Rail + Tier Matrix (3-col rail foto vertikal kiri dengan tag watermark "Siap mulai." + 9-col kanan dengan 3 tier harga; featured tier inverted black background dengan tombol CTA vermilion).
+   - `closing`: Rail Image + Contact Matrix (3-col rail foto vertikal kiri dengan caption rotasi "Langkah berikutnya" + 9-col kanan berisi headline, `.closing-notes` untuk komitmen/benefit, `.closing-contacts` grid 2 kolom ikon + label + nilai, dan `.closing-cta` vermilion).
 
 3. **Hybrid Asset Downloader Pipeline (`image-fetcher.js`):**
-   - Mendeteksi slot gambar `<!-- image: <slot> -- ... -->` dengan 6 cinematic slots: `hero` (cover), `problem` (problem), `macro` (product), `hands` (features), `viewfinder` (usp), `lens` (pricing).
-   - Mengunduh foto beresolusi tinggi langsung dari curated Unsplash direct CDN (`images.unsplash.com`) tanpa API key.
-   - Cascading fallback: Direct CDN Unsplash ➔ Lorem Picsum ➔ Local architectural vector SVG (`templates/assets/fallback/`).
+   - Mendeteksi slot gambar `<!-- image: <slot> -- ... -->`. Slot default per arketipe: `hero` (cover), `problem` (problem), `macro` (product), `hands` (features), `viewfinder` (usp), `lens` (pricing), `closing` (closing). Directive gambar pada draf selalu menang atas slot default ini.
+   - Resolusi gambar berjenjang: Openverse web image search (keyless, mati dengan `COMPRO_OFFLINE=1`) ➔ kurasi Unsplash direct CDN (`images.unsplash.com`) ➔ Lorem Picsum ➔ SVG vektor lokal (`templates/assets/fallback/`).
+   - Budget tunggal per build (default 25 s) dibagi seluruh slot secara paralel; `reports/build.log` mencatat jumlah tier yang dipakai.
 
 4. **Git Worktree & Dynamic Workspace Sync Guarantee:**
    - Skrip mendeteksi root repositori secara dinamis via `--root`, `COMPRO_PROJECT_ROOT`, atau inspeksi file pointer `.git` worktree.

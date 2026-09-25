@@ -38,7 +38,7 @@ Dokumen yang disediakan di folder `input/`:
    - **Slide 10 (CTA & Contact):** `# Hubungi Kami` + kontak lengkap (Telepon, Email, Website, Alamat).
    *Catatan Slide Opsional:* Slide 5, 7, 8 opsional — hanya dihasilkan jika data relevan tersedia. Writer TIDAK BOLEH mengarang data. Output minimal 7 slide, maksimal 10.
 4. **Visual & Asset Directives:**
-   - Cantumkan referensi visual jika relevan, misal `![Logo](assets/logo.png)` atau arahan `<!-- image: hero modern office -->`.
+   - Cantumkan referensi visual jika relevan, misal `![Logo](assets/logo.png)`. Untuk arahan gambar, utamakan bentuk kontrak penuh di §Kontrak Modern (`<!-- image: <slot> -- query: ...; keywords: ...; style: photo -->`). Bentuk bebas `<!-- image: hero modern office -->` tetap diterima dan teksnya dipakai sebagai query pencarian, tetapi tanpa `keywords` presisi hasil pencarian lebih rendah dan tier Pollinations tidak bisa dijalankan.
 5. **No Verbatim Repetition:**
    - Dalam satu slide, setiap elemen teks (tagline, deskripsi, bullet point) HARUS menyampaikan informasi yang BERBEDA satu sama lain.
    - **Tagline** = hook pendek yang punchy, maksimal 1-2 kalimat.
@@ -173,8 +173,15 @@ Aturan di bawah WAJIB dipenuhi agar output langsung bisa dikonsumsi tema builder
      ```html
      <!-- image: <slot> -- query: <1 kalimat EN> ; keywords: <3-5 kata> ; style: photo -->
      ```
-   - `<slot>`: `hero`, `problem`, `solution`, `services`, `ecosystem`, `metrics`,
-     `differentiator`, `pricing`, atau `closing` (huruf kecil, tanpa spasi).
+   - `<slot>`: gunakan salah satu nama dari `imageFetcher.SLOT_MAP` (huruf kecil,
+     tanpa spasi). Yang disarankan per jenis slide: `hero` (pembuka), `problem`,
+     `solution`, `services`, `ecosystem`, `metrics`, `differentiator`, `pricing`,
+     `closing` (kontak/CTA). Ini **bukan** nama arketipe builder — builder tetap
+     memilih layout dari classifier 7 arketipe (`cover`, `problem`, `product`,
+     `features`, `usp`, `pricing`, `closing`), dan slot hanya menentukan
+     kategori/fallback foto. Dua kosakata ini sengaja dipisah: jangan ganti nama
+     slot menjadi nama arketipe (`macro`/`hands`/`viewfinder`/`lens`) karena
+     kategorinya jadi generik dan foto kehilangan topik.
    - `query`: SATU kalimat Bahasa Inggris yang mendeskripsikan foto untuk slot itu.
    - `keywords`: 3–5 kata kunci (dipisah koma) untuk scoring pipeline gambar.
    - `style`: selalu `photo`.
@@ -199,3 +206,17 @@ Aturan di bawah WAJIB dipenuhi agar output langsung bisa dikonsumsi tema builder
    harga, dan klaim perbandingan WAJIB bersumber dari `business-knowledge-base.md`.
    Data tidak tersedia → slide opsional DIHILANGKAN + catat di draf, JANGAN mengarang
    tier, metrik, testimoni, atau kolom kompetitor.
+6. **Slide Kontak / CTA (Slide terakhir `# Hubungi Kami`):**
+   - Judul slide WAJIB memakai kosakata kontak (`Hubungi Kami`, `Kontak`, `Terima
+     Kasih`) agar builder memilih arketipe `closing`. Judul seperti "Paket &
+     Kerjasama" akan dipetakan ke `pricing` — jangan mencampur kontak ke sana.
+   - Bullet berbentuk `- **Label** : Nilai` akan dirender builder sebagai matriks
+     kontak (ikon + label + nilai). Hanya label berbau kontak
+     (WhatsApp/Telepon/Email/Alamat/Website/Kontak) yang masuk matriks; bullet
+     komitmen/benefit lain otomatis menjadi daftar notes.
+   - Kontak yang tidak ada di input docs tetap ditulis sebagai placeholder
+     eksplisit (`[Nomor WhatsApp]`, `[Email Resmi]`, `[Alamat Kantor]`) — builder
+     mengubahnya menjadi penanda `Belum tersedia`. **DILARANG** menulis nomor,
+     email, atau alamat yang tidak ada di dokumen sumber.
+   - Jangan menaruh angka metrik pada slide kontak (arketipe `closing` tidak
+     merender spec matrix).

@@ -1,9 +1,12 @@
-/* themes/modern.js — Modern multi-template renderers (cover, welcome/problem+solution,
-   services, ecosystem, metrics, differentiator, pricing, closing, social-proof + dispatcher).
-   Direct ports of congen6 build_deck.py sections 1-4, adapted to generic
-   { title, content } slides with shared parsers from ../build-deck.
+/* themes/modern.js — Aperture Cinematic Minimalist slide renderers.
+   Exactly 7 archetypes (cover, problem, product, features, usp, pricing,
+   closing) + `renderCinematicSlide` dispatcher, consumed by build-deck.js via
+   `renderModernSlide`. Shared parsers come from ../build-deck.
    Zero-hallucination rule: render only parsed cards (cards.slice(0,4) as-is);
-   never invent default services/cards. Empty grid + console.warn on zero cards.
+   never invent default services/cards/metrics. Empty grid + console.warn on
+   zero cards. Chrome copy (kickers/rail labels) defaults to Bahasa Indonesia
+   to match the generated deck (`<html lang="id">`); every default is overridable
+   from the slide object.
 */
 const {
   inline,
@@ -12,29 +15,59 @@ const {
   sanitizeSlideContent,
   sanitizeContactDetails,
   resolveSlideSlot,
-  resolveSlideImageUrl
+  resolveSlideImageUrl,
+  METRIC_TOKEN_RE
 } = require('../build-deck');
 
-function slideBadge(index, totalSlides) {
-  return `${String(index + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
-}
+// Aperture Cinematic archetype set (SSOT): exactly these 9 names.
+// The first 6 are a 1:1 port of the Figma "Product Presentation Slide" export
+// (assets/figma-presentation/); `metrics` and `ecosystem` are native Aperture
+// extensions (Figma has no equivalent page) that replace the old behaviour of
+// letting traction/architecture slides fall through to the `product` layout.
+// renderCinematicSlide consumes the same names; manifest.json + the writer /
+// reviewer slot vocabulary are locked to this list by
+// scripts/test-cinematic-classifier.js.
+const CINEMATIC_ARCHETYPES = ['cover', 'problem', 'product', 'features', 'usp', 'pricing', 'metrics', 'ecosystem', 'closing'];
 
-// Aperture Cinematic archetype set (migration SSOT): exactly these 6 names.
-// Task 3's renderCinematicSlide dispatcher consumes the same 6 names.
-const CINEMATIC_ARCHETYPES = ['cover', 'problem', 'product', 'features', 'usp', 'pricing'];
-
-// Cinematic archetype -> legacy asset slot (imageFetcher SLOT_MAP keys).
-// Slot values verified against imageFetcher SLOT_MAP / resolveSlideSlot in
-// build-deck.js: macro/hands/viewfinder/lens entries were added there so
-// every value resolves to a category + fallback — never undefined.
+// Cinematic archetype -> default asset slot (imageFetcher SLOT_MAP keys).
+// Every value MUST resolve in imageFetcher.SLOT_MAP to a category + fallback —
+// never undefined (asserted by test-cinematic-classifier.js).
 const CINEMATIC_SLOT_MAP = {
   cover: 'hero',
   problem: 'problem',
   product: 'macro',
   features: 'hands',
   usp: 'viewfinder',
-  pricing: 'lens'
+  pricing: 'lens',
+  metrics: 'metrics',
+  ecosystem: 'ecosystem',
+  closing: 'closing'
 };
+
+// NOTE: METRIC_TOKEN_RE (the whole-token figure test that keeps
+// `**Biaya tak terprediksi**` a title instead of a metric) lives in
+// ../build-deck as the single definition, imported above.
+
+// Contact-shaped bullet labels for the closing slide: only these become contact
+// rows; everything else is a note (never a fabricated "contact").
+const CONTACT_LABEL_RE = /whatsapp|\bwa\b|telepon|telp|phone|email|mail|surat|alamat|kantor|website|\bweb\b|situs|kontak|contact|hubungi|instagram|linkedin|sosial/i;
+
+// Contact / CTA vocabulary → `closing` archetype. Kept out of the pricing offer
+// vocabulary so a contact slide renders the contact layout instead of falling
+// through the zero-tier pricing guard into a features list.
+const CLOSING_RE = /hubungi|kontak|contact|\bcta\b|call to action|langkah berikutnya|terima kasih|mulai sekarang/;
+const PRICING_RE = /paket|harga|penawaran|pricing|investasi|kerjasama|\bplan\b/;
+const USP_RE = /mengapa|kenapa|\bwhy\b|why us|nilai tambah|alasan|pembeda|keunggulan kompetitif|differentiator/;
+// Title-only archetypes: a metrics/architecture slide is opted into by its title.
+// They are deliberately NOT in the body layer — a stray "integrasi" in another
+// slide's prose must not steal that slide into the ecosystem layout.
+const METRICS_RE = /pencapaian|bukti\b|metrik|metrics|traction|pertumbuhan|statistik|kinerja|angka kunci/;
+const ECOSYSTEM_RE = /ekosistem|arsitektur|infrastruktur|integrasi\b|pipeline|alur kerja|workflow|\bstack\b/;
+const PROBLEM_RE = /masalah|tantangan|pain|problem/;
+// `\bproduk\b` (not bare `produk`) so the noun "produksi" no longer matches —
+// that false positive used to drag capability slides into the product layout.
+const PRODUCT_RE = /\bproduk\b|overview|solusi|solution|\bvalue\b/;
+const FEATURES_RE = /fitur|layanan|keunggulan|kemampuan|kapabilitas|capabilit|services|feature/;
 
 // Accept both pipeline slide shapes: { title, content } (build-deck) and
 // raw markdown objects { h1, raw, lines, bullets } (brief interface).
@@ -51,9 +84,10 @@ function cinematicText(slide) {
 
 // Single authoritative classifier (kills BUG-1 dual-classifier divergence).
 // Precedence is deliberate and locked by scripts/test-cinematic-classifier.js:
-// title keywords beat body keywords; within each layer pricing > usp >
-// problem > product > features (most specific first, e.g. "keunggulan
-// kompetitif" hits usp before the generic "keunggulan" features rule).
+// title keywords beat body keywords; within each layer closing > pricing > usp
+// > problem > product > features (most specific first, e.g. "keunggulan
+// kompetitif" hits usp before the generic "keunggulan" features rule, and a
+// contact slide hits closing before pricing's offer vocabulary).
 function classifyCinematicArchetype(slide, index = 0, totalSlides = 1) {
   slide = slide || {};
   const { t, combined } = cinematicText(slide);
@@ -63,18 +97,22 @@ function classifyCinematicArchetype(slide, index = 0, totalSlides = 1) {
   if (/profil|company profile|cover|hero/.test(t)) return 'cover';
 
   // Title-keyword layer
-  if (/paket|harga|penawaran|pricing|investasi|kerjasama|\bplan\b|kontak|hubungi|contact/.test(t)) return 'pricing';
-  if (/mengapa|kenapa|\bwhy\b|why us|nilai tambah|alasan|pembeda|keunggulan kompetitif|differentiator/.test(t)) return 'usp';
-  if (/masalah|tantangan|pain|problem/.test(t)) return 'problem';
-  if (/produk|overview|solusi|solution|\bvalue\b/.test(t)) return 'product';
-  if (/fitur|layanan|keunggulan|capabilit|services|feature/.test(t)) return 'features';
+  if (CLOSING_RE.test(t)) return 'closing';
+  if (PRICING_RE.test(t)) return 'pricing';
+  if (USP_RE.test(t)) return 'usp';
+  if (METRICS_RE.test(t)) return 'metrics';
+  if (ECOSYSTEM_RE.test(t)) return 'ecosystem';
+  if (PROBLEM_RE.test(t)) return 'problem';
+  if (PRODUCT_RE.test(t)) return 'product';
+  if (FEATURES_RE.test(t)) return 'features';
 
   // Body/combined fallback layer, same order (cover stays title/positional-only)
-  if (/paket|harga|penawaran|pricing|investasi|kerjasama|\bplan\b|kontak|hubungi|contact/.test(combined)) return 'pricing';
-  if (/mengapa|kenapa|\bwhy\b|why us|nilai tambah|alasan|pembeda|keunggulan kompetitif|differentiator/.test(combined)) return 'usp';
-  if (/masalah|tantangan|pain|problem/.test(combined)) return 'problem';
-  if (/produk|overview|solusi|solution|\bvalue\b/.test(combined)) return 'product';
-  if (/fitur|layanan|keunggulan|capabilit|services|feature/.test(combined)) return 'features';
+  if (CLOSING_RE.test(combined)) return 'closing';
+  if (PRICING_RE.test(combined)) return 'pricing';
+  if (USP_RE.test(combined)) return 'usp';
+  if (PROBLEM_RE.test(combined)) return 'problem';
+  if (PRODUCT_RE.test(combined)) return 'product';
+  if (FEATURES_RE.test(combined)) return 'features';
 
   // Positional fallback (mirrors legacy index-1-problem / else-solution)
   return index === 1 ? 'problem' : 'product';
@@ -87,7 +125,7 @@ function classifyModernArchetype(slide, index, totalSlides) {
   return classifyCinematicArchetype(slide, index, totalSlides);
 }
 
-// --- Aperture Cinematic 6 Archetype Renderers (Figma DOM Parity) ---
+// --- Aperture Cinematic 7 Archetype Renderers (Figma DOM Parity) ---
 
 function resolveSlideParams(slide, brand, defaultIndex, defaultSlot, arg3, arg4, arg5) {
   let index = defaultIndex;
@@ -162,6 +200,18 @@ function renderCover(slide, brand, indexOrAsset = 0, assetsDir = '', totalSlides
     if (candidate) kicker = candidate.replace(/^tagline:\s*/i, '').trim();
   }
 
+  // Hero metrics: the writer contract mandates 2-3 key stats on slide 1. They
+  // render as a glass stat strip instead of being dropped silently.
+  const statLines = lines.filter(l => /^[-*]\s/.test(l));
+  const statsHtml = statLines.slice(0, 3).map(st => {
+    const m = extractBigNumberMetric(st);
+    const label = (m.title && m.title.replace(/\.$/, '') !== m.number ? m.desc : '') || m.desc || m.title.replace(/\.$/, '');
+    return `                <div class="cover-stat">
+                  <span class="cover-stat-value">${inline(m.number)}</span>
+                  ${label ? `<span class="cover-stat-label">${inline(label)}</span>` : ''}
+                </div>`;
+  }).join('\n');
+
   const statusText = slide.status || slide.pill || (brand && brand.status) || '';
   const titleHtml = inline(title).replace(/\n/g, '<br>');
   const activeClass = index === 0 ? ' active' : '';
@@ -185,6 +235,9 @@ function renderCover(slide, brand, indexOrAsset = 0, assetsDir = '', totalSlides
               ${subtitle ? `<p class="hero-sub">
                 ${inline(subtitle)}
               </p>` : ''}
+              ${statsHtml ? `<div class="cover-stats">
+${statsHtml}
+              </div>` : ''}
             </div>
           </div>
         </div>
@@ -197,8 +250,8 @@ function renderProblem(slide, brand, indexOrAsset = 1, assetsDir = '', totalSlid
   const { index, imgSrc } = resolveSlideParams(slide, brand, 1, 'problem', indexOrAsset, assetsDir, totalSlides);
 
   const title = slide.title != null ? String(slide.title) : String(slide.h1 || 'Great cameras are still a burden to carry.');
-  const kicker = slide.kicker || 'The problem';
-  const caption = slide.caption || 'The old way';
+  const kicker = slide.kicker || 'Masalahnya';
+  const caption = slide.caption || 'Cara lama';
   const ghostText = slide.ghostText || 'NO';
 
   let items = [];
@@ -248,42 +301,66 @@ ${itemsHtml}
       </article>`;
 }
 
+// Leading metric token of a "<metric> — <narration>" bullet. `20:1` must stay a
+// single token (the old `[—–:-]` split chopped it into `20` + `1`).
+const LEADING_METRIC_RE = /^([$€£~<>]?\s*(?:Rp\s*)?\d[\d.,]*(?:\s*(?:rb|ribu|jt|juta|k|m))?(?:[%×xX+]|[:/–—-]\s*\d[\d.,]*|[:/–—-][a-zA-Z]{2,}|[a-zA-Z]{1,3})?)(?:\s*[—–-]\s*|\s*:?\s+)([\s\S]*)$/;
+
+function metricOrNothing(metrics) {
+  for (const m of metrics) {
+    if (!m) continue;
+    // A bare narrative number must never become the headline metric, and the
+    // legacy `100%` placeholder means "no metric found".
+    if (m !== '100%' && /\d/.test(m) && METRIC_TOKEN_RE.test(String(m).trim())) {
+      return String(m).trim();
+    }
+  }
+  return '';
+}
+
 function parseMetricBullet(bulletLine) {
   if (!bulletLine) return { metric: '', label: '', title: '' };
-  const clean = bulletLine.replace(/^[-*]\s*/, '').trim();
+  // Strip a bullet marker only when it is followed by whitespace. A bare
+  // `/^[-*]\s*/` also ate the first `*` of a bold token, so callers that had
+  // already removed the marker (`**20:1** — ...`) lost the metric entirely and
+  // the raw `*` leaked into the rendered label.
+  const clean = bulletLine.replace(/^[-*]\s+/, '').trim();
   const boldMatch = clean.match(/^\*\*([^*]+)\*\*\s*[:—–-]?\s*(.*)$/);
   if (boldMatch) {
     const part1 = boldMatch[1].trim();
     const part2 = boldMatch[2].trim();
-    const isPart1Metric = /\d/.test(part1) && /^[$€£Rp~><]?\s*[\d.,]+[a-zA-Z%xX/]*$/i.test(part1);
-    if (isPart1Metric) {
+    // Whole bold token is the figure (`0.9s`, `214g`, `20:1`, `3-tier`, `1×`).
+    if (METRIC_TOKEN_RE.test(part1)) {
       return { metric: part1, label: part2 || part1, title: part2 };
     }
-    const numInPart2 = part2.match(/^([$€£Rp~><]?\s*[\d.,]+[a-zA-Z%xX/]*)\b/i);
-    if (numInPart2 && /\d/.test(numInPart2[1])) {
-      return { metric: numInPart2[1].trim(), label: part1, title: part1 };
+    // Bold token is the label and the figure leads the detail text.
+    const leadInPart2 = part2.match(LEADING_METRIC_RE);
+    const metricFromPart2 = leadInPart2 ? metricOrNothing([leadInPart2[1]]) : '';
+    if (metricFromPart2) {
+      return { metric: metricFromPart2, label: part1, title: part1 };
     }
-    const m = extractBigNumberMetric(bulletLine);
-    if (m.number && m.number !== '100%' && /\d/.test(m.number)) {
-      return { metric: m.number, label: part1, title: part1 };
-    }
-    return { metric: '', label: part2, title: part1 };
+    // No figure anywhere: keep the bullet clean instead of inventing a metric.
+    return { metric: '', label: part2 || part1, title: part1 };
+  }
+  const lead = clean.match(LEADING_METRIC_RE);
+  const leadMetric = lead ? metricOrNothing([lead[1]]) : '';
+  if (leadMetric) {
+    const label = (lead[2] || '').trim() || leadMetric;
+    return { metric: leadMetric, label, title: label };
   }
   const parts = clean.split(/[—–:-]/);
   if (parts.length > 1) {
     const p0 = parts[0].trim();
     const p1 = parts.slice(1).join(' ').trim();
-    if (/\d/.test(p0) && /^[$€£Rp~><]?\s*[\d.,]+[a-zA-Z%xX/]*$/i.test(p0)) {
-      return { metric: p0, label: p1, title: p1 };
-    }
-    if (/\d/.test(p1) && /^[$€£Rp~><]?\s*[\d.,]+[a-zA-Z%xX/]*$/i.test(p1)) {
-      return { metric: p1, label: p0, title: p0 };
+    const tailMetric = metricOrNothing([p1]);
+    if (tailMetric) {
+      return { metric: tailMetric, label: p0, title: p0 };
     }
     return { metric: '', label: p1, title: p0 };
   }
   const m = extractBigNumberMetric(bulletLine);
-  if (m.number && m.number !== '100%' && /\d/.test(m.number)) {
-    return { metric: m.number, label: m.desc || m.title, title: m.title };
+  const metric = metricOrNothing([m.number]);
+  if (metric) {
+    return { metric, label: m.desc || m.title, title: m.title };
   }
   return { metric: '', label: clean, title: clean };
 }
@@ -294,7 +371,7 @@ function renderProduct(slide, brand, indexOrAsset = 2, assetsDir = '', totalSlid
   const { index, imgSrc } = resolveSlideParams(slide, brand, 2, 'macro', indexOrAsset, assetsDir, totalSlides);
 
   const title = slide.title != null ? String(slide.title) : String(slide.h1 || 'One body.\nEvery format.');
-  const kicker = slide.kicker || 'The product';
+  const kicker = slide.kicker || 'Produk';
   const badge = slide.badge || slide.floatingBadge || '';
 
   let desc = slide.desc || slide.subtitle || '';
@@ -323,12 +400,18 @@ function renderProduct(slide, brand, indexOrAsset = 2, assetsDir = '', totalSlid
     }
   }
 
+  // Degradation guard: bullets that carry no figure at all (e.g. a capability
+  // list misclassified as `product`) must not ship a 2x2 grid of empty metric
+  // holes. Render label-only cells instead, and warn either way.
+  const hasMetric = stats.some(st => st.metric);
   if (stats.length === 0) {
     console.warn(`[modern] product slide ${index + 1} has zero stats; rendering empty grid`);
+  } else if (!hasMetric) {
+    console.warn(`[modern] product slide ${index + 1} has no numeric metric; rendering label-only stat cells`);
   }
 
-  const statsHtml = stats.slice(0, 4).map(st => `              <div class="stat-cell">
-                <div class="stat-metric">${inline(st.metric)}</div>
+  const statsHtml = stats.slice(0, 4).map(st => `              <div class="stat-cell${st.metric ? '' : ' no-metric'}">
+                ${st.metric ? `<div class="stat-metric">${inline(st.metric)}</div>` : ''}
                 <div class="stat-label">${inline(st.label)}</div>
               </div>`).join('\n');
 
@@ -362,8 +445,8 @@ function renderFeatures(slide, brand, indexOrAsset = 3, assetsDir = '', totalSli
   const { index, imgSrc } = resolveSlideParams(slide, brand, 3, 'hands', indexOrAsset, assetsDir, totalSlides);
 
   const title = slide.title != null ? String(slide.title) : String(slide.h1 || 'Everything, on board.');
-  const kicker = slide.kicker || 'Key features';
-  const railLabel = slide.railLabel || slide.rail || 'On board — everything you need';
+  const kicker = slide.kicker || 'Fitur utama';
+  const railLabel = slide.railLabel || slide.rail || 'Semua yang Anda butuhkan';
 
   let items = [];
   if (Array.isArray(slide.items)) {
@@ -471,7 +554,7 @@ function renderUsp(slide, brand, indexOrAsset = 4, assetsDir = '', totalSlides =
   const { index, imgSrc } = resolveSlideParams(slide, brand, 4, 'viewfinder', indexOrAsset, assetsDir, totalSlides);
 
   const title = slide.title != null ? String(slide.title) : String(slide.h1 || 'Three reasons it earns its place.');
-  const kicker = slide.kicker || 'Why it wins';
+  const kicker = slide.kicker || 'Mengapa kami';
 
   let cards = [];
   let honesty = '';
@@ -553,15 +636,15 @@ ${uspCardsHtml}
       </article>`;
 }
 
-// 6. Pricing: 12-col split, lens photo with "Ship it." watermark, 3 pricing tiers (featured tier inverted)
+// 6. Pricing: 12-col split, lens photo with a vertical rail overlay, 3 pricing tiers (featured tier inverted)
 function renderPricing(slide, brand, indexOrAsset = 5, assetsDir = '', totalSlides = 6) {
   slide = slide || {};
   const { index, imgSrc } = resolveSlideParams(slide, brand, 5, 'lens', indexOrAsset, assetsDir, totalSlides);
 
   const title = slide.title != null ? String(slide.title) : String(slide.h1 || 'Pick a configuration.');
-  const kicker = slide.kicker || 'Get yours';
-  const railTitle = slide.railTitle || 'Ship it.';
-  const railSub = slide.railSub || 'Free delivery worldwide';
+  const kicker = slide.kicker || 'Pilih paket';
+  const railTitle = slide.railTitle || 'Siap mulai.';
+  const railSub = slide.railSub || 'Pendampingan dari awal';
 
   let tiers = [];
   if (Array.isArray(slide.tiers)) {
@@ -651,7 +734,231 @@ ${pricingTiersHtml}
       </article>`;
 }
 
-// Cinematic dispatcher: routes to the 6 archetype renderers
+// 7. Metrics: "proof band" — number band left (8-col), image rail right (4-col).
+// Native Aperture extension. Traction/proof content is a figure grid, not a
+// product spec sheet, so it must not borrow the product layout (which pairs a
+// macro product photo with the stats).
+function renderMetrics(slide, brand, indexOrAsset = 6, assetsDir = '', totalSlides = 9) {
+  slide = slide || {};
+  const { index, imgSrc } = resolveSlideParams(slide, brand, 6, 'metrics', indexOrAsset, assetsDir, totalSlides);
+
+  const title = slide.title != null ? String(slide.title) : String(slide.h1 || 'Pencapaian & Bukti');
+  const kicker = slide.kicker || 'Validasi & metrik';
+  const railLabel = slide.railLabel || slide.rail || 'Bukti';
+
+  const content = sanitizeSlideContent(slide.content || slide.raw || '').trim();
+  const lines = content.replace(/<!--[\s\S]*?-->/g, '').split('\n').map(l => l.trim()).filter(Boolean);
+
+  let desc = slide.desc || slide.subtitle || '';
+  let honesty = '';
+  const metrics = [];
+
+  if (Array.isArray(slide.stats)) {
+    metrics.push(...slide.stats.map(s => ({
+      metric: s.metric || s.value || s.number || '',
+      label: s.label || s.desc || s.title || ''
+    })));
+  } else {
+    for (const line of lines) {
+      if (/^\*?\*?intinya[:*\s]/i.test(line)) {
+        honesty = line.replace(/^\*{0,2}intinya[:*\s]*\*{0,2}\s*/i, '').replace(/\*\*/g, '').trim();
+        continue;
+      }
+      const bullet = line.match(/^[-*]\s+(.+)$/);
+      if (bullet) {
+        const m = parseMetricBullet(bullet[1]);
+        metrics.push({ metric: m.metric, label: m.metric ? (m.label || m.title) : (m.title || m.label) });
+        continue;
+      }
+      if (!desc) desc = line;
+    }
+  }
+
+  const usable = metrics.filter(m => m.metric || m.label);
+  if (usable.length === 0) {
+    console.warn(`[modern] metrics slide ${index + 1} has zero metrics; rendering empty band`);
+  }
+  const cellsHtml = usable.slice(0, 4).map(m => `              <div class="metric-cell${m.metric ? '' : ' no-metric'}">
+                ${m.metric ? `<div class="metric-value">${inline(m.metric)}</div>` : ''}
+                <div class="metric-label">${inline(m.label)}</div>
+              </div>`).join('\n');
+
+  const activeClass = index === 0 ? ' active' : '';
+
+  return `      <!-- Slide ${String(index + 1).padStart(2, '0')}: Metrics (Traction & Proof) -->
+      <article class="slide-item${activeClass}" id="slide-${index}">
+        <div class="slide-metrics">
+          <div class="band-col">
+            <span class="mono-kicker">${inline(kicker)}</span>
+            <h2 class="headline">${inline(title)}</h2>
+            ${desc ? `<p class="desc">${inline(desc)}</p>` : ''}
+            <div class="metrics-band">
+${cellsHtml}
+            </div>
+            ${honesty ? `<p class="metrics-note">${inline(honesty)}</p>` : ''}
+          </div>
+          <div class="img-col">
+            <img src="${imgSrc}" alt="${inline(title)}">
+            <span class="rail-label">${inline(railLabel)}</span>
+          </div>
+        </div>
+      </article>`;
+}
+
+// 8. Ecosystem: "system map" — image rail left (4-col) + hairline node matrix
+// right (8-col). Each node is { name, role } parsed from the draft bullets;
+// structural default labels are never invented (empty matrix + console.warn).
+function renderEcosystem(slide, brand, indexOrAsset = 7, assetsDir = '', totalSlides = 9) {
+  slide = slide || {};
+  const { index, imgSrc } = resolveSlideParams(slide, brand, 7, 'ecosystem', indexOrAsset, assetsDir, totalSlides);
+
+  const title = slide.title != null ? String(slide.title) : String(slide.h1 || 'Arsitektur & Ekosistem');
+  const kicker = slide.kicker || 'Arsitektur sistem';
+  const caption = slide.caption || 'Cara kerja';
+
+  const content = sanitizeSlideContent(slide.content || slide.raw || '').trim();
+  const { introText, cards } = parseEditorialCards(content);
+
+  let nodes;
+  if (Array.isArray(slide.items)) {
+    nodes = slide.items.map(i => ({ name: i.name || i.title || '', role: i.role || i.desc || i.detail || '' }));
+  } else if (Array.isArray(slide.nodes)) {
+    nodes = slide.nodes.map(i => ({ name: i.name || i.title || '', role: i.role || i.desc || '' }));
+  } else {
+    nodes = cards.map(c => ({ name: c.title, role: c.desc }));
+  }
+  nodes = nodes.filter(n => n.name || n.role);
+
+  if (nodes.length === 0) {
+    console.warn(`[modern] ecosystem slide ${index + 1} has zero nodes; rendering empty matrix`);
+  }
+
+  const nodesHtml = nodes.slice(0, 4).map((n, i) => `              <div class="ecosystem-node">
+                <span class="node-index">${String(i + 1).padStart(2, '0')}</span>
+                <h3 class="node-name">${inline(n.name)}</h3>
+                <p class="node-role">${inline(n.role)}</p>
+              </div>`).join('\n');
+
+  const activeClass = index === 0 ? ' active' : '';
+
+  return `      <!-- Slide ${String(index + 1).padStart(2, '0')}: Ecosystem (System Map) -->
+      <article class="slide-item${activeClass}" id="slide-${index}">
+        <div class="slide-ecosystem">
+          <div class="img-col">
+            <img src="${imgSrc}" alt="${inline(title)}">
+            <span class="caption">${inline(caption)}</span>
+          </div>
+          <div class="text-col">
+            <span class="mono-kicker">${inline(kicker)}</span>
+            <h2 class="headline">${inline(title)}</h2>
+            ${introText ? `<p class="desc">${inline(introText)}</p>` : ''}
+            <div class="ecosystem-grid">
+${nodesHtml}
+            </div>
+          </div>
+        </div>
+      </article>`;
+}
+
+// 9. Closing: 12-col split — rail photo left, contact matrix + CTA right.
+// Contact values pass through sanitizeContactDetails(), so reviewer placeholders
+// ("[Nomor WhatsApp]", "[Email Resmi]", "[Alamat Kantor]") never reach the
+// published deck as raw brackets and are never replaced with fabricated
+// numbers either (Zero-Hallucination rule). Nothing is invented: the CTA link is
+// only emitted when a real e-mail/URL was supplied in the draft.
+function renderClosing(slide, brand, indexOrAsset = 6, assetsDir = '', totalSlides = 7) {
+  slide = slide || {};
+  const { index, imgSrc } = resolveSlideParams(slide, brand, 6, 'closing', indexOrAsset, assetsDir, totalSlides);
+
+  const title = slide.title != null ? String(slide.title) : String(slide.h1 || 'Hubungi Kami');
+  const kicker = slide.kicker || 'Hubungi kami';
+  const railLabel = slide.railLabel || slide.rail || 'Langkah berikutnya';
+  const ctaLabel = slide.cta || 'Mulai sekarang';
+
+  const content = sanitizeSlideContent(sanitizeContactDetails(slide.content || slide.raw || ''));
+  const lines = content.replace(/<!--[\s\S]*?-->/g, '').split('\n').map(l => l.trim()).filter(Boolean);
+
+  let desc = slide.desc || slide.subtitle || '';
+  const contacts = [];
+  const notes = [];
+  for (const line of lines) {
+    if (line.startsWith('#')) continue;
+    const bullet = line.match(/^[-*]\s+(.+)$/);
+    const body = bullet ? bullet[1].trim() : line;
+    const named = body.match(/^\*\*([^*]+)\*\*\s*[:—–-]?\s*(.*)$/) || body.match(/^([^:]{2,40}?)\s*:\s*(.+)$/);
+    if (named) {
+      const label = named[1].replace(/[*_`]/g, '').replace(/[:—–-]\s*$/, '').trim();
+      const value = (named[2] || '').replace(/[*_`]/g, '').trim();
+      if (label && value) {
+        // Only contact-shaped labels belong in the contact matrix; commitment /
+        // benefit bullets become a plain note list instead of fake contacts.
+        (CONTACT_LABEL_RE.test(label) ? contacts : notes).push({ label, value });
+        continue;
+      }
+    }
+    if (!desc) desc = body;
+  }
+
+  if (contacts.length === 0) {
+    console.warn(`[modern] closing slide ${index + 1} has zero contacts; rendering CTA without the contact matrix`);
+  }
+
+  const notesHtml = notes.slice(0, 4).map(n => `              <li><span class="dot"></span><span><strong>${inline(n.label)}</strong> — ${inline(n.value)}</span></li>`).join('\n');
+
+  const iconFor = (label) => {
+    const l = String(label || '').toLowerCase();
+    if (/whatsapp|telepon|phone|telp|wa\b/.test(l)) return '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>';
+    if (/email|mail|surat/.test(l)) return '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>';
+    if (/web|situs|url|tautan|link/.test(l)) return '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>';
+    return '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>';
+  };
+
+  const contactsHtml = contacts.slice(0, 4).map(c => `              <div class="contact-row">
+                <span class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${iconFor(c.label)}</svg></span>
+                <span class="contact-meta">
+                  <span class="contact-label">${inline(c.label)}</span>
+                  <span class="contact-value">${inline(c.value)}</span>
+                </span>
+              </div>`).join('\n');
+
+  // Real link derived from supplied data only (never fabricated).
+  const linkValue = contacts.map(c => c.value).find(v => /@/.test(v) || /^https?:\/\//i.test(v) || /^[\w.-]+\.(id|com|co|net|org|io)(\/|$)/i.test(v));
+  let href = null;
+  if (linkValue) {
+    if (/^https?:\/\//i.test(linkValue)) href = linkValue;
+    else if (/@/.test(linkValue)) href = `mailto:${linkValue.split(/[\s,]/)[0]}`;
+    else href = `https://${linkValue.split(/[\s,]/)[0]}`;
+  }
+  const ctaHtml = href
+    ? `<a class="closing-cta" href="${inline(href)}">${inline(ctaLabel)}</a>`
+    : `<button class="closing-cta" type="button">${inline(ctaLabel)}</button>`;
+
+  const activeClass = index === 0 ? ' active' : '';
+
+  return `      <!-- Slide ${String(index + 1).padStart(2, '0')}: Closing (CTA & Contact) -->
+      <article class="slide-item${activeClass}" id="slide-${index}">
+        <div class="slide-closing">
+          <div class="img-col">
+            <img src="${imgSrc}" alt="${inline(title)}">
+            <span class="rail-label">${inline(railLabel)}</span>
+          </div>
+          <div class="content-col">
+            <span class="mono-kicker">${inline(kicker)}</span>
+            <h2 class="headline">${inline(title)}</h2>
+            ${desc ? `<p class="closing-desc">${inline(desc)}</p>` : ''}
+            ${notesHtml ? `<ul class="closing-notes">
+${notesHtml}
+            </ul>` : ''}
+            ${contactsHtml ? `<div class="closing-contacts">
+${contactsHtml}
+            </div>` : ''}
+            <div class="closing-actions">${ctaHtml}</div>
+          </div>
+        </div>
+      </article>`;
+}
+
+// Cinematic dispatcher: routes to the 7 archetype renderers
 function renderCinematicSlide(slide, arg2, arg3, arg4, arg5) {
   let index = 0;
   let totalSlides = 6;
@@ -687,9 +994,12 @@ function renderCinematicSlide(slide, arg2, arg3, arg4, arg5) {
     case 'product': return renderProduct(slide, brand, index, assetsDir, totalSlides);
     case 'features': return renderFeatures(slide, brand, index, assetsDir, totalSlides);
     case 'usp': return renderUsp(slide, brand, index, assetsDir, totalSlides);
+    case 'metrics': return renderMetrics(slide, brand, index, assetsDir, totalSlides);
+    case 'ecosystem': return renderEcosystem(slide, brand, index, assetsDir, totalSlides);
+    case 'closing': return renderClosing(slide, brand, index, assetsDir, totalSlides);
     case 'pricing': {
-      // Zero-tier safety: contact/CTA slides misclassified as pricing would
-      // otherwise ship an empty tier grid. Fall back to features list layout.
+      // Zero-tier safety: an offer slide with no table/items would otherwise
+      // ship an empty tier grid. Fall back to the features list layout.
       const content = String(slide.content || slide.raw || '').replace(/<!--[\s\S]*?-->/g, '');
       const tableRows = content.split('\n').filter(l => l.trim().startsWith('|')).length;
       const hasTiers = (Array.isArray(slide.tiers) && slide.tiers.length > 0)
@@ -702,682 +1012,11 @@ function renderCinematicSlide(slide, arg2, arg3, arg4, arg5) {
   }
 }
 
-// Slide 1: Hero Cover — congen6 section 1 port (hero-layout-grid).
-function renderModernHero(slide, brand, index = 0, assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').replace(/<!--[\s\S]*?-->/g, '').trim();
-  const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
-  let tagline = '';
-  let desc = '';
-  const statLines = [];
-  for (const line of lines) {
-    if (/^[-*]\s/.test(line)) {
-      statLines.push(line);
-    } else if (!tagline && !/^💼/u.test(line) && line.length > 5) {
-      tagline = line;
-    } else if (/^💼/u.test(line)) {
-      desc = line.replace(/^💼\s*/u, '');
-    } else if (!desc && line.length > 25) {
-      desc = line;
-    }
-  }
-
-  const targetSlot = resolveSlideSlot(slide, index, totalSlides, 'hero');
-  const imgSrc = resolveSlideImageUrl(index + 1, targetSlot, assetsDir);
-
-  const statsHtml = statLines.slice(0, 3).map(st => {
-    const m = extractBigNumberMetric(st);
-    return `
-      <div class="hero-stat-card">
-        <span class="hero-stat-value">${inline(m.number)}</span>
-        <span class="hero-stat-desc">${inline(m.title ? `${m.title} ${m.desc}` : m.desc)}</span>
-      </div>`;
-  }).join('\n');
-
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="hero-layout-grid">
-          <div class="hero-left-panel">
-            <div style="display:flex; flex-direction:column; gap:10px;">
-              <div class="hero-header-brand-row">
-                <div class="hero-logo-mark">${inline(brand.name)}</div>
-                <span class="slide-kicker-badge">Company Profile &amp; Pitch Deck</span>
-                <span class="slide-index-badge" style="margin-left:auto;">${slideBadge(index, totalSlides)}</span>
-              </div>
-              <h1 class="hero-main-title">${inline(slide.title)}</h1>
-              ${tagline ? `<p class="hero-deck-description">${inline(tagline)}</p>` : ''}
-              ${desc ? `<p class="hero-deck-description">${inline(desc)}</p>` : ''}
-            </div>
-            ${statsHtml ? `<div class="hero-metrics-strip">${statsHtml}</div>` : ''}
-          </div>
-          <div class="editorial-image-frame">
-            <img src="${imgSrc}" alt="${inline(slide.title)}" />
-            ${tagline ? `<div class="image-floating-badge"><div class="dot"></div><span>${inline(tagline)}</span></div>` : ''}
-          </div>
-        </div>
-      </div>
-    </section>`;
-}
-
-// Slides 2 & 3: Problem / Solution — congen6 sections 2-3 port (two-col-layout-grid).
-function renderModernWelcome(slide, brand, index = 1, type = 'problem', assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').trim();
-  const { introText, cards } = parseEditorialCards(content);
-  const isProblem = type === 'problem' || /masalah|tantangan|pain|problem/i.test(slide.title || '');
-  const badgeText = isProblem ? 'Tantangan Industri' : 'Solusi & Nilai Tambah';
-  const badgeClass = isProblem ? 'slide-kicker-badge danger' : 'slide-kicker-badge';
-  const targetSlot = resolveSlideSlot(slide, index, totalSlides, isProblem ? 'problem' : 'solution');
-  const imgSrc = resolveSlideImageUrl(index + 1, targetSlot, assetsDir);
-
-  if (cards.length === 0) console.warn(`[modern] welcome slide ${index + 1} has zero cards; rendering empty grid`);
-  const cardsHtml = cards.slice(0, 4).map((card, i) => {
-    const num = String(i + 1).padStart(2, '0');
-    return `
-      <div class="editorial-story-card">
-        <div>
-          <div class="card-top-row">
-            <span class="card-number-badge${isProblem ? ' danger' : ''}">${num}</span>
-            <span class="card-pill-tag${isProblem ? ' danger' : ' solution'}">${inline(badgeText)}</span>
-          </div>
-          <h3 class="card-main-title">${inline(card.title)}</h3>
-          <p class="card-body-text">${inline(card.desc)}</p>
-        </div>
-      </div>`;
-  }).join('\n');
-
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="slide-header">
-          <div class="slide-header-left">
-            <span class="${badgeClass}">${inline(badgeText)}</span>
-            <h2 class="slide-title">${inline(slide.title)}</h2>
-          </div>
-          <div class="slide-header-right">
-            ${introText ? `<p class="slide-subtitle">${inline(introText)}</p>` : ''}
-            <span class="slide-index-badge">${slideBadge(index, totalSlides)}</span>
-          </div>
-        </div>
-        <div class="two-col-layout-grid">
-          <div class="editorial-image-frame">
-            <img src="${imgSrc}" alt="${inline(slide.title)}" />
-          </div>
-          <div class="cards-vertical-stack">
-            ${cardsHtml}
-          </div>
-        </div>
-      </div>
-    </section>`;
-}
-
-// Slide 4: Services Bento — congen6 section 4 port (services-layout-grid).
-function renderModernServices(slide, brand, index = 3, assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').trim();
-  const { introText, cards } = parseEditorialCards(content);
-  const targetSlot = resolveSlideSlot(slide, index, totalSlides, 'services');
-  const imgSrc = resolveSlideImageUrl(index + 1, targetSlot, assetsDir);
-
-  if (cards.length === 0) console.warn(`[modern] services slide ${index + 1} has zero cards; rendering empty grid`);
-  const cardsHtml = cards.slice(0, 4).map((card, i) => {
-    const num = String(i + 1).padStart(2, '0');
-    return `
-      <div class="service-card">
-        <div>
-          <div class="service-top-row">
-            <span class="service-badge-num">${num}</span>
-            <span class="service-tag-pill">Layanan</span>
-          </div>
-          <h3 class="service-title">${inline(card.title)}</h3>
-          <p class="service-desc">${inline(card.desc)}</p>
-        </div>
-      </div>`;
-  }).join('\n');
-
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="slide-header">
-          <div class="slide-header-left">
-            <span class="slide-kicker-badge">Kemampuan Platform</span>
-            <h2 class="slide-title">${inline(slide.title)}</h2>
-          </div>
-          <div class="slide-header-right">
-            ${introText ? `<p class="slide-subtitle">${inline(introText)}</p>` : ''}
-            <span class="slide-index-badge">${slideBadge(index, totalSlides)}</span>
-          </div>
-        </div>
-        <div class="services-layout-grid">
-          <div class="services-left-col">
-            <div class="services-stat-summary">
-              <span class="hero-trust-label">Layanan Unggulan</span>
-              ${introText ? `<p class="services-metric-desc">${inline(introText)}</p>` : ''}
-            </div>
-            <div class="editorial-image-frame services-photo-frame">
-              <img src="${imgSrc}" alt="${inline(slide.title)}" />
-            </div>
-          </div>
-          <div class="services-2x2-grid">
-            ${cardsHtml}
-          </div>
-        </div>
-      </div>
-    </section>`;
-}
-
-function renderFeatureCards(slide, brand, index = 3, assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').trim();
-  const { introText, cards } = parseEditorialCards(content);
-  // Zero-bullet guard: the paragraph fallback in parseEditorialCards can invent a
-  // card from prose, so gate on raw bullet lines — zero bullets means empty grid.
-  const bulletCount = (content.match(/^[-*]\s/gm) || []).length;
-  if (bulletCount === 0) console.warn(`[modern] feature-cards slide ${index + 1} has zero bullets; rendering empty grid`);
-  else if (cards.length === 0) console.warn(`[modern] feature-cards slide ${index + 1} has zero cards; rendering empty grid`);
-  if (cards.length > 4) console.warn(`[modern] feature-cards slide ${index + 1} has ${cards.length} cards; rendering first 4, remainder needs Part split`);
-  const visibleCards = bulletCount === 0 ? [] : cards;
-  const cardsHtml = visibleCards.slice(0, 4).map((c) => `
-    <div class="feature-card">
-      <div class="card-icon-brand"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg></div>
-      <h3>${inline(c.title)}</h3>
-      <p>${inline(c.desc)}</p>
-    </div>`).join('\n');
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="slide-header">
-          <div class="slide-header-left">
-            <span class="slide-kicker-badge">Fitur Unggulan</span>
-            <h2 class="slide-title">${inline(slide.title)}</h2>
-          </div>
-          <div class="slide-header-right">
-            ${introText ? `<p class="slide-subtitle">${inline(introText)}</p>` : ''}
-            <span class="slide-index-badge">${slideBadge(index, totalSlides)}</span>
-          </div>
-        </div>
-        <div class="feature-cards-grid">${cardsHtml}</div>
-      </div>
-    </section>`;
-}
-
-function renderFeatureSplit(slide, brand, index = 4, assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').trim();
-  const { introText, cards } = parseEditorialCards(content);
-  // 'solution' default slot: hero/solution/closing/ecosystem consumption depends on
-  // the image directive (known limitation — directive wins, see resolveSlideSlot).
-  const targetSlot = resolveSlideSlot(slide, index, totalSlides, 'solution');
-  const imgSrc = resolveSlideImageUrl(index + 1, targetSlot, assetsDir);
-  if (cards.length === 0) console.warn(`[modern] feature-split slide ${index + 1} has zero cards; rendering empty grid`);
-  if (cards.length > 4) console.warn(`[modern] feature-split slide ${index + 1} has ${cards.length} cards; rendering first 4, remainder needs Part split`);
-  const miniHtml = cards.slice(0, 4).map((c) => `
-    <div class="feature-card"><h3>${inline(c.title)}</h3><p>${inline(c.desc)}</p></div>`).join('\n');
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="feature-split">
-          <div>
-            <span class="slide-kicker-badge">Sorotan Fitur</span>
-            <h2 class="slide-title">${inline(slide.title)}</h2>
-            ${introText ? `<p class="slide-subtitle">${inline(introText)}</p>` : ''}
-            <div class="feature-cards-grid">${miniHtml}</div>
-          </div>
-          <div class="split-photo editorial-image-frame"><img src="${imgSrc}" alt="${inline(slide.title)}" /></div>
-        </div>
-      </div>
-    </section>`;
-}
-
-// Slide 5: Ecosystem — congen6 section 5 port (ecosystem-grid-split).
-// Orbit-SVG pattern from renderCanvaEcosystem restyled to congen6 GPU panel markup.
-// Zero-hallucination: node labels from parsed cards (title -> name, desc -> role);
-// structural default labels only when zero cards (with console.warn) — labels are
-// structural, not factual claims.
-function renderModernEcosystem(slide, brand, index = 4, assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').trim();
-  const { introText, cards } = parseEditorialCards(content);
-  const targetSlot = resolveSlideSlot(slide, index, totalSlides, 'ecosystem');
-  const imgSrc = resolveSlideImageUrl(index + 1, targetSlot, assetsDir);
-
-  let nodes;
-  if (cards.length === 0) {
-    console.warn(`[modern] ecosystem slide ${index + 1} has zero cards; rendering structural default orbit labels`);
-    nodes = [
-      { name: 'Node 1', role: 'Peran 1' },
-      { name: 'Node 2', role: 'Peran 2' },
-      { name: 'Node 3', role: 'Peran 3' },
-      { name: 'Node 4', role: 'Peran 4' }
-    ];
-  } else {
-    nodes = cards.slice(0, 4).map(c => ({ name: c.title, role: c.desc }));
-  }
-
-  const cx = 250, cy = 250, r = 160;
-  const numNodes = nodes.length;
-  const satellitesSvg = nodes.map((node, i) => {
-    const angle = -Math.PI / 2 + (i * 2 * Math.PI) / numNodes;
-    const x = Math.round(cx + r * Math.cos(angle));
-    const y = Math.round(cy + r * Math.sin(angle));
-    return `
-        <g class="orbit-node">
-          <line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${brand.primaryColor}" stroke-opacity="0.55" stroke-width="2" stroke-dasharray="6 6"/>
-          <circle cx="${x}" cy="${y}" r="40" fill="#FFFFFF" stroke="${brand.primaryColor}" stroke-width="2.5"/>
-          <text x="${x}" y="${y - 6}" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" fill="#0F172A">${inline(node.name)}</text>
-          <text x="${x}" y="${y + 12}" text-anchor="middle" font-family="'Inter', sans-serif" font-size="10" font-weight="600" fill="#007A87">${inline(node.role)}</text>
-        </g>`;
-  }).join('\n');
-
-  const orbitSvg = `
-      <svg class="ecosystem-orbit-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="${cx}" cy="${cy}" r="${r + 40}" fill="none" stroke="${brand.primaryColor}" stroke-opacity="0.12" stroke-width="2" stroke-dasharray="6 6"/>
-        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${brand.primaryColor}" stroke-opacity="0.25" stroke-width="2" stroke-dasharray="8 8"/>
-        ${satellitesSvg}
-        <circle cx="${cx}" cy="${cy}" r="52" fill="${brand.primaryColor}"/>
-        <text x="${cx}" y="${cy - 6}" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">${inline(brand.name)}</text>
-        <text x="${cx}" y="${cy + 12}" text-anchor="middle" font-family="'Inter', sans-serif" font-size="10" font-weight="600" fill="rgba(255,255,255,0.85)">AI Core</text>
-      </svg>`;
-
-  const gpuItemsHtml = cards.slice(0, 4).map(c => `
-            <div class="gpu-mini-item">
-              <div class="gpu-mini-head">${inline(c.title)}</div>
-              <p class="gpu-mini-text">${inline(c.desc)}</p>
-            </div>`).join('\n');
-
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="slide-header">
-          <div class="slide-header-left">
-            <span class="slide-kicker-badge">Arsitektur Sistem</span>
-            <h2 class="slide-title">${inline(slide.title)}</h2>
-          </div>
-          <div class="slide-header-right">
-            ${introText ? `<p class="slide-subtitle">${inline(introText)}</p>` : ''}
-            <span class="slide-index-badge">${slideBadge(index, totalSlides)}</span>
-          </div>
-        </div>
-        <div class="ecosystem-grid-split">
-          <div class="ecosystem-left-col">
-            <div class="ecosystem-svg-container">
-              ${orbitSvg}
-            </div>
-          </div>
-          <div class="ecosystem-right-col">
-            <div class="editorial-image-frame ecosystem-photo-card">
-              <img src="${imgSrc}" alt="${inline(slide.title)}" />
-            </div>
-            <div class="ecosystem-gpu-panel">
-              <div>
-                <span class="gpu-top-badge">Arsitektur &amp; Ekosistem</span>
-                <h3 class="gpu-headline">${inline(slide.title)}</h3>
-                ${introText ? `<p class="gpu-summary">${inline(introText)}</p>` : ''}
-                <div class="gpu-grid-items">
-                  ${gpuItemsHtml}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>`;
-}
-
-// Slide 6: Metrics — congen6 section 6 port (metrics-layout-grid).
-// Zero-hallucination: extractBigNumberMetric per bullet with metric-big-number class,
-// renders exactly the bullets present (no defaultMetrics); empty grid + console.warn.
-function renderModernMetrics(slide, brand, index = 5, assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').trim();
-  const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
-  const targetSlot = resolveSlideSlot(slide, index, totalSlides, 'metrics');
-  const imgSrc = resolveSlideImageUrl(index + 1, targetSlot, assetsDir);
-
-  const bulletLines = lines.filter(l => /^[-*]\s/.test(l));
-  if (bulletLines.length === 0) console.warn(`[modern] metrics slide ${index + 1} has zero bullets; rendering empty grid`);
-  const metrics = bulletLines.slice(0, 4).map(b => extractBigNumberMetric(b));
-
-  const metricsCardsHtml = metrics.map(m => `
-              <div class="metric-card">
-                <div>
-                  <div class="metric-big-number">${inline(m.number)}</div>
-                  <h3 class="metric-label">${inline(m.title)}</h3>
-                  <p class="metric-narrative">${inline(m.desc)}</p>
-                </div>
-              </div>`).join('\n');
-
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="slide-header">
-          <div class="slide-header-left">
-            <span class="slide-kicker-badge">Validasi &amp; Metrik</span>
-            <h2 class="slide-title">${inline(slide.title)}</h2>
-          </div>
-          <div class="slide-header-right">
-            <span class="slide-index-badge">${slideBadge(index, totalSlides)}</span>
-          </div>
-        </div>
-        <div class="metrics-layout-grid">
-          <div class="metrics-left-col">
-            <div class="metrics-photo-wrap">
-              <img src="${imgSrc}" alt="${inline(slide.title)}" />
-            </div>
-          </div>
-          <div class="metrics-right-stack">
-            <div class="metrics-2x2-grid">
-              ${metricsCardsHtml}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>`;
-}
-
-// Slide 7: Differentiator — congen6 section 7 port (diff-table).
-// Same markdown-table row logic as renderCanvaDifferentiator (build-deck.js):
-// separator-row skip, header from first row, brand column gets col-brand.
-// **Intinya:** line -> honesty callout ("Catatan Transparansi").
-// Unclosed-table impossible by construction (template literal closes all tags).
-// Zero-hallucination: no invented comparison rows; empty table + console.warn.
-function renderModernDifferentiator(slide, brand, index = 6, assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').trim();
-  const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
-  let intro = '';
-  let honesty = '';
-  const tableLines = [];
-
-  for (const line of lines) {
-    if (line.startsWith('|')) {
-      tableLines.push(line);
-    } else if (/^\*\*intinya[:\s]*/i.test(line) || /^intinya[:\s]*/i.test(line)) {
-      honesty = line.replace(/^\*\*intinya[:\s]*\*\*/i, '').replace(/^intinya[:\s]*/i, '').trim();
-    } else if (!intro && !line.startsWith('#') && !line.startsWith('<!--')) {
-      intro = line;
-    }
-  }
-
-  let headers = ['Aspek', brand.name];
-  let rows = [];
-  if (tableLines.length > 0) {
-    const rawRows = [];
-    for (const tl of tableLines) {
-      const cleaned = tl.replace(/^\||\|$/g, '').trim();
-      if (/^(\s*:?-{2,}:?\s*\|?)+$/.test(cleaned)) continue;
-      const cols = cleaned.split('|').map(c => c.replace(/\*\*/g, '').trim());
-      if (cols.length >= 2) rawRows.push(cols);
-    }
-    if (rawRows.length > 0) {
-      headers = rawRows[0].map(h => h || 'Aspek');
-      rows = rawRows.slice(1);
-    }
-  }
-  if (rows.length === 0) console.warn(`[modern] differentiator slide ${index + 1} has zero table rows; rendering empty table`);
-
-  const brandIdx = headers.findIndex(h => new RegExp(brand.name.replace(/[^a-z0-9]/gi, '|'), 'i').test(h) || /kami|pro|venturo/i.test(h));
-  const activeBrandIdx = brandIdx !== -1 ? brandIdx : 1;
-
-  const headerHtml = headers.map((h, i) => `
-                <th class="${i === activeBrandIdx ? 'col-brand' : ''}">${inline(h)}</th>`).join('\n');
-
-  const rowsHtml = rows.map(r => `
-              <tr>
-                ${r.map((cell, ci) => `
-                  <td class="${ci === activeBrandIdx ? 'col-brand' : ''}">${inline(cell)}</td>`).join('\n')}
-              </tr>`).join('\n');
-
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="slide-header">
-          <div class="slide-header-left">
-            <span class="slide-kicker-badge">Keunggulan Kompetitif</span>
-            <h2 class="slide-title">${inline(slide.title)}</h2>
-          </div>
-          <div class="slide-header-right">
-            ${intro ? `<p class="slide-subtitle">${inline(intro)}</p>` : ''}
-            <span class="slide-index-badge">${slideBadge(index, totalSlides)}</span>
-          </div>
-        </div>
-        <div class="differentiator-layout-wrap">
-          <div class="diff-table-container">
-            <table class="diff-table">
-              <thead>
-                <tr>
-                  ${headerHtml}
-                </tr>
-              </thead>
-              <tbody>
-                ${rowsHtml}
-              </tbody>
-            </table>
-          </div>
-          ${honesty ? `
-          <div class="differentiator-callout-strip">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${brand.primaryColor}" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            <span><strong>Catatan Transparansi:</strong> ${inline(honesty)}</span>
-          </div>` : ''}
-        </div>
-      </div>
-    </section>`;
-}
-
-// Slide 8: Pricing — congen6 section 8 port (pricing-cards-grid).
-// Parses the markdown table (tier | price | `;`-separated features); the middle
-// row is elevated with a `Best Seller` ribbon. Zero-hallucination: renders only
-// the rows present (fewer than 3 -> render fewer + console.warn, never
-// defaultTiers); empty grid + console.warn when zero rows.
-function renderModernPricing(slide, brand, index = 7, assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').replace(/<!--[\s\S]*?-->/g, '').trim();
-  const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
-  let intro = '';
-  const tableLines = [];
-  for (const line of lines) {
-    if (line.startsWith('|')) {
-      tableLines.push(line);
-    } else if (!intro && !line.startsWith('#')) {
-      intro = line;
-    }
-  }
-
-  const rawRows = [];
-  for (const tl of tableLines) {
-    const cleaned = tl.replace(/^\||\|$/g, '').trim();
-    if (/^(\s*:?-{2,}:?\s*\|?)+$/.test(cleaned)) continue;
-    const cols = cleaned.split('|').map(c => c.replace(/\*\*/g, '').trim());
-    if (cols.length >= 2) rawRows.push(cols);
-  }
-  const rows = rawRows.slice(1).map(cols => ({
-    // Intentional structural label (not a defaultTiers invention): fills an empty tier cell.
-    tier: cols[0] || 'Paket',
-    price: cols[1] || '',
-    features: (cols[2] || '').split(';').map(f => f.trim()).filter(Boolean)
-  }));
-  if (rows.length < 3) console.warn(`[modern] pricing slide ${index + 1} has ${rows.length} tier rows; rendering as-is (never inventing default tiers)`);
-
-  const elevatedIdx = Math.floor(rows.length / 2);
-  const checkSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
-  const cardsHtml = rows.map((r, i) => {
-    const isElevated = i === elevatedIdx;
-    const btnLabel = isElevated ? 'Pilih Paket' : i === 0 ? 'Mulai' : 'Hubungi Tim';
-    const btnClass = isElevated ? 'btn-primary' : 'btn-outline';
-    const featsHtml = r.features.map(f => {
-      const parts = f.split(/[—–:\-]/);
-      const head = parts[0].trim();
-      const tail = parts.slice(1).join(' ').trim();
-      return `
-                <div class="tier-feature-item">
-                  ${checkSvg}
-                  <div>
-                    <strong>${inline(head)}</strong>
-                    ${tail ? `<p>${inline(tail)}</p>` : ''}
-                  </div>
-                </div>`;
-    }).join('\n');
-    return `
-            <div class="tier-card${isElevated ? ' elevated' : ''}">
-              ${isElevated ? '<div class="tier-ribbon">Best Seller</div>' : ''}
-              <div>
-                <h3 class="tier-name">${inline(r.tier)}</h3>
-                <div class="tier-price-row">${inline(r.price)}</div>
-              </div>
-              <div class="tier-features">
-                ${featsHtml}
-              </div>
-              <div>
-                <a href="#/${totalSlides - 1}" class="${btnClass}" style="justify-content:center; width:100%; box-sizing:border-box;">${btnLabel}</a>
-              </div>
-            </div>`;
-  }).join('\n');
-
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="slide-header">
-          <div class="slide-header-left">
-            <span class="slide-kicker-badge">Investasi &amp; Kolaborasi</span>
-            <h2 class="slide-title">${inline(slide.title)}</h2>
-          </div>
-          <div class="slide-header-right">
-            ${intro ? `<p class="slide-subtitle">${inline(intro)}</p>` : ''}
-            <span class="slide-index-badge">${slideBadge(index, totalSlides)}</span>
-          </div>
-        </div>
-        <div class="pricing-content-wrap">
-          <div class="pricing-cards-grid">
-            ${cardsHtml}
-          </div>
-        </div>
-      </div>
-    </section>`;
-}
-
-// Slide 9: Closing — congen6 section 9 port (closing-3col-grid).
-// 3-column layout: architecture photo, charcoal contact card, team photo.
-// Contact values rendered verbatim via sanitizeContactDetails (invent nothing).
-// Zero-hallucination: empty contacts -> empty list + console.warn (the existing
-// sanitizeContactDetails placeholder replacement stays).
-function renderModernClosing(slide, brand, index = 8, assetsDir = '', totalSlides = 9) {
-  const brandSlug = (brand && brand.name ? brand.name : 'venturo-pro').toLowerCase().replace(/\s+/g, '-');
-  const sanitized = sanitizeContactDetails(slide.content || '', brandSlug);
-  const content = sanitizeSlideContent(sanitized).replace(/<!--[\s\S]*?-->/g, '').trim();
-  const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
-
-  let desc = '';
-  const contacts = [];
-  for (const line of lines) {
-    const m = line.match(/^[-*]\s*(.+?)\s*:\s*(.+)$/);
-    if (m) {
-      contacts.push({ label: m[1].replace(/[*_`]/g, '').trim(), value: m[2].replace(/[*_`]/g, '').trim() });
-    } else if (!desc && !line.startsWith('#')) {
-      desc = line;
-    }
-  }
-  if (contacts.length === 0) console.warn(`[modern] closing slide ${index + 1} has zero contacts; rendering empty list`);
-
-  // Unique-md5: the left panel uses the per-build branded closing-banner art
-  // (generated into assets/ on every build) instead of re-embedding the hero
-  // photo — reusing slide-1 bytes here violates the unique-md5 image rule.
-  const imgLeft = 'assets/closing-banner.svg';
-  const targetSlot = resolveSlideSlot(slide, index, totalSlides, 'closing');
-  const imgRight = resolveSlideImageUrl(index + 1, targetSlot, assetsDir);
-
-  const iconFor = (label) => {
-    const l = label.toLowerCase();
-    if (/whatsapp|telepon|phone|telp/.test(l)) return '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>';
-    if (/email|mail|surat/.test(l)) return '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>';
-    return '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>';
-  };
-  const contactItemsHtml = contacts.slice(0, 4).map(c => `
-              <div class="closing-contact-row">
-                <div class="closing-contact-icon-box">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${iconFor(c.label)}</svg>
-                </div>
-                <div class="closing-contact-meta">
-                  <span class="closing-contact-type">${inline(c.label)}</span>
-                  <span class="closing-contact-detail">${inline(c.value)}</span>
-                </div>
-              </div>`).join('\n');
-
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="closing-3col-grid">
-          <div class="editorial-image-frame closing-photo-wrap">
-            <img src="${imgLeft}" alt="Architecture Visual" />
-          </div>
-          <div class="closing-center-panel">
-            <span class="closing-badge-top">Langkah Berikutnya · Hubungi Kami</span>
-            <h2 class="closing-main-title">${inline(slide.title)}</h2>
-            <p class="closing-main-desc">${inline(desc || '')}</p>
-            <div class="closing-contact-grid">
-              ${contactItemsHtml}
-            </div>
-            <div class="closing-action-buttons">
-              <a href="#/0" class="btn-primary" style="padding:12px 26px; font-size:15px;"><span>Mulai Sekarang</span></a>
-            </div>
-          </div>
-          <div class="editorial-image-frame closing-photo-wrap">
-            <img src="${imgRight}" alt="Corporate Team Visual" />
-          </div>
-        </div>
-      </div>
-    </section>`;
-}
-
-// Social-proof: 3-column quote-card grid reusing the welcome-card structure
-// with a quote SVG + attribution. Zero-hallucination: renders exactly the
-// bullets present (no invented testimonials); empty grid + console.warn.
-function renderModernSocialProof(slide, brand, index = 7, assetsDir = '', totalSlides = 9) {
-  const content = sanitizeSlideContent(slide.content || '').trim();
-  const { introText, cards } = parseEditorialCards(content);
-  if (cards.length === 0) console.warn(`[modern] social-proof slide ${index + 1} has zero cards; rendering empty grid`);
-  const cardsHtml = cards.map(card => `
-          <div class="welcome-card quote-card">
-            <svg class="quote-icon" width="28" height="28" viewBox="0 0 24 24" fill="${brand.primaryColor}" xmlns="http://www.w3.org/2000/svg"><path d="M10 8c-3 1-5 3.5-5 7v1h5v-6H7.5C8 9 9 8.5 10 8.2V8zm9 0c-3 1-5 3.5-5 7v1h5v-6h-2.5c.5-1 1.5-1.5 2.5-1.8V8z"/></svg>
-            <div class="welcome-card-content">
-              <p class="welcome-card-desc">${inline(card.desc)}</p>
-              <h3 class="welcome-card-title">${inline(card.title)}</h3>
-            </div>
-          </div>`).join('\n');
-
-  return `
-    <section>
-      <div class="editorial-slide-container">
-        <div class="slide-header">
-          <div class="slide-header-left">
-            <span class="slide-kicker-badge">Testimoni &amp; Kepercayaan</span>
-            <h2 class="slide-title">${inline(slide.title)}</h2>
-          </div>
-          <div class="slide-header-right">
-            ${introText ? `<p class="slide-subtitle">${inline(introText)}</p>` : ''}
-            <span class="slide-index-badge">${slideBadge(index, totalSlides)}</span>
-          </div>
-        </div>
-        <div class="social-proof-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; align-items:stretch;">
-          ${cardsHtml}
-        </div>
-      </div>
-    </section>`;
-}
-
-// Modern dispatcher: archetype -> renderer.
-// Task-1 compatibility shim: the unified classifyCinematicArchetype returns the
-// 6 cinematic names, mapped here onto the closest existing modern renderer so
-// no slide silently falls into `default`. Legacy 10-name outputs are still
-// honored (alias-era callers). Superseded by Task 3's renderCinematicSlide.
+// Entry point used by build-deck.js `renderSlide()`. The cinematic classifier
+// only ever returns names in CINEMATIC_ARCHETYPES, so this is a straight
+// delegation — there is no second (legacy) dispatch table to drift out of sync.
 function renderModernSlide(slide, index, totalSlides, brand, assetsDir = '') {
-  const arch = classifyModernArchetype(slide, index, totalSlides);
-  if (CINEMATIC_ARCHETYPES.includes(arch)) {
-    return renderCinematicSlide(slide, index, totalSlides, brand, assetsDir);
-  }
-  switch (arch) {
-    case 'solution': return renderModernWelcome(slide, brand, index, 'solution', assetsDir, totalSlides);
-    case 'services': return renderModernServices(slide, brand, index, assetsDir, totalSlides);
-    case 'feature-cards': return renderFeatureCards(slide, brand, index, assetsDir, totalSlides);
-    case 'feature-split': return renderFeatureSplit(slide, brand, index, assetsDir, totalSlides);
-    case 'ecosystem': return renderModernEcosystem(slide, brand, index, assetsDir, totalSlides);
-    case 'metrics': return renderModernMetrics(slide, brand, index, assetsDir, totalSlides);
-    case 'differentiator': return renderModernDifferentiator(slide, brand, index, assetsDir, totalSlides);
-    case 'closing': return renderModernClosing(slide, brand, index, assetsDir, totalSlides);
-    case 'social-proof': return renderModernSocialProof(slide, brand, index, assetsDir, totalSlides);
-    default: return renderCinematicSlide(slide, index, totalSlides, brand, assetsDir);
-  }
+  return renderCinematicSlide(slide, index, totalSlides, brand, assetsDir);
 }
 
 module.exports = {
@@ -1392,16 +1031,8 @@ module.exports = {
   renderFeatures,
   renderUsp,
   renderPricing,
-  renderModernHero,
-  renderModernWelcome,
-  renderModernServices,
-  renderFeatureCards,
-  renderFeatureSplit,
-  renderModernEcosystem,
-  renderModernMetrics,
-  renderModernDifferentiator,
-  renderModernPricing,
-  renderModernClosing,
-  renderModernSocialProof,
+  renderMetrics,
+  renderEcosystem,
+  renderClosing,
   renderModernSlide
 };
