@@ -8,7 +8,7 @@ Agent memilih bagian yang relevan sesuai mode review:
 
 Skor minimum lolos: **90/100**
 Skor minimum: A ≥ 90/100, subtotal C+D+E ≥ 60/75
-Batas revisi: **2 putaran**
+Batas iterasi: ditetapkan Master Orchestrator (`AGENTS.md` pasal II) — generator maks. 5 putaran, debug SEO maks. 3, post-deploy maks. 2. QA Reviewer hanya memberi feedback perbaikan yang spesifik, bukan menetapkan batas putaran.
 
 ---
 

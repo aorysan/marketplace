@@ -6,6 +6,17 @@ Notes** menjadi kerangka bisnis siap pakai untuk evaluasi strategi, pricing,
 persona, analisis kompetitor, PMF, SWOT, keputusan go/no-go, hingga brand
 story.
 
+## 📦 Instalasi (Claude Code)
+
+Tersedia di marketplace `aorysan-marketplace`:
+
+```shell
+/plugin marketplace add aorysan/marketplace
+/plugin install business-intelligence-layer@aorysan-marketplace
+```
+
+Tiga skill di dalamnya dipanggil dengan namespace `/business-intelligence-layer:business-strategist`, `:business-strategist-reviewer`, dan `:brand-story-writer`.
+
 ## Alur Kerja (3 Tahap)
 
 ```

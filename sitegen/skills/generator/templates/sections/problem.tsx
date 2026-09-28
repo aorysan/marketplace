@@ -9,16 +9,16 @@ export default function Problem({ title, items }: ProblemProps) {
     <section aria-label="Masalah">
       <AnimatedSection>
         <h2>{title}</h2>
+        <ul>
+          {items.map((item) => (
+            <li key={item.title} className="stagger-item" tabIndex={0} aria-label={item.title}>
+              <AlertTriangle size={24} aria-hidden="true" />
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </li>
+          ))}
+        </ul>
       </AnimatedSection>
-      <ul>
-        {items.map((item) => (
-          <li key={item.title} className="stagger-item" tabIndex={0} aria-label={item.title}>
-            <AlertTriangle size={24} aria-hidden="true" />
-            <h3>{item.title}</h3>
-            <p>{item.desc}</p>
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }

@@ -1,24 +1,91 @@
 // Salin menjadi tests/<slug_tepat>.spec.ts (slug 100% dari PAGES-LIST.md, tanpa translasi).
 // Ganti <slug_tepat> dan {{BRAND_SLUG}} sebelum dijalankan.
-import { test, expect } from "@playwright/test";
+// Jalankan dari landings/{{BRAND_SLUG}}/web: npx playwright test --project=chromium
+import { test, expect, type Page } from "@playwright/test";
 
-const SLUG = "<slug_tepat>";
-const slugPart = SLUG === "/" ? "home" : SLUG.replace(/\//g, "-");
+// Anotasi `: string` WAJIB: tanpa itu TS memberi tipe literal dan `next build`
+// (yang ikut men-type-check folder tests/) gagal dengan TS2339/TS2367 pada baris
+// perbandingan `SLUG === "/"` dan `SLUG.replace(...)`.
+const SLUG: string = "<slug_tepat>";
+// Buang garis miring depan agar nama file screenshot tidak memakai dash ganda
+// (`/kontak` → `kontak`, bukan `-kontak` → `desktop--kontak.png`).
+const slugPart = SLUG === "/" ? "home" : SLUG.replace(/^\//, "").replace(/\//g, "-");
 const BASE = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
+
+const PREVIEW_DIR = "../reports/.preview";
+const EMOJI = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
+
+/** Galat React/Next.js (hydration, dsb.) dikumpulkan agar bisa di-assert kosong. */
+const BENIGN_ERROR = /favicon|Download the React DevTools|DevTools failed to load/i;
+function collectPageErrors(page: Page): string[] {
+  const errors: string[] = [];
+  page.on("pageerror", (err) => {
+    if (!BENIGN_ERROR.test(err.message)) errors.push(err.message);
+  });
+  page.on("console", (msg) => {
+    if (msg.type() === "error" && !BENIGN_ERROR.test(msg.text())) errors.push(msg.text());
+  });
+  return errors;
+}
+
+async function assertConstitutionCompliant(page: Page) {
+  // 1. Semua gambar wajib punya alt DAN title bernilai nyata (atribut ganda).
+  const images = await page.locator("img").all();
+  for (const img of images) {
+    await expect(img, "setiap <img> wajib punya alt").toHaveAttribute("alt", /\S/);
+    await expect(img, "setiap <img> wajib punya title").toHaveAttribute("title", /\S/);
+  }
+
+  // 2. Anti-bleeding: dokumen tidak boleh melebar melebihi viewport.
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 2),
+    "tidak boleh ada overflow horizontal"
+  ).toBe(true);
+
+  // 3. html/body wajib overflow-x: hidden.
+  expect(
+    await page.evaluate(() => {
+      const html = getComputedStyle(document.documentElement).overflowX;
+      const body = getComputedStyle(document.body).overflowX;
+      return html === "hidden" && body === "hidden";
+    }),
+    "html & body wajib overflow-x: hidden"
+  ).toBe(true);
+
+  // 4. DILARANG emoji pada UI.
+  expect(await page.evaluate(() => document.body.innerText), "UI wajib bebas emoji").not.toMatch(EMOJI);
+
+  // 5. DILARANG placeholder gambar fiktif.
+  const srcs = await page.locator("img").evaluateAll((nodes) =>
+    nodes.map((n) => n.getAttribute("src") ?? "")
+  );
+  for (const src of srcs) {
+    expect(src, "DILARANG gambar placeholder").not.toMatch(/picsum\.photos|placehold|via\.placeholder|example\.(jpg|jpeg|png)/i);
+  }
+
+  // 6. Setiap halaman wajib memuat Schema.org JSON-LD.
+  expect(await page.locator('script[type="application/ld+json"]').count()).toBeGreaterThan(0);
+}
 
 test.describe(`Halaman ${SLUG}`, () => {
   test("desktop 1280x720 + screenshot", async ({ page }) => {
+    const errors = collectPageErrors(page);
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto(`${BASE}${SLUG}`, { waitUntil: "networkidle" });
     await expect(page.locator("main")).toBeVisible();
-    await page.screenshot({ path: `../reports/.preview/desktop-${slugPart}.png`, fullPage: true });
+    await assertConstitutionCompliant(page);
+    await page.screenshot({ path: `${PREVIEW_DIR}/desktop-${slugPart}.png` });
+    expect(errors, "tidak boleh ada error console/page").toEqual([]);
   });
 
   test("mobile 375x667 + screenshot", async ({ page }) => {
+    const errors = collectPageErrors(page);
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto(`${BASE}${SLUG}`, { waitUntil: "networkidle" });
     await expect(page.locator("main")).toBeVisible();
-    await page.screenshot({ path: `../reports/.preview/mobile-${slugPart}.png`, fullPage: true });
+    await assertConstitutionCompliant(page);
+    await page.screenshot({ path: `${PREVIEW_DIR}/mobile-${slugPart}.png` });
+    expect(errors, "tidak boleh ada error console/page").toEqual([]);
   });
 });
-// Brand: {{BRAND_SLUG}}. Jalankan dari landings/{{BRAND_SLUG}}/web.
+// Brand: {{BRAND_SLUG}}. Screenshot (1280x720 & 375x667) tersimpan di landings/{{BRAND_SLUG}}/reports/.preview/.

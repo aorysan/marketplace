@@ -1,3 +1,8 @@
+---
+name: publisher
+description: Mendeploy HTML company profile hasil builder ke Vercel sebagai website live, lengkap dengan technical SEO auto-fix dan verifikasi GET 200. Gunakan saat deck HTML siap dipublikasikan ke Vercel.
+---
+
 # Publisher
 
 > **Skill untuk:** Mendeploy HTML Company Profile (hasil dari builder) ke Vercel sebagai website live, lengkap dengan technical SEO auto-fix, user confirmation gate, dan live GET 200 verification.

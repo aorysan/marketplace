@@ -167,11 +167,11 @@ The Vercel CLI isn't set up at all.
 **When to use:** Last resort when the CLI can't be installed or authenticated in the claude.ai sandbox. This requires no authentication — it returns a **Preview URL** (live site) and a **Claim URL** (transfer to your Vercel account).
 
 ```bash
-bash /mnt/skills/user/deploy-to-vercel/resources/deploy.sh [path]
+bash "$CLAUDE_PLUGIN_ROOT/skills/deploy/resources/deploy.sh" [path]
 ```
 
 > [!NOTE]
-> Path `/mnt/skills/user/deploy-to-vercel/resources/deploy.sh` hanya berlaku untuk sandbox Linux (claude.ai). Untuk environment lokal Windows/Mac, gunakan Vercel CLI (`vercel deploy`) sesuai instruksi di atas.
+> Script fallback plugin ini ada di `$CLAUDE_PLUGIN_ROOT/skills/deploy/resources/deploy.sh` (dan varian Codex: `deploy-codex.sh`). Path `/mnt/skills/user/...` hanya berlaku untuk sandbox claude.ai. Untuk environment lokal Windows/Mac, prioritaskan Vercel CLI (`vercel deploy`) sesuai instruksi di atas.
 
 **Arguments:**
 - `path` - Directory to deploy, or a `.tgz` file (defaults to current directory)
@@ -179,13 +179,13 @@ bash /mnt/skills/user/deploy-to-vercel/resources/deploy.sh [path]
 **Examples:**
 ```bash
 # Deploy current directory
-bash /mnt/skills/user/deploy-to-vercel/resources/deploy.sh
+bash "$CLAUDE_PLUGIN_ROOT/skills/deploy/resources/deploy.sh"
 
 # Deploy specific project
-bash /mnt/skills/user/deploy-to-vercel/resources/deploy.sh /path/to/project
+bash "$CLAUDE_PLUGIN_ROOT/skills/deploy/resources/deploy.sh" /path/to/project
 
 # Deploy existing tarball
-bash /mnt/skills/user/deploy-to-vercel/resources/deploy.sh /path/to/project.tgz
+bash "$CLAUDE_PLUGIN_ROOT/skills/deploy/resources/deploy.sh" /path/to/project.tgz
 ```
 
 The script auto-detects the framework from `package.json`, packages the project (excluding `node_modules`, `.git`, `.env`), uploads it, and waits for the build to complete.
@@ -210,7 +210,7 @@ The script auto-detects the framework from `package.json`, packages the project 
 
 3. **If `vercel` is not installed, or the CLI fails with "No existing credentials found"**, use the fallback script:
    ```bash
-   skill_dir="<path-to-skill>"
+   skill_dir="$CLAUDE_PLUGIN_ROOT/skills/deploy"
 
    # Deploy current directory
    bash "$skill_dir/resources/deploy-codex.sh"
@@ -234,11 +234,11 @@ The script handles framework detection, packaging, and deployment. It waits for 
 
 ### Claude Code / terminal-based agents
 
-You have full shell access. Do NOT use the `/mnt/skills/` path. Follow the decision flow above using the CLI directly.
+You have full shell access. Jangan pakai path `/mnt/skills/` (khusus sandbox claude.ai). Ikuti alur keputusan di atas dengan CLI; script fallback tersedia di `$CLAUDE_PLUGIN_ROOT/skills/deploy/resources/`.
 
 For the no-auth fallback, run the deploy script from the skill's installed location:
 ```bash
-bash ~/.claude/skills/deploy-to-vercel/resources/deploy.sh [path]
+bash "$CLAUDE_PLUGIN_ROOT/skills/deploy/resources/deploy.sh" [path]
 ```
 The path may vary depending on where the user installed the skill.
 

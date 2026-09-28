@@ -434,7 +434,7 @@ Content for ${cat} section ${idx + 1}.
     assert.ok(jsTemplate.includes('Insightify'));
   });
 
-  test('buildArtifact generates complete static HTML specification and knowledge-base.md', async () => {
+  test('buildArtifact generates complete static HTML specification and Product-Knowledge-Base.md', async () => {
     const { buildArtifact } = await import('../skills/builder/templates/build-html.mjs');
     
     const tmpDir = path.join(__dirname, '.tmp');
@@ -464,6 +464,134 @@ Content for ${cat} section ${idx + 1}.
     fs.unlinkSync(combinedPath);
   });
 
+  test('buildArtifact writes index.html and Product-Knowledge-Base.md to outDir', async () => {
+    const { buildArtifact } = await import('../skills/builder/templates/build-html.mjs');
+
+    const outDir = path.join(tmpDir, 'artifact-out');
+    fs.rmSync(outDir, { recursive: true, force: true });
+
+    buildArtifact({
+      kbDir: fixture14KbDir,
+      docPath: path.join(fixture14KbDir, 'product.md'),
+      outDir
+    });
+
+    assert.strictEqual(fs.existsSync(path.join(outDir, 'index.html')), true, 'must write index.html');
+    assert.strictEqual(
+      fs.existsSync(path.join(outDir, 'Product-Knowledge-Base.md')),
+      true,
+      'must write the primary output as Product-Knowledge-Base.md'
+    );
+    assert.strictEqual(
+      fs.existsSync(path.join(outDir, 'knowledge-base.md')),
+      false,
+      'must not write the legacy lowercase knowledge-base.md'
+    );
+  });
+
+  test('output name Product-Knowledge-Base.md is used consistently across docs and manifests', () => {
+    const root = path.join(__dirname, '..');
+    const files = [
+      '.claude-plugin/plugin.json',
+      'package.json',
+      'AGENTS.md',
+      'CLAUDE.md',
+      'README.md',
+      'skills/insightify/SKILL.md',
+      'skills/builder/SKILL.md'
+    ];
+
+    files.forEach((relPath) => {
+      const filePath = path.join(root, relPath);
+      assert.strictEqual(fs.existsSync(filePath), true, `${relPath} must exist`);
+      const content = fs.readFileSync(filePath, 'utf8');
+
+      assert.ok(
+        content.includes('Product-Knowledge-Base.md'),
+        `${relPath} must reference the Product-Knowledge-Base.md output`
+      );
+      assert.strictEqual(
+        content.includes('knowledge-base.md'),
+        false,
+        `${relPath} must not reference the legacy lowercase knowledge-base.md output`
+      );
+    });
+  });
+
+  const writeVerifyDoc = () => {
+    if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+    const docPath = path.join(tmpDir, 'verify-doc.md');
+    fs.writeFileSync(docPath, [
+      '---',
+      'title: "Verify Project"',
+      '---',
+      '',
+      '# Verify Project - Product Knowledge Base',
+      '',
+      '## Product Overview',
+      'Content for the product section.',
+      '',
+      '## Directory & Module Boundaries',
+      'Content for the directory section.',
+      '',
+      '## Constraints and Limits',
+      'Content for the constraints section.',
+      ''
+    ].join('\n'), 'utf8');
+    return docPath;
+  };
+
+  test('buildArtifact is deterministic: identical inputs produce byte-identical artifacts', async () => {
+    const { buildArtifact } = await import('../skills/builder/templates/build-html.mjs');
+    const docPath = writeVerifyDoc();
+    const firstDir = path.join(tmpDir, 'determinism-a');
+    const secondDir = path.join(tmpDir, 'determinism-b');
+    fs.rmSync(firstDir, { recursive: true, force: true });
+    fs.rmSync(secondDir, { recursive: true, force: true });
+
+    buildArtifact({ kbDir: fixture14KbDir, docPath, outDir: firstDir });
+    buildArtifact({ kbDir: fixture14KbDir, docPath, outDir: secondDir });
+
+    assert.strictEqual(
+      fs.readFileSync(path.join(firstDir, 'index.html'), 'utf8'),
+      fs.readFileSync(path.join(secondDir, 'index.html'), 'utf8'),
+      'index.html must be byte-identical across runs'
+    );
+    assert.strictEqual(
+      fs.readFileSync(path.join(firstDir, 'Product-Knowledge-Base.md'), 'utf8'),
+      fs.readFileSync(path.join(secondDir, 'Product-Knowledge-Base.md'), 'utf8'),
+      'Product-Knowledge-Base.md must be byte-identical across runs'
+    );
+  });
+
+  test('knowledge base leads with a Table of Contents and every documented section is anchored in the HTML', async () => {
+    const { buildArtifact } = await import('../skills/builder/templates/build-html.mjs');
+    const artifact = buildArtifact({ kbDir: fixture14KbDir, docPath: writeVerifyDoc() });
+
+    const tocIdx = artifact.knowledgeBase.indexOf('## Table of Contents');
+    const firstSectionIdx = artifact.knowledgeBase.indexOf('## Product Overview');
+    assert.ok(tocIdx !== -1, 'knowledge base must contain a Table of Contents');
+    assert.ok(firstSectionIdx !== -1, 'knowledge base must embed the documented sections');
+    assert.ok(tocIdx < firstSectionIdx, 'Table of Contents must precede the first documented section');
+
+    ['product-overview', 'directory-module-boundaries', 'constraints-and-limits'].forEach(id => {
+      assert.ok(artifact.html.includes('id="' + id + '"'), `section ${id} must be anchored in the HTML`);
+    });
+  });
+
+  test('index.html stays self-contained: inline CSS/JS, mermaid CDN, and no blueprint-skeleton classes', async () => {
+    const { buildArtifact } = await import('../skills/builder/templates/build-html.mjs');
+    const artifact = buildArtifact({ kbDir: fixture14KbDir, docPath: writeVerifyDoc() });
+
+    assert.strictEqual(artifact.html.split('<style>').length - 1, 1, 'exactly one inline <style> block');
+    assert.strictEqual(artifact.html.split('<script>').length - 1, 1, 'exactly one inline <script> block');
+    assert.strictEqual(artifact.html.split('<script src=').length - 1, 1, 'exactly one external script (mermaid CDN)');
+    assert.ok(artifact.html.includes('src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"'), 'mermaid must load from the CDN');
+    assert.strictEqual(artifact.html.split('rel="stylesheet"').length - 1, 1, 'exactly one stylesheet link');
+    assert.ok(artifact.html.includes('href="https://fonts.googleapis.com/css2'), 'the only stylesheet is Google Fonts');
+    assert.strictEqual(artifact.html.includes('class="bp-'), false, 'removed blueprint-skeleton classes must not return');
+  });
+
   test('builder SKILL.md defines Stage 4, Interfaces (Consumes/Produces), instructions, and rendering rules', () => {
     assert.strictEqual(fs.existsSync(skillPath), true, 'SKILL.md must exist');
     const content = fs.readFileSync(skillPath, 'utf8');
@@ -482,10 +610,10 @@ Content for ${cat} section ${idx + 1}.
     // Instructions and rendering rules
     assert.ok(content.includes('## Instructions'), 'Must include Instructions');
     assert.ok(content.includes('## Rendering Rules'), 'Must include Rendering Rules');
-    assert.ok(content.includes('templates/index-html-template.html'), 'Must reference index-html-template.html');
     assert.ok(content.includes('templates/build-html.mjs'), 'Must reference build-html.mjs');
-    assert.ok(content.includes('templates/styles.css'), 'Must reference styles.css');
-    assert.ok(content.includes('templates/scripts.js'), 'Must reference scripts.js');
+    assert.ok(content.includes('templates/layouts/base.html'), 'Must reference layouts/base.html');
+    assert.ok(content.includes('templates/layouts/styles-base.css'), 'Must reference layouts/styles-base.css');
+    assert.ok(content.includes('templates/layouts/scripts-base.js'), 'Must reference layouts/scripts-base.js');
   });
 
   test('buildProductOverview renders dynamic highlights from KB files, not hardcoded React', async () => {

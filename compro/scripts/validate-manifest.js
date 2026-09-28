@@ -4,7 +4,6 @@ const path = require('path');
 const rootDir = path.join(__dirname, '..');
 
 const manifestFiles = [
-  'plugin.json',
   '.claude-plugin/plugin.json',
   '.codex-plugin/plugin.json'
 ];

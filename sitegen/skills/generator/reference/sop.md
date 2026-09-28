@@ -34,7 +34,7 @@ Dokumen ini berisi standar teknis (Standard Operating Procedure) dan **Checklist
   },
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" }
+      { protocol: "https", hostname: "upload.wikimedia.org" }
     ]
   }
   ```
@@ -61,93 +61,18 @@ Dokumen ini berisi standar teknis (Standard Operating Procedure) dan **Checklist
 3. **Responsive Block Table (Anti Horizontal Scroll)**: DILARANG MEMBIARKAN TABEL BISA DI-SCROLL KE SAMPING di mobile. Seluruh sel `<td data-label="...">` WAJIB disetel menjadi `display: block` dengan label judul (`data-label`) muncul di sisi kiri sel.
 4. **Infinite Marquee Carousel**: Untuk daftar panjang (misalnya 10+ nama klien, logo partner, atau lokasi terdaftar), agen WAJIB mengimplementasikan *Infinite CSS Marquee* (animasi geser dari kanan ke kiri yang berjalan otomatis) menggunakan array berulang `[...list, ...list]`.
 
-## 6. Scroll Reveal Animation (Anime.js Standard & DILARANG FRAMER-MOTION / CSS MURNI)
-- **DILARANG MENGGUNAKAN `framer-motion` ATAU ANIMASI SCROLL CSS MURNI**: Seluruh animasi *scroll* WAJIB berbasis Anime.js (`animejs`) + `IntersectionObserver` via komponen `AnimatedSection.tsx`.
-- **React Strict Mode Cleanup (MANDATORY)**: Untuk mencegah glitch animasi akibat double-mount di React Strict Mode, fungsi cleanup `useEffect` pada `AnimatedSection.tsx` WAJIB memanggil `anime.remove(elementRef.current)`.
-- **Aturan Vike Flow (Asymmetric Reset)**: Animasi HANYA Boleh ter-reset jika elemen keluar dari BAWAH layar (`entry.boundingClientRect.top > 0`). Jika elemen keluar dari ATAS layar saat di-scroll turun, ia WAJIB tetap dalam kondisi terlihat.
+## 6. Scroll Reveal Animation (Anime.js v4 + Framer Motion — Unidirectional)
+- **Trilogi Animasi AAA wajib**: scroll-reveal memakai **Anime.js v4** (`animejs`) melalui komponen `AnimatedSection.tsx` **dan** transisi interaktif kartu memakai **Framer Motion**. Keduanya komplementer, BUKAN saling menggantikan (`AGENTS.md` generator Pasal III).
+- **DILARANG `once: true` dan DILARANG animasi bidirectional.** Animasi hanya terpicu saat gulir KE BAWAH (`window.scrollY > lastScrollY`) dengan deteksi arah via `scrollY` tracking.
+- **Reset asimetris (mencegah konten hilang):** elemen di-reset (`opacity: 0` + transform awal) hanya saat keluar viewport lewat BAWAH (`entry.boundingClientRect.top > 0`); elemen yang keluar lewat ATAS WAJIB tetap terlihat agar konten tidak hilang ketika pengguna menggulir balik ke atas.
+- **React Strict Mode Cleanup (MANDATORY)**: fungsi cleanup `useEffect` WAJIB memanggil `utils.remove(...)` (bukan `anime.remove` — API v3 sudah dihapus di v4) dan `observer.disconnect()`.
+- **API v4, bukan v3:** `import { animate, stagger, utils } from "animejs"`; `animate(target, { ... })`; properti `ease` (bukan `easing`) dengan nama tanpa prefix (`"outCubic"`); `utils.set()` (bukan `anime.set()`).
+- **Transform v4:** Anime.js v4 membaca nilai transform HANYA dari inline `element.style.transform` (transform dari stylesheet/CSS Module tidak terbaca). Karena itu keadaan awal transform WAJIB ditulis sebagai inline `transform`, mis. `style={{ opacity: 0, transform: "translateY(30px)" }}`.
+- **DILARANG individual transform properties (bug offset permanen):** jangan menulis `style={{ translate: "0px 30px" }}` atau `style={{ scale: "0.9" }}`. Anime.js v4 menulis hasil animasinya ke `transform` dan **tidak** menghapus properti `translate`/`scale`, sehingga keduanya berkomposisi: elemen tertinggal offset permanen ±30px (arah `up`/`left`/`right`) dan `zoom` mentok di skala 0.9. Terverifikasi di Chrome: inline `translate` → offset +30px; inline `transform` → offset 0.
 
-### Templat Wajib Komponen `components/AnimatedSection.tsx`:
-```tsx
-"use client";
-import React, { useEffect, useRef } from "react";
-import anime from "animejs";
+### Komponen kanonik `components/AnimatedSection.tsx`:
+> **JANGAN menulis ulang dan JANGAN salin-tempel dari dokumen ini.** Sumber kebenaran tunggal adalah template skill: `skills/generator/templates/AnimatedSection.tsx` (sudah memuat API v4, deteksi arah gulir, reset asimetris, staggering `.stagger-item`, dan cleanup). Salin file tersebut apa adanya.
 
-interface AnimatedSectionProps {
-  children: React.ReactNode;
-  delay?: number;
-  direction?: "up" | "left" | "right" | "zoom";
-  className?: string;
-}
-
-export default function AnimatedSection({ children, delay = 0, direction = "up", className = "" }: AnimatedSectionProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const getInitialTransform = () => {
-      switch (direction) {
-        case "left": return { translateX: 30 };
-        case "right": return { translateX: -30 };
-        case "zoom": return { scale: 0.9 };
-        case "up": default: return { translateY: 30 };
-      }
-    };
-
-    const getFinalTransform = () => {
-      switch (direction) {
-        case "left": return { translateX: [30, 0] };
-        case "right": return { translateX: [-30, 0] };
-        case "zoom": return { scale: [0.9, 1] };
-        case "up": default: return { translateY: [30, 0] };
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            anime({
-              targets: el,
-              opacity: [0, 1],
-              ...getFinalTransform(),
-              duration: 800,
-              delay: delay,
-              easing: "easeOutCubic",
-            });
-          } else if (entry.boundingClientRect.top > 0) {
-            // Asymmetric Reset
-            anime.set(el, { opacity: 0, ...getInitialTransform() });
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
-    );
-
-    observer.observe(el);
-    return () => {
-      observer.disconnect();
-      if (el) anime.remove(el);
-    };
-  }, [delay, direction]);
-
-  const getInitialStyle = (): React.CSSProperties => {
-    switch (direction) {
-      case "left": return { opacity: 0, transform: "translateX(30px)" };
-      case "right": return { opacity: 0, transform: "translateX(-30px)" };
-      case "zoom": return { opacity: 0, transform: "scale(0.9)" };
-      case "up": default: return { opacity: 0, transform: "translateY(30px)" };
-    }
-  };
-
-  return (
-    <div ref={ref} style={getInitialStyle()} className={className}>
-      {children}
-    </div>
-  );
-}
-```
 
 ## 7. Animasi Global: Lenis Smooth Scroll
 - Setiap proyek WAJIB menggunakan paket `lenis`.

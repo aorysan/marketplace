@@ -4,16 +4,18 @@ Sitegen adalah master orkestrator berbasis agen AI (AI Agent) untuk membangun we
 
 ## 📦 Install via Marketplace (Claude Code)
 
-Sitegen tersedia sebagai **plugin Claude Code** dan dapat dipasang dari marketplace `sitegen-marketplace`:
+Sitegen tersedia sebagai **plugin Claude Code** dan dapat dipasang dari marketplace `aorysan-marketplace`:
 
 ```shell
 /plugin marketplace add aorysan/marketplace
-/plugin install sitegen@marketplace
+/plugin install sitegen@aorysan-marketplace
 ```
 
 Setelah terpasang, jalankan `/sitegen` untuk memulai alur master. Sub-skill tersedia dengan namespace: `/sitegen:intake`, `/sitegen:planner`, `/sitegen:generator`, `/sitegen:qa-reviewer`, dan lainnya.
 
-> Instalasi manual: tanpa marketplace, kamu bisa memuat plugin ini langsung dengan `claude --plugin-dir <path-ke-repo>`.
+> Instalasi manual: tanpa marketplace, kamu bisa memuat plugin ini langsung dengan `claude --plugin-dir <path-ke-repo>`. Marketplace kanonik (`aorysan-marketplace`) didefinisikan di repo `aorysan/marketplace` — repo plugin ini tidak lagi memuat salinan `marketplace.json`.
+>
+> **Konvensi path skill:** seluruh perintah di skill memakai variabel resmi `$CLAUDE_PLUGIN_ROOT` (folder plugin yang sedang aktif) — jangan hardcode `.claude/plugins/sitegen/` maupun `.agents/skills/sitegen/`.
 
 ## 📋 Prerequisites
 
@@ -82,9 +84,28 @@ Seluruh aktivitas per brand WAJIB terpisah ke dalam empat pilar mandiri — root
 - `research` — riset kebutuhan user & kompetitor
 - `seo` — audit & implementasi SEO
 - `systematic-debugging` — disiplin debug berbasis bukti
-- `ui-ux-pro-max` — basis data gayu, palet, font, motion, chart
+- `ui-ux-pro-max` — basis data gaya, palet, font, motion, chart
 
 Semua 12 subfolder skill dilengkapi `AGENTS.md` konstitusi lokal.
+
+### 🧪 Menjalankan Test Skill
+
+Repo ini tidak memakai CI; jalankan test manual saat mengubah skrip/template:
+
+```bash
+# sekali saja (venv di root repo, di luar 4-pilar)
+python3 -m venv venv && source venv/bin/activate
+pip install -r skills/intake/scripts/requirements.txt
+
+# test ekstraksi PDF (termasuk regresi Zero Root Pollution + anti-duplikasi aset)
+python -m pytest skills/intake/tests -q
+
+# test basis data UI/UX
+python -m pytest skills/ui-ux-pro-max/scripts/tests -q
+
+# gate teknis SEO/animasi pada hasil generate (exit 1 = ada FAIL)
+node skills/seo/scripts/check-technical.js landings/<brand>/web
+```
 
 ### Skrip Resmi
 

@@ -16,7 +16,7 @@ description: Stage 4 - Assemble Product-Knowledge-Base.md and render single arti
 2. Read `[OUT_DIR]/.insightify/knowledge/*.md` (all category files emitted by Planner).
 3. Read `[OUT_DIR]/.insightify/plan.md` for metadata (title, audience, section order).
 4. Assemble `[OUT_DIR]/Product-Knowledge-Base.md` as the primary output consisting only of the finalized documentation (`final-documentation.md`), with an added Table of Contents at the top. The raw knowledge categories must remain untouched in their original `knowledge/` directory.
-5. Render `[OUT_DIR]/index.html` as an HTML preview of the single `Product-Knowledge-Base.md` using `templates/index-html-template.html` and `templates/build-html.mjs`. **CRITICAL**: When writing the `build.mjs` script, you MUST import `build-html.mjs` using the absolute path to this local workspace plugin directory, NEVER from a global `plugins/cache` directory.
+5. Render `[OUT_DIR]/index.html` as an HTML preview of the single `Product-Knowledge-Base.md` using `templates/layouts/base.html` and `templates/build-html.mjs`. **CRITICAL**: When writing the `build.mjs` script, you MUST import `build-html.mjs` using the absolute path to this local workspace plugin directory, NEVER from a global `plugins/cache` directory.
 6. Copy `[OUT_DIR]/.insightify/sources/` → `[OUT_DIR]/docs/intake/`.
 7. Copy `[OUT_DIR]/.insightify/plan.md` → `[OUT_DIR]/docs/plan/plan.md`.
 8. Copy `[OUT_DIR]/.insightify/review/` → `[OUT_DIR]/docs/review/`.
@@ -108,7 +108,7 @@ description: Stage 4 - Assemble Product-Knowledge-Base.md and render single arti
 - **Mermaid Diagrams**: Render via `mermaid.initialize({startOnLoad: true, theme: 'base', securityLevel: 'loose'})` - diagrams in `<pre class="mermaid">` blocks. *Note: Loaded from external CDN (jsDelivr); offline environments display pre-formatted diagrams or require a locally bundled script.*
 - **Collapsible Trees**: Directory structure as nested `<details>/<summary>` with `open` on first level.
 - **Tabs**: Component registry with tabbed interface (Component | Props | Usage) using CSS-only `:checked` hack.
-- **Product Overview**: Grid cards from `product.md`; feature badges from `features.md` with source citations.
+- **Product Overview**: Grid cards from `product.md`; feature badges from `features-and-journeys.md` with source citations.
 - **Doc Sections**: Render the single `Product-Knowledge-Base.md` with section navigation generated from H2/H3 headings, structuring sections as `<section id="slug" class="doc-section">` with label + heading + content.
 - **Styling**: 
   - Design tokens as CSS custom properties (`--color-bg`, `--color-text`, `--color-primary`, etc.)
@@ -278,7 +278,7 @@ Used for multi-tier architecture, system layers, and ingress/gateway topologies.
 
 ## Templates
 
-- `templates/layouts/base.html` (and modular `templates/components/`, with legacy `templates/index-html-template.html`) — Modular HTML template with placeholders: `{{TITLE}}`, `{{PRODUCT_NAME}}`, `{{TAGLINE}}`, `{{VERSION}}`, `{{GENERATED_AT}}`, `{{SIDEBAR_NAV}}`, `{{PRODUCT_OVERVIEW}}`, `{{DOC_SECTIONS}}`, `{{STYLE}}`, `{{SCRIPTS}}`
+- `templates/layouts/base.html` (with modular `templates/components/`) — Modular HTML template with placeholders: `{{TITLE}}`, `{{PRODUCT_NAME}}`, `{{TAGLINE}}`, `{{VERSION}}`, `{{GENERATED_AT}}`, `{{SIDEBAR_NAV}}`, `{{PRODUCT_OVERVIEW}}`, `{{DOC_SECTIONS}}`, `{{STYLE}}`, `{{SCRIPTS}}`
 - `templates/build-html.mjs` — Exports: `renderMarkdown(md)`, `buildProductOverview(kbDir)`, `buildDocSections(docPath)`, `buildSidebarNav(docPath)`, `assembleKnowledgeBase(finalDocPath, options)`, `render(template, data)`, `readTemplate(templateName)`, `buildArtifact(options)`
-- `templates/layouts/styles-base.css` (and `templates/components/`, fallback `templates/styles.css`) — Complete inline CSS (design tokens, layout, components, print, dark/light themes)
-- `templates/layouts/scripts-base.js` (fallback `templates/scripts.js`) — Minimal JS bundle (theme toggle with localStorage, Mermaid init with theme sync, smooth scroll, copy code button, sidebar mobile toggle, active nav highlight)
+- `templates/layouts/styles-base.css` (plus component CSS under `templates/components/`) — Complete inline CSS (design tokens, layout, components, print, dark/light themes)
+- `templates/layouts/scripts-base.js` — Minimal JS bundle (theme toggle with localStorage, Mermaid init with theme sync, smooth scroll, copy code button, sidebar mobile toggle, active nav highlight)

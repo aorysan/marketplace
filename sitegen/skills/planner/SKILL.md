@@ -1,6 +1,6 @@
 ---
 name: planner
-description: Menganalisis data hasil ekstraksi PDF Company Profile dari skill intake, lalu menghasilkan dokumen planning dalam format markdown. Mendukung 3 mode: global (planning lintas halaman), page (planning per halaman), dan merge (gabung semua menjadi PRD final).
+description: Menganalisis data hasil ekstraksi PDF Company Profile dari skill intake, lalu menghasilkan dokumen planning dalam format markdown. Mendukung 4 mode: global (planning lintas halaman + PAGES-LIST), page (planning per halaman), merge (gabung semua menjadi PRD final), dan design-system (spesifikasi token teknis).
 ---
 
 # Sitegen Planner — Multi-Mode Planning
@@ -21,7 +21,7 @@ Membuat planning global yang berlaku untuk SELURUH website.
 **Output:**
 - File: `landings/<brand>/planning/PLAN-GLOBAL.md`
 - File: `landings/<brand>/planning/PAGES-LIST.md` (hanya daftar nama halaman berdasarkan `PLAN-USER-NEEDS.md` dan `PLAN-COMPETITOR.md`)
-- Template: gunakan `reference/prd-global-template.md`
+- Template: `reference/prd-global-template.md` untuk PLAN-GLOBAL.md dan `reference/PAGES-LIST.md.template` untuk PAGES-LIST.md
 
 **Yang harus diisi:**
 1. Ringkasan Perusahaan (nama, tagline, industri, profil)
@@ -108,6 +108,7 @@ Membuat planning untuk SATU halaman spesifik.
 - Anti-AI Slop: DILARANG emoji, DILARANG teks generik
 
 **Aturan Copywriting per Konten (Copyfitting — diadopsi dari LPG):**
+> Panduan lengkap batas karakter, tone, dan larangan: `reference/copywriting-sop.md`.
 - **Hero Headline**: Maksimal **7 kata** (25-40 karakter). Harus memancing hook dalam 3 detik. Hindari kalimat majemuk.
 - **Hero Subheadline**: Maksimal **2 kalimat pendek** (total 15-20 kata)
 - **Section Title (H2)**: Maksimal **5 kata** — terarah dan fokus pada esensi bisnis
@@ -127,7 +128,7 @@ Membuat planning untuk SATU halaman spesifik.
 - **Semua section**: DILARANG menggunakan emoji. Gunakan ikon profesional (Lucide/SVG).
 
 **Self-Check:**
-Sebelum menyimpan, periksa dengan rubrik di `reference/scoring-rubric.md`. Target skor ≥ 90.
+Sebelum menyimpan, periksa dengan rubrik di `reference/scoring-rubric.md` (rujukan tunggal: `../../qa-reviewer/reference/review-checklist.md`). Target skor ≥ 90.
 
 ---
 
@@ -138,10 +139,11 @@ Menggabungkan semua planning yang sudah approved menjadi PRD final.
 - `landings/<brand>/planning/PLAN-GLOBAL.md`
 - `landings/<brand>/planning/PAGES-LIST.md`
 - Semua file `landings/<brand>/planning/PLAN-<halaman>.md` berdasarkan daftar di `PAGES-LIST.md`
+- (untuk Section 8–10) `landings/<brand>/planning/PLAN-USER-NEEDS.md`, `PLAN-COMPETITOR.md`, dan `PLAN-DESIGN-SYSTEM.md`
 
 **Output:**
 - File: `landings/<brand>/planning/PRD.md`
-- Format: HARUS identik dengan `reference/prd-template.md` (format lama)
+- Format: HARUS identik dengan `reference/prd-template.md` (10 section, bukan 7)
 
 **Aturan Merge:**
 1. Section 1 (Ringkasan Perusahaan) → dari PLAN-GLOBAL
@@ -151,6 +153,11 @@ Menggabungkan semua planning yang sudah approved menjadi PRD final.
 5. Section 5 (Struktur Halaman & Section Layout) → dari semua PLAN-<halaman> yang terdaftar di `PAGES-LIST.md`
 6. Section 6 (Footer Data) → dari PLAN-GLOBAL
 7. Section 7 (Catatan Tambahan) → dari PLAN-GLOBAL + catatan dari PLAN-<halaman> jika ada
+8. Section 8 (User Needs Summary) → dari `PLAN-USER-NEEDS.md` (pain points, JTBD, objection, trigger)
+9. Section 9 (Competitive Intelligence) → dari `PLAN-COMPETITOR.md` (kompetitor + gap analysis + keyword gap)
+10. Section 10 (Design System Reference) → dari `PLAN-DESIGN-SYSTEM.md` (token warna, typography, spacing, komponen)
+
+**DILARANG** membiarkan Section 8–10 kosong: setiap section wajib terisi dari dokumen sumbernya (jika dokumen sumber tidak ada, catat alasannya secara eksplisit di section tersebut).
 
 **PENTING:** PRD.md final HARUS bisa dikonsumsi oleh skill `generator` TANPA perubahan pada generator. Format harus 100% kompatibel dengan `reference/prd-template.md`.
 

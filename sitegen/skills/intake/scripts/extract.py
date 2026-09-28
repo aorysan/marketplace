@@ -1,16 +1,19 @@
 import sys
 import os
 import json
-import math
 import collections
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 try:
-    import fitz  # PyMuPDF
-except ImportError:
-    fitz = None
+    # PyMuPDF >= 1.24: API `fitz` sudah deprecated dan akan dihapus.
+    import pymupdf as fitz
+except ImportError:  # pragma: no cover - hanya untuk PyMuPDF versi lama
+    try:
+        import fitz  # type: ignore
+    except ImportError:
+        fitz = None
 
 try:
     from PIL import Image
@@ -227,9 +230,11 @@ def extract_images_with_pixmap(doc, out_dir=None):
                 if pix.width < 50 or pix.height < 50:
                     continue
                     
-                if pix.n >= 5 or (pix.colorspace and pix.colorspace.n >= 4) or (pix.colorspace and pix.colorspace.name not in (fitz.csRGB.name, fitz.csGRAY.name)):
+                # Konversi hanya bila colorspace tidak didukung (mis. CMYK).
+                # Gambar ber-alpha (logo PNG transparan) DIPERTAHANKAN agar transparansinya tidak hilang.
+                if pix.n - pix.alpha > 3:
                     pix = fitz.Pixmap(fitz.csRGB, pix)
-                    
+
                 ext = "png" if pix.alpha else "jpg"
                 filename = f"img_p{page_num}_{xref}.{ext}"
                 filepath = os.path.join(out_dir, filename)
@@ -280,37 +285,27 @@ def extract_from_pdf(pdf_path, out_dir=None):
     asset_dir = os.path.join(output_dir, "assets")
     os.makedirs(asset_dir, exist_ok=True)
     
-    img_count = 0
-    
     for page_num in range(len(doc)):
         page = doc[page_num]
         page_text = page.get_text()
         text_content.append(page_text)
         raw_text_list.append({"page": page_num, "text": page_text})
-        
-        image_list = page.get_images(full=True)
-        for _, img in enumerate(image_list):
-            try:
-                xref = img[0]
-                base_image = doc.extract_image(xref)
-                if base_image and "image" in base_image and "ext" in base_image:
-                    image_bytes = base_image["image"]
-                    image_ext = base_image["ext"]
-                    img_count += 1
-                    image_filename = os.path.join(asset_dir, f"extracted_img_{page_num}_{img_count}.{image_ext}")
-                    with open(image_filename, "wb") as image_file:
-                        image_file.write(image_bytes)
-            except (AttributeError, KeyError, RuntimeError, ValueError, TypeError, IndexError) as e:
-                sys.stderr.write(f"Warning: Failed conventional extraction of image xref on page {page_num}: {e}\n")
-                continue
-                
+
+    colors_dict = extract_colors_from_pdf(doc)
+
+    # SATU jalur ekstraksi saja (anti-duplikasi): gambar terfilter (>50px) ditulis ke `assets/`
+    # di dalam pilar intake sehingga root `landings/<brand>/intake/` tetap bersih.
+    images_list = extract_images_with_pixmap(doc, asset_dir)
+
     print("=== EXTRACTED TEXT ===")
     print("\n".join(text_content))
     print("=== ASSETS SAVED ===")
-    print(f"Saved {img_count} images to {asset_dir}")
-    
-    colors_dict = extract_colors_from_pdf(doc)
-    images_list = extract_images_with_pixmap(doc, output_dir)
+    print(f"Saved {len(images_list)} image(s) to {asset_dir}")
+    if not images_list:
+        sys.stderr.write(
+            "Warning: tidak ada gambar berukuran >= 50px yang ditemukan. "
+            "Siapkan aset manual atau gunakan Mode 2 (Questionnaire) untuk aset dari user.\n"
+        )
     
     data = {
         "colors": colors_dict,

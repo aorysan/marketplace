@@ -6,7 +6,15 @@ Daftar item teknis yang dicek oleh script `check-technical.js` dan AI agent.
 
 ## A. Cek Teknis Otomatis (Script)
 
-Berikut item yang dicek otomatis oleh script `scripts/check-technical.js`:
+Dijalankan dari root workspace:
+
+```bash
+node "$CLAUDE_PLUGIN_ROOT/skills/seo/scripts/check-technical.js" landings/<brand>/web
+```
+
+**Gate keras:** exit code **1 = ada FAIL** (0 = lulus, 2 = argumen/folder salah). QA/debug wajib memakai exit code ini, bukan hanya membaca teks ringkasan.
+
+Setiap atribut diperiksa sebagai **nilai nyata** (literal atau ekspresi JSX). Komentar seperti `/* alt="..." */` di dalam tag **dihapus sebelum pemeriksaan** sehingga tidak bisa dipakai untuk meloloskan gate.
 
 | # | Item | Cara Cek | Acuan |
 |---|---|---|---|
@@ -14,15 +22,24 @@ Berikut item yang dicek otomatis oleh script `scripts/check-technical.js`:
 | 2 | Title tag <= 55 char | Hitung panjang isi title tag | SEO SOP Checklist §3 |
 | 3 | Meta description ada | Cari `<meta name="description">` di HTML atau metadata di TSX | Generator SOP §8 |
 | 4 | Meta description <= 155 char | Hitung panjang isi meta desc | SEO SOP Checklist §3 |
-| 5 | Alt text semua gambar | Cari `alt=` di semua `<img>` dan `<Image>` | Generator Prinsip §9 |
-| 6 | Title attr semua link | Cari `title=` di semua `<a>` | Generator Prinsip §9 |
-| 7 | robots.txt ada | Cek file `robots.txt` atau `app/robots.ts` | Generator SOP §8 |
-| 8 | sitemap ada | Cek file `sitemap.xml` atau `app/sitemap.ts` | Generator SOP §8 |
-| 9 | Schema.org JSON-LD ada | Cari `application/ld+json` di file | Generator GATE 3 §6 |
-| 10 | overflow-x: hidden | Cari di CSS files | Generator Prinsip §8 |
-| 11 | Lenis terintegrasi | Cek package.json atau import di TSX | Generator Prinsip §6 |
-| 12 | Tidak ada emoji | Scan karakter emoji Unicode di file | Generator Prinsip §3 |
-| 13 | CSS Modules (bukan Tailwind) | Cek tidak ada tailwindcss di dependencies | Generator Prinsip §2 |
+| 5 | Atribut `alt` semua gambar | Nilai nyata pada setiap `<img>`/`<Image>` | Generator Prinsip §9 |
+| 6 | Atribut `title` semua gambar | Pasangan ganda `alt` + `title` (bukan hanya link) | Generator Prinsip §9 |
+| 7 | Bebas placeholder gambar | Tolak `picsum.photos`, `placehold.*`, `example.jpg` | Generator Prinsip §4 |
+| 8 | Title attr semua link | Cari `title=` di semua `<a>`/`<Link>` | Generator Prinsip §9 |
+| 9 | robots.txt ada | Cek file `robots.txt` atau `app/robots.ts` | Generator SOP §8 |
+| 10 | sitemap ada | Cek file `sitemap.xml` atau `app/sitemap.ts` | Generator SOP §8 |
+| 11 | Schema.org JSON-LD ada | Cari `application/ld+json` di file | Generator GATE 3 §6 |
+| 12 | overflow-x: hidden + max-width | Wajib pada selector `html`/`body` | Generator Prinsip §8 |
+| 13 | Lenis terintegrasi | Cek package.json atau import di TSX | Generator Prinsip §6 |
+| 14 | Tidak ada emoji | Scan karakter emoji Unicode di file | Generator Prinsip §3 |
+| 15 | CSS Modules (bukan Tailwind) | Cek dependency & `tailwind.config.*` | Generator Prinsip §2 |
+| 16 | Anime.js v4 (bukan v3) | Tolak `import anime from "animejs"`, `anime({...})`, `anime.stagger/set/remove/timeline` | Generator Prinsip §1 |
+| 17 | Deteksi arah scroll | Setiap komponen ber-`animate()` wajib melacak `scrollY` | Generator Prinsip §1 |
+| 18 | Tidak ada `once: true` | Larangan animasi sekali jalan | Generator Prinsip §1 |
+| 19 | Staggering aktif | `.stagger-item` wajib punya pemanggilan `stagger()` | Generator AGENTS Pasal III |
+| 20 | Tanpa `@types/animejs` | Stub usang; v4 membawa tipe sendiri | Generator GATE 2 |
+| 21 | Transform awal via inline `transform` | Tolak individual transform (`translate`/`scale`/`rotate`) di inline style komponen animasi — Anime.js hanya menulis ke `transform` sehingga keduanya berkomposisi dan meninggalkan offset permanen | Generator Prinsip §1 |
+| 22 | SwipeableCards horizontal | `flex-shrink: 0` + `scroll-snap-type: x` + `overflow-x: auto` | Generator Prinsip §8 |
 
 ---
 

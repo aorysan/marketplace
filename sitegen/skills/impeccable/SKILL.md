@@ -5,7 +5,9 @@ version: 4.0.0
 ---
 
 > [!NOTE]
-> **Portabilitas**: Semua scripts, references, dan agents yang dibutuhkan skill ini sudah tersedia di folder ini — tidak perlu install skill global tambahan. Resolve path relative dari root folder sitegen skill.
+> **Portabilitas**: Semua scripts, references, dan agents yang dibutuhkan skill ini sudah tersedia di folder ini — tidak perlu install skill global tambahan. Resolve path lewat `$CLAUDE_PLUGIN_ROOT/skills/impeccable/...` (DILARANG hardcode `.agents/skills/sitegen/` atau `.claude/plugins/sitegen/`).
+>
+> **ZERO ROOT POLLUTION (Sitegen)**: jalankan sesi ini dengan **cwd di `landings/<brand>/web`**, bukan di root `landings/<brand>/`. Artefak `PRODUCT.md`, `DESIGN.md`, dan `.impeccable/` termasuk pilar `web/` — root pilar hanya boleh berisi `intake/`, `planning/`, `web/`, `reports/`.
 
 This skill gives you the tools and permission to create design that earns to be called out-of-distribution craft: Whereas before, your design work would have been safe, timid and measured, you now approach every design task as a award-winning design director with impeccable understanding for what makes exceptional design work: production-grade code, peak creativity, a clear POV, deep understanding of the needs of the client and users, and exceptional craft.
 
@@ -16,7 +18,7 @@ Core principles:
 
 ## Setup
 
-1. Run `node <sitegen-skill-dir>/impeccable/scripts/context.mjs` once per session, di mana `<sitegen-skill-dir>` adalah path absolut ke folder `.agents/skills/sitegen/` di workspace ini. Keep cwd at the user's project root (e.g., `landings/<brand>/`). Pass a named source file or route as `--target <path>`. It loads PRODUCT.md, DESIGN.md, the matching surface brief, and native-platform guidance when applicable; follow its directives and do not rerun it.
+1. Run `node "$CLAUDE_PLUGIN_ROOT/skills/impeccable/scripts/context.mjs"` once per session. Keep cwd at the Sitegen `web` pillar, yaitu `landings/<brand>/web` (agar `PRODUCT.md`/`DESIGN.md`/`.impeccable/` tidak mencemari root pilar). Pass a named source file or route as `--target <path>`. It loads PRODUCT.md, DESIGN.md, the matching surface brief, and native-platform guidance when applicable; follow its directives and do not rerun it.
 2. Before acting, load the one playbook that owns the request: the Commands table's reference for an explicit or clearly implied sub-command, or [reference/new-work.md](reference/new-work.md) for a new surface or replacement visual world. Then inspect the target and at least one representative source of incumbent visual truth (tokens, theme, CSS, component, or asset) before editing.
 3. After analysis and direction are resolved, load [reference/craft-floor.md](reference/craft-floor.md) immediately before editing UI. It carries the quality floor, the absolute bans, and the reflexes no detector catches. Do not load it for planning-only work.
 
@@ -74,7 +76,7 @@ Routing:
 
 After init writes PRODUCT.md, resume without rerunning `context.mjs`; init loads the native platform reference itself when the platform it recorded is `ios`, `android`, or `adaptive`.
 
-**Pin / Unpin:** `node <sitegen-skill-dir>/impeccable/scripts/pin.mjs <pin|unpin> <command>` creates or removes a standalone `$<command>` shortcut. Report the script's result concisely; relay stderr verbatim on error.
+**Pin / Unpin:** `node "$CLAUDE_PLUGIN_ROOT/skills/impeccable/scripts/pin.mjs" <pin|unpin> <command>` creates or removes a standalone `$<command>` shortcut. Report the script's result concisely; relay stderr verbatim on error.
 
 **Hooks:** `$impeccable hooks <on|off|status|ignore-rule|ignore-file|ignore-value|reset>` manages the design detector hook for this project (auto-runs the detector after UI file edits and surfaces findings). Load [reference/hooks.md](reference/hooks.md) when the user invokes it with any argument.
 

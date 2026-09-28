@@ -11,9 +11,12 @@ Desktop.ini
 .superpowers
 docs/superpowers/plans
 
+# Python bytecode
+__pycache__/
+*.pyc
+
 # Test outputs (generated — not committed)
 tests/outputs/
-tests/prompt_*.txt
 skills/*/outputs/
 
 # Generated outputs

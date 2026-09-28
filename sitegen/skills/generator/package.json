@@ -2,9 +2,5 @@
   "name": "sitegen-skill",
   "private": true,
   "type": "module",
-  "description": "Templates & tooling untuk skill sitegen — boilerplate dan section snippets Next.js App Router (screenshot QC via Playwright di tiap proyek web).",
-  "scripts": {
-    "install:fast": "npm install --omit=optional",
-    "install:qc": "npm install --include=optional"
-  }
+  "description": "Templates & tooling untuk skill sitegen — boilerplate dan section snippets Next.js App Router. QC/screenshot dijalankan per proyek web lewat Playwright (`npx playwright test`) di landings/<brand>/web."
 }

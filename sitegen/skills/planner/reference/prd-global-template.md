@@ -48,6 +48,7 @@
 | **Tone of Voice** | [Formal/Casual, Simple/Complex, Serious/Playful — sesuai industri & audience] |
 | **Brand Personality Traits** | [3-5 traits, misal: "Confident, not arrogant"] |
 | **Positioning Statement** | ["[Brand] is the [category] for [audience] who want [outcome] because [reason]"] |
+| **Banned Content** | [Kata/frasa yang DILARANG dipakai: jargon tanpa konteks, klaim tanpa bukti, kata berkonotasi buruk] |
 
 ### Aset Visual
 - Logo: [Tersedia dari PDF / perlu dibuat]

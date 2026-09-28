@@ -8,18 +8,21 @@ export default function Video({ title, items }: VideoProps) {
     <section aria-label="Video">
       <AnimatedSection>
         <h2>{title}</h2>
+        <div className="video-list">
+          {items.map((v) => (
+            <figure key={v.embedUrl} className="stagger-item video-touchsafe">
+              <iframe
+                src={v.embedUrl}
+                title={v.title}
+                loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+              <figcaption>{v.desc}</figcaption>
+            </figure>
+          ))}
+        </div>
       </AnimatedSection>
-      {items.map((v) => (
-        <figure key={v.embedUrl} className="stagger-item video-touchsafe">
-          <iframe
-            src={v.embedUrl}
-            title={v.title}
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-          <figcaption>{v.desc}</figcaption>
-        </figure>
-      ))}
     </section>
   );
 }

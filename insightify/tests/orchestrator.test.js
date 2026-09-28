@@ -17,6 +17,22 @@ describe('Orchestrator Skill', () => {
     assert.strictEqual(content.includes('.insightify/'), true);
   });
 
+  test('insightify.md gates Stage 2 (Writer) behind explicit plan approval', () => {
+    const orchestratorPath = path.join(__dirname, '../skills/insightify/SKILL.md');
+    const content = fs.readFileSync(orchestratorPath, 'utf8');
+
+    // The orchestrator must stop the pipeline at the Planner gate, not just the
+    // planner sub-skill: without this the run would continue straight to Writer.
+    assert.strictEqual(content.includes('Approval gate:'), true, 'Planner step must declare the approval gate');
+    assert.strictEqual(content.includes('END TURN'), true, 'Gate must end the turn and wait');
+    assert.strictEqual(content.includes('until the user explicitly approves'), true, 'Gate must require explicit approval');
+    assert.strictEqual(
+      content.includes('do NOT start Stage 2 (Writer)'),
+      true,
+      'Gate must block Stage 2 (Writer) before approval'
+    );
+  });
+
   test('insightify.md includes CLI argument parsing, progress indicators, and error resilience', () => {
     const orchestratorPath = path.join(__dirname, '../skills/insightify/SKILL.md');
     const content = fs.readFileSync(orchestratorPath, 'utf8');

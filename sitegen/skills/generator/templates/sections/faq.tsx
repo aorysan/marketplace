@@ -9,16 +9,16 @@ export default function Faq({ title, items }: FaqProps) {
     <section aria-label="Pertanyaan umum">
       <AnimatedSection>
         <h2>{title}</h2>
+        <ul>
+          {items.map((f) => (
+            <li key={f.question} className="stagger-item">
+              <HelpCircle size={24} aria-hidden="true" />
+              <h3>{f.question}</h3>
+              <p>{f.answer}</p>
+            </li>
+          ))}
+        </ul>
       </AnimatedSection>
-      <ul>
-        {items.map((f) => (
-          <li key={f.question} className="stagger-item">
-            <HelpCircle size={24} aria-hidden="true" />
-            <h3>{f.question}</h3>
-            <p>{f.answer}</p>
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }

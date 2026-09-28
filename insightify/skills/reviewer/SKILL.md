@@ -58,7 +58,7 @@ Note: Source citations (`> **Source:**`) are intentionally omitted from user-fac
 - 1: Documentation describes patterns not found in the codebase, or misrepresents the architecture
 
 **Business Alignment** (matches business policies and user journeys):
-- 5: User journeys, state machines, and business policies are logically sound, accurately extracted, and well-represented (user-journeys.md, business-policies.md, state-management.md / data-models.md); Feature Catalog strictly contains functional business capabilities without UI styling/layout leakage
+- 5: User journeys, state machines, and business policies are logically sound, accurately extracted, and well-represented (features-and-journeys.md, business-policies.md, state-and-data.md); Feature Catalog strictly contains functional business capabilities without UI styling/layout leakage
 - 3: Minor logical gaps in user journeys or missing some business policies
 - 1: State machines or user journeys make no business sense, or business policies are entirely ignored, or Feature Catalog misclassifies UI styling/primitives as product features
 

@@ -14,7 +14,7 @@
 
 ## PASAL II: DISIPLIN ORKESTRASI SEKUENSIAL & KEJELASAN DELEGASI
 1. **Eksekusi Berurutan Tanpa Lompati:**
-   - Seluruh langkah (Step 1 hingga Step 11) wajib dijalankan sekuensial. Master Orchestrator dilarang melewati atau menggabungkan eksekusi dua fase kritis sekaligus.
+   - Seluruh langkah (Step 0 hingga Step 13) wajib dijalankan sekuensial. Master Orchestrator dilarang melewati atau menggabungkan eksekusi dua fase kritis sekaligus.
 2. **Kewajiban Pengikatan Aturan Sub-Skill:**
    - Saat memanggil sub-skill atau mendelegasikan tugas ke subagent (misal `planner`, `generator`, `qa-reviewer`), Master Orchestrator wajib menyertakan instruksi teks agar agen tersebut mematuhi file konstitusi lokalnya (`<subskill>/AGENTS.md`).
 

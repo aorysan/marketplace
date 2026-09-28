@@ -1,4 +1,5 @@
 ---
+name: business-strategist-reviewer
 description: Mengaudit sebuah Business Knowledge Base yang sudah ada untuk menghasilkan Business Audit Report — menilai apakah USP benar-benar unik, pricing masuk akal, positioning tepat, asumsi PMF realistis, SWOT tidak generik, dan menemukan kelemahan model bisnis. Gunakan saat pengguna sudah punya analisis/knowledge base bisnis dan ingin itu di-review, diaudit, dicek konsistensinya, atau divalidasi sebelum dipakai mengambil keputusan — misalnya "review analisis bisnis ini", "audit business knowledge base ini", "apakah analisis ini sudah cukup kuat".
 ---
 

@@ -4,7 +4,7 @@ import json
 import subprocess
 import tempfile
 import pytest
-import fitz
+import pymupdf as fitz  # `import fitz` sudah deprecated di PyMuPDF >= 1.24
 from PIL import Image
 
 @pytest.fixture
@@ -70,3 +70,20 @@ def test_extract_improvements_output(sample_pdf_path, tmp_path):
     # Check color extraction found primary hex #0f4c81 or similar
     all_colors = data["colors"]["primary"] + data["colors"]["secondary"] + data["colors"]["neutral"]
     assert len(all_colors) > 0
+
+    # --- Regresi Zero Root Pollution + anti-duplikasi aset ---
+    assets_dir = os.path.join(output_dir, "assets")
+    for item in data["images"]:
+        assert os.path.exists(os.path.join(assets_dir, item["file"])), (
+            f"{item['file']} wajib berada di assets/, bukan di root output pillar"
+        )
+
+    root_images = [
+        f for f in os.listdir(output_dir)
+        if f.lower().endswith((".png", ".jpg", ".jpeg", ".webp"))
+    ]
+    assert root_images == [], f"root output pillar tidak boleh berisi gambar: {root_images}"
+
+    assert len(os.listdir(assets_dir)) == len(data["images"]), (
+        "aset tidak boleh terduplikasi (jumlah file di assets/ harus sama dengan jumlah gambar terdaftar)"
+    )

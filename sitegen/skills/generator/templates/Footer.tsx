@@ -15,7 +15,7 @@ export default function Footer({ email, phone, address, socials, dark = true }: 
     <footer className={dark ? "site-footer site-footer-dark" : "site-footer"}>
       <div className="site-footer-inner">
         <Link href="/" title="{{BRAND}} — Beranda" aria-label="{{BRAND}} — Beranda" className={dark ? "site-logo site-logo-lightbox" : "site-logo"}>
-          <Image src="{{LOGO_PATH}}" alt="Logo {{BRAND}}" width={160} height={36} className="h-9 w-auto object-contain" />
+          <Image src="{{LOGO_PATH}}" alt="Logo resmi {{BRAND}}" title="Logo resmi {{BRAND}}" width={160} height={36} className="site-logo-img" />
         </Link>
         <address className="site-contact">
           <a href={`mailto:${email}`} title="Email {{BRAND}}">{email}</a>

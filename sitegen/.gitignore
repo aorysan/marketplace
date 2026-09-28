@@ -39,3 +39,8 @@ temp-venturo-claude/
 .agents/
 landings/
 docs/superpowers/plans
+
+# Agent tool local state (jangan pernah di-commit)
+.freebuff/
+.claude/settings.local.json
+.superpowers/

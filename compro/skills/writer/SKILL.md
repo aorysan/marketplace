@@ -1,3 +1,8 @@
+---
+name: writer
+description: Mengolah dokumen bisnis (business knowledge base, audit report, brand story guide) menjadi draf narasi company profile berbasis slide dalam Markdown. Gunakan saat pengguna butuh draf narasi company profile per-slide sebelum dirender menjadi HTML presentasi.
+---
+
 # Writer
 
 > **Skill untuk:** Mengolah 3 dokumen input bisnis menjadi draf narasi company profile berbasis slide (Markdown).

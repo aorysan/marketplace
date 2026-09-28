@@ -79,6 +79,10 @@ describe('Plan Template (Parallel Sections)', () => {
     assert.ok(!skillContent.includes('workflows.md'), 'SKILL.md must not list workflows.md category');
     assert.ok(skillContent.includes('detected archetype'), 'SKILL.md must derive category set from detected archetype');
     assert.ok(!skillContent.includes('max 5 waves'), 'SKILL.md must not enforce max 5 waves anymore');
+
+    assert.ok(skillContent.includes('Approve plan? [Y/n/revise]'), 'SKILL.md must define the plan approval prompt');
+    assert.ok(!skillContent.includes('Do NOT ask the user for plan approval'), 'SKILL.md must not auto-approve the plan');
+    assert.ok(templateContent.includes('Review and approve before Writer stage'), 'plan-template.md must require approval before the Writer stage');
   });
 
   test('planner skill enforces parallel extraction with a maximum concurrency of 5', () => {

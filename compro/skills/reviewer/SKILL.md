@@ -1,3 +1,8 @@
+---
+name: reviewer
+description: Memverifikasi draf company profile terhadap fakta bisnis dan panduan brand, menilai struktur presentasi, serta merumuskan metadata on-page SEO. Gunakan saat draf company profile perlu di-review/QA sebelum masuk tahap builder.
+---
+
 # Reviewer
 
 > **Skill untuk:** Memverifikasi akurasi draf terhadap fakta bisnis, panduan brand, struktur presentasi, dan merumuskan On-Page SEO metadata.

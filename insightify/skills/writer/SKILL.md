@@ -12,7 +12,7 @@ description: Stage 2 - Execute documentation plan by generating a single compreh
 3. Assign sub-agents to render sections/parts of the document independently in parallel based on the plan (maximum concurrency of 5).
 4. Once all sections are rendered, stitch them together into a single comprehensive markdown document at `[OUT_DIR]/docs/markdown/documentation.md`.
 5. Display summary to user for post-write review (total word count, section count, diagram count).
-5. Handle targeted revisions if requested by user.
+6. Handle targeted revisions if requested by user.
 
 ## Writing Style
 

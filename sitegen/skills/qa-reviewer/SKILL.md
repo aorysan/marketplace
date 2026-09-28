@@ -154,6 +154,7 @@ Review hasil KODE eksekusi halaman di Next.js terhadap PRD.
 
 **Output:**
 - File: `landings/<brand>/reports/QA-CODE-<halaman>.md`
+- Kerangka laporan: `reference/QA-CODE-REPORT.md.template`
 
 **Yang di-review:**
 1. **Strict Slug & Struktur**: Apakah nama komponen dan slug URL 100% kongruen dengan PRD.

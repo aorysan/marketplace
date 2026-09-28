@@ -2,6 +2,8 @@
 
 Browser-based visual brainstorming companion for showing mockups, diagrams, and options.
 
+> **Path convention (Sitegen):** semua contoh perintah `scripts/...` di dokumen ini relatif terhadap folder skill (`skills/brainstorming/`). Jalankan lewat path absolut plugin, mis. `bash "$CLAUDE_PLUGIN_ROOT/skills/brainstorming/scripts/start-server.sh" ...` — jangan mengandalkan cwd.
+
 ## When to Use
 
 Decide per-question, not per-session. The test: **would the user understand this better by seeing it than reading it?**

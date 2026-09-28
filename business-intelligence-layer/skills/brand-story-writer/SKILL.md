@@ -1,4 +1,5 @@
 ---
+name: brand-story-writer
 description: Menerjemahkan Business Knowledge Base dan Business Audit Report menjadi Brand Story Guide — narasi brand, core message, key claims, tone of voice, messaging pillars, dan elevator pitch. Gunakan saat pengguna ingin menyusun narasi brand, brand story, messaging, atau elevator pitch berdasarkan hasil analisis bisnis yang sudah ada — misalnya "buatkan brand story untuk produk ini", "susun narasi brand dari analisis ini", "buat elevator pitch", atau "bagaimana cara menyampaikan value proposition ini ke pasar".
 ---
 
@@ -28,6 +29,7 @@ Susun panduan dengan komponen berikut:
 4. **Tone of Voice** — karakter komunikasi brand (mis. profesional-hangat, berani-lugas, teknis-terpercaya) yang cocok dengan persona target pelanggan.
 5. **Messaging Pillars** — 3-4 pilar pesan yang bisa dipakai konsisten di berbagai channel (website, sales deck, campaign).
 6. **Elevator Pitch** — satu-dua kalimat yang bisa dipakai untuk memperkenalkan produk dalam waktu singkat.
+7. **Brand Color Palette** — peran warna brand (primary/secondary/accent/text/background) yang dipetakan dari tabel `## Colors` di Product Knowledge Base; jangan mengarang warna yang tidak ada di input.
 
 ## Output Template
 
@@ -82,7 +84,7 @@ yang sesuai di input. Jika input tidak punya tabel warna, isi section dengan
 
 ### Self-Validation Checklist
 
-- [ ] **Kelengkapan:** Apakah semua 6 section terisi? Brand narrative, core message, key claims, tone of voice, messaging pillars, elevator pitch — semuanya harus ada.
+- [ ] **Kelengkapan:** Apakah semua 7 section terisi? Brand narrative, core message, key claims, tone of voice, messaging pillars, elevator pitch, dan Brand Color Palette — semuanya harus ada (section warna boleh diisi "Belum tersedia di Product Knowledge Base — perlu divalidasi" bila input tidak punya tabel warna).
 - [ ] **Konsistensi dengan BKB:** Apakah persona, USP, dan positioning yang digunakan di brand story konsisten dengan Business Knowledge Base? Jika ada perbedaan, cek ulang dan perbaiki.
 - [ ] **Tidak overclaim:** Apakah ada klaim yang bertentangan dengan kelemahan yang ditemukan di Business Audit Report? Jika ada, hapus atau tandai sebagai "klaim aspirasional" dengan penjelasan.
 - [ ] **Klaim didukung:** Apakah setiap key claim memiliki dasar di Business Knowledge Base atau Audit Report? Jika ada klaim tanpa dukungan, tambahkan catatan "asumsi" atau hapus.

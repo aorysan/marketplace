@@ -23,7 +23,7 @@ Corporate decks require strict structural discipline to look polished both in in
 
 The template has exactly **7 archetypes** (SSOT: `CINEMATIC_ARCHETYPES` +
 `CINEMATIC_SLOT_MAP` in `skills/builder/scripts/themes/modern.js`, mirrored in
-`templates/modern/manifest.json` and asserted by
+`skills/builder/templates/modern/manifest.json` and asserted by
 `scripts/test-cinematic-classifier.js`). This section replaces the earlier
 per-theme layout catalogue; the canonical DOM for each layout is produced by its
 renderer, never hand-written.

@@ -4,6 +4,21 @@ Plugin otomatisasi pembuatan Company Profile interaktif dengan sistem desain **A
 
 ---
 
+## 📦 Instalasi (Claude Code)
+
+Compro tersedia sebagai plugin di marketplace `aorysan-marketplace`:
+
+```shell
+/plugin marketplace add aorysan/marketplace
+/plugin install compro@aorysan-marketplace
+```
+
+Setelah terpasang, jalankan `/compro`. Sub-skill tersedia dengan namespace `/compro:writer`, `/compro:reviewer`, `/compro:builder`, dan `/compro:publisher`.
+
+> Instalasi manual: `claude --plugin-dir <path-ke-repo>`.
+
+---
+
 ## What's New in v2.8.0 — Aperture Cinematic Minimalist
 
 Rilis v2.8.0 menggantikan seluruh tema legacy Canva Editorial dan runtime Reveal.js dengan sistem presentasi sinematik modern **Aperture Cinematic Minimalist**:
@@ -107,7 +122,6 @@ node scripts/test-modern-golden.js
 ├── .codex-plugin/
 │   └── plugin.json                     # Manifest registrasi skill Codex
 ├── package.json                        # Entry point `npm test` / `npm run build`
-├── plugin.json                         # Manifest plugin root
 ├── skills/
 │   ├── compro/SKILL.md                 # Orchestrator State-Machine (Gate -1 s/d Phase 6)
 │   ├── writer/SKILL.md                 # Skill 8: Copywriting, Research & Slide Drafting

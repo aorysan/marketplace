@@ -18,6 +18,10 @@
     "sitegen",
     "playwright"
   ],
+  "metadata": {
+    "category": "web-development",
+    "enabled": true
+  },
   "skills": [
     "./"
   ]

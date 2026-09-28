@@ -6,10 +6,10 @@ A curated collection of Claude Code plugins built by [Aorysan](https://github.co
 
 | Plugin | Description | Version |
 |--------|-------------|---------|
-| [sitegen](./sitegen) | Master orchestrator for end-to-end website generation — from PDF intake to deployment. Handles intake, generation, SEO validation, debugging, and deployment. | 1.1.0 |
+| [sitegen](./sitegen) | Master orchestrator for end-to-end website generation — from PDF intake to deployment. Handles intake, generation, SEO validation, debugging, and deployment. | 1.0.0 |
 | [insightify](./insightify) | Generate artifact-style technical documentation and a Product Knowledge Base from code repositories, URLs, and files. | 6.4.1 |
 | [compro](./compro) | Layer 3 Company Profile multi-agent plugin with Aperture Cinematic slide deck generator and Vercel deployment. | 2.8.0 |
-| [business-intelligence-layer](./business-intelligence-layer) | Strategic analysis plugin that turns Product Knowledge Base, Pitch Deck, Pricing, and Market Notes into a structured Business Knowledge Base, Business Audit Report, and Brand Story Guide. | 1.1.0 |
+| [business-intelligence-layer](./business-intelligence-layer) | Strategic analysis plugin that turns Product Knowledge Base, Pitch Deck, Pricing, and Market Notes into a structured Business Knowledge Base, Business Audit Report, and Brand Story Guide. | 1.1.1 |
 
 ## Structure
 
@@ -32,3 +32,20 @@ claude plugin add <marketplace-path>/<plugin-name>
 ```
 
 Or reference a specific plugin via its repository. Each plugin's own README contains detailed installation and usage instructions.
+
+## 🔁 Sync & Version Guard
+
+Each directory here is a vendored copy of a plugin repository. After changing a plugin in its own repository, refresh the copy and re-run the guard:
+
+```bash
+# 1. Refresh one plugin from its source repo (tracked files only)
+SRC=/path/to/plugin        # e.g. ../insight/.claude/plugins/insightify
+DST=insightify
+git -C "$SRC" ls-files -z | while IFS= read -r -d '' f; do [ -e "$SRC/$f" ] && printf '%s\0' "$f"; done > /tmp/files.list
+rm -rf "$DST" && mkdir -p "$DST" && rsync -a --from0 --files-from=/tmp/files.list "$SRC/" "$DST/"
+
+# 2. Verify the version agrees in all four places
+node scripts/check-versions.mjs
+```
+
+`scripts/check-versions.mjs` compares the vendored `.claude-plugin/plugin.json` of every plugin against its entry in `.claude-plugin/marketplace.json`, `plugins.json`, and the README table. It exits `1` on any mismatch, so it can gate a push: a stale `version` field pins every install to a plugin version that no longer exists.

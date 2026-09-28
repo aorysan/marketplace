@@ -93,6 +93,14 @@ function validateImageFile(filePath, contentType) {
   return '';
 }
 
+// Remove a partially written download synchronously: callers (and tests) check the
+// file right after the promise settles, so a callback-based unlink races.
+function removeQuietly(filePath) {
+  try {
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+  } catch (_) {}
+}
+
 function downloadFile(url, destPath, timeoutMs = 5000) {
   return new Promise((resolve, reject) => {
     const client = url.startsWith('https') ? https : http;
@@ -124,7 +132,7 @@ function downloadFile(url, destPath, timeoutMs = 5000) {
             // "no broken image ever ships" guarantee true).
             const reason = validateImageFile(destPath, response.headers && response.headers['content-type']);
             if (reason) {
-              fs.unlink(destPath, () => {});
+              removeQuietly(destPath);
               return reject(new Error(reason));
             }
             resolve(destPath);
@@ -132,7 +140,7 @@ function downloadFile(url, destPath, timeoutMs = 5000) {
         });
         file.on('error', err => {
           file.close();
-          fs.unlink(destPath, () => {});
+          removeQuietly(destPath);
           reject(err);
         });
       }
@@ -140,12 +148,12 @@ function downloadFile(url, destPath, timeoutMs = 5000) {
 
     req.on('timeout', () => {
       req.destroy();
-      fs.unlink(destPath, () => {});
+      removeQuietly(destPath);
       reject(new Error('Request timeout'));
     });
 
     req.on('error', err => {
-      fs.unlink(destPath, () => {});
+      removeQuietly(destPath);
       reject(err);
     });
   });

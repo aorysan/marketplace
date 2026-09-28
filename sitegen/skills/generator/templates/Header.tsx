@@ -22,7 +22,7 @@ export default function Header({ navItems }: HeaderProps) {
     <header className={`site-header${scrolled ? " site-header-scrolled" : ""}`}>
       <nav className="site-nav" aria-label="Navigasi utama">
         <Link href="/" title="{{BRAND}} — Beranda" aria-label="{{BRAND}} — Beranda" className="site-logo">
-          <Image src="{{LOGO_PATH}}" alt="Logo {{BRAND}}" width={160} height={36} className="h-9 w-auto object-contain" priority />
+          <Image src="{{LOGO_PATH}}" alt="Logo resmi {{BRAND}}" title="Logo resmi {{BRAND}}" width={160} height={36} className="site-logo-img" priority />
         </Link>
         <ul className="site-links">
           {navItems.map((item) => (

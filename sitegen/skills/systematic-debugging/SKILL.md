@@ -176,7 +176,7 @@ You MUST complete each phase before proceeding to the next.
    - Automated test if possible
    - One-off test script if no framework
    - MUST have before fixing
-   - Use the `superpowers:test-driven-development` skill for writing proper failing tests
+   - Pakai test runner yang sudah ada di proyek (sitegen: `pytest` untuk skrip Python, `npx playwright test` untuk halaman web); jika belum ada, tulis skrip reproduksi sekali pakai
 
 2. **Implement Single Fix**
    - Address the root cause identified
@@ -283,9 +283,10 @@ These techniques are part of systematic debugging and available in this director
 - **`defense-in-depth.md`** - Add validation at multiple layers after finding root cause
 - **`condition-based-waiting.md`** - Replace arbitrary timeouts with condition polling
 
-**Related skills:**
-- **superpowers:test-driven-development** - For creating failing test case (Phase 4, Step 1)
-- **superpowers:verification-before-completion** - Verify fix worked before claiming success
+**Terkait di plugin sitegen:**
+- Sub-skill `sitegen-debug` — eksekusi perbaikan + laporan `reports/DEBUG_LOG.md` (batas iterasi master: generator 5x, debug SEO 3x, post-deploy 2x).
+- Sub-skill `sitegen-seo` — sumber temuan SEO pada `reports/SEO-AUDIT.md` (jalankan `check-technical.js`; exit code 1 = ada FAIL).
+- Prinsip verifikasi: jangan klaim selesai sebelum fix diuji ulang (test lulus, build lulus, dan error konsol bersih).
 
 ## Real-World Impact
 

@@ -109,6 +109,20 @@ Setelah user setuju dengan pendekatan:
 
 2. **[HARD STOP]**: Perlihatkan isi `user_preferences.md` ke user, lalu kembalikan kontrol ke master orchestrator. BERHENTI MENGEKSEKUSI TOOL APA PUN DAN AKHIRI GILIRAN (END TURN). Tunggu konfirmasi persetujuan dari user secara eksplisit sebelum melanjutkan ke tahap berikutnya. Dilarang memanfaatkan momentum untuk meneruskan eksekusi secara mandiri.
 
+### Mode Komplementer (Opsional) — Visual Companion
+
+Untuk pertanyaan yang **secara hakikat visual** (pilihan wireframe/layout, dua skema warna berdampingan, diagram arsitektur), agen BOLEH memakai companion berbasis browser sebagai alat bantu. Panduan lengkap ada di `visual-companion.md`; servernya dijalankan dari folder skill ini:
+
+```bash
+bash "$CLAUDE_PLUGIN_ROOT/skills/brainstorming/scripts/start-server.sh" --project-dir "landings/<brand>" --open
+# menghentikan sesi (pakai session_dir yang dikembalikan server):
+bash "$CLAUDE_PLUGIN_ROOT/skills/brainstorming/scripts/stop-server.sh" <session_dir>
+```
+
+Aturan yang tetap berlaku: satu pertanyaan per pesan, sesi tetap berjalan di terminal, dan visual companion **bukan** pengganti sesi teks. Jika browser/server tidak tersedia di environment user, lanjutkan dengan mode teks biasa — jangan blokir sesi.
+
+---
+
 ## Prinsip
 
 - **1 pertanyaan per pesan** — jangan overwhelm user

@@ -1,0 +1,9 @@
+# Normalize all text files to LF in the repository and on checkout.
+# Prevents line-ending churn (CRLF noise) across editors and OSes.
+* text=auto eol=lf
+
+# Binary assets
+*.pyc binary
+*.png binary
+*.jpg binary
+*.pdf binary

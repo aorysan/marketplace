@@ -10,7 +10,7 @@ description: QA Otomatis, Visual Debugging (Playwright), dan Analisis Performa/S
 
 Skill ini dipanggil setelah server berjalan. Jalankan QA otomatis dalam tahap wajib berikut:
 
-- **Mandat**: Jika user ingin memperbaiki isu, JANGAN HANYA MEMBERIKAN SARAN. Langsung Analisis, Diagnosi, dan LAKUKAN PERBAIKAN langsung ke kode proyek di `landings/<brand>/web/` ! Simpan catatan analisis eksekusi perbaikan Anda di `landings/<brand>/reports/DEBUG_LOG.md`.
+- **Mandat**: Jika user ingin memperbaiki isu, JANGAN HANYA MEMBERIKAN SARAN. Langsung Analisis, Diagnosi, dan LAKUKAN PERBAIKAN langsung ke kode proyek di `landings/<brand>/web/` ! Simpan catatan analisis eksekusi perbaikan Anda di `landings/<brand>/reports/DEBUG_LOG.md` (kerangka: `templates/DEBUG_LOG.md.template`).
 - Periksa log build atau dev-server yang menyala di direktori `landings/<brand>/web/` untuk menangkap galat terminal, seperti stack trace atau port bentuk.
 
 ## Tahap 0: Pahami PRD
@@ -20,11 +20,16 @@ Skill ini dipanggil setelah server berjalan. Jalankan QA otomatis dalam tahap wa
 1. Jalankan E2E + screenshot Playwright dari folder web brand (rute dari PAGES-LIST.md):
    `cd landings/<brand>/web && npx playwright test --project=chromium`
    Spec `tests/<slug_tepat>.spec.ts` (template Batch 2) menangkap Desktop 1280x720 + Mobile 375x667 ke `landings/<brand>/reports/.preview/`.
-2. **STRICT AUTO-FAIL**: nyatakan hard-fail bila ditemukan (via assertion spec + `node <skill-dir>/seo/scripts/check-technical.js landings/<brand>/web`):
-   - Emoji di DOM; class TailwindCSS; `html`/`body` tanpa `overflow-x: hidden` + `max-width: 100vw`;
-   - `<SwipeableCards>` tanpa `flex-shrink: 0` pada children / gagal `flex-direction: row` di mobile;
-   - `<img>`/`<Image>` tanpa `alt`, `title`, atau tidak responsif; gambar 404 / `picsum.photos`;
-   - Elemen gagal render / overflow-x.
+2. **STRICT AUTO-FAIL**: nyatakan hard-fail bila ditemukan. Gate resminya adalah **exit code** dari:
+   `node "$CLAUDE_PLUGIN_ROOT/skills/seo/scripts/check-technical.js" landings/<brand>/web`
+   → **exit 1 = FAIL** (exit 0 = lulus, exit 2 = argumen/folder salah). Skrip itu sudah menguji:
+   - emoji di DOM/UI; class TailwindCSS (`tailwind.config.*` / dependency);
+   - pasangan atribut **`alt` + `title` bernilai nyata** pada semua `<img>`/`<Image>` (komentar `/* alt="..." */` sengaja diabaikan dan dianggap pelanggaran);
+   - gambar placeholder fiktif (`picsum.photos`, `placehold.*`, `example.jpg`);
+   - `html`/`body` dengan `overflow-x: hidden` + `max-width: 100vw`; robots/sitemap/JSON-LD; Lenis;
+   - **Anime.js v4** (API v3 = FAIL), pelacakan arah gulir `scrollY` (unidirectional), larangan `once: true`, dan `.stagger-item` yang benar-benar dianimasikan `stagger()`;
+   - `<SwipeableCards>` dengan `flex-shrink: 0` + `scroll-snap-type: x` + `overflow-x: auto`.
+   Assertion visual/berat (overflow horizontal, error console, screenshot) dijaga oleh spec Playwright `tests/<slug_tepat>.spec.ts`.
 3. Periksa log console untuk error React/Next.js (hydration, dll) dan segera perbaiki kode.
 4. Periksa semua gambar screenshot di folder `landings/<brand>/reports/.preview/`.
 5. Jika ada layout rusak (overflow, gambar terpotong, tipografi error, atau SwipeableCards rusak), perbaiki komponen lalu **ulangi skrip screenshot** sampai 100% sempurna.
@@ -43,7 +48,7 @@ Skill ini dipanggil setelah server berjalan. Jalankan QA otomatis dalam tahap wa
    - **Kesesuaian Visual**: Pastikan elemen menggunakan Warna Brand dan Font yang ditetapkan dari PRD. Periksa file `landings/<brand>/intake/intake_raw.json` atau file konfigurasi CSS utama (`page.module.css` / variabel CSS di folder `web/`) jika ada warna yang terlalu melenceng dari brand.
    - **PENEKANAN KUAT**: Jika hasil *render* melenceng dari PRD, meskipun tidak ada error sintaks/kode, agen **WAJIB** memperbaikinya kembali sesuai PRD.
    - **Lenis Smooth Scroll**: Pastikan scroll berjalan mulus dan tidak ada error Lenis di console.
-   - **Animasi Scroll Anime.js (Unidirectional)**: Pastikan elemen/section menggunakan `AnimatedSection.tsx` (Anime.js), animasi HANYA terpicu saat scroll dari atas ke bawah (deteksi arah scroll via `scrollY` tracking), TIDAK terpicu saat scroll ke atas, dan elemen ter-RESET saat keluar viewport. DILARANG `once: true`. Status animasi ter-reset (`anime.remove()`) secara asimetris.
+   - **Animasi Scroll Anime.js (Unidirectional)**: Pastikan elemen/section menggunakan `AnimatedSection.tsx` (Anime.js), animasi HANYA terpicu saat scroll dari atas ke bawah (deteksi arah scroll via `scrollY` tracking), TIDAK terpicu saat scroll ke atas, dan elemen ter-RESET saat keluar viewport. DILARANG `once: true`. Status animasi dibersihkan dengan `utils.remove()` (API v4; `anime.remove` sudah dihapus) dan di-reset secara asimetris.
    - **Auto-slide Carousel**: Pastikan list dengan 10+ item otomatis bergeser tanpa interaksi.
    - **Schema.org JSON-LD**: Pastikan metadata JSON-LD valid dan sesuai tipe halaman (Beranda, Layanan, Blog, dll).
    - **Blog Backlink**: Pastikan halaman `/blog` memuat tepat 3 artikel backlink dengan gambar clickable.

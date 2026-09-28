@@ -9,16 +9,16 @@ export default function Testimonial({ title, items }: TestimonialProps) {
     <section aria-label="Testimoni">
       <AnimatedSection>
         <h2>{title}</h2>
+        <ul>
+          {items.map((t) => (
+            <li key={t.name} className="stagger-item" tabIndex={0} aria-label={`Testimoni ${t.name}`}>
+              <Quote size={24} aria-hidden="true" />
+              <blockquote>{t.quote}</blockquote>
+              <p>{t.name} — {t.role}</p>
+            </li>
+          ))}
+        </ul>
       </AnimatedSection>
-      <ul>
-        {items.map((t) => (
-          <li key={t.name} className="stagger-item" tabIndex={0} aria-label={`Testimoni ${t.name}`}>
-            <Quote size={24} aria-hidden="true" />
-            <blockquote>{t.quote}</blockquote>
-            <p>{t.name} — {t.role}</p>
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }

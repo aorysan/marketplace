@@ -1,6 +1,11 @@
+---
+name: compro
+description: Orkestrator pipeline Layer 3 Company Profile v2.8.0 secara end-to-end — dari dokumen bisnis (writer) hingga HTML presentasi slide-based Aperture Cinematic Minimalist dan deploy ke Vercel. Gunakan saat pengguna ingin membuat company profile atau pitch deck lengkap dari dokumen bisnis yang sudah ada.
+---
+
 # Compro Orchestrator (Main Skill)
 
-> **Skill untuk:** Menjalankan pipeline Layer 3 — Company Profile v2.8.0 secara end-to-end dari dokumen bisnis hingga presentasi web live di Vercel dengan tema default Aperture Cinematic Minimalist, 6 core layout archetypes, standalone zero-dependency presentation engine (HTML5/CSS3/JS), hybrid Unsplash direct CDN asset pipeline, dan Git Worktree workspace sync guarantee.
+> **Skill untuk:** Menjalankan pipeline Layer 3 — Company Profile v2.8.0 secara end-to-end dari dokumen bisnis hingga presentasi web live di Vercel dengan tema default Aperture Cinematic Minimalist, 7 core layout archetypes, standalone zero-dependency presentation engine (HTML5/CSS3/JS), hybrid Unsplash direct CDN asset pipeline, dan Git Worktree workspace sync guarantee.
 
 ## Slug Resolution Protocol
 

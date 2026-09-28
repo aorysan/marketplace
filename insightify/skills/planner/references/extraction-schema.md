@@ -1,6 +1,6 @@
 # Knowledge Extraction Schema Reference
 
-Extracted knowledge MUST be categorized into archetype-specific files under `[OUT_DIR]/.insightify/knowledge/` (up to 10 for `frontend-spa`; see planner SKILL.md Phase 0):
+Extracted knowledge MUST be categorized into archetype-specific files under `[OUT_DIR]/.insightify/knowledge/` (up to 10 for `frontend-spa`; see planner SKILL.md Phase 2):
 
 1. `product.md`: Product name, description, target audience, value proposition, tech stack.
 2. `directory-structure.md`: Feature-based modular folder tree with purpose descriptions.

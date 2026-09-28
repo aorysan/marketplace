@@ -1,6 +1,6 @@
 ---
 name: planner
-description: Stage 1 - Ingest sources, extract knowledge into categories based on detected archetype, and generate documentation plan with user approval.
+description: Stage 1 - Ingest sources, extract knowledge into categories based on detected archetype, and generate a documentation plan that requires explicit user approval before the Writer stage.
 ---
 
 # Planner Skill (Ingest → Extract → Plan)
@@ -47,7 +47,7 @@ churn: 42
 
 Content headings normalized to start at H2 (`##`). Manifest format: table with Source ID, Path, Type, Status, Words, Churn.
 
-### Phase 0: Project Type Detection
+### Phase 2: Project Type Detection
 
 1. Analyze the ingested sources to detect the project archetype.
 2. Supported archetypes: `frontend-spa`, `backend-api`, `system-design`, `general`.
@@ -57,10 +57,10 @@ Content headings normalized to start at H2 (`##`). Manifest format: table with S
    - `system-design`: product, architecture, features-and-journeys, business-policies, constraints-and-limits.
    - `general`: product, directory-structure, features-and-journeys, business-policies, constraints-and-limits.
 
-### Phase 2: Extract
+### Phase 3: Extract
 
 1. Read all `[OUT_DIR]/.insightify/sources/*.md` files.
-2. For each of the required categories for the detected archetype (defined in Phase 0; field-level schema in `references/extraction-schema.md`), analyze sources and extract structured facts.
+2. For each of the required categories for the detected archetype (defined in Phase 2; field-level schema in `references/extraction-schema.md`), analyze sources and extract structured facts.
    - **Parallel Extraction:** Assign sub-agents in parallel to extract the various knowledge categories from the available sources.
    - **Concurrency Limit:** Maintain a maximum concurrency limit of 5 sub-agents at a time.
 3. Include blockquote source citations (`> **Source:** source-XXX.md § Section Name`) for every fact.
@@ -69,7 +69,7 @@ Content headings normalized to start at H2 (`##`). Manifest format: table with S
 **Map-Reduce / Context Filtering:** Chunk large sources into segments; extract facts per chunk (map), then merge per category (reduce). Per category, feed only relevant chunks as context — filtered by category keywords and churn priority — instead of all content.
 
 **Knowledge Categories:**
-*(Note: The following 9 categories are defaults for `frontend-spa`. Other archetypes use different categories depending on Phase 0).*
+*(Note: The following 9 categories are defaults for `frontend-spa`. Other archetypes use different categories depending on Phase 2).*
 1. `product.md` — Product identity, version, audience, tagline
 2. `directory-structure.md` — Folder tree, module boundaries, import conventions
 3. `architecture.md` — High-level architecture, module boundaries, layout wrappers, routing structure, entity names + purpose only (not full field listings)
@@ -98,7 +98,7 @@ The API supports up to 1000 concurrent connections.
 > **Source:** source-003.md § API Limits
 ```
 
-### Phase 3: Plan
+### Phase 4: Plan
 
 1. Read `[OUT_DIR]/.insightify/knowledge/*.md` (all extracted categories).
 2. Generate a single comprehensive Documentation Plan that outlines the structure of the unified Product Knowledge Base using `templates/plan-template.md` (saved to `[OUT_DIR]/.insightify/plan.md`).
@@ -109,7 +109,10 @@ The API supports up to 1000 concurrent connections.
    📄 Document: Product Knowledge Base ([Section count] sections)
    📊 Est. words: [Estimation]
    ```
-4. Automatically save the plan as `approved` and proceed to Writer. Do NOT ask the user for plan approval here.
+4. **[HARD STOP] Wait for explicit user approval before Writer.** Print the plan summary, then ask: `Approve plan? [Y/n/revise]`. Do NOT invoke Writer on the assumption that the user will approve — end the turn and wait.
+   - Y/Enter → save `status: approved` in `[OUT_DIR]/.insightify/plan.md`, then proceed to Writer.
+   - revise → apply the requested changes to the plan, then ask again.
+   - n → save `status: rejected` and stop without invoking Writer.
 
 **Ambiguity Resolution:** During planning, compile unresolved questions from extraction into `[OUT_DIR]/.insightify/knowledge/unanswered.md`. Interactively prompt the user to answer high-impact ambiguities (those that change plan structure or document content); record answers as cited facts in affected knowledge files and mark them resolved in `unanswered.md`.
 

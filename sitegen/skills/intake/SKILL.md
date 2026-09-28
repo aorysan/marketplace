@@ -40,10 +40,10 @@ Alur kerja ini menerapkan arsitektur hybrid produser-konsumen: script `extract.p
 ## 1. Jalankan Ekstraksi (Produser Data)
 Jalankan ekstraksi dari repo root. Pilih varian OS:
 Linux/macOS (bash):
-`python3 -m venv venv && source venv/bin/activate && pip install -r .claude/plugins/sitegen/skills/intake/scripts/requirements.txt && python .claude/plugins/sitegen/skills/intake/scripts/extract.py <path_ke_compro.pdf> <direktori_output>`
+`python3 -m venv venv && source venv/bin/activate && pip install -r "$CLAUDE_PLUGIN_ROOT/skills/intake/scripts/requirements.txt" && python "$CLAUDE_PLUGIN_ROOT/skills/intake/scripts/extract.py" <path_ke_compro.pdf> <direktori_output>`
 Windows (PowerShell):
-`python -m venv venv; venv\Scripts\Activate.ps1; pip install -r .claude/plugins/sitegen/skills/intake/scripts/requirements.txt; python .claude/plugins/sitegen/skills/intake/scripts/extract.py <path_ke_compro.pdf> <direktori_output>`
-Catatan: folder `venv/` dibuat di repo root (di luar 4-pilar, jangan di-commit).
+`python -m venv venv; venv\Scripts\Activate.ps1; pip install -r "$env:CLAUDE_PLUGIN_ROOT/skills/intake/scripts/requirements.txt"; python "$env:CLAUDE_PLUGIN_ROOT/skills/intake/scripts/extract.py" <path_ke_compro.pdf> <direktori_output>`
+Catatan: `$CLAUDE_PLUGIN_ROOT` adalah variabel resmi Claude Code yang menunjuk folder plugin ini (jangan hardcode `.claude/plugins/sitegen/...` atau `.agents/skills/sitegen/...`). Folder `venv/` dibuat di repo root workspace (di luar 4-pilar, jangan di-commit).
 
 Script `extract.py` menghasilkan log teks di terminal DAN file terstruktur `intake_raw.json` di direktori output (misal: di `landings/<brand>/intake/`). File JSON ini memuat:
 - **`colors`**: Daftar warna brand terklasifikasi (`primary`, `secondary`, `neutral`) dalam format hex `#RRGGBB`.
@@ -56,7 +56,7 @@ Sebelum menyusun dokumen akhir `intake_compro.md`, agen WAJIB membaca dan mempro
 1. Agen wajib membaca file `intake_raw.json` dari direktori output.
 2. Untuk setiap file gambar di direktori output yang tercantum pada daftar `images` di `intake_raw.json`, analisa konteks `nearby_heading`, nomor halaman (`page`), dimensi resolusi, dan perannya dalam presentasi komersial.
 3. Tentukan nama file bertiang slug semantis yang jelas dan mendeskripsikan peran atau isi gambar (contoh: dari nama mentah `img_p1_15.jpg` menjadi `hero-produk-unggulan.jpg`, atau dari `img_p2_30.png` menjadi `logo-klien-mandiri.png`).
-4. Gunakan tool `run_command` dengan perintah shell (seperti `Move-Item` / `Rename-Item` di PowerShell atau `mv` jika di bash) untuk merename file fisik tersebut secara nyata di dalam direktori `assets/`.
+4. Gunakan tool `Bash` (shell) dengan perintah seperti `mv` (bash) atau `Move-Item` / `Rename-Item` (PowerShell) untuk merename file fisik tersebut secara nyata **di dalam direktori `assets/`** — di situlah `extract.py` menulis seluruh gambar hasil ekstraksi.
 
 ### B. Penyusunan Dokumen `intake_compro.md`
 Buat dokumen `intake_compro.md` di folder `landings/<brand>/intake/intake_compro.md` yang memuat rekonstruksi komponen komersial secara terstruktur:
@@ -67,7 +67,7 @@ Buat dokumen `intake_compro.md` di folder `landings/<brand>/intake/intake_compro
 - **Ketersediaan Aset Media/Video**: Catat status ketersediaan video dari compro; jika video nihil, beri label status *[No-Video Default]* agar perancangan selanjutnya menyiapkan fallback antarmuka interaktif atau mengkonfirmasi input video langsung ke user.
 
 ### Aturan Wajib (Mandatory Rules)
-- **Mandate Nama Semantik**: Seluruh referensi tautan gambar di dalam dokumen `intake_compro.md` HARUS menggunakan **nama file semantik baru** yang telah direname (bukan lagi nama mentah berawalan `img_pX_Y` atau `extracted_img_`).
+- **Mandate Nama Semantik**: Seluruh referensi tautan gambar di dalam dokumen `intake_compro.md` HARUS menggunakan **nama file semantik baru** yang telah direname (bukan lagi nama mentah berawalan `img_pX_Y`).
 - **Batasan Skala Kerja**: JANGAN merencanakan struktur, layout, atau kode halaman website. Satu-satunya output akhir pada tahap ini adalah aset fisik yang telah ter-rename di direktori `assets/` dan file dokumen `landings/<brand>/intake/intake_compro.md`.
 
 ---

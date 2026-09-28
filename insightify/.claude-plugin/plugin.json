@@ -3,7 +3,7 @@
   "name": "insightify",
   "displayName": "Insightify v6.4",
   "version": "6.4.1",
-  "description": "Generate comprehensive technical specification documentation (artifact-style HTML + knowledge-base.md) from code repositories. Archetype-aware spec covering directory structure, data models, component architecture, state management, routing, API patterns, and Mermaid diagrams.",
+  "description": "Generate comprehensive technical specification documentation (artifact-style HTML + Product-Knowledge-Base.md) from code repositories. Archetype-aware spec covering directory structure, data models, component architecture, state management, routing, API patterns, and Mermaid diagrams.",
   "author": {
     "name": "Aryo Adi Putro"
   },

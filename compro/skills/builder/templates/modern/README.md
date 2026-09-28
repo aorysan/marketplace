@@ -37,7 +37,7 @@ Template `modern` mengusung estetika cinematic editorial: kontras dark/light pen
 ## 3. Arketipe Layout (7 Core)
 
 **SSOT:** daftar ini harus identik dengan `CINEMATIC_ARCHETYPES` +
-`CINEMATIC_SLOT_MAP` di `scripts/themes/modern.js` dan `archetypes`/`slots` di
+`CINEMATIC_SLOT_MAP` di `skills/builder/scripts/themes/modern.js` dan `archetypes`/`slots` di
 `manifest.json`. Dijaga otomatis oleh `scripts/test-cinematic-classifier.js`.
 
 | Arketipe | Slot default | Deskripsi Layout |

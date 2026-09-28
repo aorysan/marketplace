@@ -5,7 +5,6 @@ node_modules/
 # Temp & Generated Output
 .preview/
 .grademe/
-.sitegen/assets/
 
 # OS & Environment Files
 .DS_Store

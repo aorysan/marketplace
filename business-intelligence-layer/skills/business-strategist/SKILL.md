@@ -1,4 +1,5 @@
 ---
+name: business-strategist
 description: Mengubah Product Knowledge Base, Pitch Deck, Pricing, dan Market Notes menjadi Business Knowledge Base yang terstruktur (target pelanggan, USP, positioning, pricing logic, competitor landscape, PMF hypothesis, SWOT, dan rekomendasi go/no-go). Gunakan saat pengguna ingin membangun analisis bisnis awal dari sebuah produk — misalnya "buatkan business knowledge base untuk produk ini", "evaluasi produk ini sebagai bisnis", "apa target pasar dan pricing yang tepat untuk produk ini", atau "apakah produk ini layak secara bisnis".
 ---
 

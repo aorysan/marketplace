@@ -1,3 +1,8 @@
+---
+name: builder
+description: Mengubah draf Markdown company profile menjadi HTML presentasi slide-based 16:9 (tema Aperture Cinematic Minimalist) yang self-contained dan siap deploy. Gunakan saat draf sudah lolos review dan perlu dirender menjadi deck HTML presentasi.
+---
+
 # Builder
 
 > **Skill untuk:** Mengubah Company Profile (Markdown) menjadi HTML presentasi slide-based 16:9 (Aperture Cinematic Minimalist) yang siap di-deploy, berstandar visual enterprise, dan fully self-contained dengan runtime standalone zero-dependency (Vanilla HTML5/CSS3/JS).
@@ -319,7 +324,7 @@ Pada akhir kompilasi, `postBuildSyncGuarantee()` memverifikasi apakah build diek
 
 ### Cara Menjalankan
 
-Dari root plugin (lokasi `plugin.json`):
+Dari root plugin (direktori yang memuat `.claude-plugin/plugin.json`):
 
 ```bash
 node skills/builder/scripts/build-deck.js --name=<slug>
