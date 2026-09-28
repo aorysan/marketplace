@@ -4,14 +4,21 @@ name: Sync vendored plugins
 # users after this workflow refreshes those copies and re-checks the versions.
 # It needs no local clone: GitHub clones the plugin repositories on its own.
 #
-# Trigger it manually from the Actions tab (or `gh workflow run sync-plugins.yml`)
-# after releasing a plugin. The schedule is a safety net for releases that were
-# never announced, so drift cannot sit unnoticed for long.
+# Three ways in, in order of latency:
+#   1. `gh workflow run sync-plugins.yml` (or the Actions tab) — on demand.
+#   2. A `plugin-updated` repository_dispatch sent by a plugin repository, so a
+#      release propagates immediately after the plugin push lands.
+#   3. The schedule below, which re-checks every 30 minutes so drift cannot sit
+#      unnoticed even when a release was never announced. GitHub can delay or, in
+#      a repository with no commits for 60 days, pause schedules entirely — any
+#      commit or manual run makes them live again.
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [plugin-updated]
   schedule:
-    - cron: '0 3 * * 1'
+    - cron: "*/30 * * * *"
 
 permissions:
   contents: write
