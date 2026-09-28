@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "insightify",
-      "description": "Generate comprehensive technical specification documentation (artifact-style HTML + knowledge-base.md) from code repositories.",
+      "description": "Generate artifact-style technical documentation and a Product Knowledge Base from code repositories, URLs, and files.",
       "version": "6.4.1",
       "source": "./insightify"
     },
