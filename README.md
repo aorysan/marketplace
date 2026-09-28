@@ -35,17 +35,24 @@ Or reference a specific plugin via its repository. Each plugin's own README cont
 
 ## 🔁 Sync & Version Guard
 
-Each directory here is a vendored copy of a plugin repository. After changing a plugin in its own repository, refresh the copy and re-run the guard:
+Each directory here is a vendored copy of a plugin repository. Normally you do not have to do this by hand: after releasing a plugin, run the [Sync vendored plugins](./.github/workflows/sync-plugins.yml) workflow (Actions → *Sync vendored plugins* → *Run workflow*). It clones the four plugin repositories on a runner, mirrors them, propagates versions, runs the guard, and commits — so a release needs **no local clone of this repository** at all.
+
+To do it by hand instead, refresh the copy from the plugin's committed tree and re-run the guard:
 
 ```bash
-# 1. Refresh one plugin from its source repo (tracked files only)
+# 1. Refresh one plugin from its source repo (committed tree, tracked files only)
 SRC=/path/to/plugin        # e.g. ../insight/.claude/plugins/insightify
 DST=insightify
-git -C "$SRC" ls-files -z | while IFS= read -r -d '' f; do [ -e "$SRC/$f" ] && printf '%s\0' "$f"; done > /tmp/files.list
-rm -rf "$DST" && mkdir -p "$DST" && rsync -a --from0 --files-from=/tmp/files.list "$SRC/" "$DST/"
+rm -rf "$DST" && mkdir -p "$DST"
+git -C "$SRC" archive --format=tar HEAD | tar -x -C "$DST"
 
-# 2. Verify the version agrees in all four places
+# 2. Propagate the plugin version into this repository's metadata, then verify it
+node scripts/sync-versions.mjs
 node scripts/check-versions.mjs
 ```
+
+Use `git archive` rather than a plain file copy: it takes both the content and the file
+modes from git. A working tree can carry executable bits git never tracked, and copying
+those would land here as spurious mode-change commits.
 
 `scripts/check-versions.mjs` compares the vendored `.claude-plugin/plugin.json` of every plugin against its entry in `.claude-plugin/marketplace.json`, `plugins.json`, and the README table. It exits `1` on any mismatch, so it can gate a push: a stale `version` field pins every install to a plugin version that no longer exists.

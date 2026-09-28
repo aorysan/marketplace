@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the marketplace
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Fetch plugin repositories
         run: |
@@ -32,16 +32,17 @@ jobs:
           done
 
       - name: Mirror tracked files into the vendored directories
+        # `git archive` exports the committed tree with the file modes git records,
+        # which is what a plain file copy gets wrong: a working tree can carry
+        # executable bits that git never tracked, and those would surface here as
+        # spurious mode-change commits.
         run: |
           set -euo pipefail
           sync_plugin() {
             local src="$1" dst="$2"
-            git -C "$src" ls-files -z \
-              | while IFS= read -r -d '' file; do [ -e "$src/$file" ] && printf '%s\0' "$file"; done \
-              > "$RUNNER_TEMP/files.list"
             rm -rf "$dst"
             mkdir -p "$dst"
-            rsync -a --from0 --files-from="$RUNNER_TEMP/files.list" "$src/" "$dst/"
+            git -C "$src" archive --format=tar HEAD | tar -x -C "$dst"
           }
           sync_plugin "$RUNNER_TEMP/src/insightify" insightify
           sync_plugin "$RUNNER_TEMP/src/compro" compro
