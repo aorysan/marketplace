@@ -1,0 +1,70 @@
+name: Sync vendored plugins
+
+# The marketplace ships a copy of every plugin, so a plugin change only reaches
+# users after this workflow refreshes those copies and re-checks the versions.
+# It needs no local clone: GitHub clones the plugin repositories on its own.
+#
+# Trigger it manually from the Actions tab (or `gh workflow run sync-plugins.yml`)
+# after releasing a plugin. The schedule is a safety net for releases that were
+# never announced, so drift cannot sit unnoticed for long.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the marketplace
+        uses: actions/checkout@v4
+
+      - name: Fetch plugin repositories
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/src"
+          for repo in insightify compro sitegen business-intelligence-layer; do
+            git clone --depth 1 "https://github.com/aorysan/${repo}.git" "$RUNNER_TEMP/src/${repo}"
+          done
+
+      - name: Mirror tracked files into the vendored directories
+        run: |
+          set -euo pipefail
+          sync_plugin() {
+            local src="$1" dst="$2"
+            git -C "$src" ls-files -z \
+              | while IFS= read -r -d '' file; do [ -e "$src/$file" ] && printf '%s\0' "$file"; done \
+              > "$RUNNER_TEMP/files.list"
+            rm -rf "$dst"
+            mkdir -p "$dst"
+            rsync -a --from0 --files-from="$RUNNER_TEMP/files.list" "$src/" "$dst/"
+          }
+          sync_plugin "$RUNNER_TEMP/src/insightify" insightify
+          sync_plugin "$RUNNER_TEMP/src/compro" compro
+          sync_plugin "$RUNNER_TEMP/src/sitegen" sitegen
+          sync_plugin "$RUNNER_TEMP/src/business-intelligence-layer" business-intelligence-layer
+
+      - name: Propagate versions from the plugin manifests
+        run: node scripts/sync-versions.mjs
+
+      - name: Verify every version source agrees
+        run: node scripts/check-versions.mjs
+
+      - name: Commit and push
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Marketplace already in sync — nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit \
+            -m "chore: resync vendored plugins from their repositories" \
+            -m "Refreshed by .github/workflows/sync-plugins.yml from aorysan/insightify, aorysan/compro, aorysan/sitegen, and aorysan/business-intelligence-layer."
+          git push
