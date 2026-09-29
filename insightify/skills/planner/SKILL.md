@@ -22,8 +22,9 @@ description: Stage 1 - Ingest sources, extract knowledge into categories based o
 | `.html`, `.htm` | `parsers/html-parser.js` | Strips nav/footer/scripts, preserves content structure; extracts color palette data (`## Colors` section) |
 | `.js`, `.ts`, `.py`, `.java`, `.go`, `.rs`, `.rb`, `.php`, `.c`, `.cpp`, `.cs` | `parsers/code-parser.js` | Extracts JSDoc/docstrings; falls back to raw code |
 | `.pdf` | `parsers/pdf-parser.js` | Binary buffer input via `pdf-parse` |
-| `.json`, `.yaml`, `.yml` (`openapi.json`, `swagger.yaml`) | Native schema parser | OpenAPI/Swagger specs (detect `openapi`/`swagger` root key): parse endpoints/models directly instead of raw-text ingestion; non-spec `.json`/`.yaml` → Direct copy |
-| `.sql` (`schema.sql`) | Native schema parser | SQL DDL: parse tables/columns/entities directly instead of raw-text ingestion |
+| `.json` | `parsers/json-parser.js` | Strips comments/trailing commas, then extracts `dependencies`/`devDependencies`/`peerDependencies`/`scripts`/`compilerOptions` when present (package-manifest shape); any other JSON — including OpenAPI/Swagger specs — falls back to a formatted raw JSON dump. Structured OpenAPI/Swagger endpoint extraction is not yet implemented; treat such files as raw reference material for the `api-patterns.md` category. |
+| `.yaml`, `.yml` | Direct copy | No dedicated YAML parser exists yet; copied as-is with frontmatter added, same as `.md`/`.txt` |
+| `.sql` (`schema.sql`) | Direct copy | No SQL DDL parser exists yet; copied as-is with frontmatter added. Table/column/entity extraction from SQL is not yet implemented. |
 | `.md`, `.txt`, `.rst` | Direct copy | Copy content as-is with frontmatter added |
 | URLs (`http://`, `https://`) | Fetch → HTML parser | Fetch page, then process as HTML |
 | Other extensions | Skip | Log warning, mark as `skipped` in manifest |
@@ -52,8 +53,8 @@ Content headings normalized to start at H2 (`##`). Manifest format: table with S
 1. Analyze the ingested sources to detect the project archetype.
 2. Supported archetypes: `frontend-spa`, `backend-api`, `system-design`, `general`.
 3. Map the detected archetype to its corresponding knowledge categories:
-   - `frontend-spa`: 9 default categories (product, directory-structure, architecture, state-and-data, design-system, api-patterns, features-and-journeys, business-policies, constraints-and-limits).
-   - `backend-api`: product, directory-structure, architecture, api-patterns, features-and-journeys, business-policies, constraints-and-limits.
+   - `frontend-spa`: 10 default categories (product, directory-structure, architecture, state-and-data, design-system, api-patterns, features-and-journeys, business-policies, constraints-and-limits, workflows).
+   - `backend-api`: product, directory-structure, architecture, api-patterns, features-and-journeys, business-policies, constraints-and-limits, workflows.
    - `system-design`: product, architecture, features-and-journeys, business-policies, constraints-and-limits.
    - `general`: product, directory-structure, features-and-journeys, business-policies, constraints-and-limits.
 
@@ -69,7 +70,7 @@ Content headings normalized to start at H2 (`##`). Manifest format: table with S
 **Map-Reduce / Context Filtering:** Chunk large sources into segments; extract facts per chunk (map), then merge per category (reduce). Per category, feed only relevant chunks as context — filtered by category keywords and churn priority — instead of all content.
 
 **Knowledge Categories:**
-*(Note: The following 9 categories are defaults for `frontend-spa`. Other archetypes use different categories depending on Phase 2).*
+*(Note: The following 10 categories are defaults for `frontend-spa` (`backend-api` uses the same set minus `state-and-data.md` and `design-system.md`). Other archetypes use different categories depending on Phase 2).*
 1. `product.md` — Product identity, version, audience, tagline
 2. `directory-structure.md` — Folder tree, module boundaries, import conventions
 3. `architecture.md` — High-level architecture, module boundaries, layout wrappers, routing structure, entity names + purpose only (not full field listings)
@@ -79,6 +80,7 @@ Content headings normalized to start at H2 (`##`). Manifest format: table with S
 7. `features-and-journeys.md` — Feature catalog, personas, end-to-end user journeys, acceptance criteria
 8. `business-policies.md` — Business rules, validation policies, cross-cutting concerns, domain glossary
 9. `constraints-and-limits.md` — Technical limits, performance budgets, security, known issues
+10. `workflows.md` — Step-by-step procedures, execution flows, CI/CD, deployment, release
 
 **Feature Boundary & Negative Constraints:**
 - Features MUST represent functional product capabilities and business workflows (e.g., Content Planner, Video Generation Pipeline, Auth, Sheets Sync, AI Copilot).

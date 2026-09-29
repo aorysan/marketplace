@@ -24,16 +24,18 @@ Setelah terpasang, jalankan `/compro`. Sub-skill tersedia dengan namespace `/com
 Rilis v2.8.0 menggantikan seluruh tema legacy Canva Editorial dan runtime Reveal.js dengan sistem presentasi sinematik modern **Aperture Cinematic Minimalist**:
 
 - **Aperture Cinematic Minimalist Design System**: Perombakan visual menyeluruh beresolusi 1920×1080 (native 16:9), palet warna kontras tinggi (`--background: #ffffff`, `--foreground: #0a0a0a`, `--muted-foreground: #6b6b6b`, `--accent: #ff3b1d`, `--border: #e4e4e4`, `--ghost: #f1f1f1`, `--hover-bg: #fafafa`), tipografi editorial berbobot tinggi (*Archivo* untuk headline, *Inter* untuk body, *JetBrains Mono* untuk monospaced category kickers).
-- **7 Core Slide Archetypes**:
+- **9 Core Slide Archetypes** (6 halaman port 1:1 dari export Figma + 3 extension native Aperture):
   - `cover`: Full-Bleed Cinematic Hero dengan foto gelap berskala sinematik, gradient overlay ganda, live status dot (`● Now shipping`), category kicker vermilion, headline raksasa bottom-anchored, dan glass stat strip untuk 2–3 statistik kunci slide pembuka.
   - `problem`: 12-Column Asymmetric Split (4-col image kiri + 8-col text kanan), decorative ghost watermark text ("NO" di `#f1f1f1`), dan 3-item numbered list dengan angka vermilion dan highlight hover.
   - `product`: 50/50 Macro & Spec Matrix seimbang dengan floating glass badge pada foto makro produk dan 2x2 stat counter block berdefinisi tinggi.
   - `features`: Rail Image vertikal 3-kolom dengan caption teknis rotasi 90° (`writing-mode: vertical-rl`) di kiri, dan 4 baris fitur bernomor raksasa `01`–`04` di kanan yang interaktif hover.
   - `usp`: Frosted Glass Trio di atas dark viewfinder canvas dengan 3 kartu semi-transparan (`backdrop-filter: blur(12px)`), hairline white border, kicker, counter `01`–`03`, giant stat, dan teks penjelasan.
   - `pricing`: Vertical Image Rail ("Siap mulai.") di kiri dan 3 pricing tiers di kanan; featured tier mengusung inverted black background (`#0a0a0a`), teks putih, dan tombol CTA solid vermilion.
+  - `metrics` *(Aperture extension)*: Figure band untuk slide traction/pencapaian — deret metrik kontras tinggi hasil ekstraksi token figur dari draf (mis. `~90%`, `20:1`), menggantikan fallback lama yang meminjam layout `product`.
+  - `ecosystem` *(Aperture extension)*: Node matrix arsitektur/platform untuk slide ekosistem, integrasi, atau alur kerja — rail gambar vertikal + grid node, menggantikan fallback lama yang meminjam layout `product`.
   - `closing`: Rail Image ("Langkah berikutnya") di kiri dan Contact Matrix di kanan — headline, daftar `.closing-notes` (komitmen/benefit), grid 2 kolom `.closing-contacts` (ikon + label mono + nilai), dan CTA vermilion. Placeholder kontak reviewer dirender sebagai `Belum tersedia`, tidak pernah dikarang.
 - **Standalone Zero-Dependency Presentation Engine**: Menghilangkan dependensi CDN Reveal.js secara tuntas. Slide deck ditenagai runtime Vanilla HTML5/CSS3/JS yang ter-inline langsung, dilengkapi hairline progress bar 3px di bagian atas panggung, dot navigation interaktif di footer, dynamic counter (`01 / 06`), dan keyboard navigation lengkap (`ArrowLeft`, `ArrowRight`, `Space`, `PageDown`, `PageUp`, `Home`, `End`).
-- **Cinematic Asset Pipeline Slots**: Cascading fallback berjenjang — **Openverse web image search** (keyless) ➔ **kurated Unsplash direct CDN** ➔ **Lorem Picsum** ➔ **local architectural SVG** — dalam satu budget waktu kompilasi bersama (default 25 s). Slot default per arketipe (`cover→hero`, `problem→problem`, `product→macro`, `features→hands`, `usp→viewfinder`, `pricing→lens`, `closing→closing`) selalu bisa ditimpa oleh directive gambar di draf.
+- **Cinematic Asset Pipeline Slots**: Cascading fallback berjenjang — **Openverse web image search** (keyless) ➔ **kurated Unsplash direct CDN** ➔ **Lorem Picsum** ➔ **generasi AI Pollinations** ➔ **local architectural SVG** — dalam satu budget waktu kompilasi bersama (default 25 s). Slot default per arketipe (`cover→hero`, `problem→problem`, `product→macro`, `features→hands`, `usp→viewfinder`, `pricing→lens`, `metrics→metrics`, `ecosystem→ecosystem`, `closing→closing`) selalu bisa ditimpa oleh directive gambar di draf.
 - **Unified Archetype Classifier**: Eliminasi divergensi classifier ganda (`classifyCanvaArchetype` dipertahankan hanya sebagai alias deprecated; `classifyCinematicArchetype` menjadi single source of truth untuk classifier di asset pipeline, build log, dan slide renderer).
 - **Deterministic Density Pipeline**: Splitter deterministik memecah konten padat menjadi slide Part 1/2/3 (4/4/3 bullet budget atau prose split) tanpa pemotongan fakta.
 - **Zero-Hallucination Contact Handling**: Placeholder kontak reviewer (`[Nomor WhatsApp]`, `[Email Resmi]`, `[Alamat Kantor]`, …) tidak pernah bocor mentah ke deck dan tidak pernah diganti dengan nomor/email karangan — nilainya menjadi penanda eksplisit `Belum tersedia` dan dicatat di `reports/build.log`.
@@ -41,7 +43,7 @@ Rilis v2.8.0 menggantikan seluruh tema legacy Canva Editorial dan runtime Reveal
 
 ### Kontrak Perilaku (dijaga otomatis oleh test suite)
 
-1. **7 arketipe = satu SSOT.** `CINEMATIC_ARCHETYPES` / `CINEMATIC_SLOT_MAP` di `themes/modern.js`, `archetypes`/`slots` di `manifest.json`, dan dokumentasi harus identik — `test-cinematic-classifier.js` gagal kalau salah satu menyimpang. Setiap nilai slot wajib resolve di `imageFetcher.SLOT_MAP` beserta file fallback SVG-nya.
+1. **9 arketipe = satu SSOT.** `CINEMATIC_ARCHETYPES` / `CINEMATIC_SLOT_MAP` di `themes/modern.js`, `archetypes`/`slots` di `manifest.json`, dan dokumentasi harus identik — `test-cinematic-classifier.js` + `test-doc-drift.js` gagal kalau salah satu menyimpang. Setiap nilai slot wajib resolve di `imageFetcher.SLOT_MAP` beserta file fallback SVG-nya.
 2. **Slide kontak tidak lagi salah arketipe.** Judul seperti "Hubungi Kami"/"Terima Kasih" memetakan ke `closing`, bukan `pricing` → `features`.
 3. **Metrik tidak boleh salah baca.** Token bold adalah metrik hanya bila seluruh tokennya berbentuk figur (`1×`, `5–20`, `~90%`, `20:1`, `3-tier`, `0.4s`). `**20:1** — rasio LTV:CAC, di atas ambang sehat 3:1.` dirender sebagai `20:1`, bukan `3:1`.
 4. **Tidak ada grid bolong.** Slide `product` tanpa angka metrik merender `.stat-cell.no-metric` dan menulis `console.warn`; tidak ada `<div class="stat-metric"></div>` kosong di HTML akhir.
@@ -86,17 +88,21 @@ Plugin dilengkapi rangkaian script pengujian otomatis untuk memverifikasi seluru
 # 1. Jalankan seluruh test suite Layer 3 (end-to-end verification)
 npm test                    # = node scripts/test-all.js (offline-safe)
 
-# 2. Uji parity classifier 7 arketipe cinematic, slot mapping, & anti-drift manifest
+# 2. Uji parity classifier 9 arketipe cinematic, slot mapping, & anti-drift manifest
 node scripts/test-cinematic-classifier.js
 
-# 3. Uji DOM parity rendering untuk 7 arketipe & dispatcher
+# 3. Uji DOM parity rendering untuk 9 arketipe & dispatcher
 node scripts/test-modern-render.js
 
 # 4. Uji golden DOM assertions, kontrak kontak, asset pipeline, & template shell
 node scripts/test-modern-golden.js
+
+# 5. Uji anti-drift dokumentasi vs SSOT arketipe (README + seluruh SKILL.md)
+#    sekaligus konsistensi suite: setiap test-*.js terdaftar di test-all.js
+node scripts/test-doc-drift.js
 ```
 
-`scripts/test-all.js` menjalankan **seluruh 16 script** dengan `COMPRO_OFFLINE=1` supaya suite tetap hermetik dan tidak membakar rate limit Openverse.
+`scripts/test-all.js` menjalankan **seluruh 19 script** dengan `COMPRO_OFFLINE=1` supaya suite tetap hermetik dan tidak membakar rate limit Openverse.
 
 ---
 
@@ -106,7 +112,7 @@ node scripts/test-modern-golden.js
 2. **Gate 0 - Intake Check & Slug Resolution**: Mengecek kelengkapan dokumen input dasar (`input/business-knowledge-base.md`, `business-audit-report.md`, `brand-story-guide.md`), menentukan identifier unik `<slug>` proyek, dan memeriksa potensi *Pipeline Resumability*.
 3. **Phase 1 - Drafting (Dynamic Slides)** (`/writer`): Menghasilkan draf narasi per-slide dalam format Markdown (`compros/<slug>/drafts/01-draft.md`) dengan batas overlap repetisi ≤ 40% dan jumlah slide dinamis mengikuti konten.
 4. **Phase 2 - Content QA (Dedup & Contact Check)** (`/reviewer`): Memverifikasi akurasi fakta bisnis, validasi kontak faktual (Zero Hallucination), deduplikasi konten antar-slide, brand voice, dan merumuskan draf On-Page SEO (Meta Title/Description). Iterasi revisi berjalan hingga status `APPROVED` (`compros/<slug>/drafts/02-final.md`).
-5. **Phase 3 - Slide Deck Build (Aperture Cinematic & Standalone Engine)** (`/builder`): Membangun file presentasi statis *single-file HTML* dengan CSS ter-inline, gambar per-slide dari pipeline bertier (Openverse ➔ Unsplash ➔ Picsum ➔ SVG), 7 arketipe layout sinematik, dan zero-dependency standalone JS presentation engine (`compros/<slug>/index.html`).
+5. **Phase 3 - Slide Deck Build (Aperture Cinematic & Standalone Engine)** (`/builder`): Membangun file presentasi statis *single-file HTML* dengan CSS ter-inline, gambar per-slide dari pipeline bertier (Openverse ➔ Unsplash ➔ Picsum ➔ Pollinations ➔ SVG), 9 arketipe layout sinematik, dan zero-dependency standalone JS presentation engine (`compros/<slug>/index.html`).
 6. **Phase 3b - Visual Self-Check** (`/builder` / orchestrator): Memverifikasi integritas visual di browser untuk memastikan tidak ada gambar/SVG rusak, teks overflow, atau layout clipping. Memeriksa fungsi progress bar, dot navigation, dan keyboard controls. Hasil dicatat di `build.log` dan bersifat blocking sebelum lanjut ke Phase 4.
 7. **Phase 4 - Pre-flight SEO & Auto-Fix** (`/publisher`): Audit technical SEO (Title, Description, Open Graph, Schema.org JSON-LD, Alt Image) dan melakukan auto-patching otomatis pada file HTML (`compros/<slug>/reports/seo-report.md`).
 8. **Gate 5 - User Confirmation Gate**: Berhenti dan menampilkan pratinjau lokal serta hasil audit SEO untuk meminta persetujuan rilis publik dari pengguna.
@@ -130,7 +136,7 @@ node scripts/test-modern-golden.js
 │   │   ├── SKILL.md
 │   │   ├── scripts/
 │   │   │   ├── build-deck.js           # Builder engine (parsing, chunking, shell injection, build.log)
-│   │   │   ├── themes/modern.js        # 7 arketipe renderers + classifier SSOT
+│   │   │   ├── themes/modern.js        # 9 arketipe renderers + classifier SSOT
 │   │   │   ├── image-fetcher.js        # Slot map + tiered image acquisition
 │   │   │   └── asset-generator.js      # Procedural SVG assets
 │   │   ├── templates/
@@ -149,10 +155,12 @@ node scripts/test-modern-golden.js
 ├── assets/                             # Aset global, referensi Figma presentation, & data referensi compro/
 │   └── compro/                         # Runtime reference data (scraped RT Online); binari berat di-gitignore
 ├── scripts/                            # Verifikasi & test suite runner
-│   ├── test-all.js                     # Test runner seluruh suite (16 script)
-│   ├── test-cinematic-classifier.js    # Test classifier 7 arketipe + slot + anti-drift manifest
+│   ├── test-all.js                     # Test runner seluruh suite (19 script)
+│   ├── test-cinematic-classifier.js    # Test classifier 9 arketipe + slot + anti-drift manifest
+│   ├── test-doc-drift.js               # Anti-drift dokumentasi arketipe vs SSOT + konsistensi suite
 │   ├── test-modern-render.js           # Test render figma DOM parity
-│   └── test-modern-golden.js           # Golden DOM assertions, kontrak kontak, & asset assertions
+│   ├── test-modern-golden.js           # Golden DOM assertions, kontrak kontak, & asset assertions
+│   └── ... (14 suite lainnya: pipeline-flow, density, theme, schema, dll.)
 ├── test-fixtures/                      # Fixture pengujian & verifikasi
 │   ├── 01-company-profile.md           # Dokumen input contoh realistis
 │   └── expected/                       # Golden expected output

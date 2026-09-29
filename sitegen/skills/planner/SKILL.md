@@ -128,7 +128,7 @@ Membuat planning untuk SATU halaman spesifik.
 - **Semua section**: DILARANG menggunakan emoji. Gunakan ikon profesional (Lucide/SVG).
 
 **Self-Check:**
-Sebelum menyimpan, periksa dengan rubrik di `reference/scoring-rubric.md` (rujukan tunggal: `../../qa-reviewer/reference/review-checklist.md`). Target skor ≥ 90.
+Sebelum menyimpan, periksa dengan rubrik di `skills/planner/reference/scoring-rubric.md` (rujukan tunggal: `skills/qa-reviewer/reference/review-checklist.md`). Target skor ≥ 90.
 
 ---
 

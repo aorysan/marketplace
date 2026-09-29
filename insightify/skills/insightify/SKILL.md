@@ -40,6 +40,7 @@ Support the following invocation patterns:
 3. **Reviewer:** Run `insightify:reviewer`.
    - Progress: `⏳ Reviewer: [========] X/10 dimensions (iteration 1/3)`
    - Error: If review loop exceeds 3 iterations, stop and report to user.
+   - Approval gate: Reviewer ends with `Approve doc? [Y/n/revise]`. Show the verdict and END TURN; do NOT start Stage 4 (Builder) until the user explicitly approves.
 4. **Builder:** Run `insightify:builder`. Print success summary.
    - Progress: `⏳ Builder: rendering artifact-style index.html and Product-Knowledge-Base.md...`
 
@@ -60,5 +61,5 @@ The pipeline generates a **Technical Specification** matching the reference arti
 | `index.html` | Single artifact-style HTML with CSS-only sidebar, Mermaid diagrams, dark/light mode, print support |
 | `Product-Knowledge-Base.md` | Primary output: consolidated knowledge base assembled from the finalized documentation, with a Table of Contents |
 
-**Documentation Sections:** Planner emits the category set for the detected archetype (see Planner Phase 2); Builder concatenates exactly those category files under `(Categories)` headings.
+**Documentation Sections:** Planner emits the category set for the detected archetype (see Planner Phase 2). Builder assembles the primary output from the Reviewer's finalized document (`[OUT_DIR]/docs/final/final-documentation.md`) — it does NOT concatenate the raw `.insightify/knowledge/` category files.
 

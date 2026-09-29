@@ -4,11 +4,13 @@ const path = require('path');
 const testScripts = [
   'validate-manifest.js',
   'test-cinematic-classifier.js',
+  'test-doc-drift.js',
   'test-writer-schema.js',
   'test-reviewer-schema.js',
   'test-builder-inlining.js',
   'test-publisher-workflow.js',
   'test-orchestrator.js',
+  'test-pipeline-flow.js',
   'test-theme-dispatch.js',
   'test-template-bundle.js',
   'test-slide-structure.js',

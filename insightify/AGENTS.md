@@ -4,7 +4,7 @@ This file provides guidance to AI coding agents when working with code in this r
 
 ## Commands
 
-- **Run tests**: `npm test` (runs `node --test`, discovers `tests/**/*.test.js`)
+- **Run tests**: `npm test` (runs `node --test`, discovers `tests/**/*.test.js` and `skills/**/*.test.mjs`)
 - **Install dependencies**: `npm install` (no flags needed; `package.json` `overrides` reconciles the stale `tree-sitter-typescript` peer range — see below)
 - **Verify a generated output**: `npm run verify:output -- insights/<project>` (see Output verification below)
 - No lint, typecheck, or format commands exist. No CI workflows.
@@ -47,7 +47,7 @@ Each stage has a standalone invocation (e.g., `/insightify:planner`) and an orch
 ## Testing
 
 - Tests validate SKILL.md content (required sections, keywords, structure) — not just behavior.
-- `tests/build-templates.test.js` is the largest suite (~27 tests). Uses `jsdom` for DOM/JS runtime testing of `scripts-base.js`.
+- `tests/build-templates.test.js` is the largest suite. Uses `jsdom` for DOM/JS runtime testing of `scripts-base.js`.
 - `tests/fixtures/sample-14-kb/` is a generated fixture (14 `.md` files with frontmatter) used by build tests.
 - Some tests in `build-templates.test.js` are commented out (template placeholder assertions) — these are intentional skips, not failures.
 

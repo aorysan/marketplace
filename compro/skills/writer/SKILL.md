@@ -182,11 +182,11 @@ Aturan di bawah WAJIB dipenuhi agar output langsung bisa dikonsumsi tema builder
      tanpa spasi). Yang disarankan per jenis slide: `hero` (pembuka), `problem`,
      `solution`, `services`, `ecosystem`, `metrics`, `differentiator`, `pricing`,
      `closing` (kontak/CTA). Ini **bukan** nama arketipe builder — builder tetap
-     memilih layout dari classifier 7 arketipe (`cover`, `problem`, `product`,
-     `features`, `usp`, `pricing`, `closing`), dan slot hanya menentukan
-     kategori/fallback foto. Dua kosakata ini sengaja dipisah: jangan ganti nama
-     slot menjadi nama arketipe (`macro`/`hands`/`viewfinder`/`lens`) karena
-     kategorinya jadi generik dan foto kehilangan topik.
+     memilih layout dari classifier 9 arketipe (`cover`, `problem`, `product`,
+     `features`, `usp`, `pricing`, `metrics`, `ecosystem`, `closing`), dan slot
+     hanya menentukan kategori/fallback foto. Dua kosakata ini sengaja dipisah:
+     jangan ganti nama slot menjadi nama arketipe (`macro`/`hands`/`viewfinder`/`lens`)
+     karena kategorinya jadi generik dan foto kehilangan topik.
    - `query`: SATU kalimat Bahasa Inggris yang mendeskripsikan foto untuk slot itu.
    - `keywords`: 3–5 kata kunci (dipisah koma) untuk scoring pipeline gambar.
    - `style`: selalu `photo`.

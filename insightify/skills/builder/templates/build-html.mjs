@@ -197,7 +197,8 @@ function extractArchitectureHighlights(kbDir, techStack) {
     { file: 'state-and-data.md', label: 'State & Data' },
     { file: 'design-system.md', label: 'Design System' },
     { file: 'api-patterns.md', label: 'API Patterns' },
-    { file: 'business-policies.md', label: 'Business Policies' }
+    { file: 'business-policies.md', label: 'Business Policies' },
+    { file: 'workflows.md', label: 'Workflows' }
   ];
 
   for (const { file, label } of kbSources) {
@@ -479,13 +480,14 @@ export function buildArtifact(options = {}) {
   let htmlTemplate = options.htmlTemplate;
   if (!htmlTemplate) {
     const baseHtml = readTemplate('layouts/base.html');
-    if (baseHtml) {
-      htmlTemplate = baseHtml.replace(/\{\{>\s*([a-zA-Z0-9_-]+)\}\}/g, (match, compName) => {
-        const compDir = path.join(__dirname, 'components', compName);
-        const htmlFiles = getAllFilesRecursive(compDir, '.html');
-        return htmlFiles.map(f => fs.readFileSync(f, 'utf-8')).join('\n');
-      });
+    if (!baseHtml) {
+      throw new Error('builder templates/layouts/base.html not found — cannot render artifact HTML');
     }
+    htmlTemplate = baseHtml.replace(/\{\{>\s*([a-zA-Z0-9_-]+)\}\}/g, (match, compName) => {
+      const compDir = path.join(__dirname, 'components', compName);
+      const htmlFiles = getAllFilesRecursive(compDir, '.html');
+      return htmlFiles.map(f => fs.readFileSync(f, 'utf-8')).join('\n');
+    });
   }
 
   let styles = options.styles;
@@ -523,14 +525,11 @@ export function buildArtifact(options = {}) {
     TITLE: `${overview.name} - Technical Specification`,
     PRODUCT_NAME: overview.name,
     TAGLINE: overview.tagline,
-    VERSION: overview.version,
-    GENERATED_AT: new Date().toISOString().split('T')[0],
     SIDEBAR_NAV: sidebarNav,
     PRODUCT_OVERVIEW: overview.html,
     DOC_SECTIONS: docSections,
     STYLE: `<style>\n${styles}\n</style>`,
-    SCRIPTS: `<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>\n<script>\n${scripts}\n</script>`,
-    INSIGHTIFY_VERSION: insightifyVersion
+    SCRIPTS: `<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>\n<script>\n${scripts}\n</script>`
   });
 
   const knowledgeBase = assembleKnowledgeBase(docPath, { kbDir, insightifyVersion });

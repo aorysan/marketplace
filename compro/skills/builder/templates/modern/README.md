@@ -34,7 +34,7 @@ Template `modern` mengusung estetika cinematic editorial: kontras dark/light pen
 
 ---
 
-## 3. Arketipe Layout (7 Core)
+## 3. Arketipe Layout (9 Core)
 
 **SSOT:** daftar ini harus identik dengan `CINEMATIC_ARCHETYPES` +
 `CINEMATIC_SLOT_MAP` di `skills/builder/scripts/themes/modern.js` dan `archetypes`/`slots` di
@@ -48,6 +48,8 @@ Template `modern` mengusung estetika cinematic editorial: kontras dark/light pen
 | `features` | `hands` | Rail image vertikal + 4 baris fitur bernomor `01`–`04` |
 | `usp` | `viewfinder` | Dark canvas full-bleed + 3 frosted glass cards |
 | `pricing` | `lens` | Vertical image rail + 3 tier matrix (featured tier inverted) |
+| `metrics` | `metrics` | Figure band traction/pencapaian — hanya token figur ter-parse dari draf (extension native Aperture) |
+| `ecosystem` | `ecosystem` | Node matrix arsitektur/platform — rail gambar vertikal + grid node (extension native Aperture) |
 | `closing` | `closing` | Rail image "Langkah berikutnya" + headline, `closing-notes` (komitmen/benefit), `closing-contacts` (matriks 2-kolom ikon+label+nilai), dan CTA vermilion |
 
 **Fallback:** arketipe `pricing` tanpa tabel/item apa pun turun ke layout
@@ -60,7 +62,7 @@ matriks kontak (selalu ada `console.warn`).
 
 ```text
 skills/builder/templates/modern/
-├── manifest.json   # Registrasi metadata tema, 7 archetypes, slots, renderer
+├── manifest.json   # Registrasi metadata tema, 9 archetypes, slots, renderer
 ├── shell.html      # Standalone Aperture deck shell (1920x1080)
 ├── theme.css       # Aperture Cinematic stylesheet & tokens
 └── README.md       # Dokumentasi spesifikasi template modern
@@ -80,7 +82,7 @@ skills/builder/templates/modern/
 ## 6. Asset Slot Fallback
 
 Cascading fallback per slot: Openverse image search ➔ curated Unsplash CDN ➔
-Lorem Picsum ➔ local SVG.
+Lorem Picsum ➔ generasi AI Pollinations (bila `query:` tersedia) ➔ local SVG.
 
 - Slot `.jpg` direferensikan sebagai `assets/slide-N-<slot>.jpg`.
 - Fallback SVG di-inline sebagai `data:image/svg+xml;base64,...` — **bukan** `<img src="assets/*.svg">` (zero broken image, golden assertion aman walau network Tier-3).

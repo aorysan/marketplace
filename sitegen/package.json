@@ -1,0 +1,14 @@
+{
+  "name": "sitegen-plugin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitegen — master orchestrator plugin (13 sub-skill) untuk generasi website end-to-end dari intake PDF sampai deploy Vercel.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node scripts/test-pipeline-flow.js",
+    "test:intake": "python3 -m pytest skills/intake/tests -q"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

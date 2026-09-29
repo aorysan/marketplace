@@ -21,7 +21,7 @@ Corporate decks require strict structural discipline to look polished both in in
 
 ## 2. Layout Composition by Slide Archetype
 
-The template has exactly **7 archetypes** (SSOT: `CINEMATIC_ARCHETYPES` +
+The template has exactly **9 archetypes** (SSOT: `CINEMATIC_ARCHETYPES` +
 `CINEMATIC_SLOT_MAP` in `skills/builder/scripts/themes/modern.js`, mirrored in
 `skills/builder/templates/modern/manifest.json` and asserted by
 `scripts/test-cinematic-classifier.js`). This section replaces the earlier
@@ -36,7 +36,9 @@ renderer, never hand-written.
 | 4 | `features` | `hands` | 3-col : 9-col (`.slide-features`) | Left: rail photo with 90°-rotated `.rail-label` (`writing-mode: vertical-rl`). Right: header + `.sub-counter`, then ≤4 `.feature-row` items with giant `01`–`04` numbers that flip to vermilion on hover |
 | 5 | `usp` | `viewfinder` | 3-card trio on a dark canvas (`.slide-usp`) | Full-bleed dark viewfinder photo, vertical gradient overlay, headline, optional `.usp-honesty` callout, and 3 `.usp-card` frosted glass cards (`backdrop-filter: blur(12px)`, hairline white border) each with kicker, counter, optional giant stat, title, detail |
 | 6 | `pricing` | `lens` | 3-col : 9-col (`.slide-pricing`) | Left: rail photo with `Siap mulai.` overlay. Right: kicker, headline, `.pricing-grid` with ≤3 `.tier-card`s; the featured (middle) tier inverts to `#0a0a0a` with a vermilion CTA |
-| 7 | `closing` | `closing` | 3-col : 9-col (`.slide-closing`) | Left: rail photo with rotated `Langkah berikutnya` caption. Right: kicker, headline, `.closing-desc`, optional `.closing-notes` list (commitments/benefits), `.closing-contacts` 2-column icon+label+value grid, and the `.closing-cta` |
+| 7 | `metrics` | `metrics` | Figure band (`.slide-metrics`) | Traction/proof band; renders only parsed figure tokens (e.g. `~90%`, `20:1`) — native Aperture extension replacing the old `product` fallback |
+| 8 | `ecosystem` | `ecosystem` | 3-col : 9-col (`.slide-ecosystem`) | Architecture/platform node matrix over a vertical rail image; native Aperture extension replacing the old `product` fallback |
+| 9 | `closing` | `closing` | 3-col : 9-col (`.slide-closing`) | Left: rail photo with rotated `Langkah berikutnya` caption. Right: kicker, headline, `.closing-desc`, optional `.closing-notes` list (commitments/benefits), `.closing-contacts` 2-column icon+label+value grid, and the `.closing-cta` |
 
 ### 2.1 Zero-Hallucination Composition Rules
 

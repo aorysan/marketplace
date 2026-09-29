@@ -33,6 +33,20 @@ describe('Orchestrator Skill', () => {
     );
   });
 
+  test('insightify.md gates Stage 4 (Builder) behind explicit document approval', () => {
+    const orchestratorPath = path.join(__dirname, '../skills/insightify/SKILL.md');
+    const content = fs.readFileSync(orchestratorPath, 'utf8');
+
+    // The orchestrator used to enforce only the Planner gate, so a full run could
+    // flow straight from Reviewer into Builder without the document approval.
+    assert.strictEqual(content.includes('Reviewer ends with'), true, 'Reviewer step must surface its approval gate');
+    assert.strictEqual(
+      content.includes('do NOT start Stage 4 (Builder)'),
+      true,
+      'Gate must block Stage 4 (Builder) before approval'
+    );
+  });
+
   test('insightify.md includes CLI argument parsing, progress indicators, and error resilience', () => {
     const orchestratorPath = path.join(__dirname, '../skills/insightify/SKILL.md');
     const content = fs.readFileSync(orchestratorPath, 'utf8');

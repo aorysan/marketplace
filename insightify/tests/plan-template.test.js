@@ -69,14 +69,13 @@ describe('Plan Template (Parallel Sections)', () => {
       'api-patterns.md',
       'features-and-journeys.md',
       'business-policies.md',
-      'constraints-and-limits.md'
+      'constraints-and-limits.md',
+      'workflows.md'
     ];
 
     expectedKnowledgeCategories.forEach(cat => {
       assert.ok(skillContent.includes(cat), `SKILL.md must list category: ${cat}`);
     });
-
-    assert.ok(!skillContent.includes('workflows.md'), 'SKILL.md must not list workflows.md category');
     assert.ok(skillContent.includes('detected archetype'), 'SKILL.md must derive category set from detected archetype');
     assert.ok(!skillContent.includes('max 5 waves'), 'SKILL.md must not enforce max 5 waves anymore');
 

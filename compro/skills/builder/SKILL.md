@@ -24,7 +24,7 @@ Builder ini dilengkapi modul referensi desain bawaan yang self-contained di dala
    - **Spacing & Structure:** 12-column grid splits (3:9, 4:8, 50/50), hairline 1px borders, frosted glass surfaces (`backdrop-filter: blur(12px)`), dan minimal clean elevation.
 
 2. **[Visual Hierarchy & Layout Composition (`references/visual-hierarchy.md`)](references/visual-hierarchy.md):**
-   - **7 Slide Archetypes 16:9:** Komposisi slide untuk Cover (Full-Bleed Cinematic Hero + glass stat strip), Problem (12-Col Split with Ghost Watermark), Product (50/50 Macro & Spec Matrix), Features (Rail Image + Giant Numbered List), USP (Frosted Glass Trio), Pricing (Vertical Image Rail + Tier Matrix), dan Closing (Rail Image + Contact Matrix & CTA).
+   - **9 Slide Archetypes 16:9:** Komposisi slide untuk Cover (Full-Bleed Cinematic Hero + glass stat strip), Problem (12-Col Split with Ghost Watermark), Product (50/50 Macro & Spec Matrix), Features (Rail Image + Giant Numbered List), USP (Frosted Glass Trio), Pricing (Vertical Image Rail + Tier Matrix), Metrics (Figure Band untuk traction/pencapaian), Ecosystem (Node Matrix arsitektur/platform), dan Closing (Rail Image + Contact Matrix & CTA).
    - **Standar Rasio Kontras:** Kepatuhan WCAG AA / AAA (kontras teks normal minimal 4.5:1, teks besar minimal 3:1 pada kanvas terang maupun kanvas gelap).
    - **Scannability & Micro-Interactions:** Hairline progress bar, active dot indicator berdenyut vermilion, interactive row hover effects, dan keyboard shortcuts navigation.
 
@@ -98,7 +98,7 @@ Untuk impeccable, builder membaca reference docs secara langsung (bukan menjalan
 
 1. **Self-Contained Design Intelligence:** Seluruh aturan visual, warna, dan tipografi bersumber dari `references/design-tokens.md`, `references/visual-hierarchy.md`, serta dua skill desain ter-bundle `skills/ui-ux-pro-max/` (design system generator, palettes, fonts, icons) dan `skills/impeccable/` (craft quality floor, critique, audit, polish).
 2. **Single Template `modern` & Aperture Cinematic System:** Builder hanya memiliki satu template (`templates/modern/`) dengan sistem desain Aperture Cinematic Minimalist (kanvas `#ffffff`, teks `#0a0a0a`, muted `#6b6b6b`, aksen vermilion `--accent: var(--brand-primary, #ff3b1d)`, border hairline `#e4e4e4`, ghost `#f1f1f1`, hover `#fafafa`). Tidak ada opsi pemilihan tema/flag `--theme`; builder selalu merender via `themes/modern.js` (`renderCinematicSlide`) serta menyuntikkan variabel CSS brand ke dalam `:root`.
-3. **Hybrid Asset Pipeline:** Menyelesaikan gambar untuk tiap slide dari directive markdown melalui tier berjenjang: **Openverse web image search** (keyless, bisa dimatikan dengan `COMPRO_OFFLINE=1`) ➔ **kurated Unsplash direct CDN** ➔ **Lorem Picsum** ➔ **SVG vektor lokal** (`templates/assets/fallback/`). Tiga bentuk directive diterima (`parseImageDirective`): `<!-- image: <slot> -->`, `<!-- image: <slot> <teks bebas sebagai query> -->`, dan bentuk terstruktur `<!-- image: <slot> -- query: ...; keywords: ...; style: photo -->`; bagian terstruktur boleh sebagian (tidak wajib lengkap) dan setiap bagian yang hilang tidak membatalkan bagian lain. **Validasi byte:** setiap respons unduhan diperiksa magic bytes-nya (`sniffImageFormat`); respons 200 yang bukan gambar (halaman error CDN, body JSON rate-limit, challenge HTML) dihapus dan tier berikutnya yang dipakai, sehingga slot gambar tidak pernah berisi file rusak. Dua kosakata slot dibedakan tegas: **slot directive** bebas dari `imageFetcher.SLOT_MAP` (`hero`, `problem`, `solution`, `services`, `ecosystem`, `metrics`, `differentiator`, `pricing`, `closing`, `macro`, `hands`, `viewfinder`, `lens`) dan **slot default arketipe** dari `CINEMATIC_SLOT_MAP`. Directive selalu menang atas classifier; slot berhenti dipakai sebagai nama file `assets/slide-N-<slot>.jpg`. Zero API key barrier, deck mandiri tersimpan di `compros/<slug>/assets/`.
+3. **Hybrid Asset Pipeline:** Menyelesaikan gambar untuk tiap slide dari directive markdown melalui tier berjenjang: **Openverse web image search** (keyless, bisa dimatikan dengan `COMPRO_OFFLINE=1`) ➔ **kurated Unsplash direct CDN** ➔ **Lorem Picsum** ➔ **generasi AI Pollinations** (jalan bila `query:` tidak kosong) ➔ **SVG vektor lokal** (`templates/assets/fallback/`). Tiga bentuk directive diterima (`parseImageDirective`): `<!-- image: <slot> -->`, `<!-- image: <slot> <teks bebas sebagai query> -->`, dan bentuk terstruktur `<!-- image: <slot> -- query: ...; keywords: ...; style: photo -->`; bagian terstruktur boleh sebagian (tidak wajib lengkap) dan setiap bagian yang hilang tidak membatalkan bagian lain. **Validasi byte:** setiap respons unduhan diperiksa magic bytes-nya (`sniffImageFormat`); respons 200 yang bukan gambar (halaman error CDN, body JSON rate-limit, challenge HTML) dihapus dan tier berikutnya yang dipakai, sehingga slot gambar tidak pernah berisi file rusak. Dua kosakata slot dibedakan tegas: **slot directive** bebas dari `imageFetcher.SLOT_MAP` (`hero`, `problem`, `solution`, `services`, `ecosystem`, `metrics`, `differentiator`, `pricing`, `closing`, `macro`, `hands`, `viewfinder`, `lens`) dan **slot default arketipe** dari `CINEMATIC_SLOT_MAP`. Directive selalu menang atas classifier; slot berhenti dipakai sebagai nama file `assets/slide-N-<slot>.jpg`. Zero API key barrier, deck mandiri tersimpan di `compros/<slug>/assets/`.
 4. **Deterministic Chunking & Slide Budget:** Satu slide memuat 1 konsep utama berukuran 1920×1080 (16:9 1080p) dengan batas maksimal 60 kata atau 4 kartu; >4 bullets atau >60 kata dipecah otomatis via splitDenseSlides() menjadi Part 1/2/3 (`Lanjutan: [Title] (Part N)`) untuk menjamin keterbacaan proporsional. Threshold 4 card-safe: reviewer mengizinkan hingga 6 plain bullets, builder split konservatif di 5+ agar §4 4-card cap selalu terpenuhi; prose-only >60 kata di-split per kalimat dengan budget 60 kata.
 5. **Aksesibilitas & Kontras Ketat:** Memastikan teks body memiliki rasio kontras minimal 4.5:1 terhadap latar belakang (teks utama `#0a0a0a` pada kanvas terang `#ffffff`, teks inverse `#ffffff` pada kanvas gelap `#000000`/`#0a0a0a`).
 6. **Git Worktree & Dynamic Workspace Sync Guarantee:** Builder mendeteksi environment kerja secara dinamis tanpa hardcoded absolute paths (`--root`, `COMPRO_PROJECT_ROOT`, atau auto-inspeksi file pointer `.git` worktree). `postBuildSyncGuarantee()` menjamin file output otomatis disinkronkan ke root workspace pengguna (`compros/<slug>/`) tanpa risiko kehilangan artefak.
@@ -234,7 +234,7 @@ Aturan yang berlaku untuk semua arketipe:
 > `.comparison-table`, `.slide-differentiator`, `.slide-social-proof`,
 > `.testimonial-card`, `.trust-logo-bar`, `.company-pill`, store badges). Class
 > tersebut sudah dihapus dari `theme.css` bersama renderer legacy-nya (build v2.8
-> hanya punya 7 arketipe sinematik). Gunakan tabel di atas.
+> hanya punya 9 arketipe sinematik). Gunakan tabel di atas.
 
 ---
 
@@ -273,9 +273,9 @@ Template `modern` (`templates/modern/`) adalah **satu-satunya template** pada `b
 ```
 Slide dirender langsung ke dalam `.deck-stage` tanpa framework eksternal. Script inlined vanilla JS mengontrol perpindahan slide, pembaruan nomor counter, progress bar, dot aktif, serta navigasi keyboard (`ArrowRight`, `ArrowLeft`, `Space`, `Home`, `End`).
 
-### 7 Slide Archetypes Aperture Cinematic
+### 9 Slide Archetypes Aperture Cinematic
 
-Builder memetakan setiap bagian Markdown secara otomatis ke salah satu dari 7 arketipe cinematic (SSOT: `CINEMATIC_ARCHETYPES`):
+Builder memetakan setiap bagian Markdown secara otomatis ke salah satu dari 9 arketipe cinematic (SSOT: `CINEMATIC_ARCHETYPES`):
 
 | Archetype Class | Layout & Proporsi | Elemen Kunci |
 |---|---|---|
@@ -285,6 +285,8 @@ Builder memetakan setiap bagian Markdown secara otomatis ke salah satu dari 7 ar
 | `features` (`.slide-features`) | Rail Image + Giant Numbered List | Sisi kiri: 3-col vertical rail image dengan caption teknis rotasi 90° (`writing-mode: vertical-rl`). Sisi kanan: 9-col container dengan 4 baris fitur bernomor raksasa `01`–`04` (`#e4e4e4` berubah vermilion saat hover). |
 | `usp` (`.slide-usp`) | Frosted Glass Trio | Dark viewfinder background canvas dengan vertical gradient. 3 kartu frosted glass trio (`backdrop-filter: blur(12px)`, `bg-black/40`, 1px hairline border putih). Tiap kartu memiliki kicker, counter `01`–`03`, giant stat, headline, dan eksplanasi. |
 | `pricing` (`.slide-pricing`) | Vertical Image Rail + Tier Matrix | Sisi kiri: 3-col vertical image rail dengan overlay "Siap mulai." dan sub-label pendampingan. Sisi kanan: 9-col container dengan 3 pricing tiers. Featured tier mengusung inverted black background (`#0a0a0a`), teks putih, dan tombol CTA solid vermilion. |
+| `metrics` (`.slide-metrics`) | Figure Band (extension native) | Band deret metrik kontras tinggi yang hanya dirender dari token figur ter-parse pada draf (mis. `~90%`, `20:1`); slide traction/pencapaian tidak lagi meminjam layout `product`. |
+| `ecosystem` (`.slide-ecosystem`) | Node Matrix (extension native) | Rail gambar vertikal + grid node arsitektur/platform untuk slide ekosistem, integrasi, atau alur kerja. |
 | `closing` (`.slide-closing`) | Rail Image + Contact Matrix | Sisi kiri: 3-col rail image dengan caption teknis rotasi 90° ("Langkah berikutnya"). Sisi kanan: 9-col container dengan kicker, headline, `.closing-desc`, `.closing-notes` (komitmen/benefit), `.closing-contacts` (grid 2 kolom ikon SVG + label mono + nilai), dan `.closing-cta` vermilion. Nilai kontak placeholder menjadi `Belum tersedia` — tidak pernah dikarang. |
 
 ### Imagery Guidelines & Asset Pipeline Slots
@@ -292,7 +294,7 @@ Builder memetakan setiap bagian Markdown secara otomatis ke salah satu dari 7 ar
 Pipeline aset mencari gambar yang cocok untuk tiap slide — **tanpa asset diawal pun build tetap jalan**:
 
 1. **Deterministic Slot Mapping:**
-   Membaca tag komentar gambar pada draf Markdown dengan satu parser toleran (`parseImageDirective`). Tiga bentuk diterima: `<!-- image: <slot> -->`, `<!-- image: <slot> <teks bebas yang langsung dipakai sebagai query> -->`, dan bentuk terstruktur `<!-- image: <slot> -- query: ... ; keywords: ... ; style: photo -->` yang boleh sebagian (`query`/`keywords`/`style` tidak wajib lengkap; satu bagian yang hilang tidak menghapus bagian lainnya). Slot directive yang didukung (`imageFetcher.SLOT_MAP`): `hero`, `problem`, `solution`, `services`, `ecosystem`, `metrics`, `differentiator`, `pricing`, `closing`, `macro`, `hands`, `viewfinder`, `lens`. Slot default per arketipe (`CINEMATIC_SLOT_MAP`): `cover→hero`, `problem→problem`, `product→macro`, `features→hands`, `usp→viewfinder`, `pricing→lens`, `closing→closing`. Directive selalu menang atas slot default.
+   Membaca tag komentar gambar pada draf Markdown dengan satu parser toleran (`parseImageDirective`). Tiga bentuk diterima: `<!-- image: <slot> -->`, `<!-- image: <slot> <teks bebas yang langsung dipakai sebagai query> -->`, dan bentuk terstruktur `<!-- image: <slot> -- query: ... ; keywords: ... ; style: photo -->` yang boleh sebagian (`query`/`keywords`/`style` tidak wajib lengkap; satu bagian yang hilang tidak menghapus bagian lainnya). Slot directive yang didukung (`imageFetcher.SLOT_MAP`): `hero`, `problem`, `solution`, `services`, `ecosystem`, `metrics`, `differentiator`, `pricing`, `closing`, `macro`, `hands`, `viewfinder`, `lens`. Slot default per arketipe (`CINEMATIC_SLOT_MAP`): `cover→hero`, `problem→problem`, `product→macro`, `features→hands`, `usp→viewfinder`, `pricing→lens`, `metrics→metrics`, `ecosystem→ecosystem`, `closing→closing`. Directive selalu menang atas slot default.
 
 2. **Tier cascade (urutan pencarian):**
    - **`search`** — query web image search **Openverse** (keyless, `api.openverse.org`) memakai `keywords` → `query` → `judul slide + slot`. Hasil diurutkan per orientasi slot (portrait/landscape). Bisa dimatikan dengan env `COMPRO_OFFLINE=1`.
@@ -349,7 +351,7 @@ Setiap perubahan script builder, template, atau klasifikasi arketipe WAJIB diver
 npm test                 # = node scripts/test-all.js (offline-safe)
 ```
 
-Suite ini mencakup parity classifier 7 arketipe + anti-drift manifest, kontrak renderer, golden DOM assertions, dan e2e density. Tes individual bisa dijalankan langsung, mis. `node scripts/test-cinematic-classifier.js`.
+Suite ini mencakup parity classifier 9 arketipe + anti-drift manifest (+ anti-drift dokumentasi lewat `test-doc-drift.js`), kontrak renderer, golden DOM assertions, dan e2e density. Tes individual bisa dijalankan langsung, mis. `node scripts/test-cinematic-classifier.js`.
 
 ---
 

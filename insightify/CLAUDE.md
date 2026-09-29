@@ -35,7 +35,7 @@ The entry point is `skills/insightify/SKILL.md`, which orchestrates four indepen
 - All stages communicate through a temporary workspace directory (`.insightify/`) created relative to the target project.
 - **Stage skills operate in two modes**:
   - **Orchestrated**: Called by `skills/insightify/SKILL.md` during a full run.
-  - **Standalone**: Called directly via their own commands (e.g., `/insightify-planner`) for manual execution.
+  - **Standalone**: Called directly via their own namespaced commands (e.g., `/insightify:planner`) for manual execution.
 - **Knowledge Traceability**: Every extracted fact in the Knowledge Base includes a blockquote citation tracing it back to the original source ID.
 
 ### External Dependencies

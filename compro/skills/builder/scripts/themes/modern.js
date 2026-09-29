@@ -1,7 +1,7 @@
 /* themes/modern.js — Aperture Cinematic Minimalist slide renderers.
-   Exactly 7 archetypes (cover, problem, product, features, usp, pricing,
-   closing) + `renderCinematicSlide` dispatcher, consumed by build-deck.js via
-   `renderModernSlide`. Shared parsers come from ../build-deck.
+   Exactly 9 archetypes (cover, problem, product, features, usp, pricing,
+   metrics, ecosystem, closing) + `renderCinematicSlide` dispatcher, consumed by
+   build-deck.js via `renderModernSlide`. Shared parsers come from ../build-deck.
    Zero-hallucination rule: render only parsed cards (cards.slice(0,4) as-is);
    never invent default services/cards/metrics. Empty grid + console.warn on
    zero cards. Chrome copy (kickers/rail labels) defaults to Bahasa Indonesia
@@ -21,7 +21,8 @@ const {
 
 // Aperture Cinematic archetype set (SSOT): exactly these 9 names.
 // The first 6 are a 1:1 port of the Figma "Product Presentation Slide" export
-// (assets/figma-presentation/); `metrics` and `ecosystem` are native Aperture
+// (assets/figma-presentation/, which has exactly 6 pages); `closing` is the
+// Aperture contact/CTA layout, and `metrics` + `ecosystem` are native Aperture
 // extensions (Figma has no equivalent page) that replace the old behaviour of
 // letting traction/architecture slides fall through to the `product` layout.
 // renderCinematicSlide consumes the same names; manifest.json + the writer /
@@ -125,7 +126,7 @@ function classifyModernArchetype(slide, index, totalSlides) {
   return classifyCinematicArchetype(slide, index, totalSlides);
 }
 
-// --- Aperture Cinematic 7 Archetype Renderers (Figma DOM Parity) ---
+// --- Aperture Cinematic 9 Archetype Renderers (Figma DOM Parity) ---
 
 function resolveSlideParams(slide, brand, defaultIndex, defaultSlot, arg3, arg4, arg5) {
   let index = defaultIndex;
@@ -958,7 +959,7 @@ ${contactsHtml}
       </article>`;
 }
 
-// Cinematic dispatcher: routes to the 7 archetype renderers
+// Cinematic dispatcher: routes to the 9 archetype renderers
 function renderCinematicSlide(slide, arg2, arg3, arg4, arg5) {
   let index = 0;
   let totalSlides = 6;

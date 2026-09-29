@@ -2,21 +2,29 @@ const Parser = require('tree-sitter');
 
 const parsers = {};
 
+const LANG_ALIASES = {
+    ts: 'ts', tsx: 'tsx', typescript: 'ts',
+    js: 'js', jsx: 'jsx', javascript: 'js',
+    py: 'py', python: 'py'
+};
+
 function getParser(lang) {
-    if (parsers[lang]) return parsers[lang];
-    
+    const normalized = LANG_ALIASES[lang];
+    if (!normalized) return null;
+    if (parsers[normalized]) return parsers[normalized];
+
     const parser = new Parser();
-    if (lang === 'ts' || lang === 'tsx') {
+    if (normalized === 'tsx') {
+        parser.setLanguage(require('tree-sitter-typescript').tsx);
+    } else if (normalized === 'ts') {
         parser.setLanguage(require('tree-sitter-typescript').typescript);
-    } else if (lang === 'js' || lang === 'jsx') {
+    } else if (normalized === 'js' || normalized === 'jsx') {
         parser.setLanguage(require('tree-sitter-javascript'));
-    } else if (lang === 'py') {
+    } else if (normalized === 'py') {
         parser.setLanguage(require('tree-sitter-python'));
-    } else {
-        return null;
     }
-    
-    parsers[lang] = parser;
+
+    parsers[normalized] = parser;
     return parser;
 }
 

@@ -90,10 +90,18 @@ Semua 12 subfolder skill dilengkapi `AGENTS.md` konstitusi lokal.
 
 ### 🧪 Menjalankan Test Skill
 
-Repo ini tidak memakai CI; jalankan test manual saat mengubah skrip/template:
+Repo ini tidak memakai CI; jalankan test manual saat mengubah skrip/template/SKILL:
 
 ```bash
-# sekali saja (venv di root repo, di luar 4-pilar)
+# Pipeline flow contract test (Node-only, tanpa dependency) — WAJIB hijau bila
+# kamu mengubah SKILL.md/AGENTS.md atau skrip skill:
+#   - rantai artefak table dependency graph (input step N harus diproduksi step < N)
+#   - setiap gerbang [HARD STOP]/[CRITICAL STOP] benar-benar END TURN & berurutan
+#   - setiap sub-skill yang dipanggil punya SKILL.md + AGENTS.md
+#   - jumlah skill & versi manifest konsisten
+npm test
+
+# Sekali saja untuk test berbasis Python (venv di root repo, di luar 4-pilar)
 python3 -m venv venv && source venv/bin/activate
 pip install -r skills/intake/scripts/requirements.txt
 

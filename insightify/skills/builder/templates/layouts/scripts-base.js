@@ -20,7 +20,7 @@
         startOnLoad: true,
         theme: 'base',
         securityLevel: 'loose',
-        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
+        fontFamily: "IBM Plex Sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
         fontSize: 14,
         flowchart: {
           useMaxWidth: true,
